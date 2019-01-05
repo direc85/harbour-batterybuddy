@@ -8,6 +8,7 @@
 #include <QQmlContext>
 #include <QQuickView>
 #include <QQmlEngine>
+#include <QTimer>
 
 #include "battery.h"
 
@@ -27,6 +28,10 @@ int main(int argc, char *argv[])
     QQuickView* view = SailfishApp::createView();
 
     Battery battery;
+    QTimer updater;
+    QObject::connect(&updater, SIGNAL(timeout()), &battery, SLOT(updateData()));
+    updater.start(15000);
+
     view->engine()->addImportPath("/usr/share/harbour-carbudget/qml");
     view->rootContext()->setContextProperty("battery", &battery);
     view->setSource(SailfishApp::pathTo("qml/harbour-batterybuddy.qml"));

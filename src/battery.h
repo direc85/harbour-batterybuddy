@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QFile>
+#include <QDebug>
 
 class Battery : public QObject
 {
@@ -18,9 +19,10 @@ public:
     int getCharge();
     bool getCharging();
 
-private:
+public slots:
     void updateData();
 
+private:
     QFile* chargeFile;
     QFile* chargingFile;
 
