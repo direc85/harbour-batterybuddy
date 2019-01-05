@@ -79,35 +79,98 @@ Page {
             PageHeader {
                 title: qsTr("Battery Buddy")
             }
-            DetailItem {
-                label: qsTr("Charge level")
-                value: battery.charge;
+            Label {
+                x: Theme.paddingLarge
+                text: qsTr("Battery status")
+                color: Theme.highlightColor
+                font.pixelSize: Theme.fontSizeMedium
             }
-            DetailItem {
-                label: qsTr("Charging")
-                value: battery.charging ? "yes" : "no";
+            Label {
+                x: Theme.paddingLarge*2
+                width: parent.width - x*2;
+                wrapMode: Text.Wrap
+                text: qsTr("Charge level") + " " + battery.charge + "%, " + (battery.charging ? qsTr("charging") : qsTr("discharging"))
+                color: Theme.primaryColor
+                font.pixelSize: Theme.fontSizeSmall
+            }
+            Label {
+                x: Theme.paddingLarge
+                text: qsTr("Alert levels")
+                color: Theme.highlightColor
+                font.pixelSize: Theme.fontSizeMedium
+            }
+            Label {
+                x: Theme.paddingLarge*2
+                width: parent.width - x*2;
+                wrapMode: Text.Wrap
+                text: qsTr("Plays an alert sound and display a notification when the battery has been charged above the upper limit or discharged below the lower limit.")
+                color: Theme.primaryColor
+                font.pixelSize: Theme.fontSizeSmall
             }
             Slider {
                 id: highSlider
                 width: parent.width
-                label: qsTr("Upper limit")
+                label: qsTr("Charging limit")
                 minimumValue: 60
                 maximumValue: 99
                 stepSize: 1
                 value: settings.upperLimit
-                valueText: highSlider.value
+                valueText: highSlider.value + "%"
                 onValueChanged: settings.upperLimit = highSlider.value
             }
             Slider {
                 id: lowSlider
                 width: parent.width
-                label: qsTr("Lower limit")
+                label: qsTr("Discharging limit")
                 minimumValue: 10
                 maximumValue: 40
                 stepSize: 1
                 value: settings.lowerLimit
-                valueText: lowSlider.value
+                valueText: lowSlider.value + "%"
                 onValueChanged: settings.lowerLimit = lowSlider.value
+            }
+            Label {
+                x: Theme.paddingLarge
+                text: qsTr("Alert tests")
+                color: Theme.highlightColor
+                font.pixelSize: Theme.fontSizeMedium
+            }
+            Label {
+                x: Theme.paddingLarge*2
+                width: parent.width - x*2;
+                wrapMode: Text.Wrap
+                text: qsTr("Click the buttons to test the sound and notification.")
+                color: Theme.primaryColor
+                font.pixelSize: Theme.fontSizeSmall
+            }
+            Item {
+                width: parent.width
+                height: lowButton.height
+                anchors.left: parent.left
+                Item {
+                    width: parent.width / 2
+                    height: lowButton.height
+                    Button {
+                        id: lowButton
+                        text: "Low"
+                        onClicked: alertLow.play()
+                        anchors.centerIn: parent
+                    }
+                }
+                Item {
+                    anchors.right: parent.right
+                    width: parent.width / 2
+                    height: lowButton.height
+                    Button {
+                        text: "High"
+                        onClicked: alertHigh.play()
+                        anchors.centerIn: parent
+                    }
+                }
+            }
+            Item {
+                width: parent.width
+                height: Theme.paddingLarge
             }
         }
     }
