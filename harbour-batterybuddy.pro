@@ -25,7 +25,9 @@ DISTFILES += qml/harbour-batterybuddy.qml \
     rpm/harbour-batterybuddy.yaml \
     translations/*.ts \
     harbour-batterybuddy.desktop \
-    qml/pages/MainPage.qml
+    qml/pages/MainPage.qml \
+    qml/pages/AboutPage.qml
+
 # Begin: include sound files
 
 OTHER_FILES += sounds/upperLimit.ogg \
