@@ -20,15 +20,14 @@ SOURCES += src/harbour-batterybuddy.cpp \
 
 DISTFILES += qml/harbour-batterybuddy.qml \
     qml/cover/CoverPage.qml \
-    rpm/harbour-batterybuddy.changes.in \
-    rpm/harbour-batterybuddy.changes.run.in \
     rpm/harbour-batterybuddy.spec \
     rpm/harbour-batterybuddy.yaml \
     translations/*.ts \
     harbour-batterybuddy.desktop \
     qml/pages/MainPage.qml \
     qml/pages/AboutPage.qml \
-    qml/pages/InfoPage.qml
+    qml/pages/InfoPage.qml \
+    rpm/harbour-batterybuddy.changes
 
 # Begin: include sound files
 

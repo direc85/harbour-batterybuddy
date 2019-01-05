@@ -12,7 +12,7 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
-* Sun Apr 13 2014 Jack Tar <jack.tar@example.com> 0.0.1-1
-- Scrubbed the deck
-- Hoisted the sails
-
+* Sun Jan 6 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 1.0-1
+- Initial release
+- Implement battery level monitoring
+- Implement audible alerts and notifications
