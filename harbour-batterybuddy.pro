@@ -26,6 +26,19 @@ DISTFILES += qml/harbour-batterybuddy.qml \
     translations/*.ts \
     harbour-batterybuddy.desktop \
     qml/pages/MainPage.qml
+# Begin: include sound files
+
+OTHER_FILES += sounds/upperLimit.ogg \
+    sounds/lowerLimit.ogg \
+
+DEPLOYMENT_PATH = /usr/share/$${TARGET}
+
+sounds.files = sounds
+sounds.path = $${DEPLOYMENT_PATH}
+
+INSTALLS += sounds
+
+# End: include sound files
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 
