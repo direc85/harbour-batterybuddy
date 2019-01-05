@@ -67,8 +67,9 @@ Page {
         Button {
             anchors.horizontalCenter: parent.horizontalCenter
             text: qsTr("Code and feedback")
-            onClicked: Qt.openUrlExternally("http://www.github.com/direc85/harbour-countme2")
+            onClicked: Qt.openUrlExternally("http://www.github.com/direc85/harbour-batterybuddy")
         }
+        /*
         Label {
             x: Theme.paddingLarge
             text: qsTr("Sounds")
@@ -95,6 +96,7 @@ Page {
             text: qsTr("Lower limit")
             onClicked: Qt.openUrlExternally("https://notificationsounds.com/notification-sounds/unsure-566")
         }
+        */
     }
 }
 
