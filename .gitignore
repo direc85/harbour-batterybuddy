@@ -1,0 +1,6 @@
+*.old
+*.bak
+*.pro.user
+*.qm
+*.spec.*
+*.autosave
