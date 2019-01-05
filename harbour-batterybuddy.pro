@@ -27,7 +27,8 @@ DISTFILES += qml/harbour-batterybuddy.qml \
     translations/*.ts \
     harbour-batterybuddy.desktop \
     qml/pages/MainPage.qml \
-    qml/pages/AboutPage.qml
+    qml/pages/AboutPage.qml \
+    qml/pages/InfoPage.qml
 
 # Begin: include sound files
 
