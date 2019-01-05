@@ -31,15 +31,15 @@ DISTFILES += qml/harbour-batterybuddy.qml \
 
 # Begin: include sound files
 
-OTHER_FILES += sounds/upperLimit.ogg \
-    sounds/lowerLimit.ogg \
+#OTHER_FILES += sounds/upperLimit.ogg \
+#    sounds/lowerLimit.ogg \
 
-DEPLOYMENT_PATH = /usr/share/$${TARGET}
+#DEPLOYMENT_PATH = /usr/share/$${TARGET}
 
-sounds.files = sounds
-sounds.path = $${DEPLOYMENT_PATH}
+#sounds.files = sounds
+#sounds.path = $${DEPLOYMENT_PATH}
 
-INSTALLS += sounds
+#INSTALLS += sounds
 
 # End: include sound files
 

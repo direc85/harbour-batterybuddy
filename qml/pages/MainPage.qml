@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtMultimedia 5.6
 import Sailfish.Silica 1.0
 
 Page {
@@ -6,6 +7,32 @@ Page {
 
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.All
+
+    MediaPlayer {
+        id: alertLow
+        audioRole: MediaPlayer.NotificationRole
+        autoLoad: true
+        source: settings.lowAlertFile
+    }
+
+    MediaPlayer {
+        id: alertHigh
+        audioRole: MediaPlayer.NotificationRole
+        autoLoad: true
+        source: settings.highAlertFile
+    }
+
+    Timer {
+        interval: 60000
+        running: true
+        repeat: true
+        onTriggered: {
+            if(battery.charge <= settings.lowerLimit && battery.charging === false)
+                alertLow.play()
+            else if(battery.charge >= settings.upperLimit && battery.charging === true)
+                alertLow.play()
+        }
+    }
 
     // To enable PullDownMenu, place our content in a SilicaFlickable
     SilicaFlickable {
