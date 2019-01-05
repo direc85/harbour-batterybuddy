@@ -39,6 +39,28 @@ Page {
                 label: qsTr("Charging")
                 value: battery.charging ? "yes" : "no";
             }
+            Slider {
+                id: highSlider
+                width: parent.width
+                label: qsTr("Upper limit")
+                minimumValue: 60
+                maximumValue: 99
+                stepSize: 1
+                value: settings.upperLimit
+                valueText: highSlider.value
+                onValueChanged: settings.upperLimit = highSlider.value
+            }
+            Slider {
+                id: lowSlider
+                width: parent.width
+                label: qsTr("Lower limit")
+                minimumValue: 10
+                maximumValue: 40
+                stepSize: 1
+                value: settings.lowerLimit
+                valueText: lowSlider.value
+                onValueChanged: settings.lowerLimit = lowSlider.value
+            }
         }
     }
 }

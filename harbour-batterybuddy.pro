@@ -15,7 +15,8 @@ TARGET = harbour-batterybuddy
 CONFIG += sailfishapp
 
 SOURCES += src/harbour-batterybuddy.cpp \
-    src/battery.cpp
+    src/battery.cpp \
+    src/settings.cpp
 
 DISTFILES += qml/harbour-batterybuddy.qml \
     qml/cover/CoverPage.qml \
@@ -55,4 +56,5 @@ CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/harbour-batterybuddy-de.ts
 
 HEADERS += \
-    src/battery.h
+    src/battery.h \
+    src/settings.h

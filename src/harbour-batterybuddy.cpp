@@ -11,6 +11,7 @@
 #include <QTimer>
 
 #include "battery.h"
+#include "settings.h"
 
 int main(int argc, char *argv[])
 {
@@ -28,12 +29,15 @@ int main(int argc, char *argv[])
     QQuickView* view = SailfishApp::createView();
 
     Battery battery;
+    Settings settings;
+
     QTimer updater;
     QObject::connect(&updater, SIGNAL(timeout()), &battery, SLOT(updateData()));
     updater.start(15000);
 
     view->engine()->addImportPath("/usr/share/harbour-carbudget/qml");
     view->rootContext()->setContextProperty("battery", &battery);
+    view->rootContext()->setContextProperty("settings", &settings);
     view->setSource(SailfishApp::pathTo("qml/harbour-batterybuddy.qml"));
     view->showFullScreen();
 
