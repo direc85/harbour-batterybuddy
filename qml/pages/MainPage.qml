@@ -18,6 +18,7 @@
 import QtQuick 2.0
 import QtMultimedia 5.6
 import Sailfish.Silica 1.0
+import Nemo.Notifications 1.0
 
 Page {
     id: page
@@ -39,15 +40,31 @@ Page {
         source: settings.highAlertFile
     }
 
+    Notification {
+        id: notification
+        appName: qsTr("Battery Buddy")
+        appIcon: "/usr/share/icons/hicolor/128x128/apps/harbour-batterybuddy.png"
+        summary: qsTr("Battery charge", "Battery charge 20%") +" "+ battery.charge + "%"
+        body:  battery.charging ? qsTr("Please disconnect the charger.") : qsTr("Please connect the charger.")
+        previewSummary: summary
+        previewBody: body
+    }
+
     Timer {
         interval: 60000
         running: true
         repeat: true
         onTriggered: {
-            if(battery.charge <= settings.lowerLimit && battery.charging === false)
+            if(battery.charge <= settings.lowerLimit && battery.charging === false) {
                 alertLow.play()
-            else if(battery.charge >= settings.upperLimit && battery.charging === true)
+                notification.publish()
+            }
+            else if(battery.charge >= settings.upperLimit && battery.charging === true) {
                 alertLow.play()
+                notification.publish()
+            }
+            else
+                notification.close()
         }
     }
 
@@ -153,7 +170,10 @@ Page {
                     Button {
                         id: lowButton
                         text: "Low"
-                        onClicked: alertLow.play()
+                        onClicked: {
+                            alertLow.play()
+                            notification.publish()
+                        }
                         anchors.centerIn: parent
                     }
                 }
@@ -163,7 +183,10 @@ Page {
                     height: lowButton.height
                     Button {
                         text: "High"
-                        onClicked: alertHigh.play()
+                        onClicked: {
+                            alertHigh.play()
+                            notification.publish()
+                        }
                         anchors.centerIn: parent
                     }
                 }
