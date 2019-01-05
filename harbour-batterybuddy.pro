@@ -19,14 +19,13 @@ SOURCES += src/harbour-batterybuddy.cpp \
 
 DISTFILES += qml/harbour-batterybuddy.qml \
     qml/cover/CoverPage.qml \
-    qml/pages/FirstPage.qml \
-    qml/pages/SecondPage.qml \
     rpm/harbour-batterybuddy.changes.in \
     rpm/harbour-batterybuddy.changes.run.in \
     rpm/harbour-batterybuddy.spec \
     rpm/harbour-batterybuddy.yaml \
     translations/*.ts \
-    harbour-batterybuddy.desktop
+    harbour-batterybuddy.desktop \
+    qml/pages/MainPage.qml
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 

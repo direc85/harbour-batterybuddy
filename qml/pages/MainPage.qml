@@ -11,14 +11,6 @@ Page {
     SilicaFlickable {
         anchors.fill: parent
 
-        // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
-        PullDownMenu {
-            MenuItem {
-                text: qsTr("Show Page 2")
-                onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
-            }
-        }
-
         // Tell SilicaFlickable the height of its content.
         contentHeight: column.height
 
@@ -30,13 +22,15 @@ Page {
             width: page.width
             spacing: Theme.paddingLarge
             PageHeader {
-                title: qsTr("UI Template")
+                title: qsTr("Battery Buddy")
             }
-            Label {
-                x: Theme.horizontalPageMargin
-                text: qsTr("Hello Sailors")
-                color: Theme.secondaryHighlightColor
-                font.pixelSize: Theme.fontSizeExtraLarge
+            DetailItem {
+                label: qsTr("Charge level")
+                value: battery.charge;
+            }
+            DetailItem {
+                label: qsTr("Charging")
+                value: battery.charging ? "yes" : "no";
             }
         }
     }

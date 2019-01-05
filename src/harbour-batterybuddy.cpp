@@ -4,6 +4,13 @@
 
 #include <sailfishapp.h>
 
+#include <QGuiApplication>
+#include <QQmlContext>
+#include <QQuickView>
+#include <QQmlEngine>
+
+#include "battery.h"
+
 int main(int argc, char *argv[])
 {
     // SailfishApp::main() will display "qml/harbour-batterybuddy.qml", if you need more
@@ -16,5 +23,14 @@ int main(int argc, char *argv[])
     //
     // To display the view, call "show()" (will show fullscreen on device).
 
-    return SailfishApp::main(argc, argv);
+    QGuiApplication* app = SailfishApp::application(argc, argv);
+    QQuickView* view = SailfishApp::createView();
+
+    Battery battery;
+    view->engine()->addImportPath("/usr/share/harbour-carbudget/qml");
+    view->rootContext()->setContextProperty("battery", &battery);
+    view->setSource(SailfishApp::pathTo("qml/harbour-batterybuddy.qml"));
+    view->showFullScreen();
+
+    return app->exec();
 }
