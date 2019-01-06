@@ -28,24 +28,27 @@ Page {
 
     MediaPlayer {
         id: alertLow
-        audioRole: MediaPlayer.NotificationRole
+        audioRole: MediaPlayer.AlarmRole
+        volume: 0.5
         autoLoad: true
         source: settings.lowAlertFile
     }
 
     MediaPlayer {
         id: alertHigh
-        audioRole: MediaPlayer.NotificationRole
+        audioRole: MediaPlayer.AlarmRole
+        volume: 0.5
         autoLoad: true
         source: settings.highAlertFile
     }
 
     Notification {
         id: notification
+        property bool test: false
         appName: qsTr("Battery Buddy")
         appIcon: "/usr/share/icons/hicolor/128x128/apps/harbour-batterybuddy.png"
         summary: qsTr("Battery charge", "Battery charge 20%") +" "+ battery.charge + "%"
-        body:  battery.charging ? qsTr("Please disconnect the charger.") : qsTr("Please connect the charger.")
+        body: test ? qsTr("This is a test.") : battery.charging ? qsTr("Please disconnect the charger.") : qsTr("Please connect the charger.")
         previewSummary: summary
         previewBody: body
     }
@@ -169,10 +172,12 @@ Page {
                     height: lowButton.height
                     Button {
                         id: lowButton
-                        text: "Low"
+                        text: qsTr("Discharged")
                         onClicked: {
                             alertLow.play()
+                            notification.test = true
                             notification.publish()
+                            notification.test = false
                         }
                         anchors.centerIn: parent
                     }
@@ -182,10 +187,12 @@ Page {
                     width: parent.width / 2
                     height: lowButton.height
                     Button {
-                        text: "High"
+                        text: qsTr("Charged")
                         onClicked: {
                             alertHigh.play()
+                            notification.test = true
                             notification.publish()
+                            notification.test = false
                         }
                         anchors.centerIn: parent
                     }
