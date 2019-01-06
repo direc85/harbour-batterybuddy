@@ -29,8 +29,8 @@ Settings::Settings(QObject *parent) : QObject(parent)
         datadir.mkdir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
 
     // Use Sailfish-provided sounds
-    lowAlertFile = "/usr/share/sounds/jolla-ambient/general_warning.wav";
-    highAlertFile = "/usr/share/sounds/jolla-ambient/positive_confirmation.wav";
+    lowAlertFile = "/usr/share/sounds/jolla-ambient/stereo/general_warning.wav";
+    highAlertFile = "/usr/share/sounds/jolla-ambient/stereo/positive_confirmation.wav";
 
     load();
 }
