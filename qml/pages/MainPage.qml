@@ -80,11 +80,11 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: qsTr("About")
+                text: qsTr("About", "About this application")
                 onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
             }
             MenuItem {
-                text: qsTr("More info")
+                text: qsTr("Background", "More to read, background information...")
                 onClicked: pageStack.push(Qt.resolvedUrl("InfoPage.qml"))
             }
         }
@@ -123,7 +123,8 @@ Page {
                 x: Theme.paddingLarge*2
                 width: parent.width - x*2;
                 wrapMode: Text.Wrap
-                text: qsTr("Plays an alert sound and display a notification when the battery has been charged above the upper limit or discharged below the lower limit.")
+                text: qsTr("Set the maximum and minimum target charge levels.")
+                      +"\n\n"+ qsTr("Please leave Battery Buddy running in the background in order to receive alerts.")
                 color: Theme.primaryColor
                 font.pixelSize: Theme.fontSizeSmall
             }
