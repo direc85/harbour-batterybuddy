@@ -60,7 +60,7 @@ Page {
                 notification.publish()
             }
             else if(battery.charge >= settings.upperLimit && battery.charging === true) {
-                alertLow.play()
+                alertHigh.play()
                 notification.publish()
             }
             else
