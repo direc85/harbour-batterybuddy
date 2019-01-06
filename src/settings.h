@@ -19,9 +19,7 @@
 #define SETTINGS_H
 
 #include <QObject>
-#include <QFile>
-#include <QDir>
-#include <QStandardPaths>
+#include <QSettings>
 
 class Settings : public QObject
 {
@@ -44,10 +42,11 @@ public:
     void setUpperLimit(int newLimit);
 
 private:
-    int lowerLimit;
-    int upperLimit;
-    QString lowAlertFile;
-    QString highAlertFile;
+    // Default values
+    int lowerLimit = 25;
+    int upperLimit = 75;
+    QString lowAlertFile = "/usr/share/sounds/jolla-ambient/stereo/general_warning.wav";
+    QString highAlertFile = "/usr/share/sounds/jolla-ambient/stereo/positive_confirmation.wav";
 
     void load();
     void save();

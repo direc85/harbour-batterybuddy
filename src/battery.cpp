@@ -22,14 +22,11 @@ Battery::Battery(QObject* parent) : QObject(parent)
     chargeFile = new QFile("/run/state/namespaces/Battery/ChargePercentage"); // Number, meaning percentage, e.g. 42
     chargingFile = new QFile("/run/state/namespaces/Battery/IsCharging"); // Number, 0 or 1
 
-    // Default values...
-    currentCharge = 100;
-    isCharging = true;
+    // TODO
+    // What if the files can't be opened?
+    // What if the device doesn't have a battery?
 
-    nextCharge = currentCharge;
-    nextCharging = isCharging;
-
-    this->updateData();
+    updateData();
 }
 
 Battery::~Battery() { }

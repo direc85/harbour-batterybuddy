@@ -42,11 +42,12 @@ private:
     QFile* chargeFile;
     QFile* chargingFile;
 
-    int currentCharge;
-    bool isCharging;
+    // Default values
+    int currentCharge = 100;
+    bool isCharging = true;
 
-    int nextCharge;
-    bool nextCharging;
+    int nextCharge = 100;
+    bool nextCharging = true;
 
 signals:
     int chargeChanged();

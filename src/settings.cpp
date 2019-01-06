@@ -17,66 +17,31 @@
  */
 #include "settings.h"
 
-Settings::Settings(QObject *parent) : QObject(parent)
-{
-    // Defaults
-    lowerLimit = 25;
-    upperLimit = 75;
-
-    // Just to be sure...
-    QDir datadir = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-    if(!datadir.exists())
-        datadir.mkdir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
-
-    // Use Sailfish-provided sounds
-    lowAlertFile = "/usr/share/sounds/jolla-ambient/stereo/general_warning.wav";
-    highAlertFile = "/usr/share/sounds/jolla-ambient/stereo/positive_confirmation.wav";
+Settings::Settings(QObject *parent) : QObject(parent) { load(); }
 
 Settings::~Settings() { save(); }
 
 void Settings::load()
 {
-    QDir::setCurrent(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
-    QFile file;
-
-    file.setFileName("lowerLimit");
-    if(file.exists() && file.open(QIODevice::ReadOnly)) {
-        int nextLimit = file.readAll().toInt();
-        if(nextLimit >= 10 && nextLimit <= 50) {
-            lowerLimit = nextLimit;
-            emit lowerLimitChanged();
-        }
-        file.close();
+    QSettings mySettings;
+    int tempValue;
+    if(mySettings.contains("lowerLimit")) {
+        tempValue = mySettings.value("lowerLimit").toInt();
+        if(tempValue <= 10 && tempValue >= 99)
+            lowerLimit = tempValue;
     }
-    file.setFileName("upperLimit");
-    if(file.exists() && file.open(QIODevice::ReadOnly)) {
-        int nextLimit = file.readAll().toInt();
-        if(nextLimit >= 60 && nextLimit <= 99) {
-            upperLimit = nextLimit;
-            emit upperLimitChanged();
-        }
-        file.close();
+    if(mySettings.contains("upperLimit")) {
+        tempValue = mySettings.value("upperLimit").toInt();
+        if(tempValue <= 60 && tempValue >= 99)
+            upperLimit = tempValue;
     }
 }
 
 void Settings::save()
 {
-    QDir::setCurrent(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
-    QFile file;
-
-    file.setFileName("lowerLimit");
-    if(file.open(QIODevice::WriteOnly)) {
-        if(file.write(QString("%1").arg(lowerLimit).toUtf8())) {
-        }
-        file.close();
-    }
-
-    file.setFileName("upperLimit");
-    if(file.open(QIODevice::WriteOnly)) {
-        if(file.write(QString("%1").arg(upperLimit).toUtf8())) {
-        }
-        file.close();
-    }
+    QSettings mySettings;
+    mySettings.setValue("lowerLimit", QByteArray::number(lowerLimit));
+    mySettings.setValue("upperLimit", QByteArray::number(upperLimit));
 }
 
 int Settings::getLowerLimit() { return lowerLimit; }
