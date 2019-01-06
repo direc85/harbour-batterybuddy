@@ -32,13 +32,7 @@ Settings::Settings(QObject *parent) : QObject(parent)
     lowAlertFile = "/usr/share/sounds/jolla-ambient/stereo/general_warning.wav";
     highAlertFile = "/usr/share/sounds/jolla-ambient/stereo/positive_confirmation.wav";
 
-    load();
-}
-
-Settings::~Settings()
-{
-    save();
-}
+Settings::~Settings() { save(); }
 
 void Settings::load()
 {

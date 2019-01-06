@@ -32,10 +32,7 @@ Battery::Battery(QObject* parent) : QObject(parent)
     this->updateData();
 }
 
-Battery::~Battery()
-{
-
-}
+Battery::~Battery() { }
 
 void Battery::updateData()
 {
@@ -57,12 +54,6 @@ void Battery::updateData()
     }
 }
 
-int Battery::getCharge()
-{
-    return currentCharge;
-}
+int Battery::getCharge(){ return currentCharge; }
 
-bool Battery::getCharging()
-{
-    return isCharging;
-}
+bool Battery::getCharging() { return isCharging; }
