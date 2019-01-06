@@ -19,7 +19,6 @@
 #define SETTINGS_H
 
 #include <QObject>
-#include <QDebug>
 #include <QFile>
 #include <QDir>
 #include <QStandardPaths>

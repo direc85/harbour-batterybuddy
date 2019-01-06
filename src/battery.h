@@ -21,7 +21,6 @@
  */
 #include <QString>
 #include <QFile>
-#include <QDebug>
 
 class Battery : public QObject
 {

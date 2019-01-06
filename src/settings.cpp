@@ -50,7 +50,6 @@ void Settings::load()
         int nextLimit = file.readAll().toInt();
         if(nextLimit >= 10 && nextLimit <= 50) {
             lowerLimit = nextLimit;
-            qDebug() << "Lower limit loaded:" << lowerLimit;
             emit lowerLimitChanged();
         }
         file.close();
@@ -60,7 +59,6 @@ void Settings::load()
         int nextLimit = file.readAll().toInt();
         if(nextLimit >= 60 && nextLimit <= 99) {
             upperLimit = nextLimit;
-            qDebug() << "Upper limit loaded:" << upperLimit;
             emit upperLimitChanged();
         }
         file.close();
@@ -75,7 +73,6 @@ void Settings::save()
     file.setFileName("lowerLimit");
     if(file.open(QIODevice::WriteOnly)) {
         if(file.write(QString("%1").arg(lowerLimit).toUtf8())) {
-            qDebug() << "Lower limit saved:" << lowerLimit;
         }
         file.close();
     }
@@ -83,7 +80,6 @@ void Settings::save()
     file.setFileName("upperLimit");
     if(file.open(QIODevice::WriteOnly)) {
         if(file.write(QString("%1").arg(upperLimit).toUtf8())) {
-            qDebug() << "Upper limit saved:" << upperLimit;
         }
         file.close();
     }
