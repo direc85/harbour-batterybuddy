@@ -19,13 +19,11 @@
 
 Settings::Settings(QObject *parent) : QObject(parent)
 {
-    qDebug() << "Loading settings from" << mySettings.fileName();
     int tempValue;
     if(mySettings.contains("lowerLimit")) {
         tempValue = mySettings.value("lowerLimit").toInt();
         if(tempValue >= 10 && tempValue <= 50) {
             lowerLimit = tempValue;
-            qDebug() << "Lower limit:" << lowerLimit;
             emit lowerLimitChanged();
         }
     }
@@ -33,7 +31,6 @@ Settings::Settings(QObject *parent) : QObject(parent)
         tempValue = mySettings.value("upperLimit").toInt();
         if(tempValue >= 60 && tempValue <= 100) {
             upperLimit = tempValue;
-            qDebug() << "Upper limit:" << upperLimit;
             emit upperLimitChanged();
         }
     }

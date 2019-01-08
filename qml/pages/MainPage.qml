@@ -107,9 +107,9 @@ Page {
                 color: Theme.highlightColor
             }
             DetailItem {
-                label: qsTr("Charge level:")+"\n"
+                label: qsTr("Charge:")+"\n"
                        +qsTr("Charging:")+"\n"
-                       +qsTr("Battery state:")
+                       +qsTr("State:")
                 value: battery.charge+"%\n"
                        +(battery.charging ? qsTr("yes") : qsTr("no"))+"\n"
                        +qsTr(battery.state)

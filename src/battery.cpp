@@ -23,7 +23,7 @@ Battery::Battery(QObject* parent) : QObject(parent)
     chargeFile   = new QFile("/run/state/namespaces/Battery/ChargePercentage");
     // Number: 0 or 1
     chargingFile = new QFile("/run/state/namespaces/Battery/IsCharging");
-    // String: charging, discharging, idle, unknown (others?)
+    // String: charging, discharging, (empty), unknown (others?)
     stateFile   = new QFile("/run/state/namespaces/Battery/ChargingState");
 
     // TODO
@@ -39,7 +39,6 @@ void Battery::updateData()
 {
     if(chargeFile->open(QIODevice::ReadOnly)) {
         nextCharge = chargeFile->readAll().toInt();
-        qDebug() << "Charge:" << nextCharge;
         if(nextCharge != charge) {
             charge = nextCharge;
             emit chargeChanged();
@@ -48,7 +47,6 @@ void Battery::updateData()
     }
     if(chargingFile->open(QIODevice::ReadOnly)) {
         nextCharging = (chargingFile->readAll().toInt() == 0 ? false : true);
-        qDebug() << "Charging:" << nextCharge;
         if(nextCharging != charging) {
             charging = nextCharging;
             emit chargingChanged();
@@ -57,13 +55,12 @@ void Battery::updateData()
     }
     if(stateFile->open(QIODevice::ReadOnly)) {
         nextStatus = (QString(stateFile->readAll()));
-        qDebug() << "Status:" << nextStatus;
         if(nextStatus != state) {
             state = nextStatus;
 
             // Update translated text accordingly
-            if(state == "idle")
-                stateTr = tr("idle", "Battery in charger, not using nor charging battery");
+            if(state == "")
+                stateTr = tr("idle", "Charger plugged in, not using nor charging battery");
             else if(state == "discharging")
                 stateTr = tr("discharging", "Charger not plugged in, battery discharging");
             else if(state == "charging")

@@ -24,7 +24,7 @@ Page {
 
     PageHeader {
         id: header
-        title: qsTr("Battery Buddy") +" v1.0"
+        title: qsTr("Battery Buddy") +" v1.1"
     }
 
     Column {
@@ -36,7 +36,6 @@ Page {
             x: Theme.paddingLarge
             text: qsTr("Author")
             color: Theme.highlightColor
-
             font.pixelSize: Theme.fontSizeLarge
         }
         Label {
@@ -45,14 +44,12 @@ Page {
             wrapMode: Text.Wrap
             text: "Matti Viljanen"
             color: Theme.primaryColor
-
             font.pixelSize: Theme.fontSizeMedium
         }
         Label {
             x: Theme.paddingLarge
             text: qsTr("License")
             color: Theme.highlightColor
-
             font.pixelSize: Theme.fontSizeLarge
         }
         Label {
@@ -61,7 +58,6 @@ Page {
             wrapMode: Text.Wrap
             text: "GNU General Public Licence 3.0"
             color: Theme.primaryColor
-
             font.pixelSize: Theme.fontSizeMedium
         }
         Button {

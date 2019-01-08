@@ -20,7 +20,6 @@
 
 #include <QObject>
 #include <QSettings>
-#include <QDebug>
 
 class Settings : public QObject
 {

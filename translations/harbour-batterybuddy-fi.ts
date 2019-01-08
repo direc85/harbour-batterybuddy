@@ -21,6 +21,29 @@
     </message>
 </context>
 <context>
+    <name>Battery</name>
+    <message>
+        <source>discharging</source>
+        <comment>Charger not plugged in, battery discharging</comment>
+        <translation>purkautuu</translation>
+    </message>
+    <message>
+        <source>charging</source>
+        <comment>Charger plugged in and battery charging</comment>
+        <translation>latautuu</translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <comment>Battery not detected, or faulty, or something</comment>
+        <translation>tuntematon</translation>
+    </message>
+    <message>
+        <source>idle</source>
+        <comment>Charger plugged in, not using nor charging battery</comment>
+        <translation>vapaa</translation>
+    </message>
+</context>
+<context>
     <name>CoverPage</name>
     <message>
         <source>Battery Buddy</source>
@@ -137,18 +160,6 @@
         <translation>Akun tila</translation>
     </message>
     <message>
-        <source>charging</source>
-        <translation>latauksessa</translation>
-    </message>
-    <message>
-        <source>discharging</source>
-        <translation>purkautuu</translation>
-    </message>
-    <message>
-        <source>Charge level</source>
-        <translation>Varaustaso</translation>
-    </message>
-    <message>
         <source>Alert levels</source>
         <translation>Hälytysrajat</translation>
     </message>
@@ -206,6 +217,26 @@
     <message>
         <source>Charged</source>
         <translation>Täysi</translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation>kyllä</translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation>ei</translation>
+    </message>
+    <message>
+        <source>Charge:</source>
+        <translation>Varaus:</translation>
+    </message>
+    <message>
+        <source>Charging:</source>
+        <translation>Lataus:</translation>
+    </message>
+    <message>
+        <source>State:</source>
+        <translation>Tila:</translation>
     </message>
 </context>
 </TS>

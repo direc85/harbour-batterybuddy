@@ -12,7 +12,7 @@
 # The name of your application
 TARGET = harbour-batterybuddy
 
-CONFIG += sailfishapp
+CONFIG += sailfishapp sailfishapp_i18n
 
 HEADERS += \
     src/battery.h \
@@ -33,6 +33,10 @@ DISTFILES += qml/harbour-batterybuddy.qml \
     qml/pages/InfoPage.qml \
     rpm/harbour-batterybuddy.changes
 
+SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
+
+TRANSLATIONS += translations/*.ts
+
 # Begin: include sound files
 
 #OTHER_FILES += sounds/upperLimit.ogg \
@@ -46,15 +50,3 @@ DISTFILES += qml/harbour-batterybuddy.qml \
 #INSTALLS += sounds
 
 # End: include sound files
-
-SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
-
-# to disable building translations every time, comment out the
-# following CONFIG line
-CONFIG += sailfishapp_i18n
-
-# German translation is enabled as an example. If you aren't
-# planning to localize your app, remember to comment out the
-# following TRANSLATIONS line. And also do not forget to
-# modify the localized app name in the the .desktop file.
-TRANSLATIONS += translations/*.ts
