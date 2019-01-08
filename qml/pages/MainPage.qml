@@ -22,7 +22,14 @@ import Nemo.Notifications 1.0
 
 Page {
     id: page
+    property variant statusText: {
+        "idle": qsTr("idle", "Charger plugged in, not using nor charging battery"),
+        "discharging": qsTr("discharging", "Charger not plugged in, battery discharging"),
+        "charging": qsTr("charging", "Charger plugged in and battery charging"),
+        "unknown": qsTr("unknown", "Battery not detected, or faulty, or something")
+    }
 
+    // Finally, emit the signal
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.All
 
@@ -112,7 +119,7 @@ Page {
                        +qsTr("State:")
                 value: battery.charge+"%\n"
                        +(battery.charging ? qsTr("yes") : qsTr("no"))+"\n"
-                       +qsTr(battery.state)
+                       +statusText[battery.state]
             }
             Label {
                 x: Theme.paddingLarge

@@ -54,21 +54,9 @@ void Battery::updateData()
         chargingFile->close();
     }
     if(stateFile->open(QIODevice::ReadOnly)) {
-        nextStatus = (QString(stateFile->readAll()));
-        if(nextStatus != state) {
-            state = nextStatus;
-
-            // Update translated text accordingly
-            if(state == "")
-                stateTr = tr("idle", "Charger plugged in, not using nor charging battery");
-            else if(state == "discharging")
-                stateTr = tr("discharging", "Charger not plugged in, battery discharging");
-            else if(state == "charging")
-                stateTr = tr("charging", "Charger plugged in and battery charging");
-            else if(state == "unknown")
-                stateTr = tr("unknown", "Battery not detected, or faulty, or something");
-
-            // Finally, emit the signal
+        nextState = (QString(stateFile->readAll()));
+        if(nextState != state) {
+            state = nextState;
             emit stateChanged();
         }
         stateFile->close();
@@ -79,4 +67,4 @@ int Battery::getCharge(){ return charge; }
 
 bool Battery::getCharging() { return charging; }
 
-QString Battery::getState() { return stateTr; }
+QString Battery::getState() { return state; }

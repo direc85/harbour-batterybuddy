@@ -48,12 +48,11 @@ private:
     // Default values:
     int charge    = 100;     // 100% full
     bool charging = true;    // Charger plugged in
-    QString state = "idle";  // Not charging
-    QString stateTr = state; // Translated state text
+    QString state = "idle";  // dis/charging, idle, unknown
 
-    int nextCharge     = charge;
-    bool nextCharging  = charging;
-    QString nextStatus = state;
+    int nextCharge    = charge;
+    bool nextCharging = charging;
+    QString nextState = state;
 
 signals:
     int chargeChanged();
