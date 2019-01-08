@@ -17,29 +17,30 @@
  */
 #include "settings.h"
 
-Settings::Settings(QObject *parent) : QObject(parent) { load(); }
-
-Settings::~Settings() { save(); }
-
-void Settings::load()
+Settings::Settings(QObject *parent) : QObject(parent)
 {
-    QSettings mySettings;
+    qDebug() << "Loading settings from" << mySettings.fileName();
     int tempValue;
     if(mySettings.contains("lowerLimit")) {
         tempValue = mySettings.value("lowerLimit").toInt();
-        if(tempValue <= 10 && tempValue >= 99)
+        if(tempValue >= 10 && tempValue <= 50) {
             lowerLimit = tempValue;
+            qDebug() << "Lower limit:" << lowerLimit;
+            emit lowerLimitChanged();
+        }
     }
     if(mySettings.contains("upperLimit")) {
         tempValue = mySettings.value("upperLimit").toInt();
-        if(tempValue <= 60 && tempValue >= 99)
+        if(tempValue >= 60 && tempValue <= 100) {
             upperLimit = tempValue;
+            qDebug() << "Upper limit:" << upperLimit;
+            emit upperLimitChanged();
+        }
     }
 }
 
-void Settings::save()
+Settings::~Settings()
 {
-    QSettings mySettings;
     mySettings.setValue("lowerLimit", QByteArray::number(lowerLimit));
     mySettings.setValue("upperLimit", QByteArray::number(upperLimit));
 }

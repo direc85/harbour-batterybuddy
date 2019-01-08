@@ -20,6 +20,7 @@
 
 #include <QObject>
 #include <QSettings>
+#include <QDebug>
 
 class Settings : public QObject
 {
@@ -42,14 +43,13 @@ public:
     void setUpperLimit(int newLimit);
 
 private:
+    QSettings mySettings;
+
     // Default values
     int lowerLimit = 25;
     int upperLimit = 75;
     QString lowAlertFile = "/usr/share/sounds/jolla-ambient/stereo/general_warning.wav";
     QString highAlertFile = "/usr/share/sounds/jolla-ambient/stereo/positive_confirmation.wav";
-
-    void load();
-    void save();
 
 signals:
     int lowerLimitChanged();
