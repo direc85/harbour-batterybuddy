@@ -58,11 +58,12 @@ Page {
         running: true
         repeat: true
         onTriggered: {
-            if(battery.charge <= settings.lowerLimit && battery.charging === false) {
+            if(battery.charge <= settings.lowerLimit && battery.state === "discharging") {
                 alertLow.play()
                 notification.publish()
             }
-            else if(battery.charge >= settings.upperLimit && battery.charging === true) {
+            else if(battery.charge >= settings.upperLimit &&
+                    (battery.state === "charging" && battery.charging === true) || (battery.state === "idle" && battery.charging === false)) {
                 alertHigh.play()
                 notification.publish()
             }
@@ -104,10 +105,8 @@ Page {
                 x: Theme.paddingLarge
                 text: qsTr("Battery status")
                 color: Theme.highlightColor
-                font.pixelSize: Theme.fontSizeMedium
             }
             DetailItem {
-                //pixelSize: Theme.fontSizeMedium
                 label: qsTr("Charge level:")+"\n"
                        +qsTr("Charging:")+"\n"
                        +qsTr("Battery state:")
@@ -119,7 +118,6 @@ Page {
                 x: Theme.paddingLarge
                 text: qsTr("Alert levels")
                 color: Theme.highlightColor
-                font.pixelSize: Theme.fontSizeMedium
             }
             Label {
                 x: Theme.paddingLarge*2
@@ -156,7 +154,6 @@ Page {
                 x: Theme.paddingLarge
                 text: qsTr("Alert tests")
                 color: Theme.highlightColor
-                font.pixelSize: Theme.fontSizeMedium
             }
             Label {
                 x: Theme.paddingLarge*2

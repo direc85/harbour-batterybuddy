@@ -14,6 +14,10 @@ TARGET = harbour-batterybuddy
 
 CONFIG += sailfishapp
 
+HEADERS += \
+    src/battery.h \
+    src/settings.h
+
 SOURCES += src/harbour-batterybuddy.cpp \
     src/battery.cpp \
     src/settings.cpp
@@ -54,7 +58,3 @@ CONFIG += sailfishapp_i18n
 # following TRANSLATIONS line. And also do not forget to
 # modify the localized app name in the the .desktop file.
 TRANSLATIONS += translations/*.ts
-
-HEADERS += \
-    src/battery.h \
-    src/settings.h
