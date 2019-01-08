@@ -21,29 +21,6 @@
     </message>
 </context>
 <context>
-    <name>Battery</name>
-    <message>
-        <source>discharging</source>
-        <comment>Charger not plugged in, battery discharging</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>charging</source>
-        <comment>Charger plugged in and battery charging</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <comment>Battery not detected, or faulty, or something</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>idle</source>
-        <comment>Charger plugged in, not using nor charging battery</comment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>CoverPage</name>
     <message>
         <source>Battery Buddy</source>
@@ -236,6 +213,26 @@
     </message>
     <message>
         <source>State:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>idle</source>
+        <comment>Charger plugged in, not using nor charging battery</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>discharging</source>
+        <comment>Charger not plugged in, battery discharging</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>charging</source>
+        <comment>Charger plugged in and battery charging</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <comment>Battery not detected, or faulty, or something</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
