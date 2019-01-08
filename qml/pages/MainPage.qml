@@ -106,13 +106,14 @@ Page {
                 color: Theme.highlightColor
                 font.pixelSize: Theme.fontSizeMedium
             }
-            Label {
-                x: Theme.paddingLarge*2
-                width: parent.width - x*2;
-                wrapMode: Text.Wrap
-                text: qsTr("Charge level") + " " + battery.charge + "%, " + (battery.charging ? qsTr("charging") : qsTr("discharging"))
-                color: Theme.primaryColor
-                font.pixelSize: Theme.fontSizeSmall
+            DetailItem {
+                //pixelSize: Theme.fontSizeMedium
+                label: qsTr("Charge level:")+"\n"
+                       +qsTr("Charging:")+"\n"
+                       +qsTr("Battery state:")
+                value: battery.charge+"%\n"
+                       +(battery.charging ? qsTr("yes") : qsTr("no"))+"\n"
+                       +qsTr(battery.state)
             }
             Label {
                 x: Theme.paddingLarge
