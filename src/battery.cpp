@@ -19,8 +19,12 @@
 
 Battery::Battery(QObject* parent) : QObject(parent)
 {
-    chargeFile = new QFile("/run/state/namespaces/Battery/ChargePercentage"); // Number, meaning percentage, e.g. 42
-    chargingFile = new QFile("/run/state/namespaces/Battery/IsCharging"); // Number, 0 or 1
+    // Number: meaning percentage, e.g. 42
+    chargeFile   = new QFile("/run/state/namespaces/Battery/ChargePercentage");
+    // Number: 0 or 1
+    chargingFile = new QFile("/run/state/namespaces/Battery/IsCharging");
+    // String: charging, discharging, idle, unknown (others?)
+    stateFile   = new QFile("/run/state/namespaces/Battery/ChargingState");
 
     // TODO
     // What if the files can't be opened?
@@ -35,22 +39,47 @@ void Battery::updateData()
 {
     if(chargeFile->open(QIODevice::ReadOnly)) {
         nextCharge = chargeFile->readAll().toInt();
-        if(nextCharge != currentCharge) {
-            currentCharge = nextCharge;
+        qDebug() << "Charge:" << nextCharge;
+        if(nextCharge != charge) {
+            charge = nextCharge;
             emit chargeChanged();
         }
         chargeFile->close();
     }
     if(chargingFile->open(QIODevice::ReadOnly)) {
         nextCharging = (chargingFile->readAll().toInt() == 0 ? false : true);
-        if(nextCharging != isCharging) {
-            isCharging = nextCharging;
+        qDebug() << "Charging:" << nextCharge;
+        if(nextCharging != charging) {
+            charging = nextCharging;
             emit chargingChanged();
         }
         chargingFile->close();
     }
+    if(stateFile->open(QIODevice::ReadOnly)) {
+        nextStatus = (QString(stateFile->readAll()));
+        qDebug() << "Status:" << nextStatus;
+        if(nextStatus != state) {
+            state = nextStatus;
+
+            // Update translated text accordingly
+            if(state == "idle")
+                stateTr = tr("idle", "Battery in charger, not using nor charging battery");
+            else if(state == "discharging")
+                stateTr = tr("discharging", "Charger not plugged in, battery discharging");
+            else if(state == "charging")
+                stateTr = tr("charging", "Charger plugged in and battery charging");
+            else if(state == "unknown")
+                stateTr = tr("unknown", "Battery not detected, or faulty, or something");
+
+            // Finally, emit the signal
+            emit stateChanged();
+        }
+        stateFile->close();
+    }
 }
 
-int Battery::getCharge(){ return currentCharge; }
+int Battery::getCharge(){ return charge; }
 
-bool Battery::getCharging() { return isCharging; }
+bool Battery::getCharging() { return charging; }
+
+QString Battery::getState() { return stateTr; }

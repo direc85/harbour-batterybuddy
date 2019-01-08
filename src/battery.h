@@ -1,7 +1,5 @@
 #ifndef BATTERY_H
 #define BATTERY_H
-
-#include <QObject>
 /**
  * Battery Buddy, a Sailfish application to prolong battery lifetime
  *
@@ -19,14 +17,18 @@
  *
  * Author: Matti Viljanen
  */
+
+#include <QObject>
 #include <QString>
 #include <QFile>
+#include <QDebug>
 
 class Battery : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int  charge    READ getCharge    NOTIFY chargeChanged  )
-    Q_PROPERTY(bool charging  READ getCharging  NOTIFY chargingChanged)
+    Q_PROPERTY(int     charge    READ getCharge    NOTIFY chargeChanged  )
+    Q_PROPERTY(bool    charging  READ getCharging  NOTIFY chargingChanged)
+    Q_PROPERTY(QString state     READ getState     NOTIFY stateChanged)
 
 public:
     Battery(QObject* parent = nullptr);
@@ -34,6 +36,7 @@ public:
 
     int getCharge();
     bool getCharging();
+    QString getState();
 
 public slots:
     void updateData();
@@ -41,17 +44,22 @@ public slots:
 private:
     QFile* chargeFile;
     QFile* chargingFile;
+    QFile* stateFile;
 
-    // Default values
-    int currentCharge = 100;
-    bool isCharging = true;
+    // Default values:
+    int charge    = 100;     // 100% full
+    bool charging = true;    // Charger plugged in
+    QString state = "idle";  // Not charging
+    QString stateTr = state; // Translated state text
 
-    int nextCharge = 100;
-    bool nextCharging = true;
+    int nextCharge     = charge;
+    bool nextCharging  = charging;
+    QString nextStatus = state;
 
 signals:
     int chargeChanged();
     bool chargingChanged();
+    QString stateChanged();
 };
 
 #endif // BATTERY_H
