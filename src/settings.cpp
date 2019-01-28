@@ -34,17 +34,27 @@ Settings::Settings(QObject *parent) : QObject(parent)
             emit upperLimitChanged();
         }
     }
+    if(mySettings.contains("interval")) {
+        tempValue = mySettings.value("interval").toInt();
+        if(tempValue >= 60 && tempValue <= 600) {
+            interval = tempValue;
+            emit intervalChanged();
+        }
+    }
 }
 
 Settings::~Settings()
 {
     mySettings.setValue("lowerLimit", QByteArray::number(lowerLimit));
     mySettings.setValue("upperLimit", QByteArray::number(upperLimit));
+    mySettings.setValue("interval", QByteArray::number(interval));
 }
 
 int Settings::getLowerLimit() { return lowerLimit; }
 
 int Settings::getUpperLimit() { return upperLimit; }
+
+int Settings::getInterval() { return interval; }
 
 QString Settings::getLowAlert() { return lowAlertFile; }
 
@@ -53,3 +63,5 @@ QString Settings::getHighAlert() { return highAlertFile; }
 void Settings::setLowerLimit(int newLimit) { lowerLimit = newLimit; }
 
 void Settings::setUpperLimit(int newLimit) { upperLimit = newLimit; }
+
+void Settings::setInterval(int newInterval) { interval = newInterval; }

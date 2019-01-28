@@ -26,6 +26,7 @@ class Settings : public QObject
     Q_OBJECT
     Q_PROPERTY(int     lowerLimit     READ getLowerLimit  WRITE setLowerLimit  NOTIFY lowerLimitChanged)
     Q_PROPERTY(int     upperLimit     READ getUpperLimit  WRITE setUpperLimit  NOTIFY upperLimitChanged)
+    Q_PROPERTY(int     interval       READ getInterval    WRITE setInterval    NOTIFY intervalChanged)
     Q_PROPERTY(QString lowAlertFile   READ getLowAlert                         NOTIFY lowAlertChanged)
     Q_PROPERTY(QString highAlertFile  READ getHighAlert                        NOTIFY highAlertChanged)
 
@@ -36,10 +37,12 @@ public:
     // QML-exposed stuff
     int getLowerLimit();
     int getUpperLimit();
+    int getInterval();
     QString getLowAlert();
     QString getHighAlert();
     void setLowerLimit(int newLimit);
     void setUpperLimit(int newLimit);
+    void setInterval(int newInterval);
 
 private:
     QSettings mySettings;
@@ -47,12 +50,14 @@ private:
     // Default values
     int lowerLimit = 25;
     int upperLimit = 75;
+    int interval = 60;
     QString lowAlertFile = "/usr/share/sounds/jolla-ambient/stereo/general_warning.wav";
     QString highAlertFile = "/usr/share/sounds/jolla-ambient/stereo/positive_confirmation.wav";
 
 signals:
     int lowerLimitChanged();
     int upperLimitChanged();
+    int intervalChanged();
     QString lowAlertChanged();
     QString highAlertChanged();
 };
