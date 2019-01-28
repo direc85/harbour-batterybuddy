@@ -17,11 +17,43 @@
  */
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "../components"
 
 CoverBackground {
+    id: coverPage
+
+    BatteryGraph {
+        id: batteryGraph
+        x: coverPage.width * 0.3
+        y: coverPage.width * 0.25
+        width: 0.4 * coverPage.width
+
+        onChargingChanged: onChargeChanged()
+        onChargeChanged: {
+            if(charge <= settings.lowerLimit && battery.state === "discharging") {
+                coverText.text = qsTr("Connect\ncharger")
+            }
+            else if(battery.charge >= settings.upperLimit &&
+                    ((battery.state === "charging" && battery.charging === true) || (battery.state === "idle" && battery.charging === false))) {
+                coverText.text = qsTr("Disconnect\ncharger")
+            }
+            else if(battery.charging) {
+                coverText.text = qsTr("Charging...")
+            }
+            else {
+                coverText.text = qsTr("Battery\nBuddy")
+            }
+        }
+    }
     Label {
-        id: label
-        anchors.centerIn: parent
-        text: qsTr("Battery Buddy")
+        id: coverText
+        anchors.top: batteryGraph.bottom
+        anchors.bottom: coverPage.bottom
+        anchors.horizontalCenter: coverPage.horizontalCenter
+        width: coverPage.width * 0.9
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        wrapMode: Text.Wrap
+        maximumLineCount: 2
     }
 }

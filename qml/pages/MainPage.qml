@@ -121,13 +121,17 @@ Page {
                 text: qsTr("Battery status")
                 color: Theme.highlightColor
             }
-            DetailItem {
-                label: qsTr("Charge:")+"\n"
-                       +qsTr("Charging:")+"\n"
-                       +qsTr("State:")
-                value: battery.charge+"%\n"
-                       +(battery.charging ? qsTr("yes") : qsTr("no"))+"\n"
-                       +statusText[battery.state]
+            Item {
+                width: parent.width
+                // Rotation: width <==> height
+                height: batteryGraph.width
+                BatteryGraph {
+                    id: batteryGraph
+                    transformOrigin: Item.Center
+                    rotation: 90
+                    width: parent.width * 0.2
+                    anchors.centerIn: parent
+                }
             }
             // Detail column
             Column {
