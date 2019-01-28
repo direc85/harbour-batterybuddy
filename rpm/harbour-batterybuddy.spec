@@ -14,7 +14,7 @@ Name:       harbour-batterybuddy
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Battery Buddy
 # Checklist: .spec .yaml .changes AboutPage.qml
-Version:    1.1
+Version:    1.2
 Release:    1
 Group:      Qt/Qt
 License:    LICENSE

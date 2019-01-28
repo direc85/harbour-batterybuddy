@@ -23,7 +23,22 @@
 <context>
     <name>CoverPage</name>
     <message>
-        <source>Battery Buddy</source>
+        <source>Connect
+charger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disconnect
+charger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Charging...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery
+Buddy</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -137,18 +152,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Alert levels</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Charging limit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Discharging limit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Alert tests</source>
         <translation type="unfinished"></translation>
     </message>
@@ -173,14 +176,6 @@
     <message>
         <source>Background</source>
         <comment>More to read, background information...</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please leave Battery Buddy running in the background in order to receive alerts.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set the maximum and minimum target charge levels.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -233,6 +228,41 @@
     <message>
         <source>unknown</source>
         <comment>Battery not detected, or faulty, or something</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please leave Battery Buddy running in the background in order to receive alerts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsPage</name>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the maximum and minimum target charge levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Charging limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Discharging limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alert settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alert interval</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

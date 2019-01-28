@@ -12,6 +12,12 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
+* Tue Jan 29 2019 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 1.2-1
+- Adjust alarm type
+- Increase notification priority
+- Add battery graphic
+- Redesign cover page
+
 * Tue Jan 8 2019 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 1.1-1
 - Slider values are now saved
 - Show battery state

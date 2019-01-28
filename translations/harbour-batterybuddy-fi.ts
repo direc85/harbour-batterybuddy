@@ -23,8 +23,26 @@
 <context>
     <name>CoverPage</name>
     <message>
-        <source>Battery Buddy</source>
-        <translation>Battery Buddy</translation>
+        <source>Connect
+charger</source>
+        <translation>Kytke
+laturi</translation>
+    </message>
+    <message>
+        <source>Disconnect
+charger</source>
+        <translation>Irrota
+laturi</translation>
+    </message>
+    <message>
+        <source>Charging...</source>
+        <translation>Ladataan...</translation>
+    </message>
+    <message>
+        <source>Battery
+Buddy</source>
+        <translation>Battery
+Buddy</translation>
     </message>
 </context>
 <context>
@@ -137,18 +155,6 @@
         <translation>Akun tila</translation>
     </message>
     <message>
-        <source>Alert levels</source>
-        <translation>Hälytysrajat</translation>
-    </message>
-    <message>
-        <source>Charging limit</source>
-        <translation>Latausraja</translation>
-    </message>
-    <message>
-        <source>Discharging limit</source>
-        <translation>Purkautumisraja</translation>
-    </message>
-    <message>
         <source>Alert tests</source>
         <translation>Hälytystestit</translation>
     </message>
@@ -174,14 +180,6 @@
         <source>Background</source>
         <comment>More to read, background information...</comment>
         <translation>Taustatietoa</translation>
-    </message>
-    <message>
-        <source>Please leave Battery Buddy running in the background in order to receive alerts.</source>
-        <translation>Jätä Battery Buddy taustalle käyntiin, jotta hälytykset toimivat.</translation>
-    </message>
-    <message>
-        <source>Set the maximum and minimum target charge levels.</source>
-        <translation>Aseta haluamasi ylä- ja alaraja latauksen tavoitearvoiksi.</translation>
     </message>
     <message>
         <source>This is a test.</source>
@@ -234,6 +232,41 @@
         <source>unknown</source>
         <comment>Battery not detected, or faulty, or something</comment>
         <translation>tuntematon</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>Asetukset</translation>
+    </message>
+    <message>
+        <source>Please leave Battery Buddy running in the background in order to receive alerts.</source>
+        <translation>Jätä Battery Buddy taustalle käyntiin, jotta hälytykset toimivat.</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsPage</name>
+    <message>
+        <source>Settings</source>
+        <translation>Asetukset</translation>
+    </message>
+    <message>
+        <source>Set the maximum and minimum target charge levels.</source>
+        <translation>Aseta haluamasi ylä- ja alaraja latauksen tavoitearvoiksi.</translation>
+    </message>
+    <message>
+        <source>Charging limit</source>
+        <translation>Latausraja</translation>
+    </message>
+    <message>
+        <source>Discharging limit</source>
+        <translation>Purkautumisraja</translation>
+    </message>
+    <message>
+        <source>Alert settings</source>
+        <translation>Hälytysasetukset</translation>
+    </message>
+    <message>
+        <source>Alert interval</source>
+        <translation>Hälytysten tiehys</translation>
     </message>
 </context>
 </TS>
