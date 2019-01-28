@@ -30,9 +30,11 @@ Page {
         "unknown": qsTr("unknown", "Battery not detected, or faulty, or something")
     }
 
-    // Finally, emit the signal
-    // The effective value will be restricted by ApplicationWindow.allowedOrientations
-    allowedOrientations: Orientation.All
+    onStatusChanged: {
+        if(status == PageStatus.Activating) {
+            alertTimer.interval = settings.interval * 1000;
+        }
+    }
 
     MediaPlayer {
         id: alertLow
@@ -62,7 +64,8 @@ Page {
     }
 
     Timer {
-        interval: 60000
+        id: alertTimer
+        interval: settings.interval * 1000 // sec -> msec
         running: true
         repeat: true
         onTriggered: {
@@ -96,6 +99,10 @@ Page {
             MenuItem {
                 text: qsTr("Background", "More to read, background information...")
                 onClicked: pageStack.push(Qt.resolvedUrl("InfoPage.qml"))
+            }
+            MenuItem {
+                text: qsTr("Settings")
+                onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))
             }
         }
 
@@ -144,32 +151,9 @@ Page {
                 x: Theme.paddingLarge*2
                 width: parent.width - x*2;
                 wrapMode: Text.Wrap
-                text: qsTr("Set the maximum and minimum target charge levels.")
-                      +"\n\n"+ qsTr("Please leave Battery Buddy running in the background in order to receive alerts.")
+                text: qsTr("Please leave Battery Buddy running in the background in order to receive alerts.")
                 color: Theme.primaryColor
                 font.pixelSize: Theme.fontSizeSmall
-            }
-            Slider {
-                id: highSlider
-                width: parent.width
-                label: qsTr("Charging limit")
-                minimumValue: 60
-                maximumValue: 99
-                stepSize: 1
-                value: settings.upperLimit
-                valueText: highSlider.value + "%"
-                onValueChanged: settings.upperLimit = highSlider.value
-            }
-            Slider {
-                id: lowSlider
-                width: parent.width
-                label: qsTr("Discharging limit")
-                minimumValue: 10
-                maximumValue: 40
-                stepSize: 1
-                value: settings.lowerLimit
-                valueText: lowSlider.value + "%"
-                onValueChanged: settings.lowerLimit = lowSlider.value
             }
             Label {
                 x: Theme.paddingLarge
