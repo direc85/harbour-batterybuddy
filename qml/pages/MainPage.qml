@@ -19,6 +19,7 @@ import QtQuick 2.0
 import QtMultimedia 5.6
 import Sailfish.Silica 1.0
 import Nemo.Notifications 1.0
+import "../components"
 
 Page {
     id: page
@@ -121,10 +122,23 @@ Page {
                        +(battery.charging ? qsTr("yes") : qsTr("no"))+"\n"
                        +statusText[battery.state]
             }
-            Label {
-                x: Theme.paddingLarge
-                text: qsTr("Alert levels")
-                color: Theme.highlightColor
+            // Detail column
+            Column {
+                width: parent.width
+                spacing: 0
+
+                MyDetailItem {
+                    label: qsTr("Charge:")
+                    value: battery.charge + "%"
+                }
+                MyDetailItem {
+                    label: qsTr("Charging:")
+                    value: battery.charging ? qsTr("yes") : qsTr("no")
+                }
+                MyDetailItem {
+                    label: qsTr("State:")
+                    value: statusText[battery.state]
+                }
             }
             Label {
                 x: Theme.paddingLarge*2
