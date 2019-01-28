@@ -38,16 +38,16 @@ Page {
 
     MediaPlayer {
         id: alertLow
-        audioRole: MediaPlayer.AlarmRole
-        volume: 0.5
+        audioRole: MediaPlayer.NotificationRole
+        volume: 0.6
         autoLoad: true
         source: settings.lowAlertFile
     }
 
     MediaPlayer {
         id: alertHigh
-        audioRole: MediaPlayer.AlarmRole
-        volume: 0.5
+        audioRole: MediaPlayer.NotificationRole
+        volume: 0.6
         autoLoad: true
         source: settings.highAlertFile
     }
@@ -61,6 +61,7 @@ Page {
         body: test ? qsTr("This is a test.") : battery.charging ? qsTr("Please disconnect the charger.") : qsTr("Please connect the charger.")
         previewSummary: summary
         previewBody: body
+        urgency: Notification.Critical
     }
 
     Timer {
