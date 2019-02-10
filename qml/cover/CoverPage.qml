@@ -28,8 +28,10 @@ CoverBackground {
         y: coverPage.width * 0.25
         width: 0.4 * coverPage.width
 
-        onChargingChanged: onChargeChanged()
-        onChargeChanged: {
+        onStateChanged: { updateView() }
+        onChargingChanged: { updateView() }
+        onChargeChanged: { updateView() }
+        function updateView() {
             if(charge <= settings.lowerLimit && battery.state === "discharging") {
                 coverText.text = qsTr("Connect\ncharger")
             }
