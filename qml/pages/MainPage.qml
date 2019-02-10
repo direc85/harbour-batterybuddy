@@ -36,19 +36,16 @@ Page {
         }
     }
 
-    MediaPlayer {
+    SoundEffect {
         id: alertLow
-        audioRole: MediaPlayer.NotificationRole
         volume: 0.6
-        autoLoad: true
         source: settings.lowAlertFile
+
     }
 
-    MediaPlayer {
+    SoundEffect {
         id: alertHigh
-        audioRole: MediaPlayer.NotificationRole
         volume: 0.6
-        autoLoad: true
         source: settings.highAlertFile
     }
 
