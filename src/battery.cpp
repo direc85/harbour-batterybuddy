@@ -20,11 +20,11 @@
 Battery::Battery(QObject* parent) : QObject(parent)
 {
     // Number: meaning percentage, e.g. 42
-    chargeFile   = new QFile("/run/state/namespaces/Battery/ChargePercentage");
+    chargeFile   = new QFile("/run/state/namespaces/Battery/ChargePercentage", this);
     // Number: 0 or 1
-    chargingFile = new QFile("/run/state/namespaces/Battery/IsCharging");
+    chargingFile = new QFile("/run/state/namespaces/Battery/IsCharging", this);
     // String: charging, discharging, (empty), unknown (others?)
-    stateFile   = new QFile("/run/state/namespaces/Battery/ChargingState");
+    stateFile   = new QFile("/run/state/namespaces/Battery/ChargingState", this);
 
     // TODO
     // What if the files can't be opened?
