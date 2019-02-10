@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 
     QTimer updater;
     QObject::connect(&updater, SIGNAL(timeout()), &battery, SLOT(updateData()));
-    updater.start(15000);
+    updater.start(3000);
 
     view->rootContext()->setContextProperty("battery", &battery);
     view->rootContext()->setContextProperty("settings", &settings);
