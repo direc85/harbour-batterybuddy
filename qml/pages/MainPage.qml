@@ -59,6 +59,16 @@ Page {
         previewSummary: summary
         previewBody: body
         urgency: Notification.Critical
+        function republish() {
+            if(replacesId > 0)
+                close()
+            publish()
+        }
+        function republishTest() {
+            test = true
+            republish()
+            test = false
+        }
     }
 
     Timer {
@@ -69,15 +79,16 @@ Page {
         onTriggered: {
             if(battery.charge <= settings.lowerLimit && battery.state === "discharging") {
                 alertLow.play()
-                notification.publish()
+                notification.republish()
             }
             else if(battery.charge >= settings.upperLimit &&
                     (battery.state === "charging" && battery.charging === true) || (battery.state === "idle" && battery.charging === false)) {
                 alertHigh.play()
-                notification.publish()
+                notification.republish()
             }
-            else
+            else if(notification.replacesId > 0) {
                 notification.close()
+            }
         }
     }
 
@@ -179,14 +190,12 @@ Page {
                     height: lowButton.height
                     Button {
                         id: lowButton
+                        anchors.centerIn: parent
                         text: qsTr("Discharged")
                         onClicked: {
                             alertLow.play()
-                            notification.test = true
-                            notification.publish()
-                            notification.test = false
+                            notification.republishTest()
                         }
-                        anchors.centerIn: parent
                     }
                 }
                 Item {
@@ -195,13 +204,11 @@ Page {
                     height: lowButton.height
                     Button {
                         text: qsTr("Charged")
+                        anchors.centerIn: parent
                         onClicked: {
                             alertHigh.play()
-                            notification.test = true
-                            notification.publish()
-                            notification.test = false
+                            notification.republishTest()
                         }
-                        anchors.centerIn: parent
                     }
                 }
             }
