@@ -24,7 +24,7 @@ Page {
 
     PageHeader {
         id: header
-        title: qsTr("Battery Buddy") +" v1.2"
+        title: qsTr("Battery Buddy") +" v1.3"
     }
 
     Column {

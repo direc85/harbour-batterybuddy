@@ -11,6 +11,8 @@
 
 # * date Author's Name <author's email> version-release
 # - Summary of changes
+* Sun Mar 10 2019 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 1.3-1
+- Add French and Chinise translations (thanks, dashinfantry and Quenty31)
 
 * Mon Feb 11 2019 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 1.2-1
 - Alert doesn't stop media playback
