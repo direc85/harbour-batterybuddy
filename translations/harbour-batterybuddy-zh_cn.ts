@@ -104,7 +104,7 @@ Buddy（电池搭档）</translation>
     <message>
         <source>Every battery produced uses a lot of energy and at least some non-renewable resources.</source>
         <translation>生产每一块电池都需要大量的能源, 其中一些是不可再生的资源。</translation>
-    </message
+    </message>
     <message>
         <source>By taking care of your devices battery, you don&apos;t have to buy a new battery so soon.</source>
         <translation>通过留心你设备的电池状况，你不必太快去更换一块新电池</translation>
@@ -118,7 +118,7 @@ Buddy（电池搭档）</translation>
         <translation>我还能做点什么?</translation>
     </message>
     <message>
-         <source>Uninstall battery-hungry applications you don&apos;t use. Reboot your device every now and then in order to keep it running flawlessly.</source>
+        <source>Uninstall battery-hungry applications you don&apos;t use. Reboot your device every now and then in order to keep it running flawlessly.</source>
         <translation>卸载你不用的耗电应用程序。不时重启设备以确保其完美运行</translation>
     </message>
     <message>
@@ -132,6 +132,10 @@ Buddy（电池搭档）</translation>
     <message>
         <source>Great! There are a lot of articles to read and papers to study, so click the link to begin!</source>
         <translation>很好! 这里有许多可读的文章和研究论文，请点击链接以开始!</translation>
+    </message>
+    <message>
+        <source>Use flight mode overnight whenever possible in order to cut power usage down. Powering the device off and on again may use a lot more battery than you think!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
