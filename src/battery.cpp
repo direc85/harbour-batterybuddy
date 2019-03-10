@@ -27,8 +27,7 @@ Battery::Battery(QObject* parent) : QObject(parent)
     stateFile   = new QFile("/run/state/namespaces/Battery/ChargingState", this);
 
     // TODO
-    // What if the files can't be opened?
-    // What if the device doesn't have a battery?
+    // Implement DBus mechanism for reading battery status
 
     updateData();
 }
