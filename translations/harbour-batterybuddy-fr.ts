@@ -126,7 +126,7 @@ Buddy</source>
     </message>
     <message>
         <source>Don&apos;t use your phone in hot or cold environments. In the winter keep the phone in your pocket near your body (but take note of the moisture) and use a handsfree device. Extreme temperatures are bad for the battery.</source>
-        <translation>N’utilisez pas votre téléphone dans un environnement chaud ou roid. Pendant l’hiver gardez votre téléphone dans votre poche près de votre corps (en évitant l’humidité) et utilisez un kit mains libres. Les températures extrêmes ne sont pas bonnes pour la batterie. </translation>
+        <translation>N’utilisez pas votre téléphone dans un environnement chaud ou froid. Pendant l’hiver gardez votre téléphone dans votre poche près de votre corps (en évitant l’humidité) et utilisez un kit mains libres. Les températures extrêmes ne sont pas bonnes pour la batterie. </translation>
     </message>
     <message>
         <source>I want to know more!</source>
@@ -149,7 +149,7 @@ Buddy</source>
     </message>
     <message>
         <source>Battery status</source>
-        <translation>Statut de la batterie</translation>
+        <translation>État de la batterie</translation>
     </message>
     <message>
         <source>Alert tests</source>
@@ -208,7 +208,7 @@ Buddy</source>
     </message>
     <message>
         <source>State:</source>
-        <translation>Stats :</translation>
+        <translation>État :</translation>
     </message>
     <message>
         <source>idle</source>
