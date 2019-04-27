@@ -145,7 +145,7 @@ Buddy</source>
     </message>
     <message>
         <source>Click the buttons to test the sound and notification.</source>
-        <translation>Cliquez sur le bouton pour essayer le son et les notifications.</translation>
+        <translation>Cliquez sur les boutons pour essayer le son et les notifications.</translation>
     </message>
     <message>
         <source>Battery status</source>
@@ -166,7 +166,7 @@ Buddy</source>
     <message>
         <source>Battery charge</source>
         <comment>Battery charge 20%</comment>
-        <translation>Charge batterie</translation>
+        <translation>Niveau batterie</translation>
     </message>
     <message>
         <source>About</source>
