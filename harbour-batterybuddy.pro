@@ -23,6 +23,8 @@ SOURCES += src/harbour-batterybuddy.cpp \
     src/settings.cpp
 
 DISTFILES += qml/harbour-batterybuddy.qml \
+    qml/components/AboutLabel.qml \
+    qml/pages\LicensePage.qml \
     qml/cover/CoverPage.qml \
     rpm/harbour-batterybuddy.spec \
     rpm/harbour-batterybuddy.yaml \

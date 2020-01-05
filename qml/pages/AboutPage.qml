@@ -17,82 +17,100 @@
  */
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "../components"
 
 Page {
     id: aboutPage
-    anchors.fill: parent
 
-    PageHeader {
-        id: header
-        title: qsTr("Battery Buddy") +" v1.3"
+    allowedOrientations: Orientation.Portrait | Orientation.Landscape | Orientation.LandscapeInverted
+
+    onStatusChanged: {
+        if(status === PageStatus.Active)
+            pageStack.pushAttached(Qt.resolvedUrl("LicensePage.qml"))
     }
 
-    Column {
-        anchors.top: header.bottom
-        width: parent.width
-        spacing: Theme.paddingMedium
+    SilicaFlickable {
+        id: aboutFlickable
+        anchors.fill: parent
+        contentHeight: header.height + column.height
 
-        Label {
-            x: Theme.paddingLarge
-            text: qsTr("Author")
-            color: Theme.highlightColor
-            font.pixelSize: Theme.fontSizeLarge
+        PageHeader {
+            id: header
+            title: qsTr("View license")
         }
-        Label {
-            x: Theme.paddingLarge*2
-            width: parent.width - x*2;
-            wrapMode: Text.Wrap
-            text: "Matti Viljanen"
-            color: Theme.primaryColor
-            font.pixelSize: Theme.fontSizeMedium
-        }
-        Label {
-            x: Theme.paddingLarge
-            text: qsTr("License")
-            color: Theme.highlightColor
-            font.pixelSize: Theme.fontSizeLarge
-        }
-        Label {
-            x: Theme.paddingLarge*2
-            width: parent.width - x*2;
-            wrapMode: Text.Wrap
-            text: "GNU General Public Licence 3.0"
-            color: Theme.primaryColor
-            font.pixelSize: Theme.fontSizeMedium
-        }
-        Button {
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: qsTr("Code and feedback")
-            onClicked: Qt.openUrlExternally("https://www.github.com/direc85/harbour-batterybuddy")
-        }
-        /*
-        Label {
-            x: Theme.paddingLarge
-            text: qsTr("Sounds")
-            color: Theme.highlightColor
 
-            font.pixelSize: Theme.fontSizeLarge
-        }
-        Label {
-            x: Theme.paddingLarge*2
-            width: parent.width - x*2;
-            wrapMode: Text.Wrap
-            text: "Sounds were obtained from Notification Sounds and are licensed under Creative Commons Attribution license."
-            color: Theme.primaryColor
+        Column {
+            id: column
+            anchors {
+                top: header.bottom
+                horizontalCenter: parent.horizontalCenter
+            }
+            width: Math.min(Screen.width, aboutFlickable.width)
+            spacing: Theme.paddingLarge
 
-            font.pixelSize: Theme.fontSizeMedium
+            Image {
+                anchors.horizontalCenter: parent.horizontalCenter
+                source: Qt.resolvedUrl("/usr/share/icons/hicolor/172x172/apps/harbour-batterybuddy.png")
+                width: Theme.iconSizeExtraLarge
+                height: Theme.iconSizeExtraLarge
+                smooth: true
+                asynchronous: true
+            }
+
+            AboutLabel {
+                font.pixelSize: Theme.fontSizeLarge
+                color: Theme.highlightColor
+                text: "Battery Buddy"
+            }
+
+            AboutLabel {
+                font.pixelSize: Theme.fontSizeMedium
+                color: Theme.primaryColor
+                text: qsTr("Battery Buddy is a small and simple utility designed to improve the lifetime of the battery.")
+            }
+
+            AboutLabel {
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.secondaryColor
+                text: qsTr("Version") + " 0.13-1"
+            }
+
+            AboutLabel {
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.secondaryColor
+                text: "Copyright 2019-2020 Matti Viljanen"
+            }
+
+            AboutLabel {
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.secondaryColor
+                text: "Suomi: Matti Viljanen\n"+
+                      "Français: Quenty31\n"+
+                      "简体中文: dashinfantry"
+            }
+
+            AboutLabel {
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.secondaryColor
+                text: qsTr("GPSInfo is open source software licensed under the terms of the GNU General Public License.")
+            }
+
+            AboutLabel {
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.secondaryColor
+                text: qsTr("For suggestions, bugs and ideas visit ")
+            }
+
+            Button {
+                text: "GitHub"
+                anchors.horizontalCenter: parent.horizontalCenter
+                onClicked: Qt.openUrlExternally("https://github.com/direc85/harbour-batterybuddy")
+            }
+
+            Item {
+                width: parent.width
+                height: Theme.paddingMedium
+            }
         }
-        Button {
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: qsTr("Upper limit")
-            onClicked: Qt.openUrlExternally("https://notificationsounds.com/notification-sounds/unconvinced-569")
-        }
-        Button {
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: qsTr("Lower limit")
-            onClicked: Qt.openUrlExternally("https://notificationsounds.com/notification-sounds/unsure-566")
-        }
-        */
     }
 }
-
