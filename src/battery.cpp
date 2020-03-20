@@ -21,7 +21,7 @@ Battery::Battery(QObject* parent) : QObject(parent)
 {
     // Number: meaning percentage, e.g. 42
     chargeFile   = new QFile("/sys/class/power_supply/battery/capacity", this);
-    // String: charging, discharging, (empty), unknown (others?)
+    // String: charging, discharging, full, empty, unknown (others?)
     stateFile   = new QFile("/sys/class/power_supply/battery/status", this);
     // Number: 0 or 1
     chargerConnectedFile = new QFile("/sys/class/power_supply/usb/present");

@@ -25,6 +25,8 @@ Page {
         "idle": qsTr("idle", "Charger plugged in, not using nor charging battery"),
         "discharging": qsTr("discharging", "Charger not plugged in, battery discharging"),
         "charging": qsTr("charging", "Charger plugged in and battery charging"),
+        "full": qsTr("full", "Battery fully charged"),
+        "empty": qsTr("empty", "Battery fully depleted"),
         "unknown": qsTr("unknown", "Battery not detected, or faulty, or something")
     }
 
