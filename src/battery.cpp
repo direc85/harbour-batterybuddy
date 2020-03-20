@@ -34,6 +34,11 @@ Battery::Battery(Settings* newSettings, QObject* parent) : QObject(parent)
     qInfo() << "Reading charger status from" << chargerConnectedFile->fileName();
 
     // ENABLE/DISABLE CHARGING
+    if(QHostInfo::localHostName().contains("SailfishEmul")) {
+        qInfo() << "Sailfish SDK detected";
+        qInfo() << "Charger control feature disabled";
+    }
+    else {
     chargingEnabledFile = new QFile(this);
 
     // e.g. for Sony Xperia XA2
@@ -74,7 +79,7 @@ Battery::Battery(Settings* newSettings, QObject* parent) : QObject(parent)
             qWarning() << "Charger control file" << chargingEnabledFile->fileName() << "is not writable";
             qWarning() << "Charger control feature disabled";
         }
-
+        }
     }
 
     // TODO
