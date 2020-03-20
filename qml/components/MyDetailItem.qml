@@ -57,6 +57,7 @@ Item {
             right: parent.horizontalCenter
             rightMargin: Theme.paddingSmall
             leftMargin: detailItem.leftMargin
+            verticalCenter: parent.verticalCenter
         }
         horizontalAlignment: Text.AlignRight
         color: Theme.secondaryHighlightColor
@@ -74,6 +75,7 @@ Item {
             right: parent.right
             leftMargin: Theme.paddingSmall
             rightMargin: detailItem.rightMargin
+            verticalCenter: parent.verticalCenter
         }
         horizontalAlignment: Text.AlignLeft
         color: Theme.highlightColor
