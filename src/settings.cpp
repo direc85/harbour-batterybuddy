@@ -20,44 +20,36 @@
 Settings::Settings(QObject *parent) : QObject(parent)
 {
     int tempValue;
-    if(mySettings.contains(sLowAlert)) {
-        tempValue = mySettings.value(sLowAlert).toInt();
-        if(tempValue >= 10 && tempValue <= 99) {
-            lowAlert = tempValue;
-            emit lowAlertChanged();
-        }
+    tempValue = mySettings.value(sLowAlert, lowAlert).toInt();
+    if(tempValue >= 10 && tempValue <= 99) {
+        lowAlert = tempValue;
+        emit lowAlertChanged();
     }
-    if(mySettings.contains(sHighAlert)) {
-        tempValue = mySettings.value(sHighAlert).toInt();
-        if(tempValue >= 10 && tempValue <= 99) {
-            highAlert = tempValue;
-            emit highAlertChanged();
-        }
+
+    tempValue = mySettings.value(sHighAlert, highAlert).toInt();
+    if(tempValue >= 10 && tempValue <= 99) {
+        highAlert = tempValue;
+        emit highAlertChanged();
     }
-    if(mySettings.contains(sInterval)) {
-        tempValue = mySettings.value(sInterval).toInt();
-        if(tempValue >= 60 && tempValue <= 600) {
-            interval = tempValue;
-            emit intervalChanged();
-        }
+
+    tempValue = mySettings.value(sInterval, interval).toInt();
+    if(tempValue >= 60 && tempValue <= 600) {
+        interval = tempValue;
+        emit intervalChanged();
     }
-    if(mySettings.contains(sLimitEnabled)) {
-        limitEnabled = (mySettings.value(sLimitEnabled).toInt() == 1);
-        emit limitEnabledChanged();
+
+    limitEnabled = (mySettings.value(sLimitEnabled, sLimitEnabled).toInt() == 1);
+    emit limitEnabledChanged();
+    tempValue = mySettings.value(sLowLimit).toInt();
+    if(tempValue >= 20 && tempValue <= 95) {
+        lowLimit = tempValue;
+        emit lowLimitChanged();
     }
-    if(mySettings.contains(sLowLimit)) {
-        tempValue = mySettings.value(sLowLimit).toInt();
-        if(tempValue >= 20 && tempValue <= 95) {
-            lowLimit = tempValue;
-            emit lowLimitChanged();
-        }
-    }
-    if(mySettings.contains(sHighLimit)) {
-        tempValue = mySettings.value(sHighLimit).toInt();
-        if(tempValue >= 20 && tempValue <= 95) {
-            highLimit = tempValue;
-            emit highLimitChanged();
-        }
+
+    tempValue = mySettings.value(sHighLimit, highLimit).toInt();
+    if(tempValue >= 20 && tempValue <= 95) {
+        highLimit = tempValue;
+        emit highLimitChanged();
     }
 }
 

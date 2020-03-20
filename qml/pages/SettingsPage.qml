@@ -75,7 +75,7 @@ Page {
                 valueText: value + "%"
                 highlightDirection: Qt.RightToLeft
                 onValueChanged: {
-                    settings.highLimit = value
+                    settings.highAlert = value
                     if(lowAlertSlider.value >= value)
                         lowAlertSlider.value = value - 1
                 }
@@ -90,7 +90,7 @@ Page {
                 value: settings.lowAlert
                 valueText: value + "%"
                 onValueChanged: {
-                    settings.highLimit = value
+                    settings.lowAlert = value
                     if(highAlertSlider.value <= value)
                         highAlertSlider.value = value + 1
                 }
@@ -111,11 +111,11 @@ Page {
                 minimumValue: 20
                 maximumValue: 95
                 stepSize: 1
-                value: settings.lowLimit
+                value: settings.highLimit
                 valueText: value + "%"
                 highlightDirection: Qt.RightToLeft
                 onValueChanged: {
-                    settings.lowLimit = value
+                    settings.highLimit = value
                     if(lowLimitSlider.value >= value)
                         lowLimitSlider.value = value - 1
                 }
@@ -128,10 +128,10 @@ Page {
                 minimumValue: 20
                 maximumValue: 95
                 stepSize: 1
-                value: settings.highLimit
+                value: settings.lowLimit
                 valueText: value + "%"
                 onValueChanged: {
-                    settings.highLimit = value
+                    settings.lowLimit = value
                     if(highLimitSlider.value <= value)
                         highLimitSlider.value = value + 1
                 }
