@@ -21,40 +21,66 @@ Battery::Battery(Settings* newSettings, QObject* parent) : QObject(parent)
 {
     settings = newSettings;
 
-    // Number: meaning percentage, e.g. 42
+    // Number: charge percentage, e.g. 42
     chargeFile   = new QFile("/sys/class/power_supply/battery/capacity", this);
+    qInfo() << "Reading capacity from" << chargeFile->fileName();
+
     // String: charging, discharging, full, empty, unknown (others?)
     stateFile   = new QFile("/sys/class/power_supply/battery/status", this);
+    qInfo() << "Reading charge state from" << stateFile->fileName();
+
     // Number: 0 or 1
-    chargerConnectedFile = new QFile("/sys/class/power_supply/usb/present");
+    chargerConnectedFile = new QFile("/sys/class/power_supply/usb/present", this);
+    qInfo() << "Reading charger status from" << chargerConnectedFile->fileName();
 
     // ENABLE/DISABLE CHARGING
+    chargingEnabledFile = new QFile(this);
 
     // e.g. for Sony Xperia XA2
-    if(QFile::exists(QString("/sys/class/power_supply/battery/input_suspend"))) {
-        chargingEnabledFile = new QFile("/sys/class/power_supply/battery/input_suspend");
+    chargingEnabledFile->setFileName("/sys/class/power_supply/battery/input_suspend");
+    if(chargingEnabledFile->exists()) {
         enableChargingValue = 0;
         disableChargingValue = 1;
     }
 
     // e.g. for Sony Xperia Z3 Compact Tablet
-    else if(QFile::exists(QString("/sys/class/power_supply/battery/charging_enabled"))) {
-        chargingEnabledFile = new QFile("/sys/class/power_supply/battery/charging_enabled");
+    chargingEnabledFile->setFileName("/sys/class/power_supply/battery/charging_enabled");
+    if(chargingEnabledFile->exists()) {
         enableChargingValue = 1;
         disableChargingValue = 0;
     }
 
     // e.g. for Jolla Phone
-    else if(QFile::exists(QString("/sys/class/power_supply/usb/charger_disable"))) {
-        chargingEnabledFile = new QFile("/sys/class/power_supply/usb/charger_disable");
+    chargingEnabledFile->setFileName("/sys/class/power_supply/usb/charger_disable");
+    if(chargingEnabledFile->exists()) {
         enableChargingValue = 0;
         disableChargingValue = 1;
     }
-    else
+    else {
+        delete chargingEnabledFile;
         chargingEnabledFile = Q_NULLPTR;
+        qWarning() << "Charger control file not found!";
+        qWarning() << "Please contact the developer with your device model!";
+    }
+
+    if(chargingEnabledFile) {
+        if(chargingEnabledFile->open(QIODevice::WriteOnly)) {
+            qInfo() << "Controlling charging via" << chargingEnabledFile->fileName();
+            chargingEnabledFile->close();
+        }
+        else {
+            delete chargingEnabledFile;
+            chargingEnabledFile = Q_NULLPTR;
+            qWarning() << "Charger control file" << chargingEnabledFile->fileName() << "is not writable";
+            qWarning() << "Charger control feature disabled";
+        }
+
+    }
 
     // TODO
-    // Implement DBus mechanism for reading battery status
+    // Implement DBus mechanism for reading battery status, or try
+    // QFileSystemWatcher again without /run/state/namespaces/Battery/
+    // thingamabob - it is deprecated anyway.
 
     updateData();
 }
@@ -68,6 +94,7 @@ void Battery::updateData()
         if(nextCharge != charge) {
             charge = nextCharge;
             emit chargeChanged();
+            qDebug() << "Battery:" << charge;
         }
         chargeFile->close();
     }
@@ -76,6 +103,7 @@ void Battery::updateData()
         if(nextChargerConnected != chargerConnected) {
             chargerConnected = nextChargerConnected;
             emit chargerConnectedChanged();
+            qDebug() << "Charger is connected:" << chargerConnected;
         }
         chargerConnectedFile->close();
     }
@@ -84,6 +112,7 @@ void Battery::updateData()
         if(nextState != state) {
             state = nextState;
             emit stateChanged();
+            qDebug() << "Charging status:" << state;
         }
         stateFile->close();
     }
@@ -99,7 +128,7 @@ void Battery::updateData()
     //     chargingEnabledFile->close();
     // }
 
-    if(settings->getLimitEnabled()) {
+    if(chargingEnabledFile && settings->getLimitEnabled()) {
         if(chargingEnabled && charge >= settings->getHighLimit()) {
             setChargingEnabled(false);
         }
@@ -120,6 +149,13 @@ void Battery::setChargingEnabled(bool isEnabled) {
         if(chargingEnabledFile->write(QString("%1").arg(isEnabled ? enableChargingValue : disableChargingValue).toLatin1())) {
             chargingEnabled = isEnabled;
             emit chargingEnabledChanged();
+
+            if(isEnabled) {
+                qInfo() << "Charging resumed";
+            }
+            else {
+                qInfo() << "Charging paused";
+            }
         }
         chargingEnabledFile->close();
     }

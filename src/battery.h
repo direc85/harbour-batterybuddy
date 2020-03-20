@@ -21,6 +21,7 @@
 #include <QObject>
 #include <QString>
 #include <QFile>
+#include <QDebug>
 #include "settings.h"
 
 class Battery : public QObject
@@ -50,7 +51,7 @@ private:
     QFile* chargeFile;
     QFile* chargerConnectedFile;
     QFile* stateFile;
-    QFile* chargingEnabledFile;
+    QFile* chargingEnabledFile = Q_NULLPTR;
     Settings* settings;
 
     // Default values:

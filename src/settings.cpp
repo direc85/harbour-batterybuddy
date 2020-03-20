@@ -23,46 +23,23 @@ Settings::Settings(QObject *parent) : QObject(parent)
     if(mySettings.contains("lowerLimit")) {
         mySettings.setValue(sLowAlert, mySettings.value("lowerLimit"));
         mySettings.remove("lowerLimit");
+        qInfo() << "Migrated old lowerLimit value";
     }
 
     if(mySettings.contains("upperLimit")) {
         mySettings.setValue(sHighAlert, mySettings.value("upperLimit"));
         mySettings.remove("upperLimit");
+        qInfo() << "Migrated old upperLimit value";
     }
 
     // Read in the values
-    int tempValue;
-    tempValue = mySettings.value(sLowAlert, lowAlert).toInt();
-    if(tempValue >= 10 && tempValue <= 99) {
-        lowAlert = tempValue;
-        emit lowAlertChanged();
-    }
-
-    tempValue = mySettings.value(sHighAlert, highAlert).toInt();
-    if(tempValue >= 10 && tempValue <= 99) {
-        highAlert = tempValue;
-        emit highAlertChanged();
-    }
-
-    tempValue = mySettings.value(sInterval, interval).toInt();
-    if(tempValue >= 60 && tempValue <= 600) {
-        interval = tempValue;
-        emit intervalChanged();
-    }
-
-    limitEnabled = (mySettings.value(sLimitEnabled, sLimitEnabled).toInt() == 1);
-    emit limitEnabledChanged();
-    tempValue = mySettings.value(sLowLimit).toInt();
-    if(tempValue >= 20 && tempValue <= 95) {
-        lowLimit = tempValue;
-        emit lowLimitChanged();
-    }
-
-    tempValue = mySettings.value(sHighLimit, highLimit).toInt();
-    if(tempValue >= 20 && tempValue <= 95) {
-        highLimit = tempValue;
-        emit highLimitChanged();
-    }
+    loadInteger(sLowAlert, &lowAlert, 10, 99);
+    loadInteger(sHighAlert, &highAlert, 11, 100);
+    loadInteger(sInterval, &interval, 60, 600);
+    loadInteger(sLimitEnabled, &limitEnabled, 0, 1);
+    loadInteger(sLowLimit, &lowLimit, 20, 94);
+    loadInteger(sHighLimit, &highLimit, 21, 95);
+    qInfo() << "Loaded" << sLimitEnabled << limitEnabled;
 }
 
 Settings::~Settings()
@@ -70,7 +47,17 @@ Settings::~Settings()
     mySettings.setValue(sLowAlert, QByteArray::number(lowAlert));
     mySettings.setValue(sHighAlert, QByteArray::number(highAlert));
     mySettings.setValue(sInterval, QByteArray::number(interval));
-    mySettings.setValue(sLimitEnabled, QByteArray::number(limitEnabled ? 1 : 0));
+    mySettings.setValue(sLimitEnabled, QByteArray::number(limitEnabled));
     mySettings.setValue(sLowLimit, QByteArray::number(lowLimit));
     mySettings.setValue(sHighLimit, QByteArray::number(highLimit));
+    qInfo() << "Settings saved";
+}
+
+int Settings::bound(int value, int min, int max) {
+    return (value <= min ? min : (value >= max ? max : value));
+}
+
+void Settings::loadInteger(const char* key, int *value, int min, int max) {
+    *value = bound(mySettings.value(key, *value).toInt(), min, max);
+    qInfo() << "Loaded" << key << *value;
 }

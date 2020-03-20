@@ -20,6 +20,7 @@
 
 #include <QObject>
 #include <QSettings>
+#include <QDebug>
 
 class Settings : public QObject
 {
@@ -42,7 +43,7 @@ public:
     int  getInterval() { return interval; }
     int  getLowLimit() { return lowLimit; }
     int  getHighLimit() { return highLimit; }
-    bool getLimitEnabled() { return limitEnabled; }
+    bool getLimitEnabled() { return limitEnabled == 1; }
     QString getLowAlertFile() { return lowAlertFile; }
 
     void setLowAlert(int newLimit) { lowAlert = newLimit; }
@@ -50,7 +51,7 @@ public:
     void setInterval(int newInterval) { interval = newInterval; }
     void setLowLimit(int newLimit) { lowLimit = newLimit; }
     void setHighLimit(int newLimit) { highLimit = newLimit; }
-    void setLimitEnabled(bool newEnabled) { limitEnabled = newEnabled; }
+    void setLimitEnabled(bool newEnabled) { limitEnabled = (newEnabled ? 1 : 0); }
     QString getHighAlertFile() { return highAlertFile; }
 
 
@@ -61,7 +62,7 @@ private:
     int lowAlert = 25;
     int highAlert = 75;
     int interval = 60;
-    bool limitEnabled = false;
+    int limitEnabled = 0; // Converted to boolean for QML
     int lowLimit = 65;
     int highLimit = 70;
     QString lowAlertFile = "/usr/share/sounds/jolla-ambient/stereo/general_warning.wav";
@@ -76,6 +77,9 @@ private:
     const char* sHighLimit = "highLimit";
     const char* sLowAlertFile = "lowAlertFile";
     const char* sHighAlertFile = "highAlertFile";
+
+    int bound(int value, int min, int max);
+    void loadInteger(const char *key, int* value, int min, int max);
 
 signals:
     int lowAlertChanged();

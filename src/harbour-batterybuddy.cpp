@@ -26,6 +26,7 @@
 #include <QQuickView>
 #include <QQmlEngine>
 #include <QTimer>
+#include <QDebug>
 
 #include "battery.h"
 #include "settings.h"
@@ -41,6 +42,8 @@ int main(int argc, char *argv[])
     //   - SailfishApp::pathToMainQml() to get a QUrl to the main QML file
     //
     // To display the view, call "show()" (will show fullscreen on device).
+
+    qInfo() << "Starting Battery Buddy...";
 
     QGuiApplication* app = SailfishApp::application(argc, argv);
     QQuickView* view = SailfishApp::createView();
@@ -58,7 +61,11 @@ int main(int argc, char *argv[])
     view->setSource(SailfishApp::pathTo("qml/harbour-batterybuddy.qml"));
     view->showFullScreen();
 
+    qInfo() << "Launching GUI...";
+
     int retval = app->exec();
+
+    qInfo() << "Exiting...";
 
     updater->stop();
     battery->blockSignals(true);
@@ -67,6 +74,8 @@ int main(int argc, char *argv[])
     delete updater;
     delete battery;
     delete settings;
+
+    qInfo() << "Goodbye!";
 
     return retval;
 }
