@@ -149,23 +149,26 @@ Page {
                     left: parent.left
                     right: parent.right
                 }
-                height: button.height
+                height: resumeButton.height
 
                 Column {
                     width: parent.width / 2
                     Button {
-                        id: button
+                        id: resumeButton
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("Enable")
-                        onClicked: chargingEnabled = true
+                        text: qsTr("Resume")
+                        onClicked: battery.chargingEnabled = true
+                        enabled: !battery.chargingEnabled
                     }
                 }
                 Column {
                     width: parent.width / 2
                     Button {
+                        id: pauseButton
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("Disable")
-                        onClicked: chargingEnabled = false
+                        text: qsTr("Pause")
+                        onClicked: battery.chargingEnabled = false
+                        enabled: battery.chargingEnabled
                     }
                 }
             }
@@ -188,7 +191,7 @@ Page {
                     left: parent.left
                     right: parent.right
                 }
-                height: button.height
+                height: resumeButton.height
 
                 Column {
                     width: parent.width / 2
