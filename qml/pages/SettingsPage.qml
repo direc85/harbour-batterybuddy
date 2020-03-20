@@ -17,6 +17,7 @@
  */
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "../components"
 
 Page {
     id: settingsPage
@@ -45,7 +46,7 @@ Page {
                 text: qsTr("Alert settings")
                 color: Theme.highlightColor
             }
-            Slider {
+            MySlider {
                 width: parent.width
                 label: qsTr("Alert interval")
                 minimumValue: 60
@@ -63,7 +64,7 @@ Page {
                 color: Theme.primaryColor
                 font.pixelSize: Theme.fontSizeSmall
             }
-            Slider {
+            MySlider {
                 id: highAlertSlider
                 width: parent.width
                 label: qsTr("Charging limit")
@@ -72,13 +73,14 @@ Page {
                 stepSize: 1
                 value: settings.highAlert
                 valueText: value + "%"
+                highlightDirection: Qt.RightToLeft
                 onValueChanged: {
                     settings.highLimit = value
                     if(lowAlertSlider.value >= value)
                         lowAlertSlider.value = value - 1
                 }
             }
-            Slider {
+            MySlider {
                 id: lowAlertSlider
                 width: parent.width
                 label: qsTr("Discharging limit")
@@ -101,7 +103,7 @@ Page {
                 onCheckedChanged: settings.limitEnabled = checked
             }
 
-            Slider {
+            MySlider {
                 id: highLimitSlider
                 handleVisible: enabled
                 width: parent.width
@@ -111,13 +113,14 @@ Page {
                 stepSize: 1
                 value: settings.lowLimit
                 valueText: value + "%"
+                highlightDirection: Qt.RightToLeft
                 onValueChanged: {
                     settings.lowLimit = value
                     if(lowLimitSlider.value >= value)
                         lowLimitSlider.value = value - 1
                 }
             }
-            Slider {
+            MySlider {
                 id: lowLimitSlider
                 handleVisible: enabled
                 width: parent.width
