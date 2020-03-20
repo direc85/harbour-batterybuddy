@@ -16,11 +16,69 @@
  * Author: Matti Viljanen
  */
 import QtQuick 2.0
+import QtMultimedia 5.6
 import Sailfish.Silica 1.0
+import Nemo.Notifications 1.0
 import "pages"
 
 ApplicationWindow
 {
+    SoundEffect {
+        id: alertLow
+        volume: 0.6
+        source: settings.lowAlertFile
+
+    }
+
+    SoundEffect {
+        id: alertHigh
+        volume: 0.6
+        source: settings.highAlertFile
+    }
+
+    Notification {
+        id: notification
+        property bool test: false
+        appName: qsTr("Battery Buddy")
+        appIcon: "/usr/share/icons/hicolor/128x128/apps/harbour-batterybuddy.png"
+        summary: qsTr("Battery charge", "Battery charge 20%") +" "+ battery.charge + "%"
+        body: test ? qsTr("This is a test.") : battery.charging ? qsTr("Please disconnect the charger.") : qsTr("Please connect the charger.")
+        previewSummary: summary
+        previewBody: body
+        urgency: Notification.Critical
+        function republish() {
+            if(replacesId > 0)
+                close()
+            publish()
+        }
+        function republishTest() {
+            test = true
+            republish()
+            test = false
+        }
+    }
+
+    Timer {
+        id: alertTimer
+        interval: settings.interval * 1000 // sec -> msec
+        running: true
+        repeat: true
+        onTriggered: {
+            if(battery.charge <= settings.lowerLimit && battery.state === "discharging") {
+                alertLow.play()
+                notification.republish()
+            }
+            else if(battery.charge >= settings.upperLimit &&
+                    (battery.state === "charging" && battery.charging === true) || (battery.state === "idle" && battery.charging === false)) {
+                alertHigh.play()
+                notification.republish()
+            }
+            else if(notification.replacesId > 0) {
+                notification.close()
+            }
+        }
+    }
+
     initialPage: Component { MainPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: defaultAllowedOrientations

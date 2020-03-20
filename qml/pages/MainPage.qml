@@ -16,9 +16,7 @@
  * Author: Matti Viljanen
  */
 import QtQuick 2.0
-import QtMultimedia 5.6
 import Sailfish.Silica 1.0
-import Nemo.Notifications 1.0
 import "../components"
 
 Page {
@@ -33,62 +31,6 @@ Page {
     onStatusChanged: {
         if(status == PageStatus.Activating) {
             alertTimer.interval = settings.interval * 1000;
-        }
-    }
-
-    SoundEffect {
-        id: alertLow
-        volume: 0.6
-        source: settings.lowAlertFile
-
-    }
-
-    SoundEffect {
-        id: alertHigh
-        volume: 0.6
-        source: settings.highAlertFile
-    }
-
-    Notification {
-        id: notification
-        property bool test: false
-        appName: qsTr("Battery Buddy")
-        appIcon: "/usr/share/icons/hicolor/128x128/apps/harbour-batterybuddy.png"
-        summary: qsTr("Battery charge", "Battery charge 20%") +" "+ battery.charge + "%"
-        body: test ? qsTr("This is a test.") : battery.charging ? qsTr("Please disconnect the charger.") : qsTr("Please connect the charger.")
-        previewSummary: summary
-        previewBody: body
-        urgency: Notification.Critical
-        function republish() {
-            if(replacesId > 0)
-                close()
-            publish()
-        }
-        function republishTest() {
-            test = true
-            republish()
-            test = false
-        }
-    }
-
-    Timer {
-        id: alertTimer
-        interval: settings.interval * 1000 // sec -> msec
-        running: true
-        repeat: true
-        onTriggered: {
-            if(battery.charge <= settings.lowerLimit && battery.state === "discharging") {
-                alertLow.play()
-                notification.republish()
-            }
-            else if(battery.charge >= settings.upperLimit &&
-                    (battery.state === "charging" && battery.charging === true) || (battery.state === "idle" && battery.charging === false)) {
-                alertHigh.play()
-                notification.republish()
-            }
-            else if(notification.replacesId > 0) {
-                notification.close()
-            }
         }
     }
 
@@ -167,50 +109,6 @@ Page {
                 text: qsTr("Please leave Battery Buddy running in the background in order to receive alerts.")
                 color: Theme.primaryColor
                 font.pixelSize: Theme.fontSizeSmall
-            }
-            Label {
-                x: Theme.paddingLarge
-                text: qsTr("Alert tests")
-                color: Theme.highlightColor
-            }
-            Label {
-                x: Theme.paddingLarge*2
-                width: parent.width - x*2;
-                wrapMode: Text.Wrap
-                text: qsTr("Click the buttons to test the sound and notification.")
-                color: Theme.primaryColor
-                font.pixelSize: Theme.fontSizeSmall
-            }
-            Item {
-                width: parent.width
-                height: lowButton.height
-                anchors.left: parent.left
-                Item {
-                    width: parent.width / 2
-                    height: lowButton.height
-                    Button {
-                        id: lowButton
-                        anchors.centerIn: parent
-                        text: qsTr("Discharged")
-                        onClicked: {
-                            alertLow.play()
-                            notification.republishTest()
-                        }
-                    }
-                }
-                Item {
-                    anchors.right: parent.right
-                    width: parent.width / 2
-                    height: lowButton.height
-                    Button {
-                        text: qsTr("Charged")
-                        anchors.centerIn: parent
-                        onClicked: {
-                            alertHigh.play()
-                            notification.republishTest()
-                        }
-                    }
-                }
             }
             Item {
                 width: parent.width
