@@ -17,8 +17,10 @@
  */
 #include "battery.h"
 
-Battery::Battery(QObject* parent) : QObject(parent)
+Battery::Battery(Settings* newSettings, QObject* parent) : QObject(parent)
 {
+    settings = newSettings;
+
     // Number: meaning percentage, e.g. 42
     chargeFile   = new QFile("/sys/class/power_supply/battery/capacity", this);
     // String: charging, discharging, full, empty, unknown (others?)
@@ -96,6 +98,15 @@ void Battery::updateData()
     //     }
     //     chargingEnabledFile->close();
     // }
+
+    if(settings->getLimitEnabled()) {
+        if(chargingEnabled && charge >= settings->getHighLimit()) {
+            setChargingEnabled(false);
+        }
+        else if(!chargingEnabled && charge <= settings->getLowLimit()) {
+            setChargingEnabled(true);
+        }
+    }
 }
 
 int Battery::getCharge(){ return charge; }

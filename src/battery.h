@@ -21,6 +21,7 @@
 #include <QObject>
 #include <QString>
 #include <QFile>
+#include "settings.h"
 
 class Battery : public QObject
 {
@@ -31,7 +32,7 @@ class Battery : public QObject
     Q_PROPERTY(bool chargingEnabled READ getChargingEnabled  WRITE setChargingEnabled NOTIFY chargingEnabledChanged)
 
 public:
-    Battery(QObject* parent = nullptr);
+    Battery(Settings* newSettings, QObject* parent = nullptr);
     ~Battery();
 
     int getCharge();
@@ -50,6 +51,7 @@ private:
     QFile* chargerConnectedFile;
     QFile* stateFile;
     QFile* chargingEnabledFile;
+    Settings* settings;
 
     // Default values:
     int charge = 100; // 100% full
@@ -59,6 +61,7 @@ private:
 
     int enableChargingValue = 1;
     int disableChargingValue = 0;
+    bool chargerIsEnabled = true;
 
     int nextCharge = charge;
     bool nextChargerConnected = chargerConnected;

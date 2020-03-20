@@ -45,10 +45,10 @@ int main(int argc, char *argv[])
     QGuiApplication* app = SailfishApp::application(argc, argv);
     QQuickView* view = SailfishApp::createView();
 
-    Battery* battery = new Battery();
     Settings* settings = new Settings();
-    QTimer* updater = new QTimer();
+    Battery* battery = new Battery(settings);
 
+    QTimer* updater = new QTimer();
     QObject::connect(updater, SIGNAL(timeout()), battery, SLOT(updateData()));
     updater->start(3000);
 
