@@ -64,29 +64,34 @@ Page {
                 font.pixelSize: Theme.fontSizeSmall
             }
             Slider {
-                id: upperChargeLimit
+                id: highAlertSlider
                 width: parent.width
                 label: qsTr("Charging limit")
-                minimumValue: 60
+                minimumValue: 10
                 maximumValue: 99
                 stepSize: 1
-                value: settings.upperLimit
+                value: settings.highAlert
                 valueText: value + "%"
                 onValueChanged: {
-                    settings.upperLimit = value
-                    if((value - 2) < continueChargeLimit.value)
-                        continueChargeLimit.value = value - 2
+                    settings.highLimit = value
+                    if(lowAlertSlider.value >= value)
+                        lowAlertSlider.value = value - 1
                 }
             }
             Slider {
+                id: lowAlertSlider
                 width: parent.width
                 label: qsTr("Discharging limit")
                 minimumValue: 10
-                maximumValue: 40
+                maximumValue: 99
                 stepSize: 1
-                value: settings.lowerLimit
+                value: settings.lowAlert
                 valueText: value + "%"
-                onValueChanged: settings.lowerLimit = value
+                onValueChanged: {
+                    settings.highLimit = value
+                    if(highAlertSlider.value <= value)
+                        highAlertSlider.value = value + 1
+                }
             }
             TextSwitch {
                 id: autoStopCharging
@@ -97,16 +102,36 @@ Page {
             }
 
             Slider {
-                id: continueChargeLimit
+                id: highLimitSlider
+                handleVisible: enabled
+                width: parent.width
+                label: qsTr("Stop charging limit")
+                minimumValue: 20
+                maximumValue: 95
+                stepSize: 1
+                value: settings.lowLimit
+                valueText: value + "%"
+                onValueChanged: {
+                    settings.lowLimit = value
+                    if(lowLimitSlider.value >= value)
+                        lowLimitSlider.value = value - 1
+                }
+            }
+            Slider {
+                id: lowLimitSlider
                 handleVisible: enabled
                 width: parent.width
                 label: qsTr("Resume charging limit")
-                minimumValue: 50
-                maximumValue: upperChargeLimit.value - 2
+                minimumValue: 20
+                maximumValue: 95
                 stepSize: 1
-                value: settings.chargeLimit
+                value: settings.highLimit
                 valueText: value + "%"
-                onValueChanged: settings.chargeLimit = value
+                onValueChanged: {
+                    settings.highLimit = value
+                    if(highLimitSlider.value <= value)
+                        highLimitSlider.value = value + 1
+                }
             }
             Label {
                 x: Theme.paddingLarge*2
@@ -129,7 +154,7 @@ Page {
                         id: button
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: qsTr("Enable")
-                        onClicked: battery.chargingEnabled = true
+                        onClicked: chargingEnabled = true
                     }
                 }
                 Column {
@@ -137,7 +162,7 @@ Page {
                     Button {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: qsTr("Disable")
-                        onClicked: battery.chargingEnabled = false
+                        onClicked: chargingEnabled = false
                     }
                 }
             }

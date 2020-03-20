@@ -20,70 +20,53 @@
 Settings::Settings(QObject *parent) : QObject(parent)
 {
     int tempValue;
-    if(mySettings.contains("lowerLimit")) {
-        tempValue = mySettings.value("lowerLimit").toInt();
-        if(tempValue >= 10 && tempValue <= 50) {
-            lowerLimit = tempValue;
-            emit lowerLimitChanged();
+    if(mySettings.contains(sLowAlert)) {
+        tempValue = mySettings.value(sLowAlert).toInt();
+        if(tempValue >= 10 && tempValue <= 99) {
+            lowAlert = tempValue;
+            emit lowAlertChanged();
         }
     }
-    if(mySettings.contains("upperLimit")) {
-        tempValue = mySettings.value("upperLimit").toInt();
-        if(tempValue >= 60 && tempValue <= 100) {
-            upperLimit = tempValue;
-            emit upperLimitChanged();
+    if(mySettings.contains(sHighAlert)) {
+        tempValue = mySettings.value(sHighAlert).toInt();
+        if(tempValue >= 10 && tempValue <= 99) {
+            highAlert = tempValue;
+            emit highAlertChanged();
         }
     }
-    if(mySettings.contains("interval")) {
-        tempValue = mySettings.value("interval").toInt();
+    if(mySettings.contains(sInterval)) {
+        tempValue = mySettings.value(sInterval).toInt();
         if(tempValue >= 60 && tempValue <= 600) {
             interval = tempValue;
             emit intervalChanged();
         }
     }
-    if(mySettings.contains("limitEnabled")) {
-        limitEnabled = (mySettings.value("limitEnabled").toInt() == 1);
+    if(mySettings.contains(sLimitEnabled)) {
+        limitEnabled = (mySettings.value(sLimitEnabled).toInt() == 1);
         emit limitEnabledChanged();
     }
-    if(mySettings.contains("chargeLimit")) {
-        tempValue = mySettings.value("chargeLimit").toInt();
-        if(tempValue >= 50 && tempValue <= (upperLimit - 2)) {
-            chargeLimit = tempValue;
-            emit chargeLimitChanged();
+    if(mySettings.contains(sLowLimit)) {
+        tempValue = mySettings.value(sLowLimit).toInt();
+        if(tempValue >= 20 && tempValue <= 95) {
+            lowLimit = tempValue;
+            emit lowLimitChanged();
+        }
+    }
+    if(mySettings.contains(sHighLimit)) {
+        tempValue = mySettings.value(sHighLimit).toInt();
+        if(tempValue >= 20 && tempValue <= 95) {
+            highLimit = tempValue;
+            emit highLimitChanged();
         }
     }
 }
 
 Settings::~Settings()
 {
-    int limitValue = limitEnabled ? 1 : 0;
-    mySettings.setValue("lowerLimit", QByteArray::number(lowerLimit));
-    mySettings.setValue("upperLimit", QByteArray::number(upperLimit));
-    mySettings.setValue("interval", QByteArray::number(interval));
-    mySettings.setValue("limitEnabled", QByteArray::number(limitValue));
-    mySettings.setValue("chargeLimit", QByteArray::number(chargeLimit));
+    mySettings.setValue(sLowAlert, QByteArray::number(lowAlert));
+    mySettings.setValue(sHighAlert, QByteArray::number(highAlert));
+    mySettings.setValue(sInterval, QByteArray::number(interval));
+    mySettings.setValue(sLimitEnabled, QByteArray::number(limitEnabled ? 1 : 0));
+    mySettings.setValue(sLowLimit, QByteArray::number(lowLimit));
+    mySettings.setValue(sHighLimit, QByteArray::number(highLimit));
 }
-
-int Settings::getLowerLimit() { return lowerLimit; }
-
-int Settings::getUpperLimit() { return upperLimit; }
-
-int Settings::getInterval() { return interval; }
-
-QString Settings::getLowAlert() { return lowAlertFile; }
-
-QString Settings::getHighAlert() { return highAlertFile; }
-
-bool Settings::getLimitEnabled() { return limitEnabled; }
-
-int Settings::getChargeLimit() { return chargeLimit; }
-
-void Settings::setLowerLimit(int newLimit) { lowerLimit = newLimit; }
-
-void Settings::setUpperLimit(int newLimit) { upperLimit = newLimit; }
-
-void Settings::setInterval(int newInterval) { interval = newInterval; }
-
-void Settings::setLimitEnabled(bool newEnabled) { limitEnabled = newEnabled; }
-
-void Settings::setChargeLimit(int newLimit) { chargeLimit = newLimit; }

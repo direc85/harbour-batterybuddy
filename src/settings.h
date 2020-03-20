@@ -24,52 +24,68 @@
 class Settings : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int     lowerLimit     READ getLowerLimit   WRITE setLowerLimit   NOTIFY lowerLimitChanged)
-    Q_PROPERTY(int     upperLimit     READ getUpperLimit   WRITE setUpperLimit   NOTIFY upperLimitChanged)
-    Q_PROPERTY(int     interval       READ getInterval     WRITE setInterval     NOTIFY intervalChanged)
-    Q_PROPERTY(bool    limitEnabled   READ getLimitEnabled WRITE setLimitEnabled NOTIFY limitEnabledChanged)
-    Q_PROPERTY(int     chargeLimit    READ getChargeLimit  WRITE setChargeLimit  NOTIFY chargeLimitChanged)
-    Q_PROPERTY(QString lowAlertFile   READ getLowAlert                           NOTIFY lowAlertChanged)
-    Q_PROPERTY(QString highAlertFile  READ getHighAlert                          NOTIFY highAlertChanged)
+    Q_PROPERTY(int lowAlert READ getLowAlert WRITE setLowAlert NOTIFY lowAlertChanged)
+    Q_PROPERTY(int highAlert READ getHighAlert WRITE setHighAlert NOTIFY highAlertChanged)
+    Q_PROPERTY(int interval READ getInterval WRITE setInterval NOTIFY intervalChanged)
+    Q_PROPERTY(int highLimit READ getHighLimit WRITE setHighLimit NOTIFY highLimitChanged)
+    Q_PROPERTY(int lowLimit READ getLowLimit WRITE setLowLimit NOTIFY lowLimitChanged)
+    Q_PROPERTY(bool limitEnabled READ getLimitEnabled WRITE setLimitEnabled NOTIFY limitEnabledChanged)
+    Q_PROPERTY(QString lowAlertFile READ getLowAlertFile NOTIFY lowAlertFileChanged)
+    Q_PROPERTY(QString highAlertFile READ getHighAlertFile NOTIFY highAlertFileChanged)
 
 public:
     Settings(QObject* parent = nullptr);
     ~Settings();
 
-    // QML-exposed stuff
-    int getLowerLimit();
-    int getUpperLimit();
-    int getInterval();
-    bool getLimitEnabled();
-    int getChargeLimit();
-    QString getLowAlert();
-    QString getHighAlert();
-    void setLowerLimit(int newLimit);
-    void setUpperLimit(int newLimit);
-    void setInterval(int newInterval);
-    void setLimitEnabled(bool newEnabled);
-    void setChargeLimit(int newLimit);
+    int  getLowAlert() { return lowAlert; }
+    int  getHighAlert() { return highAlert; }
+    int  getInterval() { return interval; }
+    int  getLowLimit() { return lowLimit; }
+    int  getHighLimit() { return highLimit; }
+    bool getLimitEnabled() { return limitEnabled; }
+    QString getLowAlertFile() { return lowAlertFile; }
+
+    void setLowAlert(int newLimit) { lowAlert = newLimit; }
+    void setHighAlert(int newLimit) { highAlert = newLimit; }
+    void setInterval(int newInterval) { interval = newInterval; }
+    void setLowLimit(int newLimit) { lowLimit = newLimit; }
+    void setHighLimit(int newLimit) { highLimit = newLimit; }
+    void setLimitEnabled(bool newEnabled) { limitEnabled = newEnabled; }
+    QString getHighAlertFile() { return highAlertFile; }
+
 
 private:
     QSettings mySettings;
 
     // Default values
-    int lowerLimit = 25;
-    int upperLimit = 75;
+    int lowAlert = 25;
+    int highAlert = 75;
     int interval = 60;
     bool limitEnabled = false;
-    int chargeLimit = 70;
+    int lowLimit = 65;
+    int highLimit = 70;
     QString lowAlertFile = "/usr/share/sounds/jolla-ambient/stereo/general_warning.wav";
     QString highAlertFile = "/usr/share/sounds/jolla-ambient/stereo/positive_confirmation.wav";
 
+    // To avoid repeating the same string over and over and over...
+    const char* sLowAlert = "lowAlert";
+    const char* sHighAlert = "highAlert";
+    const char* sInterval = "interval";
+    const char* sLimitEnabled = "limitEnabled";
+    const char* sLowLimit = "lowLimit";
+    const char* sHighLimit = "highLimit";
+    const char* sLowAlertFile = "lowAlertFile";
+    const char* sHighAlertFile = "highAlertFile";
+
 signals:
-    int lowerLimitChanged();
-    int upperLimitChanged();
+    int lowAlertChanged();
+    int highAlertChanged();
     int intervalChanged();
     bool limitEnabledChanged();
-    int chargeLimitChanged();
-    QString lowAlertChanged();
-    QString highAlertChanged();
+    int lowLimitChanged();
+    int highLimitChanged();
+    QString lowAlertFileChanged();
+    QString highAlertFileChanged();
 };
 
 #endif // SETTINGS_H
