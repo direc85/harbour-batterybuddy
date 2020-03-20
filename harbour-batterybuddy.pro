@@ -28,6 +28,9 @@ DISTFILES += qml/harbour-batterybuddy.qml \
     qml/cover/CoverPage.qml \
     rpm/harbour-batterybuddy.spec \
     rpm/harbour-batterybuddy.yaml \
+    service/clear-write-permissions.sh \
+    service/harbour-batterybuddy.service \
+    service/set-write-permissions.sh \
     translations/*.ts \
     harbour-batterybuddy.desktop \
     qml/pages/MainPage.qml \
@@ -42,15 +45,22 @@ SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 
 TRANSLATIONS += translations/*.ts
 
+OTHER_FILES += service/clear-write-permissions.sh \
+               service/harbour-batterybuddy.service \
+               service/set-write-permissions.sh
+
+service.files = service
+service.path = /usr/share/$${TARGET}
+
+INSTALLS += service
+
 # Begin: include sound files
 
 #OTHER_FILES += sounds/upperLimit.ogg \
 #    sounds/lowerLimit.ogg \
 
-#DEPLOYMENT_PATH = /usr/share/$${TARGET}
-
 #sounds.files = sounds
-#sounds.path = $${DEPLOYMENT_PATH}
+#sounds.path = /usr/share/$${TARGET}
 
 #INSTALLS += sounds
 

@@ -1,0 +1,13 @@
+[Unit]
+Description=Allow user nemo to write to charging control file
+#After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/share/harbour-batterybuddy/service/set-write-permissions.sh
+RemainAfterExit=true
+ExecStop=/usr/share/harbour-batterybuddy/service/clear-write-permissions.sh
+StandardOutput=journal
+
+[Install]
+WantedBy=multi-user.target
