@@ -45,18 +45,24 @@ int main(int argc, char *argv[])
     QGuiApplication* app = SailfishApp::application(argc, argv);
     QQuickView* view = SailfishApp::createView();
 
-    Battery battery;
-    Settings settings;
+    Battery* battery = new Battery();
+    Settings* settings = new Settings();
+    QTimer* updater = new QTimer();
 
-    QTimer updater;
-    QObject::connect(&updater, SIGNAL(timeout()), &battery, SLOT(updateData()));
-    updater.start(3000);
+    QObject::connect(updater, SIGNAL(timeout()), battery, SLOT(updateData()));
+    updater->start(3000);
 
-    view->rootContext()->setContextProperty("battery", &battery);
-    view->rootContext()->setContextProperty("settings", &settings);
+    view->rootContext()->setContextProperty("battery", battery);
+    view->rootContext()->setContextProperty("settings", settings);
 
     view->setSource(SailfishApp::pathTo("qml/harbour-batterybuddy.qml"));
     view->showFullScreen();
 
-    return app->exec();
+    int retval = app->exec();
+
+    delete updater;
+    delete battery;
+    delete settings;
+
+    return retval;
 }
