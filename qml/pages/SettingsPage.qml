@@ -68,8 +68,8 @@ Page {
                 id: highAlertSlider
                 width: parent.width
                 label: qsTr("Charging limit")
-                minimumValue: 10
-                maximumValue: 99
+                minimumValue: 11
+                maximumValue: 100
                 stepSize: 1
                 value: settings.highAlert
                 valueText: value + "%"
@@ -108,7 +108,7 @@ Page {
                 handleVisible: enabled
                 width: parent.width
                 label: qsTr("Stop charging limit")
-                minimumValue: 20
+                minimumValue: 21
                 maximumValue: 95
                 stepSize: 1
                 value: settings.highLimit
@@ -126,7 +126,7 @@ Page {
                 width: parent.width
                 label: qsTr("Resume charging limit")
                 minimumValue: 20
-                maximumValue: 95
+                maximumValue: 94
                 stepSize: 1
                 value: settings.lowLimit
                 valueText: value + "%"
