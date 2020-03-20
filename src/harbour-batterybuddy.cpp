@@ -60,6 +60,10 @@ int main(int argc, char *argv[])
 
     int retval = app->exec();
 
+    updater->stop();
+    battery->blockSignals(true);
+    battery->setChargingEnabled(true);
+
     delete updater;
     delete battery;
     delete settings;
