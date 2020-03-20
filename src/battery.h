@@ -25,9 +25,10 @@
 class Battery : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int     charge    READ getCharge    NOTIFY chargeChanged  )
-    Q_PROPERTY(bool    charging  READ getCharging  NOTIFY chargingChanged)
-    Q_PROPERTY(QString state     READ getState     NOTIFY stateChanged)
+    Q_PROPERTY(int charge READ getCharge NOTIFY chargeChanged)
+    Q_PROPERTY(bool chargerConnected READ getChargerConnected NOTIFY chargerConnectedChanged)
+    Q_PROPERTY(QString state READ getState NOTIFY stateChanged)
+    Q_PROPERTY(bool chargingEnabled READ getChargingEnabled  WRITE setChargingEnabled NOTIFY chargingEnabledChanged)
 
 public:
     Battery(QObject* parent = nullptr);
@@ -35,29 +36,40 @@ public:
 
     int getCharge();
     bool getCharging();
+    bool getChargerConnected();
     QString getState();
+
+    bool getChargingEnabled();
+    void setChargingEnabled(bool);
 
 public slots:
     void updateData();
 
 private:
     QFile* chargeFile;
-    QFile* chargingFile;
+    QFile* chargerConnectedFile;
     QFile* stateFile;
+    QFile* chargingEnabledFile;
 
     // Default values:
-    int charge    = 100;     // 100% full
-    bool charging = true;    // Charger plugged in
-    QString state = "idle";  // dis/charging, idle, unknown
+    int charge = 100; // 100% full
+    bool chargerConnected = false; // Charger plugged in
+    QString state = "idle"; // dis/charging, idle, unknown
+    bool chargingEnabled = true; // Only ever disabled manually
 
-    int nextCharge    = charge;
-    bool nextCharging = charging;
+    int enableChargingValue = 1;
+    int disableChargingValue = 0;
+
+    int nextCharge = charge;
+    bool nextChargerConnected = chargerConnected;
     QString nextState = state;
+    bool nextChargingEnabled = chargingEnabled;
 
 signals:
     int chargeChanged();
-    bool chargingChanged();
     QString stateChanged();
+    bool chargingEnabledChanged();
+    bool chargerConnectedChanged();
 };
 
 #endif // BATTERY_H

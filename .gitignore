@@ -1,5 +1,6 @@
 *.old
 *.bak
+*.tmp
 *.pro.user
 *.pro.user.*
 *.qm

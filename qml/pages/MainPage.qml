@@ -94,8 +94,8 @@ Page {
                     value: battery.charge + "%"
                 }
                 MyDetailItem {
-                    label: qsTr("Charging:")
-                    value: battery.charging ? qsTr("yes") : qsTr("no")
+                    label: qsTr("Charger connected:")
+                    value: battery.chargerConnected ? qsTr("yes") : qsTr("no")
                 }
                 MyDetailItem {
                     label: qsTr("State:")

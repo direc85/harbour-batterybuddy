@@ -22,27 +22,33 @@ import "../components"
 CoverBackground {
     id: coverPage
 
+    onStatusChanged: batteryGraph.updateView()
+
     BatteryGraph {
         id: batteryGraph
         x: coverPage.width * 0.3
         y: coverPage.width * 0.25
         width: 0.4 * coverPage.width
 
-        onStateChanged: { updateView() }
-        onChargingChanged: { updateView() }
-        onChargeChanged: { updateView() }
+        Component.onCompleted: updateView()
+        onStateChanged: updateView()
+        onChargerConnectedChanged: updateView()
+        onChargeChanged: updateView()
         function updateView() {
             if(charge <= settings.lowerLimit && battery.state === "discharging") {
                 coverText.text = qsTr("Connect\ncharger")
             }
             else if(battery.charge >= settings.upperLimit &&
-                    ((battery.state === "charging" && battery.charging === true) || (battery.state === "idle" && battery.charging === false))) {
+                    (battery.state === "charging" || battery.state === "idle")) {
                 coverText.text = qsTr("Disconnect\ncharger")
             }
-            else if(battery.charging) {
-                coverText.text = qsTr("Charging...")
+            else if(battery.chargerConnected && battery.state === "charging") {
+                coverText.text = qsTr("Charging")
             }
-            else {
+            else if(battery.chargerConnected && battery.state === "discharging") {
+                coverText.text = qsTr("Not charging")
+            }
+            else { // Discharging
                 coverText.text = qsTr("Battery\nBuddy")
             }
         }

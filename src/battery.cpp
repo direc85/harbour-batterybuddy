@@ -20,11 +20,36 @@
 Battery::Battery(QObject* parent) : QObject(parent)
 {
     // Number: meaning percentage, e.g. 42
-    chargeFile   = new QFile("/run/state/namespaces/Battery/ChargePercentage", this);
-    // Number: 0 or 1
-    chargingFile = new QFile("/run/state/namespaces/Battery/IsCharging", this);
+    chargeFile   = new QFile("/sys/class/power_supply/battery/capacity", this);
     // String: charging, discharging, (empty), unknown (others?)
-    stateFile   = new QFile("/run/state/namespaces/Battery/ChargingState", this);
+    stateFile   = new QFile("/sys/class/power_supply/battery/status", this);
+    // Number: 0 or 1
+    chargerConnectedFile = new QFile("/sys/class/power_supply/usb/present");
+
+    // ENABLE/DISABLE CHARGING
+
+    // e.g. for Sony Xperia XA2
+    if(QFile::exists(QString("/sys/class/power_supply/battery/input_suspend"))) {
+        chargingEnabledFile = new QFile("/sys/class/power_supply/battery/input_suspend");
+        enableChargingValue = 0;
+        disableChargingValue = 1;
+    }
+
+    // e.g. for Sony Xperia Z3 Compact Tablet
+    else if(QFile::exists(QString("/sys/class/power_supply/battery/charging_enabled"))) {
+        chargingEnabledFile = new QFile("/sys/class/power_supply/battery/charging_enabled");
+        enableChargingValue = 1;
+        disableChargingValue = 0;
+    }
+
+    // e.g. for Jolla Phone
+    else if(QFile::exists(QString("/sys/class/power_supply/usb/charger_disable"))) {
+        chargingEnabledFile = new QFile("/sys/class/power_supply/usb/charger_disable");
+        enableChargingValue = 0;
+        disableChargingValue = 1;
+    }
+    else
+        chargingEnabledFile = Q_NULLPTR;
 
     // TODO
     // Implement DBus mechanism for reading battery status
@@ -37,33 +62,58 @@ Battery::~Battery() { }
 void Battery::updateData()
 {
     if(chargeFile->open(QIODevice::ReadOnly)) {
-        nextCharge = chargeFile->readAll().toInt();
+        nextCharge = chargeFile->readLine().trimmed().toInt();
         if(nextCharge != charge) {
             charge = nextCharge;
             emit chargeChanged();
         }
         chargeFile->close();
     }
-    if(chargingFile->open(QIODevice::ReadOnly)) {
-        nextCharging = (chargingFile->readAll().toInt() == 0 ? false : true);
-        if(nextCharging != charging) {
-            charging = nextCharging;
-            emit chargingChanged();
+    if(chargerConnectedFile->open(QIODevice::ReadOnly)) {
+        nextChargerConnected = chargerConnectedFile->readLine().trimmed().toInt();
+        if(nextChargerConnected != chargerConnected) {
+            chargerConnected = nextChargerConnected;
+            emit chargerConnectedChanged();
         }
-        chargingFile->close();
+        chargerConnectedFile->close();
     }
     if(stateFile->open(QIODevice::ReadOnly)) {
-        nextState = (QString(stateFile->readAll()));
+        nextState = (QString(stateFile->readLine().trimmed().toLower()));
         if(nextState != state) {
             state = nextState;
             emit stateChanged();
         }
         stateFile->close();
     }
+    // This can't be used, because on Jolla Phone the file always reads "0" :(
+    // It doesn't matter that much anyway, because the value changes only when we change it.
+
+    // if(chargingEnabledFile && chargingEnabledFile->open(QIODevice::ReadOnly)) {
+    //     nextChargingEnabled = chargingEnabledFile->readLine().trimmed().toInt() == enableChargingValue;
+    //     if(nextChargingEnabled != chargingEnabled) {
+    //         chargingEnabled = nextChargingEnabled;
+    //         emit chargingEnabledChanged();
+    //     }
+    //     chargingEnabledFile->close();
+    // }
 }
 
 int Battery::getCharge(){ return charge; }
 
-bool Battery::getCharging() { return charging; }
-
 QString Battery::getState() { return state; }
+
+bool Battery::getChargingEnabled() { return chargingEnabled; }
+
+void Battery::setChargingEnabled(bool isEnabled) {
+    if(chargingEnabledFile && chargingEnabledFile->open(QIODevice::WriteOnly)) {
+        if(chargingEnabledFile->write(QString("%1").arg(isEnabled ? enableChargingValue : disableChargingValue).toLatin1())) {
+            chargingEnabled = isEnabled;
+            emit chargingEnabledChanged();
+        }
+        chargingEnabledFile->close();
+    }
+}
+
+bool Battery::getChargerConnected() {
+    return chargerConnected;
+}

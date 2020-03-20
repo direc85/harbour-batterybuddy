@@ -24,11 +24,13 @@
 class Settings : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int     lowerLimit     READ getLowerLimit  WRITE setLowerLimit  NOTIFY lowerLimitChanged)
-    Q_PROPERTY(int     upperLimit     READ getUpperLimit  WRITE setUpperLimit  NOTIFY upperLimitChanged)
-    Q_PROPERTY(int     interval       READ getInterval    WRITE setInterval    NOTIFY intervalChanged)
-    Q_PROPERTY(QString lowAlertFile   READ getLowAlert                         NOTIFY lowAlertChanged)
-    Q_PROPERTY(QString highAlertFile  READ getHighAlert                        NOTIFY highAlertChanged)
+    Q_PROPERTY(int     lowerLimit     READ getLowerLimit   WRITE setLowerLimit   NOTIFY lowerLimitChanged)
+    Q_PROPERTY(int     upperLimit     READ getUpperLimit   WRITE setUpperLimit   NOTIFY upperLimitChanged)
+    Q_PROPERTY(int     interval       READ getInterval     WRITE setInterval     NOTIFY intervalChanged)
+    Q_PROPERTY(bool    limitEnabled   READ getLimitEnabled WRITE setLimitEnabled NOTIFY limitEnabledChanged)
+    Q_PROPERTY(int     chargeLimit    READ getChargeLimit  WRITE setChargeLimit  NOTIFY chargeLimitChanged)
+    Q_PROPERTY(QString lowAlertFile   READ getLowAlert                           NOTIFY lowAlertChanged)
+    Q_PROPERTY(QString highAlertFile  READ getHighAlert                          NOTIFY highAlertChanged)
 
 public:
     Settings(QObject* parent = nullptr);
@@ -38,11 +40,15 @@ public:
     int getLowerLimit();
     int getUpperLimit();
     int getInterval();
+    bool getLimitEnabled();
+    int getChargeLimit();
     QString getLowAlert();
     QString getHighAlert();
     void setLowerLimit(int newLimit);
     void setUpperLimit(int newLimit);
     void setInterval(int newInterval);
+    void setLimitEnabled(bool newEnabled);
+    void setChargeLimit(int newLimit);
 
 private:
     QSettings mySettings;
@@ -51,6 +57,8 @@ private:
     int lowerLimit = 25;
     int upperLimit = 75;
     int interval = 60;
+    bool limitEnabled = false;
+    int chargeLimit = 70;
     QString lowAlertFile = "/usr/share/sounds/jolla-ambient/stereo/general_warning.wav";
     QString highAlertFile = "/usr/share/sounds/jolla-ambient/stereo/positive_confirmation.wav";
 
@@ -58,6 +66,8 @@ signals:
     int lowerLimitChanged();
     int upperLimitChanged();
     int intervalChanged();
+    bool limitEnabledChanged();
+    int chargeLimitChanged();
     QString lowAlertChanged();
     QString highAlertChanged();
 };

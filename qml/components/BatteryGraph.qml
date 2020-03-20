@@ -22,7 +22,7 @@ Item {
     id: batteryGraph
     property real borderSize: width * 0.15
     property real charge: battery.charge
-    property bool charging: battery.charging
+    property bool chargerConnected: battery.chargerConnected
     height: 1.75 * width
 
     Rectangle {
