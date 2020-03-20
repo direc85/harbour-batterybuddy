@@ -19,6 +19,18 @@
 
 Settings::Settings(QObject *parent) : QObject(parent)
 {
+    // Migrate old settings
+    if(mySettings.contains("lowerLimit")) {
+        mySettings.setValue(sLowAlert, mySettings.value("lowerLimit"));
+        mySettings.remove("lowerLimit");
+    }
+
+    if(mySettings.contains("upperLimit")) {
+        mySettings.setValue(sHighAlert, mySettings.value("upperLimit"));
+        mySettings.remove("upperLimit");
+    }
+
+    // Read in the values
     int tempValue;
     tempValue = mySettings.value(sLowAlert, lowAlert).toInt();
     if(tempValue >= 10 && tempValue <= 99) {
