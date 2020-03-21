@@ -22,6 +22,12 @@ import "../components"
 Page {
     id: settingsPage
 
+    onStatusChanged: {
+        if(status === PageStatus.Activating) {
+            autoStopCharging.checked = settings.notificationsEnabled
+        }
+    }
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: header.height + settingsColumn.height + Theme.horizontalPageMargin
@@ -60,7 +66,6 @@ Page {
                 text: qsTr("Stop charging when limit reached")
                 description: qsTr("This option stops charging when battery has reached the percentage set in Charging limit value, and resumes charging when charge has decreased below Continue charge limit value. Generally a value close to the Charging limit value is recommened, such as 80% and 75%.")
                 onCheckedChanged: settings.limitEnabled = checked
-                Component.onCompleted: checked = settings.limitEnabled
             }
 
             MySlider {

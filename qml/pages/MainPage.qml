@@ -132,7 +132,10 @@ Page {
                         id: resumeButton
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: qsTr("Resume")
-                        onClicked: battery.chargingEnabled = true
+                        onClicked: {
+                            battery.chargingEnabled = true
+                            settings.limitEnabled = false
+                        }
                         enabled: !battery.chargingEnabled
                     }
                 }
@@ -142,7 +145,10 @@ Page {
                         id: pauseButton
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: qsTr("Pause")
-                        onClicked: battery.chargingEnabled = false
+                        onClicked: {
+                            battery.chargingEnabled = false
+                            settings.limitEnabled = false
+                        }
                         enabled: battery.chargingEnabled
                     }
                 }
