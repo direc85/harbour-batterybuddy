@@ -1,18 +1,15 @@
-# Rename this file as harbour-batterybuddy.changes to include changelog
-# entries in your RPM file.
-#
-# Add new changelog entries following the format below.
-# Add newest entries to the top of the list.
-# Separate entries from eachother with a blank line.
-#
-# Alternatively, if your changelog is automatically generated (e.g. with
-# the git-change-log command provided with Sailfish OS SDK), create a
-# harbour-batterybuddy.changes.run script to let mb2 run the required commands for you.
+* Sat Mar 21 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 2.0-1
+- New feature: pause and resume charging (automatically/manually)
+- Implemented systemd service for charger control permissions
+- Massive code cleanup, many parts improved or rewritten
+- Don't use deprecated /run/state/namespaces/Battery/
+- Audio tests moved to Settings page
+- Use "right to left" slider highlight
+- Use separate license page
 
-# * date Author's Name <author's email> version-release
-# - Summary of changes
 * Sun Mar 10 2019 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 1.3-1
-- Add French and Chinise translations (thanks, dashinfantry and Quenty31)
+- Add Chinese translation (thanks, dashinfantry)
+- Add French translation (thanks, Quenty31)
 
 * Mon Feb 11 2019 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 1.2-1
 - Alert doesn't stop media playback
