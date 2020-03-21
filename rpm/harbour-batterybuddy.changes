@@ -1,3 +1,7 @@
+* Sat Mar 21 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 2.1-1
+- Add landscape orientation support
+- Update Chinese translation (thanks, dashinfantry)
+
 * Sat Mar 21 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 2.0-1
 - New feature: pause and resume charging (automatically/manually)
 - Implemented systemd service for charger control permissions
