@@ -4,39 +4,45 @@
 <context>
     <name>AboutPage</name>
     <message>
-        <source>License</source>
-        <translation>Lisenssi</translation>
+        <source>Battery Buddy is a small and simple utility designed to improve the lifetime of the battery.</source>
+        <translation>Battery Buddy on pieni ja yksinkertainen sovellus, jonka tarkoituksena on pidentää akun elinikää.</translation>
     </message>
     <message>
-        <source>Code and feedback</source>
-        <translation>Koodi ja palaute</translation>
+        <source>Version</source>
+        <translation>Versio</translation>
     </message>
     <message>
-        <source>Battery Buddy</source>
-        <translation>Battery Buddy</translation>
+        <source>View License</source>
+        <translation>Näytä lisenssi</translation>
     </message>
     <message>
-        <source>Author</source>
-        <translation>Tekijä</translation>
+        <source>Battery Buddy is open source software licensed under the terms of the GNU General Public License.</source>
+        <translation>Battery Buddy on avoimen lähdekoodin ohjelma ja julkaistu GNU-lisenssin alaisuudessa.</translation>
+    </message>
+    <message>
+        <source>Contributions and translations are always appreciated!</source>
+        <translation>Sovelluksen kehittämiseen osallistuminen sekä uusien käännösten lisääminen ovat aina tervetulleita!</translation>
     </message>
 </context>
 <context>
     <name>CoverPage</name>
     <message>
+        <source>Charging</source>
+        <translation>Akku latautuu</translation>
+    </message>
+    <message>
+        <source>Not charging</source>
+        <translation>Akku ei\nlatauksessa</translation>
+    </message>
+    <message>
         <source>Connect
 charger</source>
-        <translation>Kytke
-laturi</translation>
+        <translation>Kytke\nlaturi</translation>
     </message>
     <message>
         <source>Disconnect
 charger</source>
-        <translation>Irrota
-laturi</translation>
-    </message>
-    <message>
-        <source>Charging...</source>
-        <translation>Ladataan...</translation>
+        <translation>Irrota\nlaturi</translation>
     </message>
     <message>
         <source>Battery
@@ -147,51 +153,13 @@ Buddy</translation>
         <translation>Battery Buddy</translation>
     </message>
     <message>
-        <source>Click the buttons to test the sound and notification.</source>
-        <translation>Painikkeista voit testata hälytysäänet ja ilmoituksen.</translation>
-    </message>
-    <message>
         <source>Battery status</source>
         <translation>Akun tila</translation>
-    </message>
-    <message>
-        <source>Alert tests</source>
-        <translation>Hälytystestit</translation>
-    </message>
-    <message>
-        <source>Please connect the charger.</source>
-        <translation>Ole hyvä ja kytke laturi.</translation>
-    </message>
-    <message>
-        <source>Please disconnect the charger.</source>
-        <translation>Ole hyvä ja irrota laturi.</translation>
-    </message>
-    <message>
-        <source>Battery charge</source>
-        <comment>Battery charge 20%</comment>
-        <translation>Akun varaus</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <comment>About this application</comment>
-        <translation>Tietoja</translation>
     </message>
     <message>
         <source>Background</source>
         <comment>More to read, background information...</comment>
         <translation>Taustatietoa</translation>
-    </message>
-    <message>
-        <source>This is a test.</source>
-        <translation>Tämä on testi.</translation>
-    </message>
-    <message>
-        <source>Discharged</source>
-        <translation>Tyhjä</translation>
-    </message>
-    <message>
-        <source>Charged</source>
-        <translation>Täysi</translation>
     </message>
     <message>
         <source>yes</source>
@@ -204,10 +172,6 @@ Buddy</translation>
     <message>
         <source>Charge:</source>
         <translation>Varaus:</translation>
-    </message>
-    <message>
-        <source>Charging:</source>
-        <translation>Lataus:</translation>
     </message>
     <message>
         <source>State:</source>
@@ -234,12 +198,38 @@ Buddy</translation>
         <translation>tuntematon</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translation>Asetukset</translation>
+        <source>Charger connected:</source>
+        <translation>Laturi kytketty:</translation>
     </message>
     <message>
-        <source>Please leave Battery Buddy running in the background in order to receive alerts.</source>
-        <translation>Jätä Battery Buddy taustalle käyntiin, jotta hälytykset toimivat.</translation>
+        <source>full</source>
+        <comment>Battery fully charged</comment>
+        <translation>täysi</translation>
+    </message>
+    <message>
+        <source>empty</source>
+        <comment>Battery fully depleted</comment>
+        <translation>tyhjä</translation>
+    </message>
+    <message>
+        <source>Resume</source>
+        <translation>Jatka</translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translation>Keskeytä</translation>
+    </message>
+    <message>
+        <source>Charger control</source>
+        <translation>Latauksen hallinta</translation>
+    </message>
+    <message>
+        <source>Please leave Battery Buddy running in the background for proper operation.</source>
+        <translation>Jätä Battery Buddy käyntiin, jotta se toimisi normaalisti.</translation>
+    </message>
+    <message>
+        <source>Using these controls overrides the automated settings.</source>
+        <translation>Näiden painikkeiden käyttö poistaa latausautomatiikan käytöstä.</translation>
     </message>
 </context>
 <context>
@@ -249,24 +239,77 @@ Buddy</translation>
         <translation>Asetukset</translation>
     </message>
     <message>
-        <source>Set the maximum and minimum target charge levels.</source>
-        <translation>Aseta haluamasi ylä- ja alaraja latauksen tavoitearvoiksi.</translation>
+        <source>Resume charging limit</source>
+        <translation>Latauksen jatkamisraja</translation>
     </message>
     <message>
-        <source>Charging limit</source>
-        <translation>Latausraja</translation>
+        <source>Charging settings</source>
+        <translation>Latauksen asetukset</translation>
     </message>
     <message>
-        <source>Discharging limit</source>
-        <translation>Purkautumisraja</translation>
+        <source>Notification settings</source>
+        <translation>Ilmoitusasetukset</translation>
     </message>
     <message>
-        <source>Alert settings</source>
-        <translation>Hälytysasetukset</translation>
+        <source>Use notifications</source>
+        <translation>Käytä ilmoituksia</translation>
     </message>
     <message>
-        <source>Alert interval</source>
-        <translation>Hälytysten tiehys</translation>
+        <source>Notification interval</source>
+        <translation>Ilmoitusten väli</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <comment>About this application</comment>
+        <translation>Tietoja</translation>
+    </message>
+    <message>
+        <source>Pause charging limit</source>
+        <translation>Latauksen keskeytysraja</translation>
+    </message>
+    <message>
+        <source>Display visual and audible notifications about reached battery charge levels, when the battery charge is below or above desired percentage.</source>
+        <translation>Näytä visuaalinen ilmoitus ja toista merkkiääni, kun akku on latautunut joko riittävän tyhjäksi tai riittävän täyteen.</translation>
+    </message>
+    <message>
+        <source>Battery low notification</source>
+        <translation>Alhainen varaustaso</translation>
+    </message>
+    <message>
+        <source>Battery full notification</source>
+        <translation>Korkea varaustaso</translation>
+    </message>
+    <message>
+        <source>Automatic charging control</source>
+        <translation>Automaattinen latauksenhallinta</translation>
+    </message>
+    <message>
+        <source>This option disables charging automatically when the battery has charged above the pausing percentage and enables it again when the battery has depleted below the resuming percentage.</source>
+        <translation>Tämä valinta keskeyttää akun latauksen automaattisesti, kun akku on latautunut keskeytysrajaan asti, ja jatkaa latausta uudelleen, kun akku on purkautunut jatkamisrajaan asti.</translation>
+    </message>
+</context>
+<context>
+    <name>harbour-batterybuddy</name>
+    <message>
+        <source>Battery Buddy</source>
+        <translation>Battery Buddy</translation>
+    </message>
+    <message>
+        <source>Battery charge</source>
+        <comment>Battery charge 20%</comment>
+        <translation>Akun varaus</translation>
+    </message>
+    <message>
+        <source>This is a test.</source>
+        <translation>Tämä on testi.</translation>
+    </message>
+    <message>
+        <source>Please disconnect the charger.</source>
+        <translation>Ole hyvä ja irrota laturi.</translation>
+    </message>
+    <message>
+        <source>Please connect the charger.</source>
+        <translation>Ole hyvä ja kytke laturi.</translation>
     </message>
 </context>
 </TS>
