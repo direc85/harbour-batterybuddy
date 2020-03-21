@@ -39,10 +39,8 @@ Battery::Battery(Settings* newSettings, QObject* parent) : QObject(parent)
         qInfo() << "Charger control feature disabled";
     }
     else {
-        chargingEnabledFile = new QFile(this);
-
         // e.g. for Sony Xperia XA2
-        chargingEnabledFile->setFileName("/sys/class/power_supply/battery/input_suspend");
+        chargingEnabledFile = new QFile("/sys/class/power_supply/battery/input_suspend", this);
         if(chargingEnabledFile->exists()) {
             enableChargingValue = 0;
             disableChargingValue = 1;
