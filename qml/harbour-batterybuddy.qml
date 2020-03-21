@@ -60,8 +60,8 @@ ApplicationWindow
 
     Timer {
         id: alertTimer
-        interval: settings.interval * 1000 // sec -> msec
-        running: true
+        interval: settings.interval * 1000
+        running: settings.notificationsEnabled
         repeat: true
         onTriggered: {
             if(battery.charge <= settings.lowerLimit && battery.state === "discharging") {

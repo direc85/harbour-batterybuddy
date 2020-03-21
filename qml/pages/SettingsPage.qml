@@ -26,6 +26,8 @@ Page {
         anchors.fill: parent
         contentHeight: header.height + settingsColumn.height + Theme.horizontalPageMargin
 
+        VerticalScrollDecorator { flickable: mainFlickable }
+
         PageHeader {
             id: header
             title: qsTr("Settings")
@@ -43,64 +45,15 @@ Page {
 
             Label {
                 x: Theme.paddingLarge
-                text: qsTr("Alert settings")
+                text: qsTr("Charging settings")
                 color: Theme.highlightColor
-            }
-            MySlider {
-                width: parent.width
-                label: qsTr("Alert interval")
-                minimumValue: 60
-                maximumValue: 600
-                stepSize: 10
-                value: settings.interval
-                valueText: Math.floor(value / 60) + (value % 60 < 10 ? ":0" + value % 60 : ":" + value % 60)
-                onValueChanged: settings.interval = value
-            }
-            Label {
-                x: Theme.paddingLarge*2
-                width: parent.width - x*2;
-                wrapMode: Text.Wrap
-                text: qsTr("Set the maximum and minimum target charge levels.")
-                color: Theme.primaryColor
-                font.pixelSize: Theme.fontSizeSmall
-            }
-            MySlider {
-                id: highAlertSlider
-                width: parent.width
-                label: qsTr("Charging limit")
-                minimumValue: 11
-                maximumValue: 100
-                stepSize: 1
-                value: settings.highAlert
-                valueText: value + "%"
-                highlightDirection: Qt.RightToLeft
-                onValueChanged: {
-                    settings.highAlert = value
-                    if(lowAlertSlider.value >= value)
-                        lowAlertSlider.value = value - 1
-                }
-            }
-            MySlider {
-                id: lowAlertSlider
-                width: parent.width
-                label: qsTr("Discharging limit")
-                minimumValue: 10
-                maximumValue: 99
-                stepSize: 1
-                value: settings.lowAlert
-                valueText: value + "%"
-                onValueChanged: {
-                    settings.lowAlert = value
-                    if(highAlertSlider.value <= value)
-                        highAlertSlider.value = value + 1
-                }
             }
             TextSwitch {
                 id: autoStopCharging
                 text: qsTr("Stop charging when limit reached")
                 description: qsTr("This option stops charging when battery has reached the percentage set in Charging limit value, and resumes charging when charge has decreased below Continue charge limit value. Generally a value close to the Charging limit value is recommened, such as 80% and 75%.")
-                checked: settings.limitEnabled
                 onCheckedChanged: settings.limitEnabled = checked
+                Component.onCompleted: checked = settings.limitEnabled
             }
 
             MySlider {
@@ -111,7 +64,7 @@ Page {
                 minimumValue: 21
                 maximumValue: 95
                 stepSize: 1
-                value: settings.highLimit
+                Component.onCompleted: value = settings.highLimit
                 valueText: value + "%"
                 highlightDirection: Qt.RightToLeft
                 onValueChanged: {
@@ -128,7 +81,7 @@ Page {
                 minimumValue: 20
                 maximumValue: 94
                 stepSize: 1
-                value: settings.lowLimit
+                Component.onCompleted: value = settings.lowLimit
                 valueText: value + "%"
                 onValueChanged: {
                     settings.lowLimit = value
@@ -137,84 +90,57 @@ Page {
                 }
             }
             Label {
-                x: Theme.paddingLarge*2
-                width: parent.width - x*2;
-                wrapMode: Text.Wrap
-                text: qsTr("You can also independently stop and resume charging.")
-                color: Theme.primaryColor
-                font.pixelSize: Theme.fontSizeSmall
-            }
-            Row {
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-                height: resumeButton.height
-
-                Column {
-                    width: parent.width / 2
-                    Button {
-                        id: resumeButton
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("Resume")
-                        onClicked: battery.chargingEnabled = true
-                        enabled: !battery.chargingEnabled
-                    }
-                }
-                Column {
-                    width: parent.width / 2
-                    Button {
-                        id: pauseButton
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("Pause")
-                        onClicked: battery.chargingEnabled = false
-                        enabled: battery.chargingEnabled
-                    }
-                }
-            }
-            Label {
                 x: Theme.paddingLarge
-                text: qsTr("Alert tests")
+                text: qsTr("Notification settings")
                 color: Theme.highlightColor
             }
-
-            Label {
-                x: Theme.paddingLarge*2
-                width: parent.width - x*2;
-                wrapMode: Text.Wrap
-                text: qsTr("Click the buttons to test the sound and notification.")
-                color: Theme.primaryColor
-                font.pixelSize: Theme.fontSizeSmall
+            TextSwitch {
+                id: notificationsSwitch
+                text: qsTr("Use notifications")
+                description: qsTr("When the application is minimized, display visual and audible notifications about reached battery charge levels.")
+                Component.onCompleted: checked = settings.notificationsEnabled
+                onCheckedChanged: settings.notificationsEnabled = checked
             }
-            Row {
-                anchors {
-                    left: parent.left
-                    right: parent.right
+            MySlider {
+                id: highAlertSlider
+                width: parent.width
+                label: qsTr("Charging limit")
+                minimumValue: 11
+                maximumValue: 100
+                stepSize: 1
+                Component.onCompleted: value = settings.highAlert
+                valueText: value + "%"
+                highlightDirection: Qt.RightToLeft
+                onValueChanged: {
+                    settings.highAlert = value
+                    if(lowAlertSlider.value >= value)
+                        lowAlertSlider.value = value - 1
                 }
-                height: resumeButton.height
-
-                Column {
-                    width: parent.width / 2
-                    Button {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("Charged")
-                        onClicked: {
-                            alertHigh.play()
-                            notification.republishTest()
-                        }
-                    }
+            }
+            MySlider {
+                id: lowAlertSlider
+                width: parent.width
+                label: qsTr("Discharging limit")
+                minimumValue: 10
+                maximumValue: 99
+                stepSize: 1
+                Component.onCompleted: value = settings.lowAlert
+                valueText: value + "%"
+                onValueChanged: {
+                    settings.lowAlert = value
+                    if(highAlertSlider.value <= value)
+                        highAlertSlider.value = value + 1
                 }
-                Column {
-                    width: parent.width / 2
-                    Button {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("Discharged")
-                        onClicked: {
-                            alertLow.play()
-                            notification.republishTest()
-                        }
-                    }
-                }
+            }
+            MySlider {
+                width: parent.width
+                label: qsTr("Notification interval")
+                minimumValue: 60
+                maximumValue: 600
+                stepSize: 10
+                Component.onCompleted: value = settings.interval
+                valueText: Math.floor(value / 60) + (value % 60 < 10 ? ":0" + value % 60 : ":" + value % 60)
+                onValueChanged: settings.interval = value
             }
         }
     }

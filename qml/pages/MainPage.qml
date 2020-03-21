@@ -40,7 +40,7 @@ Page {
     SilicaFlickable {
         id: mainFlickable
         anchors.fill: parent
-        contentHeight: column.height
+        contentHeight: column.height + Theme.horizontalPageMargin
 
         VerticalScrollDecorator { flickable: mainFlickable }
 
@@ -112,9 +112,46 @@ Page {
                 color: Theme.primaryColor
                 font.pixelSize: Theme.fontSizeSmall
             }
-            Item {
-                width: parent.width
-                height: Theme.paddingLarge
+            Label {
+                x: Theme.paddingLarge
+                text: qsTr("Charger control")
+                color: Theme.highlightColor
+            }
+            Label {
+                x: Theme.paddingLarge*2
+                width: parent.width - x*2;
+                wrapMode: Text.Wrap
+                text: qsTr("Using these controls overrides the automated settings.")
+                color: Theme.primaryColor
+                font.pixelSize: Theme.fontSizeSmall
+            }
+            Row {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                height: resumeButton.height
+
+                Column {
+                    width: parent.width / 2
+                    Button {
+                        id: resumeButton
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: qsTr("Resume")
+                        onClicked: battery.chargingEnabled = true
+                        enabled: !battery.chargingEnabled
+                    }
+                }
+                Column {
+                    width: parent.width / 2
+                    Button {
+                        id: pauseButton
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: qsTr("Pause")
+                        onClicked: battery.chargingEnabled = false
+                        enabled: battery.chargingEnabled
+                    }
+                }
             }
         }
     }

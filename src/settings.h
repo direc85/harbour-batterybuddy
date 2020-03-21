@@ -31,6 +31,7 @@ class Settings : public QObject
     Q_PROPERTY(int highLimit READ getHighLimit WRITE setHighLimit NOTIFY highLimitChanged)
     Q_PROPERTY(int lowLimit READ getLowLimit WRITE setLowLimit NOTIFY lowLimitChanged)
     Q_PROPERTY(bool limitEnabled READ getLimitEnabled WRITE setLimitEnabled NOTIFY limitEnabledChanged)
+    Q_PROPERTY(bool notificationsEnabled READ getNotificationsEnabled WRITE setNotificationsEnabled NOTIFY notificationsEnabledChanged)
     Q_PROPERTY(QString lowAlertFile READ getLowAlertFile NOTIFY lowAlertFileChanged)
     Q_PROPERTY(QString highAlertFile READ getHighAlertFile NOTIFY highAlertFileChanged)
 
@@ -44,15 +45,17 @@ public:
     int  getLowLimit() { return lowLimit; }
     int  getHighLimit() { return highLimit; }
     bool getLimitEnabled() { return limitEnabled == 1; }
+    bool getNotificationsEnabled() { return notificationsEnabled == 1; }
     QString getLowAlertFile() { return lowAlertFile; }
+    QString getHighAlertFile() { return highAlertFile;}
 
-    void setLowAlert(int newLimit) { lowAlert = newLimit; }
-    void setHighAlert(int newLimit) { highAlert = newLimit; }
-    void setInterval(int newInterval) { interval = newInterval; }
-    void setLowLimit(int newLimit) { lowLimit = newLimit; }
-    void setHighLimit(int newLimit) { highLimit = newLimit; }
-    void setLimitEnabled(bool newEnabled) { limitEnabled = (newEnabled ? 1 : 0); }
-    QString getHighAlertFile() { return highAlertFile; }
+    void setLowAlert(int newLimit) { lowAlert = newLimit; emit lowAlertChanged(); }
+    void setHighAlert(int newLimit) { highAlert = newLimit; emit highAlertChanged(); }
+    void setInterval(int newInterval) { interval = newInterval; emit intervalChanged(); }
+    void setLowLimit(int newLimit) { lowLimit = newLimit; emit lowLimitChanged(); }
+    void setHighLimit(int newLimit) { highLimit = newLimit; emit highLimitChanged(); }
+    void setLimitEnabled(bool newEnabled) { limitEnabled = (newEnabled ? 1 : 0); emit limitEnabledChanged(); }
+    void setNotificationsEnabled(bool newEnabled) { notificationsEnabled = (newEnabled ? 1 : 0); emit notificationsEnabledChanged(); }
 
 
 private:
@@ -63,6 +66,7 @@ private:
     int highAlert = 75;
     int interval = 60;
     int limitEnabled = 0; // Converted to boolean for QML
+    int notificationsEnabled = 1; // Converted to boolean for QML
     int lowLimit = 65;
     int highLimit = 70;
     QString lowAlertFile = "/usr/share/sounds/jolla-ambient/stereo/general_warning.wav";
@@ -73,6 +77,7 @@ private:
     const char* sHighAlert = "highAlert";
     const char* sInterval = "interval";
     const char* sLimitEnabled = "limitEnabled";
+    const char* sNotificationsEnabled = "notificationsEnabled";
     const char* sLowLimit = "lowLimit";
     const char* sHighLimit = "highLimit";
     const char* sLowAlertFile = "lowAlertFile";
@@ -86,6 +91,7 @@ signals:
     int highAlertChanged();
     int intervalChanged();
     bool limitEnabledChanged();
+    bool notificationsEnabledChanged();
     int lowLimitChanged();
     int highLimitChanged();
     QString lowAlertFileChanged();

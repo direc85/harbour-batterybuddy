@@ -37,6 +37,7 @@ Settings::Settings(QObject *parent) : QObject(parent)
     loadInteger(sHighAlert, &highAlert, 11, 100);
     loadInteger(sInterval, &interval, 60, 600);
     loadInteger(sLimitEnabled, &limitEnabled, 0, 1);
+    loadInteger(sNotificationsEnabled, &notificationsEnabled, 0, 1);
     loadInteger(sLowLimit, &lowLimit, 20, 94);
     loadInteger(sHighLimit, &highLimit, 21, 95);
     qInfo() << "Loaded" << sLimitEnabled << limitEnabled;
@@ -48,6 +49,7 @@ Settings::~Settings()
     mySettings.setValue(sHighAlert, QByteArray::number(highAlert));
     mySettings.setValue(sInterval, QByteArray::number(interval));
     mySettings.setValue(sLimitEnabled, QByteArray::number(limitEnabled));
+    mySettings.setValue(sNotificationsEnabled, QByteArray::number(notificationsEnabled));
     mySettings.setValue(sLowLimit, QByteArray::number(lowLimit));
     mySettings.setValue(sHighLimit, QByteArray::number(highLimit));
     qInfo() << "Settings saved";
