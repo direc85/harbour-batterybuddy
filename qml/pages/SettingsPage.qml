@@ -24,15 +24,28 @@ Page {
 
     onStatusChanged: {
         if(status === PageStatus.Activating) {
-            autoStopCharging.checked = settings.notificationsEnabled
+            settingsTimer.start()
+        }
+    }
+
+    Timer {
+        id: settingsTimer
+        interval: 10
+        repeat: false
+        onTriggered: {
+            autoStopCharging.checked = settings.limitEnabled
+            highLimitSlider.value = settings.highLimit
+            lowLimitSlider.value = settings.lowLimit
+            notificationsSwitch.checked = settings.notificationsEnabled
+            highAlertSlider.value = settings.highAlert
+            lowAlertSlider.value = settings.lowAlert
+            intervalSlider.value = settings.interval
         }
     }
 
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: header.height + settingsColumn.height + Theme.horizontalPageMargin
-
-        VerticalScrollDecorator { flickable: mainFlickable }
 
         PullDownMenu {
             MenuItem {
@@ -76,7 +89,6 @@ Page {
                 minimumValue: 21
                 maximumValue: 95
                 stepSize: 1
-                Component.onCompleted: value = settings.highLimit
                 valueText: value + "%"
                 highlightDirection: Qt.RightToLeft
                 onValueChanged: {
@@ -93,7 +105,6 @@ Page {
                 minimumValue: 20
                 maximumValue: 94
                 stepSize: 1
-                Component.onCompleted: value = settings.lowLimit
                 valueText: value + "%"
                 onValueChanged: {
                     settings.lowLimit = value
@@ -110,7 +121,6 @@ Page {
                 id: notificationsSwitch
                 text: qsTr("Use notifications")
                 description: qsTr("When the application is minimized, display visual and audible notifications about reached battery charge levels.")
-                Component.onCompleted: checked = settings.notificationsEnabled
                 onCheckedChanged: settings.notificationsEnabled = checked
             }
             MySlider {
@@ -120,7 +130,6 @@ Page {
                 minimumValue: 11
                 maximumValue: 100
                 stepSize: 1
-                Component.onCompleted: value = settings.highAlert
                 valueText: value + "%"
                 highlightDirection: Qt.RightToLeft
                 onValueChanged: {
@@ -136,7 +145,6 @@ Page {
                 minimumValue: 10
                 maximumValue: 99
                 stepSize: 1
-                Component.onCompleted: value = settings.lowAlert
                 valueText: value + "%"
                 onValueChanged: {
                     settings.lowAlert = value
@@ -145,12 +153,12 @@ Page {
                 }
             }
             MySlider {
+                id: intervalSlider
                 width: parent.width
                 label: qsTr("Notification interval")
                 minimumValue: 60
                 maximumValue: 600
                 stepSize: 10
-                Component.onCompleted: value = settings.interval
                 valueText: Math.floor(value / 60) + (value % 60 < 10 ? ":0" + value % 60 : ":" + value % 60)
                 onValueChanged: settings.interval = value
             }

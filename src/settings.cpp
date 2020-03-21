@@ -53,7 +53,7 @@ Settings::~Settings()
     saveInteger(sLowLimit, &lowLimit);
     saveInteger(sHighLimit, &highLimit);
     mySettings.sync();
-    qInfo() << "Settings saved:" << mySettings.status() == QSettings::NoError;
+    qInfo() << "Settings saved:" << (mySettings.status() == QSettings::NoError);
 }
 
 int  Settings::getLowAlert() {
