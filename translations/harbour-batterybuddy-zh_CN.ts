@@ -212,7 +212,7 @@ Buddy（电池搭档）</translation>
         <translation>充电器已连接:</translation>
     </message>
     <message>
-        <source>Please leave Battery Buddy running in the background for proper operatio.n.</source>
+        <source>Please leave Battery Buddy running in the background for proper operation.</source>
         <translation>请保持 Battery Buddy（电池搭档）运行于后台以用于特定操作。</translation>
     </message>
     <message>
