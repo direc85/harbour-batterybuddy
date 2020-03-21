@@ -1,5 +1,3 @@
-#ifndef BATTERY_H
-#define BATTERY_H
 /**
  * Battery Buddy, a Sailfish application to prolong battery lifetime
  *
@@ -17,6 +15,8 @@
  *
  * Author: Matti Viljanen
  */
+#ifndef BATTERY_H
+#define BATTERY_H
 
 #include <QObject>
 #include <QString>
