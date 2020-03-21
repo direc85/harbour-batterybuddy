@@ -21,6 +21,7 @@
 #include <QObject>
 #include <QString>
 #include <QFile>
+#include <QStandardPaths>
 #include <QHostInfo>
 #include <QDebug>
 #include "settings.h"
