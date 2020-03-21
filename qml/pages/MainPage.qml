@@ -21,6 +21,7 @@ import "../components"
 
 Page {
     id: page
+    allowedOrientations: Orientation.Portrait | Orientation.Landscape | Orientation.LandscapeInverted
     property variant statusText: {
         "idle": qsTr("idle", "Charger plugged in, not using nor charging battery"),
         "discharging": qsTr("discharging", "Charger not plugged in, battery discharging"),
@@ -42,7 +43,7 @@ Page {
     SilicaFlickable {
         id: mainFlickable
         anchors.fill: parent
-        contentHeight: column.height + Theme.horizontalPageMargin
+        contentHeight: flow.height + Theme.horizontalPageMargin
 
         VerticalScrollDecorator { flickable: mainFlickable }
 
@@ -55,102 +56,118 @@ Page {
 
         // Place our content in a Column.  The PageHeader is always placed at the top
         // of the page, followed by our content.
-        Column {
-            id: column
+        Flow {
+            id: flow
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+            }
+            height: header.height + Math.max(columnOne.heigh, columnTwo.height)
 
-            width: page.width
-            spacing: Theme.paddingLarge
             PageHeader {
+                id: header
                 title: qsTr("Battery Buddy")
             }
-            Label {
-                x: Theme.paddingLarge
-                text: qsTr("Battery status")
-                color: Theme.highlightColor
-            }
-            Item {
-                width: parent.width
-                // Rotation: width <==> height
-                height: batteryGraph.width
-                BatteryGraph {
-                    id: batteryGraph
-                    transformOrigin: Item.Center
-                    rotation: 90
-                    width: parent.width * 0.2
-                    anchors.centerIn: parent
-                }
-            }
-            // Detail column
             Column {
-                width: parent.width
-                spacing: 0
+                id: columnOne
+                width: isPortrait ? parent.width : parent.width / 2
+                spacing: Theme.paddingLarge
 
-                MyDetailItem {
-                    label: qsTr("Charge:")
-                    value: battery.charge + "%"
+                Label {
+                    x: Theme.paddingLarge
+                    text: qsTr("Battery status")
+                    color: Theme.highlightColor
                 }
-                MyDetailItem {
-                    label: qsTr("Charger connected:")
-                    value: battery.chargerConnected ? qsTr("yes") : qsTr("no")
-                }
-                MyDetailItem {
-                    label: qsTr("State:")
-                    value: statusText[battery.state]
-                }
-            }
-            Label {
-                x: Theme.paddingLarge*2
-                width: parent.width - x*2;
-                wrapMode: Text.Wrap
-                text: qsTr("Please leave Battery Buddy running in the background for proper operation.")
-                color: Theme.primaryColor
-                font.pixelSize: Theme.fontSizeSmall
-            }
-            Label {
-                x: Theme.paddingLarge
-                text: qsTr("Charger control")
-                color: Theme.highlightColor
-            }
-            Label {
-                x: Theme.paddingLarge*2
-                width: parent.width - x*2;
-                wrapMode: Text.Wrap
-                text: qsTr("Using these controls overrides the automated settings.")
-                color: Theme.primaryColor
-                font.pixelSize: Theme.fontSizeSmall
-            }
-            Row {
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-                height: resumeButton.height
-
-                Column {
-                    width: parent.width / 2
-                    Button {
-                        id: resumeButton
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("Resume")
-                        onClicked: {
-                            battery.chargingEnabled = true
-                            settings.limitEnabled = false
-                        }
-                        enabled: !battery.chargingEnabled
+                Item {
+                    width: parent.width
+                    // Rotation: width <==> height
+                    height: batteryGraph.width
+                    BatteryGraph {
+                        id: batteryGraph
+                        transformOrigin: Item.Center
+                        rotation: 90
+                        width: parent.width * 0.2
+                        anchors.centerIn: parent
                     }
                 }
+                // Detail column
                 Column {
-                    width: parent.width / 2
-                    Button {
-                        id: pauseButton
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("Pause")
-                        onClicked: {
-                            battery.chargingEnabled = false
-                            settings.limitEnabled = false
-                        }
-                        enabled: battery.chargingEnabled
+                    width: parent.width
+                    spacing: 0
+
+                    MyDetailItem {
+                        label: qsTr("Charge:")
+                        value: battery.charge + "%"
                     }
+                    MyDetailItem {
+                        label: qsTr("Charger connected:")
+                        value: battery.chargerConnected ? qsTr("yes") : qsTr("no")
+                    }
+                    MyDetailItem {
+                        label: qsTr("State:")
+                        value: statusText[battery.state]
+                    }
+                }
+            }
+            Column {
+                id: columnTwo
+                width: isPortrait ? parent.width : parent.width / 2
+                spacing: Theme.paddingMedium
+                Label {
+                    x: Theme.paddingLarge
+                    text: qsTr("Charger control")
+                    color: Theme.highlightColor
+                }
+                Label {
+                    x: Theme.paddingLarge*2
+                    width: parent.width - x*2;
+                    wrapMode: Text.Wrap
+                    text: qsTr("Using these controls overrides the automated settings.")
+                    color: Theme.primaryColor
+                    font.pixelSize: Theme.fontSizeSmall
+                }
+                Row {
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                    }
+                    height: resumeButton.height
+
+                    Column {
+                        width: parent.width / 2
+                        Button {
+                            id: resumeButton
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text: qsTr("Resume")
+                            onClicked: {
+                                battery.chargingEnabled = true
+                                settings.limitEnabled = false
+                            }
+                            enabled: !battery.chargingEnabled
+                        }
+                    }
+                    Column {
+                        width: parent.width / 2
+                        Button {
+                            id: pauseButton
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text: qsTr("Pause")
+                            onClicked: {
+                                battery.chargingEnabled = false
+                                settings.limitEnabled = false
+                            }
+                            enabled: battery.chargingEnabled
+                        }
+                    }
+                }
+                Label {
+                    x: Theme.paddingLarge*2
+                    width: parent.width - x*2;
+                    wrapMode: Text.Wrap
+                    text: qsTr("Please leave Battery Buddy running in the background for proper operation.")
+                    color: Theme.primaryColor
+                    font.pixelSize: Theme.fontSizeSmall
                 }
             }
         }
