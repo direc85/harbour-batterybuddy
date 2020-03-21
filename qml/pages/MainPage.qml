@@ -29,10 +29,12 @@ Page {
         "empty": qsTr("empty", "Battery fully depleted"),
         "unknown": qsTr("unknown", "Battery not detected, or faulty, or something")
     }
+    property bool settingsPagePushed: false
 
     onStatusChanged: {
-        if(status == PageStatus.Activating) {
-            alertTimer.interval = settings.interval * 1000;
+        if(status == PageStatus.Active && !settingsPagePushed) {
+            pageStack.pushAttached(Qt.resolvedUrl("SettingsPage.qml"))
+            settingsPagePushed = true;
         }
     }
 
@@ -46,16 +48,8 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: qsTr("About", "About this application")
-                onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
-            }
-            MenuItem {
                 text: qsTr("Background", "More to read, background information...")
                 onClicked: pageStack.push(Qt.resolvedUrl("InfoPage.qml"))
-            }
-            MenuItem {
-                text: qsTr("Settings")
-                onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))
             }
         }
 

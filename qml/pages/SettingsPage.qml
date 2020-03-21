@@ -28,6 +28,13 @@ Page {
 
         VerticalScrollDecorator { flickable: mainFlickable }
 
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("About", "About this application")
+                onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
+            }
+        }
+
         PageHeader {
             id: header
             title: qsTr("Settings")
