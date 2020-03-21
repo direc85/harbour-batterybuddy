@@ -33,14 +33,21 @@ Page {
         interval: 10
         repeat: false
         onTriggered: {
+            // The only setting that can change outside this page
             autoStopCharging.checked = settings.limitEnabled
-            highLimitSlider.value = settings.highLimit
-            lowLimitSlider.value = settings.lowLimit
-            notificationsSwitch.checked = settings.notificationsEnabled
-            highAlertSlider.value = settings.highAlert
-            lowAlertSlider.value = settings.lowAlert
-            intervalSlider.value = settings.interval
+            console.debug("Charger control enabled updated")
         }
+    }
+
+    Component.onCompleted: {
+        // These we can read only once
+        highLimitSlider.value = settings.highLimit
+        lowLimitSlider.value = settings.lowLimit
+        notificationsSwitch.checked = settings.notificationsEnabled
+        highAlertSlider.value = settings.highAlert
+        lowAlertSlider.value = settings.lowAlert
+        intervalSlider.value = settings.interval
+        console.debug("SettingsPage values updated")
     }
 
     SilicaFlickable {
