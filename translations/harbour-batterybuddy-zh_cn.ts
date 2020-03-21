@@ -4,20 +4,24 @@
 <context>
     <name>AboutPage</name>
     <message>
-        <source>License</source>
-        <translation>许可证</translation>
+        <source>View License</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Code and feedback</source>
-        <translation>代码及反馈</translation>
+        <source>Battery Buddy is a small and simple utility designed to improve the lifetime of the battery.</source>
+        <translation type="unfinished">Battery Buddy （电池搭档）是一个帮助你改善电池寿命的小巧玲珑的软件。</translation>
     </message>
     <message>
-        <source>Battery Buddy</source>
-        <translation>Battery Buddy（电池搭档）</translation>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Author</source>
-        <translation>作者</translation>
+        <source>Battery Buddy is open source software licensed under the terms of the GNU General Public License.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contributions and translations are always appreciated!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -33,14 +37,18 @@ charger</source>
         <translation>断开充电器</translation>
     </message>
     <message>
-        <source>Charging...</source>
-        <translation>充电中...</translation>
-    </message>
-    <message>
         <source>Battery
 Buddy</source>
         <translation>Battery
 Buddy（电池搭档）</translation>
+    </message>
+    <message>
+        <source>Charging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not charging</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -145,51 +153,13 @@ Buddy（电池搭档）</translation>
         <translation>Battery Buddy（电池搭档）</translation>
     </message>
     <message>
-        <source>Click the buttons to test the sound and notification.</source>
-        <translation>点击按钮以测试声音及通知</translation>
-    </message>
-    <message>
         <source>Battery status</source>
         <translation>电池状态</translation>
-    </message>
-    <message>
-        <source>Alert tests</source>
-        <translation>警报测试</translation>
-    </message>
-    <message>
-        <source>Please connect the charger.</source>
-        <translation>请连接到充电器</translation>
-    </message>
-    <message>
-        <source>Please disconnect the charger.</source>
-        <translation>请断开充电器</translation>
-    </message>
-    <message>
-        <source>Battery charge</source>
-        <comment>Battery charge 20%</comment>
-        <translation>电池充电 20%</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <comment>About this application</comment>
-        <translation>关于应用程序</translation>
     </message>
     <message>
         <source>Background</source>
         <comment>More to read, background information...</comment>
         <translation>更多阅读, 后台信息...</translation>
-    </message>
-    <message>
-        <source>This is a test.</source>
-        <translation>这是一个测试</translation>
-    </message>
-    <message>
-        <source>Discharged</source>
-        <translation>放电</translation>
-    </message>
-    <message>
-        <source>Charged</source>
-        <translation>已充电</translation>
     </message>
     <message>
         <source>yes</source>
@@ -202,10 +172,6 @@ Buddy（电池搭档）</translation>
     <message>
         <source>Charge:</source>
         <translation>充电:</translation>
-    </message>
-    <message>
-        <source>Charging:</source>
-        <translation>正在充电:</translation>
     </message>
     <message>
         <source>State:</source>
@@ -232,12 +198,38 @@ Buddy（电池搭档）</translation>
         <translation>未检测到电池或出错或别的原因</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translation>设置</translation>
+        <source>full</source>
+        <comment>Battery fully charged</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please leave Battery Buddy running in the background in order to receive alerts.</source>
-        <translation>请让Battery Buddy（电池搭档）在后台保持运行, 以便接收警报。</translation>
+        <source>empty</source>
+        <comment>Battery fully depleted</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Charger connected:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please leave Battery Buddy running in the background for proper operation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Charger control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Using these controls overrides the automated settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -247,24 +239,77 @@ Buddy（电池搭档）</translation>
         <translation>设置</translation>
     </message>
     <message>
-        <source>Set the maximum and minimum target charge levels.</source>
-        <translation>设置最大和最小充电电量目标</translation>
+        <source>About</source>
+        <comment>About this application</comment>
+        <translation type="unfinished">关于应用程序</translation>
     </message>
     <message>
-        <source>Charging limit</source>
-        <translation>充电限值</translation>
+        <source>Charging settings</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Discharging limit</source>
-        <translation>放电限值</translation>
+        <source>Automatic charging control</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Alert settings</source>
-        <translation>警报设置</translation>
+        <source>This option disables charging automatically when the battery has charged above the pausing percentage and enables it again when the battery has depleted below the resuming percentage.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Alert interval</source>
-        <translation>警报间隔</translation>
+        <source>Pause charging limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume charging limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notification settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display visual and audible notifications about reached battery charge levels, when the battery charge is below or above desired percentage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery full notification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery low notification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notification interval</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>harbour-batterybuddy</name>
+    <message>
+        <source>Battery Buddy</source>
+        <translation type="unfinished">Battery Buddy（电池搭档）</translation>
+    </message>
+    <message>
+        <source>Battery charge</source>
+        <comment>Battery charge 20%</comment>
+        <translation type="unfinished">电池充电 20%</translation>
+    </message>
+    <message>
+        <source>This is a test.</source>
+        <translation type="unfinished">这是一个测试</translation>
+    </message>
+    <message>
+        <source>Please disconnect the charger.</source>
+        <translation type="unfinished">请断开充电器</translation>
+    </message>
+    <message>
+        <source>Please connect the charger.</source>
+        <translation type="unfinished">请连接到充电器</translation>
     </message>
 </context>
 </TS>
