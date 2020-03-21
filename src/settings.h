@@ -39,23 +39,23 @@ public:
     Settings(QObject* parent = nullptr);
     ~Settings();
 
-    int  getLowAlert() { return lowAlert; }
-    int  getHighAlert() { return highAlert; }
-    int  getInterval() { return interval; }
-    int  getLowLimit() { return lowLimit; }
-    int  getHighLimit() { return highLimit; }
-    bool getLimitEnabled() { return limitEnabled == 1; }
-    bool getNotificationsEnabled() { return notificationsEnabled == 1; }
-    QString getLowAlertFile() { return lowAlertFile; }
-    QString getHighAlertFile() { return highAlertFile;}
+    int  getLowAlert();
+    int  getHighAlert();
+    int  getInterval();
+    int  getLowLimit();
+    int  getHighLimit();
+    bool getLimitEnabled();
+    bool getNotificationsEnabled();
+    QString getLowAlertFile();
+    QString getHighAlertFile();
 
-    void setLowAlert(int newLimit) { lowAlert = newLimit; emit lowAlertChanged(); }
-    void setHighAlert(int newLimit) { highAlert = newLimit; emit highAlertChanged(); }
-    void setInterval(int newInterval) { interval = newInterval; emit intervalChanged(); }
-    void setLowLimit(int newLimit) { lowLimit = newLimit; emit lowLimitChanged(); }
-    void setHighLimit(int newLimit) { highLimit = newLimit; emit highLimitChanged(); }
-    void setLimitEnabled(bool newEnabled) { limitEnabled = (newEnabled ? 1 : 0); emit limitEnabledChanged(); }
-    void setNotificationsEnabled(bool newEnabled) { notificationsEnabled = (newEnabled ? 1 : 0); emit notificationsEnabledChanged(); }
+    void setLowAlert(int newLimit);
+    void setHighAlert(int newLimit);
+    void setInterval(int newInterval);
+    void setLowLimit(int newLimit);
+    void setHighLimit(int newLimit);
+    void setLimitEnabled(bool newEnabled);
+    void setNotificationsEnabled(bool newEnabled);
 
 
 private:
@@ -84,7 +84,8 @@ private:
     const char* sHighAlertFile = "highAlertFile";
 
     int bound(int value, int min, int max);
-    void loadInteger(const char *key, int* value, int min, int max);
+    void loadInteger(const char *key, int *value, int min, int max);
+    void saveInteger(const char *key, int *value);
 
 signals:
     int lowAlertChanged();

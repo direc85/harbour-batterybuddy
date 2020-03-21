@@ -48,6 +48,9 @@ int main(int argc, char *argv[])
     QGuiApplication* app = SailfishApp::application(argc, argv);
     QQuickView* view = SailfishApp::createView();
 
+    qDebug() << "Application name:" << app->applicationName();
+    qDebug() << "Organization name:" << app->organizationName();
+
     Settings* settings = new Settings();
     Battery* battery = new Battery(settings);
 

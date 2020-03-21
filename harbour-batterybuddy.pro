@@ -14,6 +14,8 @@ TARGET = harbour-batterybuddy
 
 CONFIG += sailfishapp sailfishapp_i18n
 
+#DEFINES += QT_NO_DEBUG_OUTPUT
+
 HEADERS += \
     src/battery.h \
     src/settings.h
