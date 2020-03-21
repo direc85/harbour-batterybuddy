@@ -27,6 +27,9 @@
 #include <QQmlEngine>
 #include <QTimer>
 #include <QDebug>
+#ifdef QT_NO_DEBUG_OUTPUT
+#include <QLoggingCategory>
+#endif
 
 #include "battery.h"
 #include "settings.h"
@@ -42,6 +45,11 @@ int main(int argc, char *argv[])
     //   - SailfishApp::pathToMainQml() to get a QUrl to the main QML file
     //
     // To display the view, call "show()" (will show fullscreen on device).
+
+#ifdef QT_NO_DEBUG_OUTPUT
+    // Disable QML debug level logging
+    QLoggingCategory::setFilterRules("*.debug=false");
+#endif
 
     qInfo() << "Starting Battery Buddy...";
 
