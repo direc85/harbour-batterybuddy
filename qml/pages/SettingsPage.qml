@@ -76,8 +76,8 @@ Page {
             }
             TextSwitch {
                 id: autoStopCharging
-                text: qsTr("Stop charging when limit reached")
-                description: qsTr("This option stops charging when battery has reached the percentage set in Charging limit value, and resumes charging when charge has decreased below Continue charge limit value. Generally a value close to the Charging limit value is recommened, such as 80% and 75%.")
+                text: qsTr("Automatic charging control")
+                description: qsTr("This option disables charging automatically when the battery has charged above the pausing percentage and enables it again when the battery has depleted below the resuming percentage.")
                 onCheckedChanged: settings.limitEnabled = checked
             }
 
@@ -85,7 +85,7 @@ Page {
                 id: highLimitSlider
                 handleVisible: enabled
                 width: parent.width
-                label: qsTr("Stop charging limit")
+                label: qsTr("Pause charging limit")
                 minimumValue: 21
                 maximumValue: 95
                 stepSize: 1
@@ -120,13 +120,13 @@ Page {
             TextSwitch {
                 id: notificationsSwitch
                 text: qsTr("Use notifications")
-                description: qsTr("When the application is minimized, display visual and audible notifications about reached battery charge levels.")
+                description: qsTr("Display visual and audible notifications about reached battery charge levels, when the battery charge is below or above desired percentage.")
                 onCheckedChanged: settings.notificationsEnabled = checked
             }
             MySlider {
                 id: highAlertSlider
                 width: parent.width
-                label: qsTr("Charging limit")
+                label: qsTr("Battery full notification")
                 minimumValue: 11
                 maximumValue: 100
                 stepSize: 1
@@ -141,7 +141,7 @@ Page {
             MySlider {
                 id: lowAlertSlider
                 width: parent.width
-                label: qsTr("Discharging limit")
+                label: qsTr("Battery low notification")
                 minimumValue: 10
                 maximumValue: 99
                 stepSize: 1

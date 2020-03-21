@@ -102,7 +102,7 @@ Page {
                 x: Theme.paddingLarge*2
                 width: parent.width - x*2;
                 wrapMode: Text.Wrap
-                text: qsTr("Please leave Battery Buddy running in the background in order to receive alerts.")
+                text: qsTr("Please leave Battery Buddy running in the background for proper operation.")
                 color: Theme.primaryColor
                 font.pixelSize: Theme.fontSizeSmall
             }

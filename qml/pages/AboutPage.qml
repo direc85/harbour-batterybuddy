@@ -36,7 +36,7 @@ Page {
 
         PageHeader {
             id: header
-            title: qsTr("View license")
+            title: qsTr("View License")
         }
 
         Column {
@@ -92,13 +92,13 @@ Page {
             AboutLabel {
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.secondaryColor
-                text: qsTr("GPSInfo is open source software licensed under the terms of the GNU General Public License.")
+                text: qsTr("Battery Buddy is open source software licensed under the terms of the GNU General Public License.")
             }
 
             AboutLabel {
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.secondaryColor
-                text: qsTr("For suggestions, bugs and ideas visit ")
+                text: qsTr("Contributions and translations are always appreciated!")
             }
 
             Button {

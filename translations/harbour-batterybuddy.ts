@@ -4,24 +4,36 @@
 <context>
     <name>AboutPage</name>
     <message>
-        <source>License</source>
+        <source>Battery Buddy is a small and simple utility designed to improve the lifetime of the battery.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Code and feedback</source>
+        <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Battery Buddy</source>
+        <source>View License</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Author</source>
+        <source>Battery Buddy is open source software licensed under the terms of the GNU General Public License.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contributions and translations are always appreciated!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CoverPage</name>
+    <message>
+        <source>Charging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not charging</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Connect
 charger</source>
@@ -30,10 +42,6 @@ charger</source>
     <message>
         <source>Disconnect
 charger</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Charging...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -144,50 +152,12 @@ Buddy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Click the buttons to test the sound and notification.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Battery status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alert tests</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please connect the charger.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please disconnect the charger.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Battery charge</source>
-        <comment>Battery charge 20%</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About</source>
-        <comment>About this application</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Background</source>
         <comment>More to read, background information...</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This is a test.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Discharged</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Charged</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -200,10 +170,6 @@ Buddy</source>
     </message>
     <message>
         <source>Charge:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Charging:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -231,11 +197,37 @@ Buddy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Settings</source>
+        <source>Charger connected:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please leave Battery Buddy running in the background in order to receive alerts.</source>
+        <source>full</source>
+        <comment>Battery fully charged</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>empty</source>
+        <comment>Battery fully depleted</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Charger control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please leave Battery Buddy running in the background for proper operation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Using these controls overrides the automated settings.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -246,23 +238,76 @@ Buddy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Set the maximum and minimum target charge levels.</source>
+        <source>Resume charging limit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Charging limit</source>
+        <source>Charging settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Discharging limit</source>
+        <source>Notification settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Alert settings</source>
+        <source>Use notifications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Alert interval</source>
+        <source>Notification interval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About</source>
+        <comment>About this application</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause charging limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display visual and audible notifications about reached battery charge levels, when the battery charge is below or above desired percentage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery low notification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery full notification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic charging control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This option disables charging automatically when the battery has charged above the pausing percentage and enables it again when the battery has depleted below the resuming percentage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>harbour-batterybuddy</name>
+    <message>
+        <source>Battery Buddy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery charge</source>
+        <comment>Battery charge 20%</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is a test.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please disconnect the charger.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please connect the charger.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
