@@ -19,6 +19,7 @@
 
 Battery::Battery(Settings* newSettings, QObject* parent) : QObject(parent)
 {
+    QString filename;
     settings = newSettings;
 
     // Number: charge percentage, e.g. 42
@@ -40,43 +41,47 @@ Battery::Battery(Settings* newSettings, QObject* parent) : QObject(parent)
     }
     else {
         // e.g. for Sony Xperia XA2
-        chargingEnabledFile = new QFile("/sys/class/power_supply/battery/input_suspend", this);
-        if(chargingEnabledFile->exists()) {
+        filename = "/sys/class/power_supply/battery/input_suspend";
+        if(!chargingEnabledFile && QFile::exists(filename)) {
+            chargingEnabledFile = new QFile(filename, this);
             enableChargingValue = 0;
             disableChargingValue = 1;
         }
 
         // e.g. for Sony Xperia Z3 Compact Tablet
-        chargingEnabledFile->setFileName("/sys/class/power_supply/battery/charging_enabled");
-        if(chargingEnabledFile->exists()) {
+        filename = "/sys/class/power_supply/battery/charging_enabled";
+        if(!chargingEnabledFile && QFile::exists(filename)) {
+            chargingEnabledFile = new QFile(filename, this);
             enableChargingValue = 1;
             disableChargingValue = 0;
         }
 
         // e.g. for Jolla Phone
-        chargingEnabledFile->setFileName("/sys/class/power_supply/usb/charger_disable");
-        if(chargingEnabledFile->exists()) {
+        filename = "/sys/class/power_supply/usb/charger_disable";
+        if(!chargingEnabledFile && QFile::exists(filename)) {
+            chargingEnabledFile = new QFile(filename, this);
             enableChargingValue = 0;
             disableChargingValue = 1;
+        }
+
+
+        if(!chargingEnabledFile) {
+            qWarning() << "Charger control file not found!";
+            qWarning() << "Please contact the developer with your device model!";
+        }
+    }
+
+    // If we found a usable file, check that it is writable
+    if(chargingEnabledFile) {
+        if(chargingEnabledFile->open(QIODevice::WriteOnly)) {
+            qInfo() << "Controlling charging via" << chargingEnabledFile->fileName();
+            chargingEnabledFile->close();
         }
         else {
             delete chargingEnabledFile;
             chargingEnabledFile = Q_NULLPTR;
-            qWarning() << "Charger control file not found!";
-            qWarning() << "Please contact the developer with your device model!";
-        }
-
-        if(chargingEnabledFile) {
-            if(chargingEnabledFile->open(QIODevice::WriteOnly)) {
-                qInfo() << "Controlling charging via" << chargingEnabledFile->fileName();
-                chargingEnabledFile->close();
-            }
-            else {
-                delete chargingEnabledFile;
-                chargingEnabledFile = Q_NULLPTR;
-                qWarning() << "Charger control file" << chargingEnabledFile->fileName() << "is not writable";
-                qWarning() << "Charger control feature disabled";
-            }
+            qWarning() << "Charger control file" << chargingEnabledFile->fileName() << "is not writable";
+            qWarning() << "Charger control feature disabled";
         }
     }
 
