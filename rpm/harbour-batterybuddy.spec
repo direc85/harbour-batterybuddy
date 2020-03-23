@@ -14,7 +14,7 @@ Name:       harbour-batterybuddy
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Battery Buddy
 Version:    2.1
-Release:    1
+Release:    2
 Group:      Qt/Qt
 License:    LICENSE
 URL:        http://example.org/
@@ -70,10 +70,10 @@ desktop-file-install --delete-original       \
 # >> files
 # << files
 
-%post
+%posttrans
+systemctl disable --now harbour-batterybuddy.service
 cp %{_datadir}/%{name}/service/harbour-batterybuddy.service /etc/systemd/system/
 chmod 755 %{_datadir}/%{name}/service/*.sh
-systemctl disable --now harbour-batterybuddy.service
 systemctl enable --now harbour-batterybuddy.service
 
 %postun

@@ -15,7 +15,7 @@
 # Author: Matti Viljanen
 
 [Unit]
-Description=Allow user nemo to write to charging control file
+Description=Battery Buddy file permission daemon
 
 [Service]
 Type=oneshot
