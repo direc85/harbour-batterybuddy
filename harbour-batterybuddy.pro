@@ -21,6 +21,9 @@ VERSION = $${VER}-$${REL}
 $$system(bash update-spec-version.sh $$TARGET $$VER $$REL)
 DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"
 
+# Do not set this! Use "--verbose" and "--debug" instead.
+#DEFINES += QT_NO_DEBUG_OUTPUT
+
 HEADERS += \
     src/battery.h \
     src/settings.h
