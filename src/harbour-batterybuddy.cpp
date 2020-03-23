@@ -27,9 +27,7 @@
 #include <QQmlEngine>
 #include <QTimer>
 #include <QDebug>
-#ifdef QT_NO_DEBUG_OUTPUT
-#include <QLoggingCategory>
-#endif
+#include <iostream>
 
 #include "battery.h"
 #include "settings.h"
@@ -46,10 +44,13 @@ int main(int argc, char *argv[])
     //
     // To display the view, call "show()" (will show fullscreen on device).
 
-#ifdef QT_NO_DEBUG_OUTPUT
-    // Disable QML debug level logging
-    QLoggingCategory::setFilterRules("*.debug=false");
-#endif
+    const char* logEnvVar = "QT_LOGGING_RULES";
+    for(int i = 1; i < argc; i++) {
+        if(!strcmp(argv[i],"-v")) {
+            std::cout << "Battery Buddy " << APP_VERSION << std::endl << std::flush;
+            return 0;
+        }
+    }
 
     qInfo() << "Starting Battery Buddy...";
 
@@ -68,6 +69,7 @@ int main(int argc, char *argv[])
 
     view->rootContext()->setContextProperty("battery", battery);
     view->rootContext()->setContextProperty("settings", settings);
+    view->rootContext()->setContextProperty("app_version", APP_VERSION);
 
     view->setSource(SailfishApp::pathTo("qml/harbour-batterybuddy.qml"));
     view->showFullScreen();

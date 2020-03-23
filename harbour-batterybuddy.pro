@@ -12,9 +12,14 @@
 # The name of your application
 TARGET = harbour-batterybuddy
 
-CONFIG += sailfishapp sailfishapp_i18n
+CONFIG += console sailfishapp sailfishapp_i18n
 
-DEFINES += QT_NO_DEBUG_OUTPUT
+VER = 2.1
+REL = 2
+
+VERSION = $${VER}-$${REL}
+$$system(bash update-spec-version.sh $$TARGET $$VER $$REL)
+DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"
 
 HEADERS += \
     src/battery.h \

@@ -72,7 +72,7 @@ Page {
             AboutLabel {
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.secondaryColor
-                text: qsTr("Version") + " 2.1-2"
+                text: qsTr("Version") + " " + app_version
             }
 
             AboutLabel {
