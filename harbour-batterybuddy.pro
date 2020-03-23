@@ -36,7 +36,6 @@ DISTFILES += qml/harbour-batterybuddy.qml \
     qml/pages\LicensePage.qml \
     qml/cover/CoverPage.qml \
     rpm/harbour-batterybuddy.spec \
-    rpm/harbour-batterybuddy.yaml \
     service/clear-write-permissions.sh \
     service/harbour-batterybuddy.service \
     service/set-write-permissions.sh \

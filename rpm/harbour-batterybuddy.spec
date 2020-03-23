@@ -16,7 +16,7 @@ Summary:    Battery Buddy
 Version:    2.1
 Release:    2
 Group:      Qt/Qt
-License:    LICENSE
+License:    GPLv3
 URL:        http://example.org/
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-batterybuddy.yaml
