@@ -50,9 +50,12 @@ int main(int argc, char *argv[])
             std::cout << "Battery Buddy " << APP_VERSION << std::endl << std::flush;
             return 0;
         }
+        else if(!strcmp(argv[i],"--verbose"))
+            qputenv(logEnvVar, "*.info=true;*.debug=false");
     }
+    if(!qEnvironmentVariableIsSet(logEnvVar))
+        qputenv(logEnvVar, "*.info=false;*.debug=false");
 
-    qInfo() << "Starting Battery Buddy...";
 
     QGuiApplication* app = SailfishApp::application(argc, argv);
     QQuickView* view = SailfishApp::createView();
