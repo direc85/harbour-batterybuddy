@@ -1,6 +1,8 @@
 * Sat Mar 27 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 2.2-2
 - Fix broken notifications timer
+- Add Swedish translation (thanks, eson57)
 - Add "--verbose" and "--debug" arguments to print out more messages
+- Add "-v" argument for version query, because why not :)
 - Add "--help" argument
 
 * Sat Mar 21 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 2.1-2
