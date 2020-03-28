@@ -94,43 +94,43 @@ QString Settings::getHighAlertFile() {
 
 void Settings::setLowAlert(int newLimit) {
     lowAlert = newLimit;
-    emit lowAlertChanged();
+    emit lowAlertChanged(lowAlert);
     qDebug() << "Change" << sLowAlert << newLimit;
 }
 
 void Settings::setHighAlert(int newLimit) {
     highAlert = newLimit;
-    emit highAlertChanged();
+    emit highAlertChanged(highAlert);
     qDebug() << "Change" << sHighAlert << newLimit;
 }
 
 void Settings::setInterval(int newInterval) {
     interval = newInterval;
-    emit intervalChanged();
+    emit intervalChanged(interval);
     qDebug() << "Change" << sInterval << newInterval;
 }
 
 void Settings::setLowLimit(int newLimit) {
     lowLimit = newLimit;
-    emit lowLimitChanged();
+    emit lowLimitChanged(lowLimit);
     qDebug() << "Change" << sLowLimit << newLimit;
 }
 
 void Settings::setHighLimit(int newLimit) {
     highLimit = newLimit;
-    emit highLimitChanged();
+    emit highLimitChanged(highLimit);
     qDebug() << "Change" << sHighLimit << newLimit;
 }
 
 void Settings::setLimitEnabled(bool newEnabled) {
     limitEnabled = (newEnabled ? 1 : 0);
-    emit limitEnabledChanged();
+    emit limitEnabledChanged(limitEnabled);
     qDebug() << "Change" << sLimitEnabled << newEnabled;
 }
 
 void Settings::setNotificationsEnabled(bool newEnabled) {
     notificationsEnabled = (newEnabled ? 1 : 0);
-    emit notificationsEnabledChanged();
+    emit notificationsEnabledChanged(notificationsEnabled);
     qDebug() << "Change" << sNotificationsEnabled << newEnabled;
 }
 

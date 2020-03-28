@@ -88,15 +88,15 @@ private:
     void saveInteger(const char *key, int *value);
 
 signals:
-    int lowAlertChanged();
-    int highAlertChanged();
-    int intervalChanged();
-    bool limitEnabledChanged();
-    bool notificationsEnabledChanged();
-    int lowLimitChanged();
-    int highLimitChanged();
-    QString lowAlertFileChanged();
-    QString highAlertFileChanged();
+    void lowAlertChanged(int);
+    void highAlertChanged(int);
+    void intervalChanged(int);
+    void limitEnabledChanged(bool);
+    void notificationsEnabledChanged(bool);
+    void lowLimitChanged(int);
+    void highLimitChanged(int);
+    void lowAlertFileChanged(QString);
+    void highAlertFileChanged(QString);
 };
 
 #endif // SETTINGS_H

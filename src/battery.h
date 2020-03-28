@@ -72,10 +72,10 @@ private:
     bool nextChargingEnabled = chargingEnabled;
 
 signals:
-    int chargeChanged();
-    QString stateChanged();
-    bool chargingEnabledChanged();
-    bool chargerConnectedChanged();
+    void chargeChanged(int);
+    void stateChanged(QString);
+    void chargingEnabledChanged(bool);
+    void chargerConnectedChanged(bool);
 };
 
 #endif // BATTERY_H

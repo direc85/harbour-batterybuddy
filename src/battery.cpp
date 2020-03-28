@@ -105,7 +105,7 @@ void Battery::updateData()
         nextCharge = chargeFile->readLine().trimmed().toInt();
         if(nextCharge != charge) {
             charge = nextCharge;
-            emit chargeChanged();
+            emit chargeChanged(charge);
             qDebug() << "Battery:" << charge;
         }
         chargeFile->close();
@@ -114,7 +114,7 @@ void Battery::updateData()
         nextChargerConnected = chargerConnectedFile->readLine().trimmed().toInt();
         if(nextChargerConnected != chargerConnected) {
             chargerConnected = nextChargerConnected;
-            emit chargerConnectedChanged();
+            emit chargerConnectedChanged(chargerConnected);
             qDebug() << "Charger is connected:" << chargerConnected;
         }
         chargerConnectedFile->close();
@@ -123,7 +123,7 @@ void Battery::updateData()
         nextState = (QString(stateFile->readLine().trimmed().toLower()));
         if(nextState != state) {
             state = nextState;
-            emit stateChanged();
+            emit stateChanged(state);
             qDebug() << "Charging status:" << state;
         }
         stateFile->close();
@@ -135,7 +135,7 @@ void Battery::updateData()
     //     nextChargingEnabled = chargingEnabledFile->readLine().trimmed().toInt() == enableChargingValue;
     //     if(nextChargingEnabled != chargingEnabled) {
     //         chargingEnabled = nextChargingEnabled;
-    //         emit chargingEnabledChanged();
+    //         emit chargingEnabledChanged(chargingEnabled);
     //     }
     //     chargingEnabledFile->close();
     // }
@@ -160,7 +160,7 @@ void Battery::setChargingEnabled(bool isEnabled) {
     if(chargingEnabledFile && chargingEnabledFile->open(QIODevice::WriteOnly)) {
         if(chargingEnabledFile->write(QString("%1").arg(isEnabled ? enableChargingValue : disableChargingValue).toLatin1())) {
             chargingEnabled = isEnabled;
-            emit chargingEnabledChanged();
+            emit chargingEnabledChanged(chargingEnabled);
 
             if(isEnabled) {
                 qInfo() << "Charging resumed";
