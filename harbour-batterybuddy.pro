@@ -20,8 +20,11 @@ REL = 2
 VERSION = $${VER}-$${REL}
 $$system(bash update-spec-version.sh $$TARGET $$VER $$REL)
 DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"
+DEFINES += APP_NAME=\"\\\"$$TARGET\\\"\"
 
-# Do not set this! Use "--verbose" and "--debug" instead.
+# Do not define QT_NO_DEBUG_OUTPUT!
+# Use "--verbose" and "--debug" at runtime instead.
+# See main() for details.
 #DEFINES += QT_NO_DEBUG_OUTPUT
 
 HEADERS += \

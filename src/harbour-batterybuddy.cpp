@@ -27,7 +27,6 @@
 #include <QQmlEngine>
 #include <QTimer>
 #include <QDebug>
-#include <iostream>
 
 #include "battery.h"
 #include "settings.h"
@@ -47,13 +46,21 @@ int main(int argc, char *argv[])
     const char* logEnvVar = "QT_LOGGING_RULES";
     for(int i = 1; i < argc; i++) {
         if(!strcmp(argv[i],"-v")) {
-            std::cout << "Battery Buddy " << APP_VERSION << std::endl << std::flush;
+            printf("%s %s\n", APP_NAME, APP_VERSION);
             return 0;
         }
         else if(!strcmp(argv[i],"--verbose"))
             qputenv(logEnvVar, "*.info=true;*.debug=false");
         else if(!strcmp(argv[i],"--debug"))
             qputenv(logEnvVar, "*.info=true");
+        else if(!strcmp(argv[i],"--help")) {
+            printf("%s %s\n", APP_NAME, APP_VERSION);
+            printf("Usage:\n");
+            printf("  --verbose     Enable informational messages\n");
+            printf("  --debug       Enable informational and debugging messages\n");
+            printf("  --help        Print version string and exit\n");
+            return 0;
+        }
     }
     if(!qEnvironmentVariableIsSet(logEnvVar))
         qputenv(logEnvVar, "*.info=false;*.debug=false");
