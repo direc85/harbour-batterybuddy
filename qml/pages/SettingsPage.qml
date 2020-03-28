@@ -23,12 +23,6 @@ Page {
     id: settingsPage
     allowedOrientations: Orientation.Portrait | Orientation.Landscape | Orientation.LandscapeInverted
 
-    onStatusChanged: {
-        if(status === PageStatus.Activating) {
-            settingsTimer.start()
-        }
-    }
-
     Timer {
         id: settingsTimer
         interval: 10

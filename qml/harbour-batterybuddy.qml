@@ -63,17 +63,28 @@ ApplicationWindow
         interval: settings.interval * 1000
         running: settings.notificationsEnabled
         repeat: true
+        triggeredOnStart: true
         onTriggered: {
-            if(battery.charge <= settings.lowerLimit && battery.state === "discharging") {
+            if(settings.notificationsEnabled && battery.charge <= settings.lowAlert && battery.state === "discharging") {
+                console.info("Battery notification timer: empty enough battery")
                 alertLow.play()
                 notification.republish()
             }
-            else if(battery.charge >= settings.upperLimit &&
-                    (battery.state === "charging" && battery.charging === true) || (battery.state === "idle" && battery.charging === false)) {
+            else if((battery.charge >= settings.highAlert && battery.state === "charging")
+                    || (battery.charge === 100 && battery.state === "idle")) {
+                console.info("Battery notification timer: full enough battery")
                 alertHigh.play()
                 notification.republish()
             }
             else if(notification.replacesId > 0) {
+                console.info("Battery notification timer: close notification")
+                notification.close()
+            }
+        }
+        onRunningChanged: {
+            console.debug("alertTimer is " + (running ? "" : "not ") + "running")
+            if(notification.replacesId > 0) {
+                console.info("Battery notification timer: close notification")
                 notification.close()
             }
         }
