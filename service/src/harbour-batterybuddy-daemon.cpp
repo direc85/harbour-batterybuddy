@@ -4,6 +4,7 @@
 #include "battery.h"
 #include "settings.h"
 #include <iostream>
+#include <signal.h>
 
 int main(int argc, char** argv)
 {
@@ -43,6 +44,11 @@ int main(int argc, char** argv)
     QTimer* updater = new QTimer();
     QObject::connect(updater, SIGNAL(timeout()), battery, SLOT(updateData()));
     updater->start(3000);
+
+    // Exit gracefully on Ctrl-C and service stop
+    QObject::connect(&app, SIGNAL(aboutToQuit()), battery, SLOT(shutdown()));
+    signal(SIGINT, app.exit);
+    signal(SIGTERM, app.exit);
 
     int retval = app.exec();
 
