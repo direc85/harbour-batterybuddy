@@ -25,7 +25,7 @@ Page {
 
     Timer {
         id: settingsTimer
-        interval: 10
+        interval: 16
         repeat: false
         onTriggered: {
             // The only setting that can change outside this page
@@ -34,8 +34,12 @@ Page {
         }
     }
 
+    onStatusChanged: {
+        if(status === PageStatus.Activating)
+            settingsTimer.start()
+    }
+
     Component.onCompleted: {
-        // These we can read only once
         autoStopCharging.checked = settings.limitEnabled
         highLimitSlider.value = settings.highLimit
         lowLimitSlider.value = settings.lowLimit
