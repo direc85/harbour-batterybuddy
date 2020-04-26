@@ -85,7 +85,7 @@ void Settings::setLowAlert(int newLimit) {
     // Lows and highs are always saved in pairs!
     //mySettings->sync();
     emit lowAlertChanged(lowAlert);
-    qDebug() << "Change" << sLowAlert << newLimit;
+    qDebug() << sLowAlert << newLimit;
 }
 
 void Settings::setHighAlert(int newLimit) {
@@ -93,7 +93,7 @@ void Settings::setHighAlert(int newLimit) {
     saveInteger(sHighAlert, &highAlert);
     mySettings->sync();
     emit highAlertChanged(highAlert);
-    qDebug() << "Change" << sHighAlert << newLimit;
+    qDebug() << sHighAlert << newLimit;
 }
 
 void Settings::setInterval(int newInterval) {
@@ -101,7 +101,7 @@ void Settings::setInterval(int newInterval) {
     saveInteger(sInterval, &interval);
     mySettings->sync();
     emit intervalChanged(interval);
-    qDebug() << "Change" << sInterval << newInterval;
+    qDebug() << sInterval << newInterval;
 }
 
 void Settings::setLowLimit(int newLimit) {
@@ -110,7 +110,7 @@ void Settings::setLowLimit(int newLimit) {
     // Lows and highs are always saved in pairs!
     //mySettings->sync();
     emit lowLimitChanged(lowLimit);
-    qDebug() << "Change" << sLowLimit << newLimit;
+    qDebug() << sLowLimit << newLimit;
 }
 
 void Settings::setHighLimit(int newLimit) {
@@ -118,7 +118,7 @@ void Settings::setHighLimit(int newLimit) {
     saveInteger(sHighLimit, &highLimit);
     mySettings->sync();
     emit highLimitChanged(highLimit);
-    qDebug() << "Change" << sHighLimit << newLimit;
+    qDebug() << sHighLimit << newLimit;
 }
 
 void Settings::setLimitEnabled(bool newEnabled) {
@@ -126,7 +126,7 @@ void Settings::setLimitEnabled(bool newEnabled) {
     saveInteger(sLimitEnabled, &limitEnabled);
     mySettings->sync();
     emit limitEnabledChanged(limitEnabled);
-    qDebug() << "Change" << sLimitEnabled << newEnabled;
+    qDebug() << sLimitEnabled << newEnabled;
 }
 
 void Settings::setNotificationsEnabled(bool newEnabled) {
@@ -134,7 +134,7 @@ void Settings::setNotificationsEnabled(bool newEnabled) {
     saveInteger(sNotificationsEnabled, &notificationsEnabled);
     mySettings->sync();
     emit notificationsEnabledChanged(notificationsEnabled);
-    qDebug() << "Change" << sNotificationsEnabled << newEnabled;
+    qDebug() << sNotificationsEnabled << newEnabled;
 }
 
 void Settings::setNotificationTitle(QString newText) {

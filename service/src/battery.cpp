@@ -39,12 +39,7 @@ Battery::Battery(Settings *newSettings, QTimer *newUpdater, QTimer *newNotifier,
 
     // ENABLE/DISABLE CHARGING
     if(QHostInfo::localHostName().contains("SailfishEmul")) {
-        qInfo() << "Sailfish SDK detected";
-        qInfo() << "Using dummy control file";
-        filename = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+"/charging_enabled_dummy";
-        chargingEnabledFile = new QFile(filename, this);
-        enableChargingValue = 1;
-        disableChargingValue = 0;
+        qInfo() << "Sailfish SDK detected, not using charger control file";
     }
     else {
         // e.g. for Sony Xperia XA2
@@ -70,7 +65,6 @@ Battery::Battery(Settings *newSettings, QTimer *newUpdater, QTimer *newNotifier,
             enableChargingValue = 0;
             disableChargingValue = 1;
         }
-
 
         if(!chargingEnabledFile) {
             qWarning() << "Charger control file not found!";
@@ -99,11 +93,6 @@ Battery::Battery(Settings *newSettings, QTimer *newUpdater, QTimer *newNotifier,
             qWarning() << "Charger control feature disabled";
         }
     }
-
-    // TODO
-    // Implement DBus mechanism for reading battery status, or try
-    // QFileSystemWatcher again without /run/state/namespaces/Battery/
-    // thingamabob - it is deprecated anyway.
 
     updateData();
 
@@ -175,19 +164,19 @@ void Battery::showNotification() {
     if(!settings->getNotificationsEnabled())
             return;
 
-    qDebug() << "battery" << charge << "low" << settings->getLowAlert() << "high" << settings->getHighAlert() << "state" << state;
+    qInfo() << "battery" << charge << "low" << settings->getLowAlert() << "high" << settings->getHighAlert() << "state" << state;
 
     if(charge <= settings->getLowAlert() && state.compare("charging")) {
-        qInfo() << "Battery notification timer: empty enough battery";
+        qDebug() << "Battery notification timer: empty enough battery";
         notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationLowText(), settings->getLowAlertFile());
     }
     else if((charge >= settings->getHighAlert() && state.compare("discharging"))
             || (charge == 100 && !state.compare("idle"))) {
-        qInfo() << "Battery notification timer: full enough battery";
+        qDebug() << "Battery notification timer: full enough battery";
         notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationHighText(), settings->getHighAlertFile());
     }
     else {
-        qInfo() << "Battery notification timer: close notification";
+        qDebug() << "Battery notification timer: close notification";
         notification->close();
     }
 }
@@ -224,6 +213,11 @@ void Battery::shutdown() {
     if(updateTimer) {
         updateTimer->stop();
         qDebug() << "Timer stopped";
+    }
+    notification->close();
+    if(notifyTimer) {
+        notifyTimer->stop();
+        qDebug() << "Notification stopped";
     }
     setChargingEnabled(true);
     chargingEnabledFile->setPermissions(originalPerms);

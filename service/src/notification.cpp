@@ -33,30 +33,30 @@ void Notification::send(QString title, QString body, QString soundFile)
     body = body.replace("\"", "\\\"");
 
     QStringList args;
-    QString command;
 
-    // Using 'update' works always; it creates a new one if needed
-    command = QString("notificationtool -o update -i %1 -I /usr/share/icons/hicolor/128x128/apps/harbour-batterybuddy.png -A \"Battery Buddy\" \"%2\" \"%3\" \"%2\" \"%3\"").arg(noteID).arg(title).arg(body);
-
-    args << "-l" << "nemo" << "-c" << command;
+    // Using 'update' works always; it creates a new notification if the ID doesn't match.
+    args << "-l" << "nemo" << "-c"
+         << QString("notificationtool -o update -i %1 -I /usr/share/icons/hicolor/128x128/apps/harbour-batterybuddy.png -A \"Battery Buddy\" \"%2\" \"%3\" \"%2\" \"%3\"").arg(noteID).arg(title).arg(body);
 
     QProcess aplay;
     if(!soundFile.isEmpty()) {
         QStringList aplayArgs;
         aplayArgs << "-l" << "nemo" << "-c" << QString("paplay %1").arg(soundFile);
         aplay.start("runuser", aplayArgs);
-        qDebug() << "runuser" << aplayArgs;
     }
 
     QProcess notificationtool;
     notificationtool.start("runuser", args);
-    qDebug() << "runuser" << args;
     notificationtool.waitForFinished();
-    aplay.waitForFinished();
 
     QString result(notificationtool.readAll());
     if(!result.isEmpty())
         noteID = result.split(' ').last().trimmed();
+
+    // Playing the sound may take a while, so let's do this as late as possible.
+    // Shouldn't matter though, because the minimum delay is 1:00
+    // and the sound plays for a few seconds.
+    aplay.waitForFinished();
     return;
 }
 
@@ -66,7 +66,8 @@ void Notification::close()
         return;
 
     QStringList args;
-    args << "-o" << "remove" << "-i" << noteID;
+    args << "-l" << "nemo" << "-c"
+         << QString("notificationtool -o remove -i %1").arg(noteID);
     QProcess proc;
     proc.start("runuser", args);
     proc.waitForFinished();
