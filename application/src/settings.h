@@ -67,7 +67,7 @@ public:
     void setNotificationHighText(QString newText);
 
 private:
-    QSettings *mySettings;
+    QSettings *mySettings = nullptr;
 
     // Default values
     int lowAlert = 25;

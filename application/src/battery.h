@@ -50,11 +50,11 @@ public slots:
     void updateData();
 
 private:
-    QFile* chargeFile;
-    QFile* chargerConnectedFile;
-    QFile* stateFile;
-    QFile* chargingEnabledFile;
-    Settings* settings;
+    QFile* chargeFile = nullptr;
+    QFile* chargerConnectedFile = nullptr;
+    QFile* stateFile = nullptr;
+    QFile* chargingEnabledFile = nullptr;
+    Settings* settings = nullptr;
 
     // Default values:
     int charge = 100; // 100% full

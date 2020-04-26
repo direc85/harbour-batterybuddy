@@ -53,11 +53,11 @@ public slots:
     void shutdown();
 
 private:
-    QFile* chargeFile;
-    QFile* chargerConnectedFile;
-    QFile* stateFile;
-    QFile* chargingEnabledFile = Q_NULLPTR;
-    Settings* settings;
+    QFile *chargeFile = nullptr;
+    QFile *chargerConnectedFile = nullptr;
+    QFile *stateFile = nullptr;
+    QFile *chargingEnabledFile = nullptr;
+    Settings *settings = nullptr;
     QTimer *updateTimer = nullptr;
     QTimer *notifyTimer = nullptr;
     Notification *notification = nullptr;
