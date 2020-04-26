@@ -36,12 +36,7 @@ Battery::Battery(Settings* newSettings, QObject* parent) : QObject(parent)
 
     // ENABLE/DISABLE CHARGING
     if(QHostInfo::localHostName().contains("SailfishEmul")) {
-        qInfo() << "Sailfish SDK detected";
-        qInfo() << "Using dummy control file";
-        filename = QStandardPaths::writableLocation(QStandardPaths::TempLocation)+"/charging_enabled_dummy";
-        chargingEnabledFile = new QFile(filename, this);
-        enableChargingValue = 1;
-        disableChargingValue = 0;
+        qInfo() << "Sailfish SDK detected, not using charger control file";
     }
     else {
         // e.g. for Sony Xperia XA2
@@ -90,9 +85,9 @@ Battery::Battery(Settings* newSettings, QObject* parent) : QObject(parent)
     }
 
     // TODO
-    // Implement DBus mechanism for reading battery status, or try
-    // QFileSystemWatcher again without /run/state/namespaces/Battery/
-    // thingamabob - it is deprecated anyway.
+    // Use DBus instead of polling the files - where is the documentation?
+    // QFileWatcher doesn't work, because e.g. the charge file
+    // isn't a real file, and it doesn't "change" when the value changes.
 
     updateData();
 }
@@ -101,7 +96,7 @@ Battery::~Battery() { }
 
 void Battery::updateData()
 {
-    if(chargeFile->open(QIODevice::ReadOnly)) {
+    if(chargeFile && chargeFile->open(QIODevice::ReadOnly)) {
         nextCharge = chargeFile->readLine().trimmed().toInt();
         if(nextCharge != charge) {
             charge = nextCharge;
@@ -110,7 +105,7 @@ void Battery::updateData()
         }
         chargeFile->close();
     }
-    if(chargerConnectedFile->open(QIODevice::ReadOnly)) {
+    if(chargerConnectedFile && chargerConnectedFile->open(QIODevice::ReadOnly)) {
         nextChargerConnected = chargerConnectedFile->readLine().trimmed().toInt();
         if(nextChargerConnected != chargerConnected) {
             chargerConnected = nextChargerConnected;
@@ -119,7 +114,7 @@ void Battery::updateData()
         }
         chargerConnectedFile->close();
     }
-    if(stateFile->open(QIODevice::ReadOnly)) {
+    if(stateFile && stateFile->open(QIODevice::ReadOnly)) {
         nextState = (QString(stateFile->readLine().trimmed().toLower()));
         if(nextState != state) {
             state = nextState;
@@ -127,26 +122,6 @@ void Battery::updateData()
             qDebug() << "Charging status:" << state;
         }
         stateFile->close();
-    }
-    // This can't be used, because on Jolla Phone the file always reads "0" :(
-    // It doesn't matter that much anyway, because the value changes only when we change it.
-
-    // if(chargingEnabledFile && chargingEnabledFile->open(QIODevice::ReadOnly)) {
-    //     nextChargingEnabled = chargingEnabledFile->readLine().trimmed().toInt() == enableChargingValue;
-    //     if(nextChargingEnabled != chargingEnabled) {
-    //         chargingEnabled = nextChargingEnabled;
-    //         emit chargingEnabledChanged(chargingEnabled);
-    //     }
-    //     chargingEnabledFile->close();
-    // }
-
-    if(chargingEnabledFile && settings->getLimitEnabled()) {
-        if(chargingEnabled && charge >= settings->getHighLimit()) {
-            setChargingEnabled(false);
-        }
-        else if(!chargingEnabled && charge <= settings->getLowLimit()) {
-            setChargingEnabled(true);
-        }
     }
 }
 
