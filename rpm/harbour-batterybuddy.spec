@@ -71,7 +71,6 @@ desktop-file-install --delete-original       \
 %posttrans
 systemctl disable --now harbour-batterybuddy.service
 cp %{_datadir}/%{name}/service/harbour-batterybuddy.service /etc/systemd/system/
-chmod 755 %{_datadir}/%{name}/service/*.sh
 systemctl enable --now harbour-batterybuddy.service
 
 %postun

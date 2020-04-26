@@ -14,6 +14,7 @@ TARGET = harbour-batterybuddy
 
 CONFIG += console sailfishapp sailfishapp_i18n
 
+# Keep this in sync with "service.pro"
 VER = 2.2
 REL = 2
 
@@ -42,9 +43,7 @@ DISTFILES += qml/harbour-batterybuddy.qml \
     qml/pages\LicensePage.qml \
     qml/cover/CoverPage.qml \
     ../rpm/harbour-batterybuddy.spec \
-    service/clear-write-permissions.sh \
     service/harbour-batterybuddy.service \
-    service/set-write-permissions.sh \
     translations/*.ts \
     harbour-batterybuddy.desktop \
     qml/pages/MainPage.qml \
@@ -59,16 +58,13 @@ SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 
 TRANSLATIONS += translations/*.ts
 
-OTHER_FILES += service/clear-write-permissions.sh \
-               service/harbour-batterybuddy.service \
-               service/set-write-permissions.sh
+# Executable provided by "service.pro"
+OTHER_FILES += service/harbour-batterybuddy.service
 
 service.files = service
 service.path = /usr/share/$${TARGET}
 
 INSTALLS += service
-
-SUBDIRS += service
 
 # Begin: include sound files
 

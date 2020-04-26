@@ -18,11 +18,7 @@
 Description=Battery Buddy file permission daemon
 
 [Service]
-Type=oneshot
-ExecStart=/usr/share/harbour-batterybuddy/service/set-write-permissions.sh
-RemainAfterExit=true
-ExecStop=/usr/share/harbour-batterybuddy/service/clear-write-permissions.sh
-StandardOutput=journal
+ExecStart=/usr/bin/harbour-batterybuddy-daemon
 
 [Install]
 WantedBy=multi-user.target

@@ -1,5 +1,5 @@
 #!/bin/bash
-SPEC=rpm/$1.spec
+SPEC=../rpm/$1.spec
 if [[ $(grep "^Version:    $2$" $SPEC | wc -l) = 0 ]]
 then
   sed -i "/^Version:    /c\Version:    $2" $SPEC

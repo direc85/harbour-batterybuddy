@@ -1,8 +1,16 @@
 TARGET = harbour-batterybuddy-daemon
 
-CONFIG = qt c++11 sailfish_build
+CONFIG = qt console c++11 sailfish_build
 
-QT = dbus network xml
+QT = core network
+
+# Keep this in sync with "application.pro"
+VER = 2.2
+REL = 2
+
+VERSION = $${VER}-$${REL}
+DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"
+DEFINES += APP_NAME=\"\\\"$$TARGET\\\"\"
 
 HEADERS += \
     src/filewatcher.h
@@ -12,8 +20,6 @@ SOURCES += \
     src/harbour-batterybuddy-daemon.cpp
 
 OTHER_FILES += harbour-batterybuddy-daemon.service
-
-#include($$PWD/../common/common.pri)
 
 service.path = /usr/lib/systemd/user/
 service.files += harbour-batterybuddy-daemon.service
