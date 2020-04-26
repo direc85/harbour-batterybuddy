@@ -13,10 +13,12 @@ DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"
 DEFINES += APP_NAME=\"\\\"$$TARGET\\\"\"
 
 HEADERS += \
-    src/filewatcher.h
+    src/battery.h \
+    src/settings.h
 
 SOURCES += \
-    src/filewatcher.cpp \
+    src/battery.cpp \
+    src/settings.cpp \
     src/harbour-batterybuddy-daemon.cpp
 
 OTHER_FILES += harbour-batterybuddy-daemon.service
