@@ -82,10 +82,10 @@ Battery::Battery(Settings* newSettings, QObject* parent) : QObject(parent)
             chargingEnabledFile->close();
         }
         else {
-            delete chargingEnabledFile;
-            chargingEnabledFile = Q_NULLPTR;
             qWarning() << "Charger control file" << chargingEnabledFile->fileName() << "is not writable";
             qWarning() << "Charger control feature disabled";
+            delete chargingEnabledFile;
+            chargingEnabledFile = Q_NULLPTR;
         }
     }
 
