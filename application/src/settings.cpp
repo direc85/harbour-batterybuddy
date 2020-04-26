@@ -19,16 +19,19 @@
 
 Settings::Settings(QObject *parent) : QObject(parent)
 {
+    mySettings = new QSettings("harbour-batterybuddy", "harbour-batterybuddy");
+    qDebug() << "Using" << mySettings->fileName();
+
     // Migrate old settings
-    if(mySettings.contains("lowerLimit")) {
-        mySettings.setValue(sLowAlert, mySettings.value("lowerLimit"));
-        mySettings.remove("lowerLimit");
+    if(mySettings->contains("lowerLimit")) {
+        mySettings->setValue(sLowAlert, mySettings->value("lowerLimit"));
+        mySettings->remove("lowerLimit");
         qInfo() << "Migrated old lowerLimit value";
     }
 
-    if(mySettings.contains("upperLimit")) {
-        mySettings.setValue(sHighAlert, mySettings.value("upperLimit"));
-        mySettings.remove("upperLimit");
+    if(mySettings->contains("upperLimit")) {
+        mySettings->setValue(sHighAlert, mySettings->value("upperLimit"));
+        mySettings->remove("upperLimit");
         qInfo() << "Migrated old upperLimit value";
     }
 
@@ -52,8 +55,8 @@ Settings::~Settings()
     saveInteger(sNotificationsEnabled, &notificationsEnabled);
     saveInteger(sLowLimit, &lowLimit);
     saveInteger(sHighLimit, &highLimit);
-    mySettings.sync();
-    qInfo() << "Settings saved:" << (mySettings.status() == QSettings::NoError);
+    mySettings->sync();
+    qInfo() << "Settings saved:" << (mySettings->status() == QSettings::NoError);
 }
 
 int  Settings::getLowAlert() {
@@ -140,11 +143,11 @@ int Settings::bound(int value, int min, int max) {
 }
 
 void Settings::loadInteger(const char* key, int *value, int min, int max) {
-    *value = bound(mySettings.value(key, *value).toInt(), min, max);
+    *value = bound(mySettings->value(key, *value).toInt(), min, max);
     qInfo() << "Loaded" << key << *value;
 }
 
 void Settings::saveInteger(const char* key, int *value) {
-    mySettings.setValue(key, QByteArray::number(*value));
+    mySettings->setValue(key, QByteArray::number(*value));
     qInfo() << "Saved" << key << *value;
 }

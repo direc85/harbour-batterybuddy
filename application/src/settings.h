@@ -59,7 +59,7 @@ public:
 
 
 private:
-    QSettings mySettings;
+    QSettings *mySettings;
 
     // Default values
     int lowAlert = 25;
