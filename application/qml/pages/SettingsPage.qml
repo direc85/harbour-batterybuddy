@@ -103,9 +103,12 @@ Page {
                     valueText: value + "%"
                     highlightDirection: Qt.RightToLeft
                     onValueChanged: {
-                        settings.highLimit = value
                         if(lowLimitSlider.value >= value)
                             lowLimitSlider.value = value - 1
+                    }
+                    onReleased: {
+                        settings.lowLimit = lowLimitSlider.value
+                        settings.highLimit = value
                     }
                 }
                 MySlider {
@@ -118,9 +121,12 @@ Page {
                     stepSize: 1
                     valueText: value + "%"
                     onValueChanged: {
-                        settings.lowLimit = value
                         if(highLimitSlider.value <= value)
                             highLimitSlider.value = value + 1
+                    }
+                    onReleased: {
+                        settings.lowLimit = value
+                        settings.highLimit = highLimitSlider.value
                     }
                 }
             }
@@ -149,9 +155,12 @@ Page {
                     valueText: value + "%"
                     highlightDirection: Qt.RightToLeft
                     onValueChanged: {
-                        settings.highAlert = value
                         if(lowAlertSlider.value >= value)
                             lowAlertSlider.value = value - 1
+                    }
+                    onReleased: {
+                        settings.lowAlert = lowAlertSlider.value
+                        settings.highAlert = value
                     }
                 }
                 MySlider {
@@ -163,9 +172,12 @@ Page {
                     stepSize: 1
                     valueText: value + "%"
                     onValueChanged: {
-                        settings.lowAlert = value
                         if(highAlertSlider.value <= value)
                             highAlertSlider.value = value + 1
+                    }
+                    onReleased: {
+                        settings.lowAlert = value
+                        settings.highAlert = highAlertSlider.value
                     }
                 }
                 MySlider {
@@ -176,7 +188,7 @@ Page {
                     maximumValue: 600
                     stepSize: 10
                     valueText: Math.floor(value / 60) + (value % 60 < 10 ? ":0" + value % 60 : ":" + value % 60)
-                    onValueChanged: settings.interval = value
+                    onReleased: settings.interval = value
                 }
             }
         }

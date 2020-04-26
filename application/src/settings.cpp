@@ -82,7 +82,8 @@ QString Settings::getNotificationHighText() { return notificationHighText; }
 void Settings::setLowAlert(int newLimit) {
     lowAlert = newLimit;
     saveInteger(sLowAlert, &lowAlert);
-    mySettings->sync();
+    // Lows and highs are always saved in pairs!
+    //mySettings->sync();
     emit lowAlertChanged(lowAlert);
     qDebug() << "Change" << sLowAlert << newLimit;
 }
@@ -106,7 +107,8 @@ void Settings::setInterval(int newInterval) {
 void Settings::setLowLimit(int newLimit) {
     lowLimit = newLimit;
     saveInteger(sLowLimit, &lowLimit);
-    mySettings->sync();
+    // Lows and highs are always saved in pairs!
+    //mySettings->sync();
     emit lowLimitChanged(lowLimit);
     qDebug() << "Change" << sLowLimit << newLimit;
 }
