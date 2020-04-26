@@ -32,6 +32,8 @@
 **
 ****************************************************************************************/
 
+// Modified by Matti Viljanen 2020: Added left-to-right/right-to-left support
+
 import QtQuick 2.4
 import Sailfish.Silica 1.0
 import Sailfish.Silica.private 1.0
@@ -43,7 +45,6 @@ SliderBase {
 
     readonly property real _glassItemPadding: Theme.paddingMedium
 
-    // Left-to-right/right-to-left support by Matti Viljanen aka direc85 2020
     property int highlightDirection: Qt.LeftToRight
 
     // compensate the existence of glow effect on light ambiences

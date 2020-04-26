@@ -32,7 +32,7 @@
 **
 ****************************************************************************************/
 
-// Modified by Matti Viljanen: added text size control
+// Modified by Matti Viljanen 2020: added text size control
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
