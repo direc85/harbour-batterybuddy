@@ -5,8 +5,8 @@ CONFIG = qt console c++11 sailfish_build
 QT = core network
 
 # Keep this in sync with "application.pro"
-VER = 2.2
-REL = 2
+VER = 2.99
+REL = 1
 
 VERSION = $${VER}-$${REL}
 DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"
