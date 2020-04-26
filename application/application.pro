@@ -64,7 +64,10 @@ OTHER_FILES += service/harbour-batterybuddy.service
 service.files = service
 service.path = /usr/share/$${TARGET}
 
-INSTALLS += service
+images.files = images
+images.path = /usr/share/$${TARGET}
+
+INSTALLS += service images
 
 # Begin: include sound files
 

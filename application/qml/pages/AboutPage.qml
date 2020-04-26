@@ -84,6 +84,29 @@ Page {
             AboutLabel {
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.secondaryColor
+                text: qsTr("If you like my work and would like to support me, you can buy me a coffee!")
+            }
+
+            BackgroundItem {
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: Theme.iconSizeExtraLarge * 1.2
+                height: Theme.iconSizeExtraLarge * 1.2
+                onClicked: Qt.openUrlExternally("https://ko-fi.com/direc85")
+                contentItem.radius: Theme.paddingSmall
+
+                Image {
+                    anchors.centerIn: parent
+                    source: Qt.resolvedUrl("/usr/share/harbour-batterybuddy/images/Ko-fi_Icon_RGB_rounded.png")
+                    width: Theme.iconSizeExtraLarge
+                    height: Theme.iconSizeExtraLarge
+                    smooth: true
+                    asynchronous: true
+                }
+            }
+
+            AboutLabel {
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.secondaryColor
                 text: "Suomi: Matti Viljanen\n"+
                       "Français: Quenty31\n"+
                       "简体中文: dashinfantry\n"+
