@@ -165,7 +165,7 @@ Page {
                     x: Theme.paddingLarge*2
                     width: parent.width - x*2;
                     wrapMode: Text.Wrap
-                    text: qsTr("Please leave Battery Buddy running in the background for proper operation.")
+                    text: qsTr("You can close Battery Buddy when you are done, notifications and charger control will continue working in the background.")
                     color: Theme.primaryColor
                     font.pixelSize: Theme.fontSizeSmall
                 }
