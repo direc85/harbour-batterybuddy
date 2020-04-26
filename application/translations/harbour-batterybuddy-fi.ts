@@ -27,6 +27,10 @@
         <source>If you like my work and would like to support me, you can buy me a coffee!</source>
         <translation>Jos pidät työstäni ja haluat tukea minua, voit ostaa minulle kahvin!</translation>
     </message>
+    <message>
+        <source>Translations</source>
+        <translation>Käännökset</translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -228,12 +232,12 @@ Buddy</translation>
         <translation>Latauksen hallinta</translation>
     </message>
     <message>
-        <source>Please leave Battery Buddy running in the background for proper operation.</source>
-        <translation>Jätä Battery Buddy käyntiin, jotta se toimisi normaalisti.</translation>
-    </message>
-    <message>
         <source>Using these controls overrides the automated settings.</source>
         <translation>Näiden painikkeiden käyttö poistaa latausautomatiikan käytöstä.</translation>
+    </message>
+    <message>
+        <source>You can close Battery Buddy when you are done, notifications and charger control will continue working in the background.</source>
+        <translation>Voit sulkea Battery Buddyn kun olet valmis, sillä taustaprosessi huolehtii ilmoituksista ja latauksen hallinnasta.</translation>
     </message>
 </context>
 <context>

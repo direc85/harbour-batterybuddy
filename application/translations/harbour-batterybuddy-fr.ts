@@ -27,6 +27,10 @@
         <source>If you like my work and would like to support me, you can buy me a coffee!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Translations</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -215,10 +219,6 @@ Buddy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please leave Battery Buddy running in the background for proper operation.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Charger control</source>
         <translation type="unfinished"></translation>
     </message>
@@ -232,6 +232,10 @@ Buddy</source>
     </message>
     <message>
         <source>Pause</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can close Battery Buddy when you are done, notifications and charger control will continue working in the background.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

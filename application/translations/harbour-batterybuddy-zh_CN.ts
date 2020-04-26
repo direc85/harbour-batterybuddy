@@ -27,6 +27,10 @@
         <source>If you like my work and would like to support me, you can buy me a coffee!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Translations</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -216,10 +220,6 @@ Buddy（电池搭档）</translation>
         <translation>充电器已连接:</translation>
     </message>
     <message>
-        <source>Please leave Battery Buddy running in the background for proper operation.</source>
-        <translation>请保持 Battery Buddy（电池搭档）运行于后台以用于特定操作。</translation>
-    </message>
-    <message>
         <source>Charger control</source>
         <translation>充电器控制</translation>
     </message>
@@ -234,6 +234,10 @@ Buddy（电池搭档）</translation>
     <message>
         <source>Pause</source>
         <translation>暂停</translation>
+    </message>
+    <message>
+        <source>You can close Battery Buddy when you are done, notifications and charger control will continue working in the background.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
