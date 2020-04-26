@@ -34,6 +34,9 @@ class Settings : public QObject
     Q_PROPERTY(bool notificationsEnabled READ getNotificationsEnabled WRITE setNotificationsEnabled NOTIFY notificationsEnabledChanged)
     Q_PROPERTY(QString lowAlertFile READ getLowAlertFile NOTIFY lowAlertFileChanged)
     Q_PROPERTY(QString highAlertFile READ getHighAlertFile NOTIFY highAlertFileChanged)
+    Q_PROPERTY(QString notificationTitle READ getNotificationTitle WRITE setNotificationTitle NOTIFY notificationTitleChanged)
+    Q_PROPERTY(QString notificationLowText READ getNotificationLowText WRITE setNotificationLowText NOTIFY notificationLowTextChanged)
+    Q_PROPERTY(QString notificationHighText READ getNotificationHighText WRITE setNotificationHighText NOTIFY notificationHighTextChanged)
 
 public:
     Settings(QObject* parent = nullptr);
@@ -48,6 +51,9 @@ public:
     bool getNotificationsEnabled();
     QString getLowAlertFile();
     QString getHighAlertFile();
+    QString getNotificationTitle();
+    QString getNotificationLowText();
+    QString getNotificationHighText();
 
     void setLowAlert(int newLimit);
     void setHighAlert(int newLimit);
@@ -56,7 +62,9 @@ public:
     void setHighLimit(int newLimit);
     void setLimitEnabled(bool newEnabled);
     void setNotificationsEnabled(bool newEnabled);
-
+    void setNotificationTitle(QString newText);
+    void setNotificationLowText(QString newText);
+    void setNotificationHighText(QString newText);
 
 private:
     QSettings *mySettings;
@@ -71,6 +79,9 @@ private:
     int highLimit = 70;
     QString lowAlertFile = "/usr/share/sounds/jolla-ambient/stereo/general_warning.wav";
     QString highAlertFile = "/usr/share/sounds/jolla-ambient/stereo/positive_confirmation.wav";
+    QString notificationTitle;
+    QString notificationLowText;
+    QString notificationHighText;
 
     // To avoid repeating the same string over and over and over...
     const char* sLowAlert = "lowAlert";
@@ -82,6 +93,9 @@ private:
     const char* sHighLimit = "highLimit";
     const char* sLowAlertFile = "lowAlertFile";
     const char* sHighAlertFile = "highAlertFile";
+    const char* sNotificationTitle = "notificationTitle";
+    const char* sNotificationLowText = "notificationLowText";
+    const char* sNotificationHighText = "notificationHighText";
 
     int bound(int value, int min, int max);
     void loadInteger(const char *key, int *value, int min, int max);
@@ -97,6 +111,9 @@ signals:
     void highLimitChanged(int);
     void lowAlertFileChanged(QString);
     void highAlertFileChanged(QString);
+    void notificationTitleChanged(QString);
+    void notificationLowTextChanged(QString);
+    void notificationHighTextChanged(QString);
 };
 
 #endif // SETTINGS_H

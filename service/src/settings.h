@@ -41,6 +41,9 @@ public:
     bool getNotificationsEnabled();
     QString getLowAlertFile();
     QString getHighAlertFile();
+    QString getNotificationTitle();
+    QString getNotificationLowText();
+    QString getNotificationHighText();
 
 private:
     QSettings* mySettings = nullptr;
@@ -60,6 +63,9 @@ private:
     int highLimit = 70;
     QString lowAlertFile = "/usr/share/sounds/jolla-ambient/stereo/general_warning.wav";
     QString highAlertFile = "/usr/share/sounds/jolla-ambient/stereo/positive_confirmation.wav";
+    QString notificationTitle;
+    QString notificationLowText;
+    QString notificationHighText;
 
     // To avoid repeating the same string over and over and over...
     const char* sLowAlert = "lowAlert";
@@ -71,12 +77,18 @@ private:
     const char* sHighLimit = "highLimit";
     const char* sLowAlertFile = "lowAlertFile";
     const char* sHighAlertFile = "highAlertFile";
+    const char* sNotificationTitle = "notificationTitle";
+    const char* sNotificationLowText = "notificationLowText";
+    const char* sNotificationHighText = "notificationHighText";
 
     int bound(int value, int min, int max);
     void loadInteger(const char *key, int *value, int min, int max);
 
 private slots:
-    void configChanged(QString path);
+    void updateConfig(QString path);
+
+signals:
+    void configChanged();
 };
 
 #endif // SETTINGS_H

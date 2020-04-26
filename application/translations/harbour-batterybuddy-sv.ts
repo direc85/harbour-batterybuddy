@@ -23,6 +23,10 @@
         <source>Contributions and translations are always appreciated!</source>
         <translation>Kodbidrag och översättningar är alltid uppskattat!</translation>
     </message>
+    <message>
+        <source>If you like my work and would like to support me, you can buy me a coffee!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -235,6 +239,21 @@ Buddy</translation>
     </message>
 </context>
 <context>
+    <name>Settings</name>
+    <message>
+        <source>Battery charge %1%</source>
+        <translation>Batteriladdning %1%</translation>
+    </message>
+    <message>
+        <source>Please connect the charger.</source>
+        <translation>Anslut laddaren.</translation>
+    </message>
+    <message>
+        <source>Please disconnect the charger.</source>
+        <translation>Koppla ifrån laddaren.</translation>
+    </message>
+</context>
+<context>
     <name>SettingsPage</name>
     <message>
         <source>Settings</source>
@@ -288,30 +307,6 @@ Buddy</translation>
     <message>
         <source>This option disables charging automatically when the battery has charged above the pausing percentage and enables it again when the battery has depleted below the resuming percentage.</source>
         <translation>Detta alternativ inaktiverar laddningen automatiskt, när batteriet har laddats upp över pausprocenten och aktiverar det igen, när batteriet har laddats ur under återupptagandeprocent.</translation>
-    </message>
-</context>
-<context>
-    <name>harbour-batterybuddy</name>
-    <message>
-        <source>Battery Buddy</source>
-        <translation>Battery Buddy</translation>
-    </message>
-    <message>
-        <source>Battery charge</source>
-        <comment>Battery charge 20%</comment>
-        <translation>Batteriladdning</translation>
-    </message>
-    <message>
-        <source>This is a test.</source>
-        <translation>Detta är ett test.</translation>
-    </message>
-    <message>
-        <source>Please disconnect the charger.</source>
-        <translation>Koppla ifrån laddaren.</translation>
-    </message>
-    <message>
-        <source>Please connect the charger.</source>
-        <translation>Anslut laddaren.</translation>
     </message>
 </context>
 </TS>

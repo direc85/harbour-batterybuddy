@@ -19,12 +19,14 @@
 #define BATTERY_H
 
 #include <QObject>
+#include <QTimer>
 #include <QString>
 #include <QFile>
 #include <QStandardPaths>
 #include <QHostInfo>
 #include <QDebug>
 #include "settings.h"
+#include "notification.h"
 
 class Battery : public QObject
 {
@@ -35,7 +37,7 @@ class Battery : public QObject
     Q_PROPERTY(bool chargingEnabled READ getChargingEnabled  WRITE setChargingEnabled NOTIFY chargingEnabledChanged)
 
 public:
-    Battery(Settings* newSettings, QObject* parent = nullptr);
+    Battery(Settings *newSettings, QTimer *newUpdater, QTimer *newNotifier, Notification *newNotification, QObject *parent = nullptr);
     ~Battery();
 
     int getCharge();
@@ -56,6 +58,9 @@ private:
     QFile* stateFile;
     QFile* chargingEnabledFile = Q_NULLPTR;
     Settings* settings;
+    QTimer *updateTimer = nullptr;
+    QTimer *notifyTimer = nullptr;
+    Notification *notification = nullptr;
 
     // Default values:
     int charge = 100; // 100% full
@@ -80,6 +85,10 @@ signals:
     void stateChanged(QString);
     void chargingEnabledChanged(bool);
     void chargerConnectedChanged(bool);
+
+public slots:
+    void updateConfig();
+    void showNotification();
 };
 
 #endif // BATTERY_H

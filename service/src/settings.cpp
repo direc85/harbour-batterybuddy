@@ -23,6 +23,7 @@ Settings::Settings(QObject *parent) : QObject(parent)
     if(!mySettings) {
         mySettings = new QSettings("harbour-batterybuddy", "harbour-batterybuddy");
     }
+
     qDebug() << "Using" << mySettings->fileName();
 
     // Migrate old settings
@@ -40,16 +41,15 @@ Settings::Settings(QObject *parent) : QObject(parent)
 
     // Do this here, because...
     watcher = new QFileSystemWatcher(QStringList(mySettings->fileName()));
-    connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(configChanged(QString)));
+    connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(updateConfig(QString)));
 
     // ...calling this deletes mySettings!
-    configChanged(mySettings->fileName());
+    updateConfig(mySettings->fileName());
 
     qInfo() << "Loaded" << sLimitEnabled << limitEnabled;
 
     // Battery Buddy GUI application changes the settings file,
     // so we must monitor it and update when it changes.
-
 }
 
 Settings::~Settings()
@@ -66,7 +66,7 @@ void Settings::loadInteger(const char* key, int *value, int min, int max) {
     qInfo() << "Loaded" << key << *value;
 }
 
-void Settings::configChanged(QString path) {
+void Settings::updateConfig(QString path) {
 
     // Use the same file location as GUI for data exchange
     if(!mySettings) {
@@ -82,6 +82,13 @@ void Settings::configChanged(QString path) {
     loadInteger(sNotificationsEnabled, &notificationsEnabled, 0, 1);
     loadInteger(sLowLimit, &lowLimit, 20, 94);
     loadInteger(sHighLimit, &highLimit, 21, 95);
+
+    // These are translated in the GUI application
+    // and delivered here via the config file
+    notificationTitle = mySettings->value(sNotificationTitle, "Battery charge %1%").toString();
+    notificationLowText = mySettings->value(sNotificationLowText, "Please connect the charger.").toString();
+    notificationHighText = mySettings->value(sNotificationHighText, "Please disconnect the charger.").toString();
+
     qDebug() << "Values read.";
 
     delete mySettings;
@@ -109,3 +116,6 @@ bool    Settings::getLimitEnabled()         { return limitEnabled == 1; }
 bool    Settings::getNotificationsEnabled() { return notificationsEnabled == 1; }
 QString Settings::getLowAlertFile()         { return lowAlertFile; }
 QString Settings::getHighAlertFile()        { return highAlertFile; }
+QString Settings::getNotificationTitle()    { return notificationTitle; }
+QString Settings::getNotificationLowText()  { return notificationLowText; }
+QString Settings::getNotificationHighText() { return notificationHighText; }

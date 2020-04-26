@@ -5,6 +5,7 @@
 #include "settings.h"
 #include <iostream>
 #include <signal.h>
+#include "notification.h"
 
 int main(int argc, char** argv)
 {
@@ -38,12 +39,11 @@ int main(int argc, char** argv)
 
     QCoreApplication app(argc, argv);
 
-    Settings* settings = new Settings();
-    Battery* battery = new Battery(settings);
-
-    QTimer* updater = new QTimer();
-    QObject::connect(updater, SIGNAL(timeout()), battery, SLOT(updateData()));
-    updater->start(3000);
+    QTimer *updater = new QTimer();
+    QTimer *notifier = new QTimer();
+    Settings *settings = new Settings();
+    Notification *notification = new Notification();
+    Battery *battery = new Battery(settings, updater, notifier, notification);
 
     // Exit gracefully on Ctrl-C and service stop
     QObject::connect(&app, SIGNAL(aboutToQuit()), battery, SLOT(shutdown()));
@@ -51,6 +51,10 @@ int main(int argc, char** argv)
     signal(SIGTERM, app.exit);
 
     int retval = app.exec();
+
+    delete updater;
+    delete settings;
+    delete battery;
 
     return retval;
 }

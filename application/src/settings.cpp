@@ -43,7 +43,10 @@ Settings::Settings(QObject *parent) : QObject(parent)
     loadInteger(sNotificationsEnabled, &notificationsEnabled, 0, 1);
     loadInteger(sLowLimit, &lowLimit, 20, 94);
     loadInteger(sHighLimit, &highLimit, 21, 95);
-    qInfo() << "Loaded" << sLimitEnabled << limitEnabled;
+
+    notificationTitle = tr("Battery charge %1%");
+    notificationLowText = tr("Please connect the charger.");
+    notificationHighText = tr("Please disconnect the charger.");
 }
 
 Settings::~Settings()
@@ -55,45 +58,26 @@ Settings::~Settings()
     saveInteger(sNotificationsEnabled, &notificationsEnabled);
     saveInteger(sLowLimit, &lowLimit);
     saveInteger(sHighLimit, &highLimit);
+    mySettings->setValue(sNotificationTitle, notificationTitle);
+    mySettings->setValue(sNotificationLowText, notificationLowText);
+    mySettings->setValue(sNotificationHighText, notificationHighText);
     mySettings->sync();
     qInfo() << "Settings saved:" << (mySettings->status() == QSettings::NoError);
 }
 
-int  Settings::getLowAlert() {
-    return lowAlert;
-}
-
-int  Settings::getHighAlert() {
-    return highAlert;
-}
-
-int  Settings::getInterval() {
-    return interval;
-}
-
-int  Settings::getLowLimit() {
-    return lowLimit;
-}
-
-int  Settings::getHighLimit() {
-    return highLimit;
-}
-
-bool Settings::getLimitEnabled() {
-    return limitEnabled == 1;
-}
-
-bool Settings::getNotificationsEnabled() {
-    return notificationsEnabled == 1;
-}
-
-QString Settings::getLowAlertFile() {
-    return lowAlertFile;
-}
-
-QString Settings::getHighAlertFile() {
-    return highAlertFile;
-}
+// Getters condensed.
+int     Settings::getLowAlert()             { return lowAlert; }
+int     Settings::getHighAlert()            { return highAlert; }
+int     Settings::getInterval()             { return interval; }
+int     Settings::getLowLimit()             { return lowLimit; }
+int     Settings::getHighLimit()            { return highLimit; }
+bool    Settings::getLimitEnabled()         { return limitEnabled == 1; }
+bool    Settings::getNotificationsEnabled() { return notificationsEnabled == 1; }
+QString Settings::getLowAlertFile()         { return lowAlertFile; }
+QString Settings::getHighAlertFile()        { return highAlertFile; }
+QString Settings::getNotificationTitle()    { return notificationTitle; }
+QString Settings::getNotificationLowText()  { return notificationLowText; }
+QString Settings::getNotificationHighText() { return notificationHighText; }
 
 void Settings::setLowAlert(int newLimit) {
     lowAlert = newLimit;
@@ -151,6 +135,29 @@ void Settings::setNotificationsEnabled(bool newEnabled) {
     qDebug() << "Change" << sNotificationsEnabled << newEnabled;
 }
 
+void Settings::setNotificationTitle(QString newText) {
+    notificationTitle = newText;
+    mySettings->setValue(sNotificationTitle, notificationTitle);
+    mySettings->sync();
+    emit notificationTitleChanged(notificationTitle);
+    qDebug() << sNotificationTitle << notificationTitle;
+}
+
+void Settings::setNotificationLowText(QString newText) {
+    notificationLowText = newText;
+    mySettings->setValue(sNotificationLowText, notificationLowText);
+    mySettings->sync();
+    emit notificationLowTextChanged(notificationLowText);
+    qDebug() << sNotificationLowText << notificationLowText;
+}
+
+void Settings::setNotificationHighText(QString newText) {
+    notificationHighText = newText;
+    mySettings->setValue(sNotificationHighText, notificationHighText);
+    mySettings->sync();
+    emit notificationHighTextChanged(notificationHighText);
+    qDebug() << sNotificationHighText << notificationHighText;
+}
 
 int Settings::bound(int value, int min, int max) {
     return (value <= min ? min : (value >= max ? max : value));

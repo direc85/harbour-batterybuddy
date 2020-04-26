@@ -23,6 +23,10 @@
         <source>Contributions and translations are always appreciated!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>If you like my work and would like to support me, you can buy me a coffee!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -232,6 +236,21 @@ Buddy</source>
     </message>
 </context>
 <context>
+    <name>Settings</name>
+    <message>
+        <source>Battery charge %1%</source>
+        <translation>Niveau batterie %1%</translation>
+    </message>
+    <message>
+        <source>Please connect the charger.</source>
+        <translation>Merci de brancher le chargeur.</translation>
+    </message>
+    <message>
+        <source>Please disconnect the charger.</source>
+        <translation>Merci de débrancher le chargeur.</translation>
+    </message>
+</context>
+<context>
     <name>SettingsPage</name>
     <message>
         <source>Settings</source>
@@ -285,30 +304,6 @@ Buddy</source>
     <message>
         <source>Notification interval</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>harbour-batterybuddy</name>
-    <message>
-        <source>Battery Buddy</source>
-        <translation type="unfinished">Battery Buddy</translation>
-    </message>
-    <message>
-        <source>Battery charge</source>
-        <comment>Battery charge 20%</comment>
-        <translation type="unfinished">Niveau batterie</translation>
-    </message>
-    <message>
-        <source>This is a test.</source>
-        <translation type="unfinished">Ceci est un essai.</translation>
-    </message>
-    <message>
-        <source>Please disconnect the charger.</source>
-        <translation type="unfinished">Merci de débrancher le chargeur.</translation>
-    </message>
-    <message>
-        <source>Please connect the charger.</source>
-        <translation type="unfinished">Merci de brancher le chargeur.</translation>
     </message>
 </context>
 </TS>

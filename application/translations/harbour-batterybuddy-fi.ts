@@ -23,6 +23,10 @@
         <source>Contributions and translations are always appreciated!</source>
         <translation>Sovelluksen kehittämiseen osallistuminen sekä uusien käännösten lisääminen ovat aina tervetulleita!</translation>
     </message>
+    <message>
+        <source>If you like my work and would like to support me, you can buy me a coffee!</source>
+        <translation>Jos pidät työstäni ja haluat tukea minua, voit ostaa minulle kahvin!</translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -233,6 +237,21 @@ Buddy</translation>
     </message>
 </context>
 <context>
+    <name>Settings</name>
+    <message>
+        <source>Battery charge %1%</source>
+        <translation>Akun lataus %1%</translation>
+    </message>
+    <message>
+        <source>Please connect the charger.</source>
+        <translation>Ole hyvä ja kytke laturi.</translation>
+    </message>
+    <message>
+        <source>Please disconnect the charger.</source>
+        <translation>Ole hyvä ja irrota laturi.</translation>
+    </message>
+</context>
+<context>
     <name>SettingsPage</name>
     <message>
         <source>Settings</source>
@@ -286,30 +305,6 @@ Buddy</translation>
     <message>
         <source>This option disables charging automatically when the battery has charged above the pausing percentage and enables it again when the battery has depleted below the resuming percentage.</source>
         <translation>Tämä valinta keskeyttää akun latauksen automaattisesti, kun akku on latautunut keskeytysrajaan asti, ja jatkaa latausta uudelleen, kun akku on purkautunut jatkamisrajaan asti.</translation>
-    </message>
-</context>
-<context>
-    <name>harbour-batterybuddy</name>
-    <message>
-        <source>Battery Buddy</source>
-        <translation>Battery Buddy</translation>
-    </message>
-    <message>
-        <source>Battery charge</source>
-        <comment>Battery charge 20%</comment>
-        <translation>Akun varaus</translation>
-    </message>
-    <message>
-        <source>This is a test.</source>
-        <translation>Tämä on testi.</translation>
-    </message>
-    <message>
-        <source>Please disconnect the charger.</source>
-        <translation>Ole hyvä ja irrota laturi.</translation>
-    </message>
-    <message>
-        <source>Please connect the charger.</source>
-        <translation>Ole hyvä ja kytke laturi.</translation>
     </message>
 </context>
 </TS>

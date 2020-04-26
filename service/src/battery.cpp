@@ -17,10 +17,13 @@
  */
 #include "battery.h"
 
-Battery::Battery(Settings* newSettings, QObject* parent) : QObject(parent)
+Battery::Battery(Settings *newSettings, QTimer *newUpdater, QTimer *newNotifier, Notification *newNotification, QObject *parent) : QObject(parent)
 {
     QString filename;
     settings = newSettings;
+    updateTimer = newUpdater;
+    notifyTimer = newNotifier;
+    notification = newNotification;
 
     // Number: charge percentage, e.g. 42
     chargeFile   = new QFile("/sys/class/power_supply/battery/capacity", this);
@@ -103,6 +106,19 @@ Battery::Battery(Settings* newSettings, QObject* parent) : QObject(parent)
     // thingamabob - it is deprecated anyway.
 
     updateData();
+
+    connect(updateTimer, SIGNAL(timeout()), this, SLOT(updateData()));
+    connect(settings, SIGNAL(configChanged()), this, SLOT(updateConfig()));
+    connect(notifyTimer, SIGNAL(timeout()), this, SLOT(showNotification()));
+
+    updateConfig();
+
+    updateTimer->setInterval(5000);
+    updateTimer->start();
+
+    if(settings->getNotificationsEnabled()) {
+        showNotification();
+    }
 }
 
 Battery::~Battery() { }
@@ -148,7 +164,34 @@ void Battery::updateData()
     }
 }
 
-int Battery::getCharge(){ return charge; }
+void Battery::updateConfig() {
+    notifyTimer->stop();
+    notifyTimer->setInterval(settings->getInterval() * 1000);
+    if(settings->getNotificationsEnabled())
+        notifyTimer->start();
+}
+
+void Battery::showNotification() {
+    if(!settings->getNotificationsEnabled())
+            return;
+
+    qDebug() << "battery" << charge << "low" << settings->getLowAlert() << "high" << settings->getHighAlert() << "state" << state;
+
+    if(charge <= settings->getLowAlert() && state.compare("charging")) {
+        qInfo() << "Battery notification timer: empty enough battery";
+        notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationLowText(), settings->getLowAlertFile());
+    }
+    else if((charge >= settings->getHighAlert() && state.compare("discharging"))
+            || (charge == 100 && !state.compare("idle"))) {
+        qInfo() << "Battery notification timer: full enough battery";
+        notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationHighText(), settings->getHighAlertFile());
+    }
+    else {
+        qInfo() << "Battery notification timer: close notification";
+        notification->close();
+    }
+}
+int Battery::getCharge() { return charge; }
 
 QString Battery::getState() { return state; }
 
@@ -176,6 +219,13 @@ bool Battery::getChargerConnected() {
 }
 
 void Battery::shutdown() {
+    qDebug() << "\nPreparing for exit...";
+    blockSignals(true);
+    if(updateTimer) {
+        updateTimer->stop();
+        qDebug() << "Timer stopped";
+    }
+    setChargingEnabled(true);
     chargingEnabledFile->setPermissions(originalPerms);
-    qDebug() << "Charger control file permissions updated.";
+    qDebug() << "Charger control file permissions restored.";
 }

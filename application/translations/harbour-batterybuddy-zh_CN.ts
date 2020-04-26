@@ -23,6 +23,10 @@
         <source>Contributions and translations are always appreciated!</source>
         <translation>非常感谢你们提供贡献及翻译！</translation>
     </message>
+    <message>
+        <source>If you like my work and would like to support me, you can buy me a coffee!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -233,6 +237,21 @@ Buddy（电池搭档）</translation>
     </message>
 </context>
 <context>
+    <name>Settings</name>
+    <message>
+        <source>Battery charge %1%</source>
+        <translation>电池充电 %1%</translation>
+    </message>
+    <message>
+        <source>Please connect the charger.</source>
+        <translation>请连接到充电器</translation>
+    </message>
+    <message>
+        <source>Please disconnect the charger.</source>
+        <translation>请断开充电器</translation>
+    </message>
+</context>
+<context>
     <name>SettingsPage</name>
     <message>
         <source>Settings</source>
@@ -286,30 +305,6 @@ Buddy（电池搭档）</translation>
     <message>
         <source>Notification interval</source>
         <translation>通知间隔</translation>
-    </message>
-</context>
-<context>
-    <name>harbour-batterybuddy</name>
-    <message>
-        <source>Battery Buddy</source>
-        <translation>Battery Buddy（电池搭档）</translation>
-    </message>
-    <message>
-        <source>Battery charge</source>
-        <comment>Battery charge 20%</comment>
-        <translation>电池充电 20%</translation>
-    </message>
-    <message>
-        <source>This is a test.</source>
-        <translation>这是一次测试。</translation>
-    </message>
-    <message>
-        <source>Please disconnect the charger.</source>
-        <translation>请断开充电器</translation>
-    </message>
-    <message>
-        <source>Please connect the charger.</source>
-        <translation>请连接到充电器</translation>
     </message>
 </context>
 </TS>
