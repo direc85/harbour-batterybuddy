@@ -90,8 +90,6 @@ int main(int argc, char *argv[])
     qInfo() << "Exiting...";
 
     updater->stop();
-    battery->blockSignals(true);
-    battery->setChargingEnabled(true);
 
     delete updater;
     delete battery;

@@ -53,7 +53,7 @@ private:
     QFile* chargeFile;
     QFile* chargerConnectedFile;
     QFile* stateFile;
-    QFile* chargingEnabledFile = Q_NULLPTR;
+    QFile* chargingEnabledFile;
     Settings* settings;
 
     // Default values:
