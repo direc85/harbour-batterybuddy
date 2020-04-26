@@ -36,6 +36,7 @@ Page {
 
     Component.onCompleted: {
         // These we can read only once
+        autoStopCharging.checked = settings.limitEnabled
         highLimitSlider.value = settings.highLimit
         lowLimitSlider.value = settings.lowLimit
         notificationsSwitch.checked = settings.notificationsEnabled
