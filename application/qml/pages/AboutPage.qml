@@ -81,12 +81,6 @@ Page {
                 text: "Copyright 2019-2020 Matti Viljanen"
             }
 
-            AboutLabel {
-                font.pixelSize: Theme.fontSizeSmall
-                color: Theme.secondaryColor
-                text: qsTr("If you like my work and would like to support me, you can buy me a coffee!")
-            }
-
             BackgroundItem {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: Theme.iconSizeExtraLarge * 1.2
@@ -102,6 +96,18 @@ Page {
                     smooth: true
                     asynchronous: true
                 }
+            }
+
+            AboutLabel {
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.secondaryColor
+                text: qsTr("If you like my work and would like to support me, you can buy me a coffee!")
+            }
+
+            AboutLabel {
+                font.pixelSize: Theme.fontSizeMedium
+                color: Theme.primaryColor
+                text: qsTr("Translations")
             }
 
             AboutLabel {
