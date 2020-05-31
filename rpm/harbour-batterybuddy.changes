@@ -1,8 +1,9 @@
-* Sun Apr 26 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 2.99-1
-- Version 3.0 beta 1
+* Sun May 31 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.0-1
 - Reimplemented systemd service controls charging and notifications
 - GUI doesn't have to be open for proper operation
 - Added Ko-Fi.com donation link
+- Translation fixes
+- Identical with version 3.0 beta 1 (2.99-1)
 
 * Fri Mar 27 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 2.2-2
 - Fix broken notifications timer
