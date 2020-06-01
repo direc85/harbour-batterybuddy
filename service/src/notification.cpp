@@ -62,7 +62,7 @@ void Notification::send(QString title, QString body, QString soundFile)
 
 void Notification::close()
 {
-    if(noteID.compare("1") == 0)
+    if(noteID == "1")
         return;
 
     QStringList args;

@@ -166,12 +166,12 @@ void Battery::showNotification() {
 
     qInfo() << "battery" << charge << "low" << settings->getLowAlert() << "high" << settings->getHighAlert() << "state" << state;
 
-    if(charge <= settings->getLowAlert() && state.compare("charging")) {
+    if(charge <= settings->getLowAlert() && state != "charging") {
         qDebug() << "Battery notification timer: empty enough battery";
         notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationLowText(), settings->getLowAlertFile());
     }
-    else if((charge >= settings->getHighAlert() && state.compare("discharging"))
-            || (charge == 100 && !state.compare("idle"))) {
+    else if((charge >= settings->getHighAlert() && state != "discharging")
+            && !(charge == 100 && state == "idle")) {
         qDebug() << "Battery notification timer: full enough battery";
         notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationHighText(), settings->getHighAlertFile());
     }
