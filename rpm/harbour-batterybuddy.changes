@@ -1,3 +1,7 @@
+* Mon Jun 01 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.1-1
+- Update Chinese translation
+- Don't alert on "100% idle" (e.g. emulator)
+
 * Sun May 31 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.0-1
 - Reimplemented systemd service controls charging and notifications
 - GUI doesn't have to be open for proper operation
