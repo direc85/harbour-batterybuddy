@@ -25,11 +25,11 @@
     </message>
     <message>
         <source>If you like my work and would like to support me, you can buy me a coffee!</source>
-        <translation type="unfinished"></translation>
+        <translation>如果你喜欢我的作品，不妨考虑给我买杯咖啡！</translation>
     </message>
     <message>
         <source>Translations</source>
-        <translation type="unfinished"></translation>
+        <translation>翻译</translation>
     </message>
 </context>
 <context>
@@ -237,7 +237,7 @@ Buddy（电池搭档）</translation>
     </message>
     <message>
         <source>You can close Battery Buddy when you are done, notifications and charger control will continue working in the background.</source>
-        <translation type="unfinished"></translation>
+        <translation>你可以关闭 BatteryBuddy，通知及充电控制功能可以在后台进行。</translation>
     </message>
 </context>
 <context>
