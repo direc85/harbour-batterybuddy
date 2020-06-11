@@ -73,25 +73,11 @@ Battery::Battery(Settings *newSettings, QTimer *newUpdater, QTimer *newNotifier,
     }
 
     // If we found a usable file, check that it is writable
-    if(chargingEnabledFile) {
-        // This should always succeed, since the service is started as root
-        if(chargingEnabledFile->open(QIODevice::WriteOnly)) {
-//            qInfo() << "Controlling charging via" << chargingEnabledFile->fileName();
-//            chargingEnabledFile->close();
-
-//            originalPerms = chargingEnabledFile->permissions();
-
-//            if(originalPerms | customPerms) {
-//                chargingEnabledFile->setPermissions(customPerms);
-//                qDebug() << "Charger control file permissions updated.";
-//            }
-        }
-        else {
-            delete chargingEnabledFile;
-            chargingEnabledFile = Q_NULLPTR;
-            qWarning() << "Charger control file" << chargingEnabledFile->fileName() << "is not writable";
-            qWarning() << "Charger control feature disabled";
-        }
+    if(chargingEnabledFile && !chargingEnabledFile->open(QIODevice::WriteOnly)) {
+        delete chargingEnabledFile;
+        chargingEnabledFile = Q_NULLPTR;
+        qWarning() << "Charger control file" << chargingEnabledFile->fileName() << "is not writable";
+        qWarning() << "Charger control feature disabled";
     }
 
     updateData();
@@ -162,7 +148,7 @@ void Battery::updateConfig() {
 
 void Battery::showNotification() {
     if(!settings->getNotificationsEnabled())
-            return;
+        return;
 
     qInfo() << "battery" << charge << "low" << settings->getLowAlert() << "high" << settings->getHighAlert() << "state" << state;
 

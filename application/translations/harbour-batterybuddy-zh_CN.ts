@@ -220,24 +220,24 @@ Buddy（电池搭档）</translation>
         <translation>充电器已连接:</translation>
     </message>
     <message>
-        <source>Charger control</source>
-        <translation>充电器控制</translation>
-    </message>
-    <message>
-        <source>Using these controls overrides the automated settings.</source>
-        <translation>使用这些操作以覆盖默认设置。</translation>
-    </message>
-    <message>
-        <source>Resume</source>
-        <translation>继续</translation>
-    </message>
-    <message>
-        <source>Pause</source>
-        <translation>暂停</translation>
-    </message>
-    <message>
         <source>You can close Battery Buddy when you are done, notifications and charger control will continue working in the background.</source>
         <translation>你可以关闭 BatteryBuddy，通知及充电控制功能可以在后台进行。</translation>
+    </message>
+    <message>
+        <source>If notifications misbehave or there are problems with charger control, restarting the background service should help.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Background service</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

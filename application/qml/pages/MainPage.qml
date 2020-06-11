@@ -17,6 +17,7 @@
  */
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import Process 1.0
 import "../components"
 
 Page {
@@ -36,6 +37,52 @@ Page {
         if(status == PageStatus.Active && !settingsPagePushed) {
             pageStack.pushAttached(Qt.resolvedUrl("SettingsPage.qml"))
             settingsPagePushed = true;
+        }
+    }
+
+    Timer {
+        id: daemonControlTimer
+        interval: 100
+        running: false
+        repeat: false
+        onTriggered: {
+            var action = daemonStatus.serviceRunning ? "stop" : "start"
+            console.log("Action: " + action)
+            daemonControl.start("/bin/systemctl", ["--user", action, "harbour-batterybuddy.service"])
+        }
+    }
+
+    Process {
+        id: daemonControl
+        onFinished: {
+            daemonStatusTimer.start()
+            console.debug("Service control return code " + errorCode())
+        }
+    }
+
+    Timer {
+        id: daemonStatusTimer
+        interval: 2000
+        running: false
+        repeat: false
+        onTriggered: {
+            daemonStatus.start("/bin/systemctl", ["--user", "status", "harbour-batterybuddy.service"])
+        }
+    }
+
+    Process {
+        id: daemonStatus
+        property bool serviceRunning: true
+        onFinished: {
+            if(errorCode() === 0) {
+                serviceRunning = true
+                daemonStopButton.enabled = true
+            }
+            else {
+                serviceRunning = false
+                daemonStartButton.enabled = true
+            }
+            console.debug("Service status return code " + errorCode())
         }
     }
 
@@ -116,14 +163,14 @@ Page {
                 spacing: Theme.paddingMedium
                 Label {
                     x: Theme.paddingLarge
-                    text: qsTr("Charger control")
+                    text: qsTr("Background service")
                     color: Theme.highlightColor
                 }
                 Label {
                     x: Theme.paddingLarge*2
                     width: parent.width - x*2;
                     wrapMode: Text.Wrap
-                    text: qsTr("Using these controls overrides the automated settings.")
+                    text: qsTr("If notifications misbehave or there are problems with charger control, restarting the background service should help.")
                     color: Theme.primaryColor
                     font.pixelSize: Theme.fontSizeSmall
                 }
@@ -132,32 +179,32 @@ Page {
                         left: parent.left
                         right: parent.right
                     }
-                    height: resumeButton.height
+                    height: daemonStartButton.height
 
                     Column {
                         width: parent.width / 2
                         Button {
-                            id: resumeButton
+                            id: daemonStartButton
                             anchors.horizontalCenter: parent.horizontalCenter
-                            text: qsTr("Resume")
+                            text: qsTr("Start")
                             onClicked: {
-                                battery.chargingEnabled = true
-                                settings.limitEnabled = false
+                                daemonControlTimer.start()
+                                enabled = false
                             }
-                            enabled: !battery.chargingEnabled
+                            enabled: false
                         }
                     }
                     Column {
                         width: parent.width / 2
                         Button {
-                            id: pauseButton
+                            id: daemonStopButton
                             anchors.horizontalCenter: parent.horizontalCenter
-                            text: qsTr("Pause")
+                            text: qsTr("Stop")
                             onClicked: {
-                                battery.chargingEnabled = false
-                                settings.limitEnabled = false
+                                daemonControlTimer.start()
+                                enabled = false
                             }
-                            enabled: battery.chargingEnabled
+                            enabled: true
                         }
                     }
                 }

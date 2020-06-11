@@ -220,24 +220,24 @@ Buddy</translation>
         <translation>tyhjä</translation>
     </message>
     <message>
-        <source>Resume</source>
-        <translation>Jatka</translation>
-    </message>
-    <message>
-        <source>Pause</source>
-        <translation>Keskeytä</translation>
-    </message>
-    <message>
-        <source>Charger control</source>
-        <translation>Latauksen hallinta</translation>
-    </message>
-    <message>
-        <source>Using these controls overrides the automated settings.</source>
-        <translation>Näiden painikkeiden käyttö poistaa latausautomatiikan käytöstä.</translation>
-    </message>
-    <message>
         <source>You can close Battery Buddy when you are done, notifications and charger control will continue working in the background.</source>
         <translation>Voit sulkea Battery Buddyn kun olet valmis, sillä taustaprosessi huolehtii ilmoituksista ja latauksen hallinnasta.</translation>
+    </message>
+    <message>
+        <source>Background service</source>
+        <translation>Taustapalvelu</translation>
+    </message>
+    <message>
+        <source>If notifications misbehave or there are problems with charger control, restarting the background service should help.</source>
+        <translation>Jos ilmoitukset eivät tottele, tai latauksen automaattinen keskeytys ei toimi, palvelun uudelleenkäynnistämisen pitäisi auttaa.</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation>Käynnistä</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Sammuta</translation>
     </message>
 </context>
 <context>

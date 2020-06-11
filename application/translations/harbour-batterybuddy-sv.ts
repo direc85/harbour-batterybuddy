@@ -222,23 +222,23 @@ Buddy</translation>
         <translation>Tom</translation>
     </message>
     <message>
-        <source>Resume</source>
-        <translation>Återuppta</translation>
-    </message>
-    <message>
-        <source>Pause</source>
-        <translation>Pausa</translation>
-    </message>
-    <message>
-        <source>Charger control</source>
-        <translation>Laddningskontroll</translation>
-    </message>
-    <message>
-        <source>Using these controls overrides the automated settings.</source>
-        <translation>Dessa kontroller åsidosätter de automatiserade inställningarna.</translation>
-    </message>
-    <message>
         <source>You can close Battery Buddy when you are done, notifications and charger control will continue working in the background.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If notifications misbehave or there are problems with charger control, restarting the background service should help.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Background service</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -30,7 +30,8 @@ DEFINES += APP_NAME=\"\\\"$$TARGET\\\"\"
 
 HEADERS += \
     src/battery.h \
-    src/settings.h
+    src/settings.h \
+    src/process.h
 
 SOURCES += src/harbour-batterybuddy.cpp \
     src/battery.cpp \

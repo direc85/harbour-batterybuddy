@@ -23,22 +23,6 @@ Page {
     id: settingsPage
     allowedOrientations: Orientation.Portrait | Orientation.Landscape | Orientation.LandscapeInverted
 
-    Timer {
-        id: settingsTimer
-        interval: 16
-        repeat: false
-        onTriggered: {
-            // The only setting that can change outside this page
-            autoStopCharging.checked = settings.limitEnabled
-            console.debug("Charger control enabled updated")
-        }
-    }
-
-    onStatusChanged: {
-        if(status === PageStatus.Activating)
-            settingsTimer.start()
-    }
-
     Component.onCompleted: {
         autoStopCharging.checked = settings.limitEnabled
         highLimitSlider.value = settings.highLimit

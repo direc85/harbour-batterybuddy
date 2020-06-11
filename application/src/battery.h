@@ -25,6 +25,7 @@
 #include <QHostInfo>
 #include <QDebug>
 #include "settings.h"
+#include "process.h"
 
 class Battery : public QObject
 {
