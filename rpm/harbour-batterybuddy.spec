@@ -69,15 +69,36 @@ desktop-file-install --delete-original       \
 # << files
 
 %posttrans
-systemctl disable --now harbour-batterybuddy-oneshot.service
-systemctl disable --now harbour-batterybuddy.service
-cp %{_datadir}/%{name}/service/harbour-batterybuddy-oneshot.service /etc/systemd/system/
-cp %{_datadir}/%{name}/service/harbour-batterybuddy.service /etc/systemd/system/
-systemctl enable --now harbour-batterybuddy-oneshot.service
-systemctl enable --now harbour-batterybuddy.service
+# Remove all service (new and old)
+systemctl stop %{name}-oneshot.service || true
+systemctl stop %{name}.service || true
+su nemo -c "systemctl --user stop %{name}.service" || true
+
+systemctl disable %{name}-oneshot.service || true
+systemctl disable %{name}.service || true
+su nemo -c "systemctl --user disable %{name}.service" || true
+
+rm %{_unitdir}/%{name}-oneshot.service || true
+rm %{_unitdir}/%{name}.service || true
+rm %{_userunitdir}/%{name}.service || true
+
+# Install/update permission daemon (root)
+cp %{_datadir}/%{name}/service/%{name}-oneshot.service %{_unitdir}/%{name}-oneshot.service
+systemctl start %{name}-oneshot.service
+systemctl enable %{name}-oneshot.service
+
+# Install/update background daemon (nemo)
+cp %{_datadir}/%{name}/service/%{name}.service %{_userunitdir}/%{name}.service
+su nemo -c "systemctl --user start %{name}.service"
+su nemo -c "systemctl --user enable %{name}.service"
+
+# Cleanup
+systemctl daemon-reload
+systemctl reset-failed
+
 
 %postun
-systemctl disable --now harbour-batterybuddy-oneshot.service
-systemctl disable --now harbour-batterybuddy.service
-rm /etc/systemd/system/harbour-batterybuddy-oneshot.service
-rm /etc/systemd/system/harbour-batterybuddy.service
+su nemo -c "systemctl --user disable --now %{name}.service" || true
+systemctl disable --now %{name}-oneshot.service || true
+rm %{_unitdir}/%{name}-oneshot.service
+rm %{_userunitdir}/%{name}.service
