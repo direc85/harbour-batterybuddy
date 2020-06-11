@@ -69,10 +69,15 @@ desktop-file-install --delete-original       \
 # << files
 
 %posttrans
+systemctl disable --now harbour-batterybuddy-oneshot.service
 systemctl disable --now harbour-batterybuddy.service
+cp %{_datadir}/%{name}/service/harbour-batterybuddy-oneshot.service /etc/systemd/system/
 cp %{_datadir}/%{name}/service/harbour-batterybuddy.service /etc/systemd/system/
+systemctl enable --now harbour-batterybuddy-oneshot.service
 systemctl enable --now harbour-batterybuddy.service
 
 %postun
+systemctl disable --now harbour-batterybuddy-oneshot.service
 systemctl disable --now harbour-batterybuddy.service
+rm /etc/systemd/system/harbour-batterybuddy-oneshot.service
 rm /etc/systemd/system/harbour-batterybuddy.service

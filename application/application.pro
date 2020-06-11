@@ -44,6 +44,9 @@ DISTFILES += qml/harbour-batterybuddy.qml \
     qml/cover/CoverPage.qml \
     ../rpm/harbour-batterybuddy.spec \
     service/harbour-batterybuddy.service \
+    service/harbour-batterybuddy-oneshot.service \
+    service/restore-write-permissions.sh \
+    service/set-write-permissions.sh \
     translations/*.ts \
     harbour-batterybuddy.desktop \
     qml/pages/MainPage.qml \
@@ -59,11 +62,15 @@ SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 TRANSLATIONS += translations/*.ts
 
 # Executable provided by "service.pro"
-OTHER_FILES += service/harbour-batterybuddy.service
-
+# Two services, actually
+OTHER_FILES += service/harbour-batterybuddy.service \
+    service/harbour-batterybuddy-oneshot.service \
+    service/restore-write-permissions.sh \
+    service/set-write-permissions.sh
 service.files = service
 service.path = /usr/share/$${TARGET}
 
+# Include images
 images.files = images
 images.path = /usr/share/$${TARGET}
 

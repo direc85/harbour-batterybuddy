@@ -76,15 +76,15 @@ Battery::Battery(Settings *newSettings, QTimer *newUpdater, QTimer *newNotifier,
     if(chargingEnabledFile) {
         // This should always succeed, since the service is started as root
         if(chargingEnabledFile->open(QIODevice::WriteOnly)) {
-            qInfo() << "Controlling charging via" << chargingEnabledFile->fileName();
-            chargingEnabledFile->close();
+//            qInfo() << "Controlling charging via" << chargingEnabledFile->fileName();
+//            chargingEnabledFile->close();
 
-            originalPerms = chargingEnabledFile->permissions();
+//            originalPerms = chargingEnabledFile->permissions();
 
-            if(originalPerms | customPerms) {
-                chargingEnabledFile->setPermissions(customPerms);
-                qDebug() << "Charger control file permissions updated.";
-            }
+//            if(originalPerms | customPerms) {
+//                chargingEnabledFile->setPermissions(customPerms);
+//                qDebug() << "Charger control file permissions updated.";
+//            }
         }
         else {
             delete chargingEnabledFile;
