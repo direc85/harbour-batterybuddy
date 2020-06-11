@@ -16,6 +16,8 @@
 
 [Unit]
 Description=Battery Buddy file permission daemon
+Requires=harbour-batterybuddy-oneshot.service
+After=harbour-batterybuddy-oneshot.service
 
 [Service]
 ExecStart=/usr/bin/harbour-batterybuddy-daemon
