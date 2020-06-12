@@ -81,6 +81,8 @@ su nemo -c "systemctl --user disable %{name}.service" || true
 rm %{_unitdir}/%{name}-oneshot.service || true
 rm %{_unitdir}/%{name}.service || true
 rm %{_userunitdir}/%{name}.service || true
+rm /etc/systemd/system/%{name}.service || true
+rm /etc/systemd/system/%{name}-oneshot.service || true
 
 # Install/update permission daemon (root)
 cp %{_datadir}/%{name}/service/%{name}-oneshot.service %{_unitdir}/%{name}-oneshot.service
