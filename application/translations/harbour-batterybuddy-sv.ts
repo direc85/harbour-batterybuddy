@@ -25,11 +25,11 @@
     </message>
     <message>
         <source>If you like my work and would like to support me, you can buy me a coffee!</source>
-        <translation type="unfinished"></translation>
+        <translation>Om du gillar mitt arbete och vill stödja mig, får du gärna bjuda mig på en kopp kaffe!</translation>
     </message>
     <message>
         <source>Translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Översättningar</translation>
     </message>
 </context>
 <context>
@@ -223,23 +223,23 @@ Buddy</translation>
     </message>
     <message>
         <source>You can close Battery Buddy when you are done, notifications and charger control will continue working in the background.</source>
-        <translation type="unfinished"></translation>
+        <translation>Du kan stänga Battery Buddy när du är klar, meddelanden och laddkontroll fortsätter att arbeta i bakgrunden.</translation>
     </message>
     <message>
         <source>If notifications misbehave or there are problems with charger control, restarting the background service should help.</source>
-        <translation type="unfinished"></translation>
+        <translation>Om aviseringarna missköter sig eller om det blir problem med laddkontrollen, bör det hjälpa att starta om bakgrundstjänsten.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Starta</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Stoppa</translation>
     </message>
     <message>
         <source>Background service</source>
-        <translation type="unfinished"></translation>
+        <translation>Bakgrundstjänst</translation>
     </message>
 </context>
 <context>
