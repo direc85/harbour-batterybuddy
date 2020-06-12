@@ -73,11 +73,13 @@ Battery::Battery(Settings *newSettings, QTimer *newUpdater, QTimer *newNotifier,
     }
 
     // If we found a usable file, check that it is writable
-    if(chargingEnabledFile && !chargingEnabledFile->open(QIODevice::WriteOnly)) {
-        delete chargingEnabledFile;
-        chargingEnabledFile = Q_NULLPTR;
-        qWarning() << "Charger control file" << chargingEnabledFile->fileName() << "is not writable";
-        qWarning() << "Charger control feature disabled";
+    if(chargingEnabledFile) {
+        if(chargingEnabledFile->open(QIODevice::WriteOnly)) {
+            chargingEnabledFile->close();
+        }
+        else {
+            qWarning() << "Charger control file" << chargingEnabledFile->fileName() << "is not writable";
+        }
     }
 
     updateData();
@@ -173,19 +175,27 @@ QString Battery::getState() { return state; }
 bool Battery::getChargingEnabled() { return chargingEnabled; }
 
 void Battery::setChargingEnabled(bool isEnabled) {
-    if(chargingEnabledFile && chargingEnabledFile->open(QIODevice::WriteOnly)) {
-        if(chargingEnabledFile->write(QString("%1").arg(isEnabled ? enableChargingValue : disableChargingValue).toLatin1())) {
-            chargingEnabled = isEnabled;
-            emit chargingEnabledChanged(chargingEnabled);
+    if(chargingEnabledFile) {
+        if(chargingEnabledFile->open(QIODevice::WriteOnly)) {
+            if(chargingEnabledFile->write(QString("%1").arg(isEnabled ? enableChargingValue : disableChargingValue).toLatin1())) {
+                chargingEnabled = isEnabled;
+                emit chargingEnabledChanged(chargingEnabled);
 
-            if(isEnabled) {
-                qInfo() << "Charging resumed";
+                if(isEnabled) {
+                    qInfo() << "Charging resumed";
+                }
+                else {
+                    qInfo() << "Charging paused";
+                }
             }
             else {
-                qInfo() << "Charging paused";
+                qWarning() << "Could not write new charger state";
             }
+            chargingEnabledFile->close();
         }
-        chargingEnabledFile->close();
+        else {
+            qWarning() << "Could not open charger control file";
+        }
     }
 }
 
