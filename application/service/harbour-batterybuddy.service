@@ -16,9 +16,10 @@
 
 [Unit]
 Description=Battery Buddy background daemon
+After=pre-user-session.target
 
 [Service]
 ExecStart=/usr/bin/harbour-batterybuddy-daemon
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=user-session.target
