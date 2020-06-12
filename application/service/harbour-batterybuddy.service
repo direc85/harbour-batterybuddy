@@ -15,7 +15,7 @@
 # Author: Matti Viljanen
 
 [Unit]
-Description=Battery Buddy file permission daemon
+Description=Battery Buddy background daemon
 
 [Service]
 ExecStart=/usr/bin/harbour-batterybuddy-daemon
