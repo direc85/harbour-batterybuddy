@@ -174,12 +174,14 @@ QString Battery::getState() { return state; }
 
 bool Battery::getChargingEnabled() { return chargingEnabled; }
 
-void Battery::setChargingEnabled(bool isEnabled) {
+bool Battery::setChargingEnabled(bool isEnabled) {
+    bool success = false;
     if(chargingEnabledFile) {
         if(chargingEnabledFile->open(QIODevice::WriteOnly)) {
             if(chargingEnabledFile->write(QString("%1").arg(isEnabled ? enableChargingValue : disableChargingValue).toLatin1())) {
                 chargingEnabled = isEnabled;
                 emit chargingEnabledChanged(chargingEnabled);
+                success = true;
 
                 if(isEnabled) {
                     qInfo() << "Charging resumed";
@@ -197,6 +199,7 @@ void Battery::setChargingEnabled(bool isEnabled) {
             qWarning() << "Could not open charger control file";
         }
     }
+    return success;
 }
 
 bool Battery::getChargerConnected() {
