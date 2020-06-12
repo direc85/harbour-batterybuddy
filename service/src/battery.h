@@ -46,7 +46,7 @@ public:
     QString getState();
 
     bool getChargingEnabled();
-    void setChargingEnabled(bool);
+    bool setChargingEnabled(bool);
 
 public slots:
     void updateData();

@@ -218,7 +218,9 @@ void Battery::shutdown() {
         notifyTimer->stop();
         qDebug() << "Notification stopped";
     }
-    setChargingEnabled(true);
-    chargingEnabledFile->setPermissions(originalPerms);
-    qDebug() << "Charger control file permissions restored.";
+    if(!setChargingEnabled(true)) {
+        qWarning() << "ERROR! Could not restore charger status! Your device" << endl
+                   << "may not start until reboot! If that doesn't help," << endl
+                   << "uninstall Battery Buddy and reboot your device.";
+    }
 }
