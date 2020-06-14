@@ -35,18 +35,15 @@
 <context>
     <name>CoverPage</name>
     <message>
-        <source>Connect
-charger</source>
+        <source>Connect charger</source>
         <translation>Branchez le chargeur</translation>
     </message>
     <message>
-        <source>Disconnect
-charger</source>
+        <source>Disconnect charger</source>
         <translation>Débranchez le chargeur</translation>
     </message>
     <message>
-        <source>Battery
-Buddy</source>
+        <source>Battery Buddy</source>
         <translation>Battery Buddy</translation>
     </message>
     <message>

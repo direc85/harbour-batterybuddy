@@ -36,11 +36,11 @@ CoverBackground {
         onChargeChanged: updateView()
         function updateView() {
             if(charge <= settings.lowerLimit && battery.state === "discharging") {
-                coverText.text = qsTr("Connect\ncharger")
+                coverText.text = qsTr("Connect charger")
             }
             else if(battery.charge >= settings.upperLimit &&
                     (battery.state === "charging" || battery.state === "idle")) {
-                coverText.text = qsTr("Disconnect\ncharger")
+                coverText.text = qsTr("Disconnect charger")
             }
             else if(battery.chargerConnected && battery.state === "charging") {
                 coverText.text = qsTr("Charging")
@@ -49,7 +49,7 @@ CoverBackground {
                 coverText.text = qsTr("Not charging")
             }
             else { // Discharging
-                coverText.text = qsTr("Battery\nBuddy")
+                coverText.text = qsTr("Battery Buddy")
             }
         }
     }

@@ -43,22 +43,16 @@
         <translation>Laddar inte</translation>
     </message>
     <message>
-        <source>Connect
-charger</source>
-        <translation>Anslut
-laddare</translation>
+        <source>Connect charger</source>
+        <translation>Anslut laddare</translation>
     </message>
     <message>
-        <source>Disconnect
-charger</source>
-        <translation>Koppla ifrån
-laddaren</translation>
+        <source>Disconnect charger</source>
+        <translation>Koppla ifrån laddaren</translation>
     </message>
     <message>
-        <source>Battery
-Buddy</source>
-        <translation>Battery
-Buddy</translation>
+        <source>Battery Buddy</source>
+        <translation>Battery Buddy</translation>
     </message>
 </context>
 <context>

@@ -43,18 +43,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Connect
-charger</source>
+        <source>Connect charger</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Disconnect
-charger</source>
+        <source>Disconnect charger</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Battery
-Buddy</source>
+        <source>Battery Buddy</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

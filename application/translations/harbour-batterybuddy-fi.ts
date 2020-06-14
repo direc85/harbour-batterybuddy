@@ -43,20 +43,16 @@
         <translation>Akku ei\nlatauksessa</translation>
     </message>
     <message>
-        <source>Connect
-charger</source>
-        <translation>Kytke\nlaturi</translation>
+        <source>Connect charger</source>
+        <translation>Kytke laturi</translation>
     </message>
     <message>
-        <source>Disconnect
-charger</source>
-        <translation>Irrota\nlaturi</translation>
+        <source>Disconnect charger</source>
+        <translation>Irrota laturi</translation>
     </message>
     <message>
-        <source>Battery
-Buddy</source>
-        <translation>Battery
-Buddy</translation>
+        <source>Battery Buddy</source>
+        <translation>Battery Buddy</translation>
     </message>
 </context>
 <context>

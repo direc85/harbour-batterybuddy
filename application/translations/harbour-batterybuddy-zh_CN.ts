@@ -35,20 +35,16 @@
 <context>
     <name>CoverPage</name>
     <message>
-        <source>Connect
-charger</source>
+        <source>Connect charger</source>
         <translation>连接充电器</translation>
     </message>
     <message>
-        <source>Disconnect
-charger</source>
+        <source>Disconnect charger</source>
         <translation>断开充电器</translation>
     </message>
     <message>
-        <source>Battery
-Buddy</source>
-        <translation>Battery
-Buddy（电池搭档）</translation>
+        <source>Battery Buddy</source>
+        <translation>Battery Buddy（电池搭档）</translation>
     </message>
     <message>
         <source>Charging</source>
