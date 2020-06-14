@@ -92,10 +92,6 @@ Battery::Battery(Settings *newSettings, QTimer *newUpdater, QTimer *newNotifier,
 
     updateTimer->setInterval(5000);
     updateTimer->start();
-
-    if(settings->getNotificationsEnabled()) {
-        showNotification();
-    }
 }
 
 Battery::~Battery() { }
