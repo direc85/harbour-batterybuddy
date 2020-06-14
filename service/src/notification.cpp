@@ -35,18 +35,21 @@ void Notification::send(QString title, QString body, QString soundFile)
     QStringList args;
 
     // Using 'update' works always; it creates a new notification if the ID doesn't match.
-    args << "-l" << "nemo" << "-c"
-         << QString("notificationtool -o update -i %1 -I /usr/share/icons/hicolor/128x128/apps/harbour-batterybuddy.png -A \"Battery Buddy\" \"%2\" \"%3\" \"%2\" \"%3\"").arg(noteID).arg(title).arg(body);
+    // notificationtol
+    args << "-o" << "update"
+         << "-i" << noteID
+         << "-I" << "/usr/share/icons/hicolor/128x128/apps/harbour-batterybuddy.png"
+         << "-A" << "\"Battery Buddy\"" << title << body << title << body;
 
     QProcess aplay;
     if(!soundFile.isEmpty()) {
         QStringList aplayArgs;
-        aplayArgs << "-l" << "nemo" << "-c" << QString("paplay %1").arg(soundFile);
-        aplay.start("runuser", aplayArgs);
+        aplayArgs << soundFile;
+        aplay.start("paplay", aplayArgs);
     }
 
     QProcess notificationtool;
-    notificationtool.start("runuser", args);
+    notificationtool.start("notificationtool", args);
     notificationtool.waitForFinished();
 
     QString result(notificationtool.readAll());
@@ -66,10 +69,9 @@ void Notification::close()
         return;
 
     QStringList args;
-    args << "-l" << "nemo" << "-c"
-         << QString("notificationtool -o remove -i %1").arg(noteID);
+    args << "-o" << "remove" << "-i" << noteID;
     QProcess proc;
-    proc.start("runuser", args);
+    proc.start("notificationtool", args);
     proc.waitForFinished();
     return;
 }
