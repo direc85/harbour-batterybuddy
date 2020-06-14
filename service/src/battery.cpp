@@ -126,6 +126,11 @@ void Battery::updateData()
             state = nextState;
             emit stateChanged(state);
             qDebug() << "Charging status:" << state;
+
+            // Hide/show notification right away
+            showNotification();
+            // Reset the timer, too
+            updateConfig();
         }
         stateFile->close();
     }
