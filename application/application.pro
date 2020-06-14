@@ -15,7 +15,7 @@ TARGET = harbour-batterybuddy
 CONFIG += console sailfishapp sailfishapp_i18n
 
 # Keep this in sync with "service.pro"
-VER = 3.3
+VER = 3.4
 REL = 1
 
 VERSION = $${VER}-$${REL}

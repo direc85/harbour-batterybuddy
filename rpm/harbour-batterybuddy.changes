@@ -1,3 +1,12 @@
+* Sun Jun 14 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.4-1
+- Check service status when starting app
+- Add controls to enable/disable service at boot
+- Trigger notifications when charger is connected/disconnected
+- Fix notifications and sounds (broken since 3.2)
+- Reset notification ID after closing it
+- Fix cover page text wrap issue
+- Minor repo/code cleanup
+
 * Fri Jun 12 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.3-1
 - Start user service at boot
 - Remove all old versions of the services
