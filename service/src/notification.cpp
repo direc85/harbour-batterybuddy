@@ -72,6 +72,7 @@ void Notification::close()
     args << "-o" << "remove" << "-i" << noteID;
     QProcess proc;
     proc.start("notificationtool", args);
+    noteID = 1;
     proc.waitForFinished();
     return;
 }
