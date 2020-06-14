@@ -3,7 +3,7 @@ Battery Buddy is a Sailfish OS application that pauses and resumes charging at s
 
 The application logo is a 5 minute craft at the moment, and can be considered a permanent temporary solution. It doesn't look nice in the notification view. If you have the skills to make a better logo using the same idea (a heart inside the battery) and are willing to spend a little time for this project, please feel free to send a new logo to me.
 
-There is initial systemd service for setting the battery charger control sys file permissions, and hence this application is not allowed in Jolla Store anymore. At this point the app must be kept open in order for it to work. I may add more features to the service it at some point.
+The application consist of three parts: the GUI, the monitoring daemon and the filesystem permission daemon. The filesystem daemon, `harbour-batterybuddy-oneshot.service`, always starts when the device boots. Its sole purpose is to set correct permissions for the charger control file of the device, so that everything else can be started as user `nemo`, minimizing security impact. The monitoring daemon, `harbour-batterybuddy.service`, actually sends the notifications and pauses/resumes charging.
 
 Another known "issue" at the moment is that the alert sound played uses the media volume setting instead of ringtone volume setting. Any tips on this are appreciated.
 
