@@ -31,10 +31,6 @@
 class Battery : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int charge READ getCharge NOTIFY chargeChanged)
-    Q_PROPERTY(bool chargerConnected READ getChargerConnected NOTIFY chargerConnectedChanged)
-    Q_PROPERTY(QString state READ getState NOTIFY stateChanged)
-    Q_PROPERTY(bool chargingEnabled READ getChargingEnabled  WRITE setChargingEnabled NOTIFY chargingEnabledChanged)
 
 public:
     Battery(Settings *newSettings, QTimer *newUpdater, QTimer *newNotifier, Notification *newNotification, QObject *parent = nullptr);
