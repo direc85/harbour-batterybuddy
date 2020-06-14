@@ -22,19 +22,6 @@ Settings::Settings(QObject *parent) : QObject(parent)
     mySettings = new QSettings("harbour-batterybuddy", "harbour-batterybuddy");
     qDebug() << "Using" << mySettings->fileName();
 
-    // Migrate old settings
-    if(mySettings->contains("lowerLimit")) {
-        mySettings->setValue(sLowAlert, mySettings->value("lowerLimit"));
-        mySettings->remove("lowerLimit");
-        qInfo() << "Migrated old lowerLimit value";
-    }
-
-    if(mySettings->contains("upperLimit")) {
-        mySettings->setValue(sHighAlert, mySettings->value("upperLimit"));
-        mySettings->remove("upperLimit");
-        qInfo() << "Migrated old upperLimit value";
-    }
-
     // Read in the values
     loadInteger(sLowAlert, &lowAlert, 10, 99);
     loadInteger(sHighAlert, &highAlert, 11, 100);
