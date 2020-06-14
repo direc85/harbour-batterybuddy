@@ -310,5 +310,13 @@ Buddy</translation>
         <source>This option disables charging automatically when the battery has charged above the pausing percentage and enables it again when the battery has depleted below the resuming percentage.</source>
         <translation>Tämä valinta keskeyttää akun latauksen automaattisesti, kun akku on latautunut keskeytysrajaan asti, ja jatkaa latausta uudelleen, kun akku on purkautunut jatkamisrajaan asti.</translation>
     </message>
+    <message>
+        <source>Background service</source>
+        <translation>Taustapalvelu</translation>
+    </message>
+    <message>
+        <source>Start background service at startup</source>
+        <translation>Käynnistä taustapalvelu kun puhelin käynnistyy</translation>
+    </message>
 </context>
 </TS>

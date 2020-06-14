@@ -310,5 +310,13 @@ Buddy（电池搭档）</translation>
         <source>Notification interval</source>
         <translation>通知间隔</translation>
     </message>
+    <message>
+        <source>Background service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start background service at startup</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

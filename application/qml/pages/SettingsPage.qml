@@ -17,6 +17,7 @@
  */
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import Process 1.0
 import "../components"
 
 Page {
@@ -24,14 +25,70 @@ Page {
     allowedOrientations: Orientation.Portrait | Orientation.Landscape | Orientation.LandscapeInverted
 
     Component.onCompleted: {
-        autoStopCharging.checked = settings.limitEnabled
-        highLimitSlider.value = settings.highLimit
-        lowLimitSlider.value = settings.lowLimit
-        notificationsSwitch.checked = settings.notificationsEnabled
-        highAlertSlider.value = settings.highAlert
-        lowAlertSlider.value = settings.lowAlert
-        intervalSlider.value = settings.interval
-        console.debug("SettingsPage values updated")
+    }
+
+    Timer {
+        id: startupTimer
+        interval: 100
+        repeat: false
+        running: true
+        onTriggered: {
+            autoStopCharging.checked = settings.limitEnabled
+            highLimitSlider.value = settings.highLimit
+            lowLimitSlider.value = settings.lowLimit
+            notificationsSwitch.checked = settings.notificationsEnabled
+            highAlertSlider.value = settings.highAlert
+            lowAlertSlider.value = settings.lowAlert
+            intervalSlider.value = settings.interval
+            console.debug("SettingsPage values updated")
+            daemonCheck.start()
+        }
+    }
+
+    Timer {
+        id: daemonToggle
+        interval: 100
+        running: false
+        repeat: false
+        onTriggered: {
+            var action = daemonEnabledSwitch.checked ? "disable" : "enable"
+            console.log("Action: " + action)
+            _toggleProcess.start("/bin/systemctl", ["--user", action, "harbour-batterybuddy.service"])
+        }
+    }
+
+    Process {
+        // Only used by daemonToggle timer
+        id: _toggleProcess
+        onFinished: {
+            daemonCheck.start()
+            console.debug("Service toggle " + (errorCode() === 0 ? "succeeded" : "failed"))
+        }
+    }
+
+    Timer {
+        id: daemonCheck
+        interval: 0
+        running: false
+        repeat: false
+        onTriggered: {
+            _checkProcess.start("/bin/systemctl", ["--user", "is-enabled", "harbour-batterybuddy.service"])
+        }
+    }
+
+    Process {
+        // Only used by daemonCheck timer
+        id: _checkProcess
+        onFinished: {
+            if(errorCode() === 0) {
+                daemonEnabledSwitch.checked = true
+            }
+            else {
+                daemonEnabledSwitch.checked = false
+            }
+            daemonEnabledSwitch.busy = false
+            console.info("Service is " + (errorCode() === 0 ? "enabled" : "disabled"))
+        }
     }
 
     SilicaFlickable {
@@ -173,6 +230,21 @@ Page {
                     stepSize: 10
                     valueText: Math.floor(value / 60) + (value % 60 < 10 ? ":0" + value % 60 : ":" + value % 60)
                     onReleased: settings.interval = value
+                }
+                Label {
+                    x: Theme.paddingLarge
+                    text: qsTr("Background service")
+                    color: Theme.highlightColor
+                }
+                TextSwitch {
+                    id: daemonEnabledSwitch
+                    text: qsTr("Start background service at startup")
+                    checked: true
+                    onClicked: {
+                        busy = true
+                        checked = !checked
+                        daemonToggle.start()
+                    }
                 }
             }
         }

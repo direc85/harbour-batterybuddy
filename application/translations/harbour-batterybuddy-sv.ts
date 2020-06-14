@@ -312,5 +312,13 @@ Buddy</translation>
         <source>This option disables charging automatically when the battery has charged above the pausing percentage and enables it again when the battery has depleted below the resuming percentage.</source>
         <translation>Detta alternativ inaktiverar laddningen automatiskt, när batteriet har laddats upp över pausprocenten och aktiverar det igen, när batteriet har laddats ur under återupptagandeprocent.</translation>
     </message>
+    <message>
+        <source>Background service</source>
+        <translation>Bakgrundstjänst</translation>
+    </message>
+    <message>
+        <source>Start background service at startup</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

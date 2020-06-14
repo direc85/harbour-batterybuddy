@@ -309,5 +309,13 @@ Buddy</source>
         <source>Notification interval</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Background service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start background service at startup</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
