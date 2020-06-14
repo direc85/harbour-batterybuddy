@@ -27,11 +27,13 @@ class Settings : public QObject
     Q_OBJECT
     Q_PROPERTY(int lowAlert READ getLowAlert WRITE setLowAlert NOTIFY lowAlertChanged)
     Q_PROPERTY(int highAlert READ getHighAlert WRITE setHighAlert NOTIFY highAlertChanged)
-    Q_PROPERTY(int interval READ getInterval WRITE setInterval NOTIFY intervalChanged)
+    Q_PROPERTY(int highNotificationsInterval READ getHighNotificationsInterval WRITE setHighNotificationsInterval NOTIFY highNotificationsIntervalChanged)
+    Q_PROPERTY(int lowNotificationsInterval READ getLowNotificationsInterval WRITE setLowNotificationsInterval NOTIFY lowNotificationsIntervalChanged)
     Q_PROPERTY(int highLimit READ getHighLimit WRITE setHighLimit NOTIFY highLimitChanged)
     Q_PROPERTY(int lowLimit READ getLowLimit WRITE setLowLimit NOTIFY lowLimitChanged)
     Q_PROPERTY(bool limitEnabled READ getLimitEnabled WRITE setLimitEnabled NOTIFY limitEnabledChanged)
-    Q_PROPERTY(bool notificationsEnabled READ getNotificationsEnabled WRITE setNotificationsEnabled NOTIFY notificationsEnabledChanged)
+    Q_PROPERTY(bool highNotificationsEnabled READ getHighNotificationsEnabled WRITE setHighNotificationsEnabled NOTIFY highNotificationsEnabledChanged)
+    Q_PROPERTY(bool lowNotificationsEnabled READ getLowNotificationsEnabled WRITE setLowNotificationsEnabled NOTIFY lowNotificationsEnabledChanged)
     Q_PROPERTY(QString lowAlertFile READ getLowAlertFile NOTIFY lowAlertFileChanged)
     Q_PROPERTY(QString highAlertFile READ getHighAlertFile NOTIFY highAlertFileChanged)
     Q_PROPERTY(QString notificationTitle READ getNotificationTitle WRITE setNotificationTitle NOTIFY notificationTitleChanged)
@@ -44,11 +46,13 @@ public:
 
     int  getLowAlert();
     int  getHighAlert();
-    int  getInterval();
+    int  getHighNotificationsInterval();
+    int  getLowNotificationsInterval();
     int  getLowLimit();
     int  getHighLimit();
     bool getLimitEnabled();
-    bool getNotificationsEnabled();
+    bool getHighNotificationsEnabled();
+    bool getLowNotificationsEnabled();
     QString getLowAlertFile();
     QString getHighAlertFile();
     QString getNotificationTitle();
@@ -57,11 +61,13 @@ public:
 
     void setLowAlert(int newLimit);
     void setHighAlert(int newLimit);
-    void setInterval(int newInterval);
+    void setHighNotificationsInterval(int newInterval);
+    void setLowNotificationsInterval(int newInterval);
     void setLowLimit(int newLimit);
     void setHighLimit(int newLimit);
     void setLimitEnabled(bool newEnabled);
-    void setNotificationsEnabled(bool newEnabled);
+    void setHighNotificationsEnabled(bool newEnabled);
+    void setLowNotificationsEnabled(bool newEnabled);
     void setNotificationTitle(QString newText);
     void setNotificationLowText(QString newText);
     void setNotificationHighText(QString newText);
@@ -72,9 +78,11 @@ private:
     // Default values
     int lowAlert = 25;
     int highAlert = 75;
-    int interval = 60;
+    int highNotificationsInterval = 60;
+    int lowNotificationsInterval = 60;
     int limitEnabled = 0; // Converted to boolean for QML
-    int notificationsEnabled = 1; // Converted to boolean for QML
+    int highNotificationsEnabled = 1; // Converted to boolean for QML
+    int lowNotificationsEnabled = 1; // Converted to boolean for QML
     int lowLimit = 65;
     int highLimit = 70;
     QString lowAlertFile = "/usr/share/sounds/jolla-ambient/stereo/general_warning.wav";
@@ -86,9 +94,11 @@ private:
     // To avoid repeating the same string over and over and over...
     const char* sLowAlert = "lowAlert";
     const char* sHighAlert = "highAlert";
-    const char* sInterval = "interval";
+    const char* sHighNotificationsInterval = "highNotificationsInterval";
+    const char* sLowNotificationsInterval = "lowNotificationsInterval";
     const char* sLimitEnabled = "limitEnabled";
-    const char* sNotificationsEnabled = "notificationsEnabled";
+    const char* sHighNotificationsEnabled = "highNotificationsEnabled";
+    const char* sLowNotificationsEnabled = "lowNotificationsEnabled";
     const char* sLowLimit = "lowLimit";
     const char* sHighLimit = "highLimit";
     const char* sLowAlertFile = "lowAlertFile";
@@ -104,9 +114,11 @@ private:
 signals:
     void lowAlertChanged(int);
     void highAlertChanged(int);
-    void intervalChanged(int);
+    void highNotificationsIntervalChanged(int);
+    void lowNotificationsIntervalChanged(int);
     void limitEnabledChanged(bool);
-    void notificationsEnabledChanged(bool);
+    void highNotificationsEnabledChanged(bool);
+    void lowNotificationsEnabledChanged(bool);
     void lowLimitChanged(int);
     void highLimitChanged(int);
     void lowAlertFileChanged(QString);

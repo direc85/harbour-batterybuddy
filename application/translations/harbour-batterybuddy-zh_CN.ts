@@ -287,10 +287,6 @@
         <translation>通知设置</translation>
     </message>
     <message>
-        <source>Use notifications</source>
-        <translation>使用通知</translation>
-    </message>
-    <message>
         <source>Display visual and audible notifications about reached battery charge levels, when the battery charge is below or above desired percentage.</source>
         <translation>当电池电量低于或高于所需百分比时，显示有关已达到电池电量水平的视觉及听觉通知。</translation>
     </message>
@@ -303,15 +299,27 @@
         <translation>低电量通知</translation>
     </message>
     <message>
-        <source>Notification interval</source>
-        <translation>通知间隔</translation>
-    </message>
-    <message>
         <source>Background service</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Start background service at startup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show high charge notification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show low charge notification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery high notification interval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery low notification interval</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

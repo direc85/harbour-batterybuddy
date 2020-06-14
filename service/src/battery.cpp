@@ -17,13 +17,14 @@
  */
 #include "battery.h"
 
-Battery::Battery(Settings *newSettings, QTimer *newUpdater, QTimer *newNotifier, Notification *newNotification, QObject *parent) : QObject(parent)
+Battery::Battery(QObject *parent) : QObject(parent)
 {
     QString filename;
-    settings = newSettings;
-    updateTimer = newUpdater;
-    notifyTimer = newNotifier;
-    notification = newNotification;
+    settings = new Settings(this);
+    updateTimer = new QTimer(this);
+    highNotifyTimer = new QTimer(this);
+    lowNotifyTimer = new QTimer(this);
+    notification = new Notification(this);
 
     // Number: charge percentage, e.g. 42
     chargeFile   = new QFile("/sys/class/power_supply/battery/capacity", this);
@@ -86,7 +87,8 @@ Battery::Battery(Settings *newSettings, QTimer *newUpdater, QTimer *newNotifier,
 
     connect(updateTimer, SIGNAL(timeout()), this, SLOT(updateData()));
     connect(settings, SIGNAL(configChanged()), this, SLOT(updateConfig()));
-    connect(notifyTimer, SIGNAL(timeout()), this, SLOT(showNotification()));
+    connect(highNotifyTimer, SIGNAL(timeout()), this, SLOT(showHighNotification()));
+    connect(lowNotifyTimer, SIGNAL(timeout()), this, SLOT(showLowNotification()));
 
     updateConfig();
 
@@ -124,7 +126,7 @@ void Battery::updateData()
             qDebug() << "Charging status:" << state;
 
             // Hide/show notification right away
-            showNotification();
+            updateNotification();
             // Reset the timer, too
             updateConfig();
         }
@@ -143,23 +145,16 @@ void Battery::updateData()
 }
 
 void Battery::updateConfig() {
-    notifyTimer->stop();
-    notifyTimer->setInterval(settings->getInterval() * 1000);
-    if(settings->getNotificationsEnabled())
-        notifyTimer->start();
+    highNotifyTimer->stop();
+    lowNotifyTimer->stop();
+    highNotifyTimer->setInterval(settings->getHighNotificationsInterval() * 1000);
+    lowNotifyTimer->setInterval(settings->getLowNotificationsInterval() * 1000);
+    highNotifyTimer->start();
+    lowNotifyTimer->start();
 }
 
-void Battery::showNotification() {
-    if(!settings->getNotificationsEnabled())
-        return;
-
-    qInfo() << "battery" << charge << "low" << settings->getLowAlert() << "high" << settings->getHighAlert() << "state" << state;
-
-    if(charge <= settings->getLowAlert() && state != "charging") {
-        qDebug() << "Battery notification timer: empty enough battery";
-        notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationLowText(), settings->getLowAlertFile());
-    }
-    else if((charge >= settings->getHighAlert() && state != "discharging")
+void Battery::showHighNotification() {
+    if(settings->getHighNotificationsEnabled() && (charge >= settings->getHighAlert() && state != "discharging")
             && !(charge == 100 && state == "idle")) {
         qDebug() << "Battery notification timer: full enough battery";
         notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationHighText(), settings->getHighAlertFile());
@@ -169,6 +164,34 @@ void Battery::showNotification() {
         notification->close();
     }
 }
+
+void Battery::showLowNotification() {
+    if(settings->getLowNotificationsEnabled() && charge <= settings->getLowAlert() && state != "charging") {
+        qDebug() << "Battery notification timer: empty enough battery";
+        notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationLowText(), settings->getLowAlertFile());
+    }
+    else {
+        qDebug() << "Battery notification timer: close notification";
+        notification->close();
+    }
+}
+
+void Battery::updateNotification() {
+    if(settings->getHighNotificationsEnabled() && (charge >= settings->getHighAlert() && state != "discharging")
+            && !(charge == 100 && state == "idle")) {
+        qDebug() << "Battery notification timer: full enough battery";
+        notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationHighText(), settings->getHighAlertFile());
+    }
+    else if(settings->getLowNotificationsEnabled() && charge <= settings->getLowAlert() && state != "charging") {
+        qDebug() << "Battery notification timer: empty enough battery";
+        notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationLowText(), settings->getLowAlertFile());
+    }
+    else {
+        qDebug() << "Battery notification timer: close notification";
+        notification->close();
+    }
+}
+
 int Battery::getCharge() { return charge; }
 
 QString Battery::getState() { return state; }
@@ -208,16 +231,20 @@ bool Battery::getChargerConnected() {
 }
 
 void Battery::shutdown() {
-    qDebug() << "\nPreparing for exit...";
+    qDebug() << "Preparing for exit...";
     blockSignals(true);
     if(updateTimer) {
         updateTimer->stop();
         qDebug() << "Timer stopped";
     }
     notification->close();
-    if(notifyTimer) {
-        notifyTimer->stop();
-        qDebug() << "Notification stopped";
+    if(highNotifyTimer) {
+        highNotifyTimer->stop();
+        qDebug() << "High battery notification stopped";
+    }
+    if(lowNotifyTimer) {
+        lowNotifyTimer->stop();
+        qDebug() << "Low battery notification stopped";
     }
     if(!setChargingEnabled(true)) {
         qWarning() << "ERROR! Could not restore charger status! Your device" << endl

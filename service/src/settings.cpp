@@ -39,6 +39,19 @@ Settings::Settings(QObject *parent) : QObject(parent)
         qInfo() << "Migrated old upperLimit value";
     }
 
+    if(mySettings->contains("notificationsEnabled")) {
+        mySettings->setValue(sHighNotificationsEnabled, mySettings->value("notificationsEnabled"));
+        mySettings->remove("notificationsEnabled");
+        qInfo() << "Migrated old upperLimit value";
+    }
+
+    if(mySettings->contains("interval")) {
+        mySettings->setValue(sHighNotificationsInterval, mySettings->value("interval"));
+        mySettings->setValue(sLowNotificationsInterval, mySettings->value("interval"));
+        mySettings->remove("interval");
+        qInfo() << "Migrated old notification interval value";
+    }
+
     // Do this here, because...
     watcher = new QFileSystemWatcher(QStringList(mySettings->fileName()));
     connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(updateConfig(QString)));
@@ -77,9 +90,11 @@ void Settings::updateConfig(QString path) {
     // Read in the values
     loadInteger(sLowAlert, &lowAlert, 10, 99);
     loadInteger(sHighAlert, &highAlert, 11, 100);
-    loadInteger(sInterval, &interval, 60, 600);
+    loadInteger(sHighNotificationsInterval, &highNotificationsInterval, 60, 600);
+    loadInteger(sLowNotificationsInterval, &lowNotificationsInterval, 60, 600);
     loadInteger(sLimitEnabled, &limitEnabled, 0, 1);
-    loadInteger(sNotificationsEnabled, &notificationsEnabled, 0, 1);
+    loadInteger(sHighNotificationsEnabled, &highNotificationsEnabled, 0, 1);
+    loadInteger(sLowNotificationsEnabled, &lowNotificationsEnabled, 0, 1);
     loadInteger(sLowLimit, &lowLimit, 20, 94);
     loadInteger(sHighLimit, &highLimit, 21, 95);
 
@@ -107,15 +122,17 @@ void Settings::updateConfig(QString path) {
 }
 
 // Getters condensed
-int     Settings::getLowAlert()             { return lowAlert; }
-int     Settings::getHighAlert()            { return highAlert; }
-int     Settings::getInterval()             { return interval; }
-int     Settings::getLowLimit()             { return lowLimit; }
-int     Settings::getHighLimit()            { return highLimit; }
-bool    Settings::getLimitEnabled()         { return limitEnabled == 1; }
-bool    Settings::getNotificationsEnabled() { return notificationsEnabled == 1; }
-QString Settings::getLowAlertFile()         { return lowAlertFile; }
-QString Settings::getHighAlertFile()        { return highAlertFile; }
-QString Settings::getNotificationTitle()    { return notificationTitle; }
-QString Settings::getNotificationLowText()  { return notificationLowText; }
-QString Settings::getNotificationHighText() { return notificationHighText; }
+int     Settings::getLowAlert()                  { return lowAlert; }
+int     Settings::getHighAlert()                 { return highAlert; }
+int     Settings::getHighNotificationsInterval() { return highNotificationsInterval; }
+int     Settings::getLowNotificationsInterval()  { return lowNotificationsInterval; }
+int     Settings::getLowLimit()                  { return lowLimit; }
+int     Settings::getHighLimit()                 { return highLimit; }
+bool    Settings::getLimitEnabled()              { return limitEnabled == 1; }
+bool    Settings::getHighNotificationsEnabled()  { return highNotificationsEnabled == 1; }
+bool    Settings::getLowNotificationsEnabled()   { return lowNotificationsEnabled == 1; }
+QString Settings::getLowAlertFile()              { return lowAlertFile; }
+QString Settings::getHighAlertFile()             { return highAlertFile; }
+QString Settings::getNotificationTitle()         { return notificationTitle; }
+QString Settings::getNotificationLowText()       { return notificationLowText; }
+QString Settings::getNotificationHighText()      { return notificationHighText; }

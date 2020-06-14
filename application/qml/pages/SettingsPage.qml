@@ -36,10 +36,12 @@ Page {
             autoStopCharging.checked = settings.limitEnabled
             highLimitSlider.value = settings.highLimit
             lowLimitSlider.value = settings.lowLimit
-            notificationsSwitch.checked = settings.notificationsEnabled
+            highNotificationsSwitch.checked = settings.highNotificationsEnabled
+            lowNotificationsSwitch.checked = settings.lowNotificationsEnabled
             highAlertSlider.value = settings.highAlert
             lowAlertSlider.value = settings.lowAlert
-            intervalSlider.value = settings.interval
+            highIntervalSlider.value = settings.highNotificationsInterval
+            lowIntervalSlider.value = settings.lowNotificationsInterval
             console.debug("SettingsPage values updated")
             daemonCheck.start()
         }
@@ -123,13 +125,39 @@ Page {
 
                 Label {
                     x: Theme.paddingLarge
+                    text: qsTr("Background service")
+                    color: Theme.highlightColor
+                }
+                TextSwitch {
+                    id: daemonEnabledSwitch
+                    text: qsTr("Start background service at startup")
+                    checked: true
+                    onClicked: {
+                        busy = true
+                        checked = !checked
+                        daemonToggle.start()
+                    }
+                }
+                Label {
+                    x: Theme.paddingLarge
                     text: qsTr("Charging settings")
                     color: Theme.highlightColor
+                }
+                Label {
+                    text: qsTr("This option disables charging automatically when the battery has charged above the pausing percentage and enables it again when the battery has depleted below the resuming percentage.")
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        leftMargin: Theme.horizontalPageMargin*2
+                        rightMargin: Theme.horizontalPageMargin
+                    }
+                    color: Theme.primaryColor
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    wrapMode: Text.Wrap
                 }
                 TextSwitch {
                     id: autoStopCharging
                     text: qsTr("Automatic charging control")
-                    description: qsTr("This option disables charging automatically when the battery has charged above the pausing percentage and enables it again when the battery has depleted below the resuming percentage.")
                     onCheckedChanged: settings.limitEnabled = checked
                 }
 
@@ -180,11 +208,28 @@ Page {
                     text: qsTr("Notification settings")
                     color: Theme.highlightColor
                 }
+                Label {
+                    text: qsTr("Display visual and audible notifications about reached battery charge levels, when the battery charge is below or above desired percentage.")
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        leftMargin: Theme.horizontalPageMargin*2
+                        rightMargin: Theme.horizontalPageMargin
+                    }
+                    color: Theme.primaryColor
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    wrapMode: Text.Wrap
+                }
+
                 TextSwitch {
-                    id: notificationsSwitch
-                    text: qsTr("Use notifications")
-                    description: qsTr("Display visual and audible notifications about reached battery charge levels, when the battery charge is below or above desired percentage.")
-                    onCheckedChanged: settings.notificationsEnabled = checked
+                    id: highNotificationsSwitch
+                    text: qsTr("Show high charge notification")
+                    onCheckedChanged: settings.highNotificationsEnabled = checked
+                }
+                TextSwitch {
+                    id: lowNotificationsSwitch
+                    text: qsTr("Show low charge notification")
+                    onCheckedChanged: settings.lowNotificationsEnabled = checked
                 }
                 MySlider {
                     id: highAlertSlider
@@ -222,29 +267,24 @@ Page {
                     }
                 }
                 MySlider {
-                    id: intervalSlider
+                    id: highIntervalSlider
                     width: parent.width
-                    label: qsTr("Notification interval")
+                    label: qsTr("Battery high notification interval")
                     minimumValue: 60
                     maximumValue: 600
                     stepSize: 10
                     valueText: Math.floor(value / 60) + (value % 60 < 10 ? ":0" + value % 60 : ":" + value % 60)
-                    onReleased: settings.interval = value
+                    onReleased: settings.highNotificationsInterval = value
                 }
-                Label {
-                    x: Theme.paddingLarge
-                    text: qsTr("Background service")
-                    color: Theme.highlightColor
-                }
-                TextSwitch {
-                    id: daemonEnabledSwitch
-                    text: qsTr("Start background service at startup")
-                    checked: true
-                    onClicked: {
-                        busy = true
-                        checked = !checked
-                        daemonToggle.start()
-                    }
+                MySlider {
+                    id: lowIntervalSlider
+                    width: parent.width
+                    label: qsTr("Battery low notification interval")
+                    minimumValue: 60
+                    maximumValue: 600
+                    stepSize: 10
+                    valueText: Math.floor(value / 60) + (value % 60 < 10 ? ":0" + value % 60 : ":" + value % 60)
+                    onReleased: settings.lowNotificationsInterval = value
                 }
             }
         }

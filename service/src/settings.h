@@ -34,11 +34,13 @@ public:
 
     int  getLowAlert();
     int  getHighAlert();
-    int  getInterval();
+    int  getHighNotificationsInterval();
+    int  getLowNotificationsInterval();
     int  getLowLimit();
     int  getHighLimit();
     bool getLimitEnabled();
-    bool getNotificationsEnabled();
+    bool getHighNotificationsEnabled();
+    bool getLowNotificationsEnabled();
     QString getLowAlertFile();
     QString getHighAlertFile();
     QString getNotificationTitle();
@@ -52,11 +54,13 @@ private:
     // Default values
     int lowAlert = 25;
     int highAlert = 75;
-    int interval = 60;
+    int highNotificationsInterval = 60;
+    int lowNotificationsInterval = 60;
 
     // Converted to boolean for QML
     int limitEnabled = 0;
-    int notificationsEnabled = 1;
+    int highNotificationsEnabled = 1; // Converted to boolean for QML
+    int lowNotificationsEnabled = 1; // Converted to boolean for QML
     int daemonEnabled = 1;
 
     int lowLimit = 65;
@@ -70,9 +74,11 @@ private:
     // To avoid repeating the same string over and over and over...
     const char* sLowAlert = "lowAlert";
     const char* sHighAlert = "highAlert";
-    const char* sInterval = "interval";
+    const char* sHighNotificationsInterval = "highNotificationsInterval";
+    const char* sLowNotificationsInterval = "lowNotificationsInterval";
     const char* sLimitEnabled = "limitEnabled";
-    const char* sNotificationsEnabled = "notificationsEnabled";
+    const char* sHighNotificationsEnabled = "highNotificationsEnabled";
+    const char* sLowNotificationsEnabled = "lowNotificationsEnabled";
     const char* sLowLimit = "lowLimit";
     const char* sHighLimit = "highLimit";
     const char* sLowAlertFile = "lowAlertFile";

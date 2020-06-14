@@ -33,7 +33,7 @@ class Battery : public QObject
     Q_OBJECT
 
 public:
-    Battery(Settings *newSettings, QTimer *newUpdater, QTimer *newNotifier, Notification *newNotification, QObject *parent = nullptr);
+    Battery(QObject *parent = nullptr);
     ~Battery();
 
     int getCharge();
@@ -55,7 +55,8 @@ private:
     QFile *chargingEnabledFile = nullptr;
     Settings *settings = nullptr;
     QTimer *updateTimer = nullptr;
-    QTimer *notifyTimer = nullptr;
+    QTimer *highNotifyTimer = nullptr;
+    QTimer *lowNotifyTimer = nullptr;
     Notification *notification = nullptr;
 
     // Default values:
@@ -84,7 +85,9 @@ signals:
 
 public slots:
     void updateConfig();
-    void showNotification();
+    void showHighNotification();
+    void showLowNotification();
+    void updateNotification();
 };
 
 #endif // BATTERY_H
