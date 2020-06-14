@@ -1,4 +1,10 @@
-* Thu Jun 12 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.2-1
+* Fri Jun 12 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.3-1
+- Start user service at boot
+- Remove all old versions of the services
+- Fix start and stop service controls
+- Update Swedish translation (thanks, eson57)
+
+* Fri Jun 12 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.2-1
 - Run service without root privileges
 - Add start and stop service controls
 
