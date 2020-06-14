@@ -161,7 +161,7 @@ Page {
                     onCheckedChanged: settings.limitEnabled = checked
                 }
 
-                MySlider {
+                Slider {
                     id: highLimitSlider
                     handleVisible: enabled
                     width: parent.width
@@ -170,7 +170,6 @@ Page {
                     maximumValue: 95
                     stepSize: 1
                     valueText: value + "%"
-                    highlightDirection: Qt.RightToLeft
                     onValueChanged: {
                         if(lowLimitSlider.value >= value)
                             lowLimitSlider.value = value - 1
@@ -180,7 +179,7 @@ Page {
                         settings.highLimit = value
                     }
                 }
-                MySlider {
+                Slider {
                     id: lowLimitSlider
                     handleVisible: enabled
                     width: parent.width
@@ -231,7 +230,7 @@ Page {
                     text: qsTr("Show low charge notification")
                     onCheckedChanged: settings.lowNotificationsEnabled = checked
                 }
-                MySlider {
+                Slider {
                     id: highAlertSlider
                     width: parent.width
                     label: qsTr("Battery full notification")
@@ -239,7 +238,6 @@ Page {
                     maximumValue: 100
                     stepSize: 1
                     valueText: value + "%"
-                    highlightDirection: Qt.RightToLeft
                     onValueChanged: {
                         if(lowAlertSlider.value >= value)
                             lowAlertSlider.value = value - 1
@@ -249,7 +247,7 @@ Page {
                         settings.highAlert = value
                     }
                 }
-                MySlider {
+                Slider {
                     id: lowAlertSlider
                     width: parent.width
                     label: qsTr("Battery low notification")
@@ -266,7 +264,7 @@ Page {
                         settings.highAlert = highAlertSlider.value
                     }
                 }
-                MySlider {
+                Slider {
                     id: highIntervalSlider
                     width: parent.width
                     label: qsTr("Battery high notification interval")
@@ -276,7 +274,7 @@ Page {
                     valueText: Math.floor(value / 60) + (value % 60 < 10 ? ":0" + value % 60 : ":" + value % 60)
                     onReleased: settings.highNotificationsInterval = value
                 }
-                MySlider {
+                Slider {
                     id: lowIntervalSlider
                     width: parent.width
                     label: qsTr("Battery low notification interval")

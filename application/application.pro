@@ -40,7 +40,6 @@ SOURCES += src/harbour-batterybuddy.cpp \
 DISTFILES += qml/harbour-batterybuddy.qml \
     qml/components/AboutLabel.qml \
     qml/components/MyLabel.qml \
-    qml/components/MySlider.qml \
     qml/pages\LicensePage.qml \
     qml/cover/CoverPage.qml \
     ../rpm/harbour-batterybuddy.spec \
