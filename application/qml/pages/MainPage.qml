@@ -31,12 +31,16 @@ Page {
         "empty": qsTr("empty", "Battery fully depleted"),
         "unknown": qsTr("unknown", "Battery not detected, or faulty, or something")
     }
-    property bool settingsPagePushed: false
 
-    onStatusChanged: {
-        if(status == PageStatus.Active && !settingsPagePushed) {
+    Timer {
+        id: startupTimer
+        interval: 250
+        repeat: false
+        running: true
+        onTriggered: {
+            console.log("Startup timer started")
+            daemonStatus.start("/bin/systemctl", ["--user", "status", "harbour-batterybuddy.service"])
             pageStack.pushAttached(Qt.resolvedUrl("SettingsPage.qml"))
-            settingsPagePushed = true;
         }
     }
 
@@ -204,7 +208,7 @@ Page {
                                 daemonControlTimer.start()
                                 enabled = false
                             }
-                            enabled: true
+                            enabled: false
                         }
                     }
                 }
