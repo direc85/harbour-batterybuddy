@@ -31,6 +31,7 @@ Page {
         "empty": qsTr("empty", "Battery fully depleted"),
         "unknown": qsTr("unknown", "Battery not detected, or faulty, or something")
     }
+    property bool serviceRunning: true
 
     Timer {
         id: startupTimer
@@ -39,44 +40,45 @@ Page {
         running: true
         onTriggered: {
             console.log("Startup timer started")
-            daemonStatus.start("/bin/systemctl", ["--user", "status", "harbour-batterybuddy.service"])
+            daemonStatus.start()
             pageStack.pushAttached(Qt.resolvedUrl("SettingsPage.qml"))
         }
     }
 
     Timer {
-        id: daemonControlTimer
+        id: daemonControl
         interval: 100
         running: false
         repeat: false
         onTriggered: {
-            var action = daemonStatus.serviceRunning ? "stop" : "start"
+            var action = serviceRunning ? "stop" : "start"
             console.log("Action: " + action)
-            daemonControl.start("/bin/systemctl", ["--user", action, "harbour-batterybuddy.service"])
+            _controlProcess.start("/bin/systemctl", ["--user", action, "harbour-batterybuddy.service"])
         }
     }
 
     Process {
-        id: daemonControl
+        // Only used by daemonControl timer
+        id: _controlProcess
         onFinished: {
-            daemonStatusTimer.start()
+            daemonStatus.start()
             console.debug("Service control return code " + errorCode())
         }
     }
 
     Timer {
-        id: daemonStatusTimer
+        id: daemonStatus
         interval: 2000
         running: false
         repeat: false
         onTriggered: {
-            daemonStatus.start("/bin/systemctl", ["--user", "status", "harbour-batterybuddy.service"])
+            _statusProcess.start("/bin/systemctl", ["--user", "status", "harbour-batterybuddy.service"])
         }
     }
 
     Process {
-        id: daemonStatus
-        property bool serviceRunning: true
+        // Only used by daemonStatus timer
+        id: _statusProcess
         onFinished: {
             if(errorCode() === 0) {
                 serviceRunning = true
@@ -192,7 +194,7 @@ Page {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: qsTr("Start")
                             onClicked: {
-                                daemonControlTimer.start()
+                                daemonControl.start()
                                 enabled = false
                             }
                             enabled: false
@@ -205,7 +207,7 @@ Page {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: qsTr("Stop")
                             onClicked: {
-                                daemonControlTimer.start()
+                                daemonControl.start()
                                 enabled = false
                             }
                             enabled: false
