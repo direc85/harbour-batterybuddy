@@ -163,7 +163,7 @@
     <message>
         <source>Background</source>
         <comment>More to read, background information...</comment>
-        <translation>更多阅读, 背景信息...</translation>
+        <translation>更多阅读, 背景信息……</translation>
     </message>
     <message>
         <source>yes</source>
@@ -221,19 +221,19 @@
     </message>
     <message>
         <source>If notifications misbehave or there are problems with charger control, restarting the background service should help.</source>
-        <translation type="unfinished"></translation>
+        <translation>如果通知不正常或者充电器控制有问题，重启后台服务应该会有所帮助。</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>开始</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>停止</translation>
     </message>
     <message>
         <source>Background service</source>
-        <translation type="unfinished"></translation>
+        <translation>后台服务</translation>
     </message>
 </context>
 <context>
@@ -300,27 +300,27 @@
     </message>
     <message>
         <source>Background service</source>
-        <translation type="unfinished"></translation>
+        <translation>后台服务</translation>
     </message>
     <message>
         <source>Start background service at startup</source>
-        <translation type="unfinished"></translation>
+        <translation>启动时开启后台服务</translation>
     </message>
     <message>
         <source>Show high charge notification</source>
-        <translation type="unfinished"></translation>
+        <translation>显示高充电量通知</translation>
     </message>
     <message>
         <source>Show low charge notification</source>
-        <translation type="unfinished"></translation>
+        <translation>显示低充电量通知</translation>
     </message>
     <message>
         <source>Battery high notification interval</source>
-        <translation type="unfinished"></translation>
+        <translation>高电量通知区间</translation>
     </message>
     <message>
         <source>Battery low notification interval</source>
-        <translation type="unfinished"></translation>
+        <translation>低电量通知区间</translation>
     </message>
 </context>
 </TS>
