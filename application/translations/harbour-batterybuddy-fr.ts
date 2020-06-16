@@ -5,31 +5,31 @@
     <name>AboutPage</name>
     <message>
         <source>View License</source>
-        <translation type="unfinished"></translation>
+        <translation>Voir la licence</translation>
     </message>
     <message>
         <source>Battery Buddy is a small and simple utility designed to improve the lifetime of the battery.</source>
-        <translation type="unfinished">Battery Buddy est un utilitaire léger et simple créé pour améliorer la durée de vie de la batterie.</translation>
+        <translation>Battery Buddy est un utilitaire léger et simple créé pour améliorer la durée de vie de la batterie.</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Version</translation>
     </message>
     <message>
         <source>Battery Buddy is open source software licensed under the terms of the GNU General Public License.</source>
-        <translation type="unfinished"></translation>
+        <translation>Battery Buddy est un logiciel libre sous licence GNU General Public License</translation>
     </message>
     <message>
         <source>Contributions and translations are always appreciated!</source>
-        <translation type="unfinished"></translation>
+        <translation>Les contributions et les traductions sont appréciées !</translation>
     </message>
     <message>
         <source>If you like my work and would like to support me, you can buy me a coffee!</source>
-        <translation type="unfinished"></translation>
+        <translation>Si vous aimez mon travail et que vous voulez me soutenir, vous poudvez m'acheter un café !</translation>
     </message>
     <message>
         <source>Translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Traductions</translation>
     </message>
 </context>
 <context>
@@ -48,11 +48,11 @@
     </message>
     <message>
         <source>Charging</source>
-        <translation type="unfinished"></translation>
+        <translation>Charge</translation>
     </message>
     <message>
         <source>Not charging</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne charge pas</translation>
     </message>
 </context>
 <context>
@@ -204,7 +204,7 @@
     <message>
         <source>full</source>
         <comment>Battery fully charged</comment>
-        <translation type="unfinished"></translation>
+        <translation>Batterie complètement chargée</translation>
     </message>
     <message>
         <source>empty</source>
@@ -225,15 +225,15 @@
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrer</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrêter</translation>
     </message>
     <message>
         <source>Background service</source>
-        <translation type="unfinished"></translation>
+        <translation>Service en arrière plan</translation>
     </message>
 </context>
 <context>
@@ -260,11 +260,11 @@
     <message>
         <source>About</source>
         <comment>About this application</comment>
-        <translation type="unfinished">À propos</translation>
+        <translation>À propos</translation>
     </message>
     <message>
         <source>Charging settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres de charge</translation>
     </message>
     <message>
         <source>Automatic charging control</source>
