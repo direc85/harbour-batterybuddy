@@ -1,3 +1,7 @@
+* Mon Oct 19 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.5-1
+- Fix service control buttons on SFOS 3.4
+- Drop custom slider element
+
 * Sun Jun 14 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.4-1
 - Check service status when starting app
 - Add controls to enable/disable service at boot
