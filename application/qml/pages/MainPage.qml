@@ -53,7 +53,7 @@ Page {
         onTriggered: {
             var action = serviceRunning ? "stop" : "start"
             console.log("Action: " + action)
-            _controlProcess.start("/bin/systemctl", ["--user", action, "harbour-batterybuddy.service"])
+            _controlProcess.start("systemctl", ["--user", action, "harbour-batterybuddy.service"])
         }
     }
 
@@ -72,7 +72,7 @@ Page {
         running: false
         repeat: false
         onTriggered: {
-            _statusProcess.start("/bin/systemctl", ["--user", "status", "harbour-batterybuddy.service"])
+            _statusProcess.start("systemctl", ["--user", "status", "harbour-batterybuddy.service"])
         }
     }
 
