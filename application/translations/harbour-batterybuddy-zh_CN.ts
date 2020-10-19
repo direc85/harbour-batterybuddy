@@ -44,7 +44,8 @@
     </message>
     <message>
         <source>Battery Buddy</source>
-        <translation>Battery Buddy（电池搭档）</translation>
+        <translation>Battery Buddy
+电池搭档</translation>
     </message>
     <message>
         <source>Charging</source>
@@ -154,7 +155,8 @@
     <name>MainPage</name>
     <message>
         <source>Battery Buddy</source>
-        <translation>Battery Buddy（电池搭档）</translation>
+        <translation>Battery Buddy
+电池搭档</translation>
     </message>
     <message>
         <source>Battery status</source>
@@ -163,7 +165,7 @@
     <message>
         <source>Background</source>
         <comment>More to read, background information...</comment>
-        <translation>更多阅读, 背景信息...</translation>
+        <translation>更多阅读, 后台信息...</translation>
     </message>
     <message>
         <source>yes</source>
@@ -221,19 +223,19 @@
     </message>
     <message>
         <source>If notifications misbehave or there are problems with charger control, restarting the background service should help.</source>
-        <translation type="unfinished"></translation>
+        <translation>如果通知表现不正常或充电器控制有任何问题，重启后台服务可能会有用。</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>开始</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>停止</translation>
     </message>
     <message>
         <source>Background service</source>
-        <translation type="unfinished"></translation>
+        <translation>后台服务</translation>
     </message>
 </context>
 <context>
@@ -300,27 +302,27 @@
     </message>
     <message>
         <source>Background service</source>
-        <translation type="unfinished"></translation>
+        <translation>后台服务</translation>
     </message>
     <message>
         <source>Start background service at startup</source>
-        <translation type="unfinished"></translation>
+        <translation>启动时开始后台服务</translation>
     </message>
     <message>
         <source>Show high charge notification</source>
-        <translation type="unfinished"></translation>
+        <translation>显示高充电通知</translation>
     </message>
     <message>
         <source>Show low charge notification</source>
-        <translation type="unfinished"></translation>
+        <translation>显示低电量通知</translation>
     </message>
     <message>
         <source>Battery high notification interval</source>
-        <translation type="unfinished"></translation>
+        <translation>电池电量高通知区间</translation>
     </message>
     <message>
         <source>Battery low notification interval</source>
-        <translation type="unfinished"></translation>
+        <translation>电池电量低通知区间</translation>
     </message>
 </context>
 </TS>
