@@ -239,6 +239,10 @@
         <source>Stop</source>
         <translation>Stopp</translation>
     </message>
+    <message>
+        <source>Current:</source>
+        <translation>Strom:</translation>
+    </message>
 </context>
 <context>
     <name>Settings</name>
