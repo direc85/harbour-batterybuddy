@@ -6,7 +6,7 @@ QT = core network
 
 # Keep this in sync with "application.pro"
 VER = 3.6
-REL = 1
+REL = 2
 
 VERSION = $${VER}-$${REL}
 DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"

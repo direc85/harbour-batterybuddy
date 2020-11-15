@@ -1,4 +1,8 @@
+* Sun Nov 15 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.6-2
+- Add German translation (thanks, dryo)
+
 * Sun Nov 15 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.6-1
+- Main build requires SailfishOS 3.3
 - Display charging/discharging current
 - Speed up service buttons
 
