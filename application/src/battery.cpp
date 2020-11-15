@@ -26,6 +26,10 @@ Battery::Battery(Settings* newSettings, QObject* parent) : QObject(parent)
     chargeFile   = new QFile("/sys/class/power_supply/battery/capacity", this);
     qInfo() << "Reading capacity from" << chargeFile->fileName();
 
+    // Number: battery/charging current, e.g. -1450000 (-145mA)
+    currentFile   = new QFile("/sys/class/power_supply/battery/current_now", this);
+    qInfo() << "Reading current from" << currentFile->fileName();
+
     // String: charging, discharging, full, empty, unknown (others?)
     stateFile   = new QFile("/sys/class/power_supply/battery/status", this);
     qInfo() << "Reading charge state from" << stateFile->fileName();
@@ -105,6 +109,15 @@ void Battery::updateData()
         }
         chargeFile->close();
     }
+    if(currentFile && currentFile->open(QIODevice::ReadOnly)) {
+        nextCurrent = currentFile->readLine().trimmed().toInt();
+        if(nextCurrent != current) {
+            current = nextCurrent;
+            emit currentChanged(current);
+            qDebug() << "Current:" << current;
+        }
+        currentFile->close();
+    }
     if(chargerConnectedFile && chargerConnectedFile->open(QIODevice::ReadOnly)) {
         nextChargerConnected = chargerConnectedFile->readLine().trimmed().toInt();
         if(nextChargerConnected != chargerConnected) {
@@ -126,6 +139,8 @@ void Battery::updateData()
 }
 
 int Battery::getCharge(){ return charge; }
+
+int Battery::getCurrent(){ return current; }
 
 QString Battery::getState() { return state; }
 

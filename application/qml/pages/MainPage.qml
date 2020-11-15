@@ -154,6 +154,11 @@ Page {
                         value: battery.charge + "%"
                     }
                     MyDetailItem {
+                        label: qsTr("Current:")
+                        value: Math.floor(battery.current / 1000) + " mA"
+                    }
+
+                    MyDetailItem {
                         label: qsTr("Charger connected:")
                         value: battery.chargerConnected ? qsTr("yes") : qsTr("no")
                     }
