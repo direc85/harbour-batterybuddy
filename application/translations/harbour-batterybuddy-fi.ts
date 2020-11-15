@@ -40,7 +40,7 @@
     </message>
     <message>
         <source>Not charging</source>
-        <translation>Akku ei\nlatauksessa</translation>
+        <translation>Akku ei latauksessa</translation>
     </message>
     <message>
         <source>Connect charger</source>
