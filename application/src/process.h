@@ -26,6 +26,8 @@ public:
 
         //qDebug() << program + " " + args.join(" ");
         QProcess::start(program, args);
+        QProcess::waitForStarted(1000);
+        QProcess::waitForFinished(1000);
     }
 
     Q_INVOKABLE QByteArray readAll() {
