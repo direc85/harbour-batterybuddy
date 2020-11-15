@@ -239,7 +239,7 @@
     </message>
     <message>
         <source>Current:</source>
-        <translation type="unfinished"></translation>
+        <translation>当前状态:</translation>
     </message>
 </context>
 <context>
