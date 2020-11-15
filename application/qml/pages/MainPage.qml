@@ -35,7 +35,7 @@ Page {
 
     Timer {
         id: startupTimer
-        interval: 250
+        interval: 1
         repeat: false
         running: true
         onTriggered: {
@@ -47,7 +47,7 @@ Page {
 
     Timer {
         id: daemonControl
-        interval: 100
+        interval: 1
         running: false
         repeat: false
         onTriggered: {
@@ -68,7 +68,7 @@ Page {
 
     Timer {
         id: daemonStatus
-        interval: 2000
+        interval: 1
         running: false
         repeat: false
         onTriggered: {
