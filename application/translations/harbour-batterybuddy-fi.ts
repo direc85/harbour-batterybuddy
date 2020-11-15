@@ -235,6 +235,10 @@
         <source>Stop</source>
         <translation>Sammuta</translation>
     </message>
+    <message>
+        <source>Current:</source>
+        <translation>Virta:</translation>
+    </message>
 </context>
 <context>
     <name>Settings</name>

@@ -235,6 +235,10 @@
         <source>Background service</source>
         <translation>Bakgrundstjänst</translation>
     </message>
+    <message>
+        <source>Current:</source>
+        <translation>Ström:</translation>
+    </message>
 </context>
 <context>
     <name>Settings</name>

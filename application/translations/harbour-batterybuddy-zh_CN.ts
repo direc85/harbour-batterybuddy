@@ -237,6 +237,10 @@
         <source>Background service</source>
         <translation>后台服务</translation>
     </message>
+    <message>
+        <source>Current:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Settings</name>

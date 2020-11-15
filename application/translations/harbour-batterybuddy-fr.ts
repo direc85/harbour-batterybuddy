@@ -25,7 +25,7 @@
     </message>
     <message>
         <source>If you like my work and would like to support me, you can buy me a coffee!</source>
-        <translation>Si vous aimez mon travail et que vous voulez me soutenir, vous poudvez m'acheter un café !</translation>
+        <translation>Si vous aimez mon travail et que vous voulez me soutenir, vous poudvez m&apos;acheter un café !</translation>
     </message>
     <message>
         <source>Translations</source>
@@ -235,6 +235,10 @@
         <source>Background service</source>
         <translation>Service en arrière plan</translation>
     </message>
+    <message>
+        <source>Current:</source>
+        <translation>Courant:</translation>
+    </message>
 </context>
 <context>
     <name>Settings</name>
@@ -300,7 +304,7 @@
     </message>
     <message>
         <source>Background service</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Service en arrière plan</translation>
     </message>
     <message>
         <source>Start background service at startup</source>
