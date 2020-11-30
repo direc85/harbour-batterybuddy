@@ -163,7 +163,7 @@ void Battery::resetTimers() {
 }
 
 void Battery::showHighNotification() {
-    if(settings->getHighNotificationsEnabled() && (charge >= settings->getHighAlert() && state != "discharging")
+    if(settings->getHighNotificationsInterval() < 610 && (charge >= settings->getHighAlert() && state != "discharging")
             && !(charge == 100 && state == "idle")) {
         qDebug() << "Battery notification timer: full enough battery";
         notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationHighText(), settings->getHighAlertFile());
@@ -179,7 +179,7 @@ void Battery::showHighNotification() {
 }
 
 void Battery::showLowNotification() {
-    if(settings->getLowNotificationsEnabled() && charge <= settings->getLowAlert() && state != "charging") {
+    if(settings->getLowNotificationsInterval() < 610 && charge <= settings->getLowAlert() && state != "charging") {
         qDebug() << "Battery notification timer: empty enough battery";
         notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationLowText(), settings->getLowAlertFile());
         if(settings->getLowNotificationsInterval() == 50) {
@@ -194,12 +194,12 @@ void Battery::showLowNotification() {
 }
 
 void Battery::updateNotification() {
-    if(settings->getHighNotificationsEnabled() && (charge >= settings->getHighAlert() && state != "discharging")
+    if(settings->getHighNotificationsInterval() < 610 && (charge >= settings->getHighAlert() && state != "discharging")
             && !(charge == 100 && state == "idle")) {
         qDebug() << "Battery notification timer: full enough battery";
         notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationHighText(), settings->getHighAlertFile());
     }
-    else if(settings->getLowNotificationsEnabled() && charge <= settings->getLowAlert() && state != "charging") {
+    else if(settings->getLowNotificationsInterval() < 610 && charge <= settings->getLowAlert() && state != "charging") {
         qDebug() << "Battery notification timer: empty enough battery";
         notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationLowText(), settings->getLowAlertFile());
     }

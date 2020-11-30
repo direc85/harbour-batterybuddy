@@ -311,14 +311,6 @@
         <translation>Käynnistä taustapalvelu kun puhelin käynnistyy</translation>
     </message>
     <message>
-        <source>Show high charge notification</source>
-        <translation>Näytä korkean varauksen ilmoitukset</translation>
-    </message>
-    <message>
-        <source>Show low charge notification</source>
-        <translation>Näytä matalan varauksen ilmoitukset</translation>
-    </message>
-    <message>
         <source>Battery high notification interval</source>
         <translation>Korkean varauksen ilmoituksen aikaväli</translation>
     </message>

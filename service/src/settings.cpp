@@ -40,9 +40,9 @@ Settings::Settings(QObject *parent) : QObject(parent)
     }
 
     if(mySettings->contains("notificationsEnabled")) {
-        mySettings->setValue(sHighNotificationsEnabled, mySettings->value("notificationsEnabled"));
+        mySettings->setValue("highNotificationsEnabled", mySettings->value("notificationsEnabled"));
         mySettings->remove("notificationsEnabled");
-        qInfo() << "Migrated old upperLimit value";
+        qInfo() << "Migrated old notificationsEnabled value";
     }
 
     if(mySettings->contains("interval")) {
@@ -50,6 +50,20 @@ Settings::Settings(QObject *parent) : QObject(parent)
         mySettings->setValue(sLowNotificationsInterval, mySettings->value("interval"));
         mySettings->remove("interval");
         qInfo() << "Migrated old notification interval value";
+    }
+
+    if(mySettings->contains("highNotificationsEnabled")) {
+        if(mySettings->value("highNotificationsEnabled").toInt() == 0)
+            mySettings->setValue(sHighNotificationsInterval, 610);
+        mySettings->remove("highNotificationsEnabled");
+        qInfo() << "Migrated old highNotificationsEnabled value";
+    }
+
+    if(mySettings->contains("lowNotificationsEnabled")) {
+        if(mySettings->value("lowNotificationsEnabled").toInt() == 0)
+            mySettings->setValue(sLowNotificationsInterval, 610);
+        mySettings->remove("lowNotificationsEnabled");
+        qInfo() << "Migrated old lowNotificationsEnabled value";
     }
 
     // Do this here, because...
@@ -99,8 +113,6 @@ void Settings::updateConfig(QString path) {
     restartTimers |= loadInteger(sHighNotificationsInterval, &highNotificationsInterval, 50, 610);
     restartTimers |= loadInteger(sLowNotificationsInterval, &lowNotificationsInterval, 50, 610);
     loadInteger(sLimitEnabled, &limitEnabled, 0, 1);
-    restartTimers |= loadInteger(sHighNotificationsEnabled, &highNotificationsEnabled, 0, 1);
-    restartTimers |= loadInteger(sLowNotificationsEnabled, &lowNotificationsEnabled, 0, 1);
     loadInteger(sLowLimit, &lowLimit, 20, 94);
     loadInteger(sHighLimit, &highLimit, 21, 95);
 
@@ -139,8 +151,6 @@ int     Settings::getLowNotificationsInterval()  { return lowNotificationsInterv
 int     Settings::getLowLimit()                  { return lowLimit; }
 int     Settings::getHighLimit()                 { return highLimit; }
 bool    Settings::getLimitEnabled()              { return limitEnabled == 1; }
-bool    Settings::getHighNotificationsEnabled()  { return highNotificationsEnabled == 1; }
-bool    Settings::getLowNotificationsEnabled()   { return lowNotificationsEnabled == 1; }
 QString Settings::getLowAlertFile()              { return lowAlertFile; }
 QString Settings::getHighAlertFile()             { return highAlertFile; }
 QString Settings::getNotificationTitle()         { return notificationTitle; }

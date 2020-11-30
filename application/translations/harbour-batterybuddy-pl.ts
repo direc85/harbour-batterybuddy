@@ -311,14 +311,6 @@
         <translation>Uruchom proces w tle podczas uruchomienia</translation>
     </message>
     <message>
-        <source>Show high charge notification</source>
-        <translation>Pokaż powiadomienie o wysokim poziomie naładowania</translation>
-    </message>
-    <message>
-        <source>Show low charge notification</source>
-        <translation>Pokaż powiadomienie o niskim poziomie naładowania</translation>
-    </message>
-    <message>
         <source>Battery high notification interval</source>
         <translation>Interwał powiadamiania o wysokim poziomie naładowania</translation>
     </message>

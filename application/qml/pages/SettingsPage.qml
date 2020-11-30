@@ -36,8 +36,6 @@ Page {
             autoStopCharging.checked = settings.limitEnabled
             highLimitSlider.value = settings.highLimit
             lowLimitSlider.value = settings.lowLimit
-            highNotificationsSwitch.checked = settings.highNotificationsEnabled
-            lowNotificationsSwitch.checked = settings.lowNotificationsEnabled
             highAlertSlider.value = settings.highAlert
             lowAlertSlider.value = settings.lowAlert
             highIntervalSlider.value = settings.highNotificationsInterval
@@ -220,16 +218,6 @@ Page {
                     wrapMode: Text.Wrap
                 }
 
-                TextSwitch {
-                    id: highNotificationsSwitch
-                    text: qsTr("Show high charge notification")
-                    onCheckedChanged: settings.highNotificationsEnabled = checked
-                }
-                TextSwitch {
-                    id: lowNotificationsSwitch
-                    text: qsTr("Show low charge notification")
-                    onCheckedChanged: settings.lowNotificationsEnabled = checked
-                }
                 Slider {
                     id: highAlertSlider
                     width: parent.width

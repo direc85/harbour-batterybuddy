@@ -315,14 +315,6 @@
         <translation>Starte den Hintergrunddienst beim Einschalten</translation>
     </message>
     <message>
-        <source>Show high charge notification</source>
-        <translation>Zeige Hinweis, wenn der Akku voll ist</translation>
-    </message>
-    <message>
-        <source>Show low charge notification</source>
-        <translation>Zeige Hinweis, wenn der Akku leer ist</translation>
-    </message>
-    <message>
         <source>Battery high notification interval</source>
         <translation>Intervall für Hinweis &quot;battery voll&quot;</translation>
     </message>

@@ -313,14 +313,6 @@
         <translation>启动时开始后台服务</translation>
     </message>
     <message>
-        <source>Show high charge notification</source>
-        <translation>显示高充电通知</translation>
-    </message>
-    <message>
-        <source>Show low charge notification</source>
-        <translation>显示低电量通知</translation>
-    </message>
-    <message>
         <source>Battery high notification interval</source>
         <translation>电池电量高通知区间</translation>
     </message>

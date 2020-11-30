@@ -311,14 +311,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show high charge notification</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show low charge notification</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Battery high notification interval</source>
         <translation type="unfinished"></translation>
     </message>

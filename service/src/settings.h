@@ -61,8 +61,6 @@ private:
 
     // Converted to boolean for QML
     int limitEnabled = 0;
-    int highNotificationsEnabled = 1; // Converted to boolean for QML
-    int lowNotificationsEnabled = 1; // Converted to boolean for QML
     int daemonEnabled = 1;
 
     int lowLimit = 65;
@@ -79,8 +77,6 @@ private:
     const char* sHighNotificationsInterval = "highNotificationsInterval";
     const char* sLowNotificationsInterval = "lowNotificationsInterval";
     const char* sLimitEnabled = "limitEnabled";
-    const char* sHighNotificationsEnabled = "highNotificationsEnabled";
-    const char* sLowNotificationsEnabled = "lowNotificationsEnabled";
     const char* sLowLimit = "lowLimit";
     const char* sHighLimit = "highLimit";
     const char* sLowAlertFile = "lowAlertFile";
