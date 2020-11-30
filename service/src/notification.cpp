@@ -19,7 +19,8 @@
 
 Notification::Notification(QObject* parent) : QObject(parent)
 {
-
+    notification.setAppName("Battery Buddy");
+    notification.setAppIcon("harbour-batterybuddy");
 }
 
 Notification::~Notification()
@@ -34,13 +35,6 @@ void Notification::send(QString title, QString body, QString soundFile)
 
     QStringList args;
 
-    // Using 'update' works always; it creates a new notification if the ID doesn't match.
-    // notificationtol
-    args << "-o" << "update"
-         << "-i" << noteID
-         << "-I" << "/usr/share/icons/hicolor/128x128/apps/harbour-batterybuddy.png"
-         << "-A" << "\"Battery Buddy\"" << title << body << title << body;
-
     QProcess aplay;
     if(!soundFile.isEmpty()) {
         QStringList aplayArgs;
@@ -48,13 +42,11 @@ void Notification::send(QString title, QString body, QString soundFile)
         aplay.start("paplay", aplayArgs);
     }
 
-    QProcess notificationtool;
-    notificationtool.start("notificationtool", args);
-    notificationtool.waitForFinished();
-
-    QString result(notificationtool.readAll());
-    if(!result.isEmpty())
-        noteID = result.split(' ').last().trimmed();
+    notification.setSummary(title);
+    notification.setBody(body);
+    notification.setPreviewSummary(title);
+    notification.setPreviewBody(body);
+    notification.publish();
 
     // Playing the sound may take a while, so let's do this as late as possible.
     // Shouldn't matter though, because the minimum delay is 1:00
@@ -65,14 +57,6 @@ void Notification::send(QString title, QString body, QString soundFile)
 
 void Notification::close()
 {
-    if(noteID == "1")
-        return;
-
-    QStringList args;
-    args << "-o" << "remove" << "-i" << noteID;
-    QProcess proc;
-    proc.start("notificationtool", args);
-    noteID = 1;
-    proc.waitForFinished();
+    notification.close();
     return;
 }

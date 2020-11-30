@@ -21,6 +21,7 @@
 #include <QObject>
 #include <QProcess>
 #include <QTimer>
+#include <nemonotifications-qt5/notification.h>
 #include <QDebug>
 
 class Notification : public QObject
@@ -37,6 +38,7 @@ public slots:
 
 private:
     QString noteID = "1";
+    Notification notification;
 };
 
 #endif // NOTIFICATION_H
