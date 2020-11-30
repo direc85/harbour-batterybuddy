@@ -268,21 +268,39 @@ Page {
                     id: highIntervalSlider
                     width: parent.width
                     label: qsTr("Battery high notification interval")
-                    minimumValue: 60
-                    maximumValue: 600
+                    minimumValue: 50
+                    maximumValue: 610
                     stepSize: 10
-                    valueText: Math.floor(value / 60) + (value % 60 < 10 ? ":0" + value % 60 : ":" + value % 60)
+                    valueText: updateValueText()
                     onReleased: settings.highNotificationsInterval = value
+                    onValueChanged: updateValueText()
+                    function updateValueText() {
+                        console.log("UpdateValueText()")
+                        if(value == 50)
+                            return qsTr("Once")
+                        if(value == 610)
+                            return qsTr("Never")
+                        return Math.floor(value / 60) + (value % 60 < 10 ? ":0" + value % 60 : ":" + value % 60)
+                    }
                 }
                 Slider {
                     id: lowIntervalSlider
                     width: parent.width
                     label: qsTr("Battery low notification interval")
-                    minimumValue: 60
-                    maximumValue: 600
+                    minimumValue: 50
+                    maximumValue: 610
                     stepSize: 10
-                    valueText: Math.floor(value / 60) + (value % 60 < 10 ? ":0" + value % 60 : ":" + value % 60)
+                    valueText: updateValueText()
+                    onValueChanged: updateValueText()
                     onReleased: settings.lowNotificationsInterval = value
+                    function updateValueText() {
+                        console.log("UpdateValueText()")
+                        if(value == 50)
+                            return qsTr("Once")
+                        if(value == 610)
+                            return qsTr("Never")
+                        return Math.floor(value / 60) + (value % 60 < 10 ? ":0" + value % 60 : ":" + value % 60)
+                    }
                 }
             }
         }

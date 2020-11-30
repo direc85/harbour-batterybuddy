@@ -330,5 +330,13 @@
         <source>Battery low notification interval</source>
         <translation>Intervall für Hinweis &quot;battery leer&quot;</translation>
     </message>
+    <message>
+        <source>Once</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

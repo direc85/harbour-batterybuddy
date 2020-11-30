@@ -328,5 +328,13 @@
         <source>Battery low notification interval</source>
         <translation>电池电量低通知区间</translation>
     </message>
+    <message>
+        <source>Once</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

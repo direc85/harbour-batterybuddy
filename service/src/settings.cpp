@@ -96,8 +96,8 @@ void Settings::updateConfig(QString path) {
 
     loadInteger(sLowAlert, &lowAlert, 10, 99);
     loadInteger(sHighAlert, &highAlert, 11, 100);
-    restartTimers |= loadInteger(sHighNotificationsInterval, &highNotificationsInterval, 60, 600);
-    restartTimers |= loadInteger(sLowNotificationsInterval, &lowNotificationsInterval, 60, 600);
+    restartTimers |= loadInteger(sHighNotificationsInterval, &highNotificationsInterval, 50, 610);
+    restartTimers |= loadInteger(sLowNotificationsInterval, &lowNotificationsInterval, 50, 610);
     loadInteger(sLimitEnabled, &limitEnabled, 0, 1);
     restartTimers |= loadInteger(sHighNotificationsEnabled, &highNotificationsEnabled, 0, 1);
     restartTimers |= loadInteger(sLowNotificationsEnabled, &lowNotificationsEnabled, 0, 1);

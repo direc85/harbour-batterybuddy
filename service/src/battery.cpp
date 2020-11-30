@@ -88,6 +88,8 @@ Battery::Battery(QObject *parent) : QObject(parent)
     connect(highNotifyTimer, SIGNAL(timeout()), this, SLOT(showHighNotification()));
     connect(lowNotifyTimer, SIGNAL(timeout()), this, SLOT(showLowNotification()));
 
+    updateData();
+    resetTimers();
     updateTimer->start(5000);
 }
 
@@ -144,8 +146,20 @@ void Battery::resetTimers() {
     lowNotifyTimer->stop();
     highNotifyTimer->setInterval(settings->getHighNotificationsInterval() * 1000);
     lowNotifyTimer->setInterval(settings->getLowNotificationsInterval() * 1000);
-    highNotifyTimer->start();
-    lowNotifyTimer->start();
+    if(settings->getHighNotificationsInterval() < 610) {
+        qDebug() << "Starting high level notification timer";
+        highNotifyTimer->start();
+    }
+    else {
+        qDebug() << "High level notification timer not started";
+    }
+    if(settings->getLowNotificationsInterval() < 610) {
+        qDebug() << "Starting low level notification timer";
+        lowNotifyTimer->start();
+    }
+    else {
+        qDebug() << "Low level notification timer not started";
+    }
 }
 
 void Battery::showHighNotification() {
@@ -153,6 +167,10 @@ void Battery::showHighNotification() {
             && !(charge == 100 && state == "idle")) {
         qDebug() << "Battery notification timer: full enough battery";
         notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationHighText(), settings->getHighAlertFile());
+        if(settings->getLowNotificationsInterval() == 50) {
+            qDebug() << "Stop high notification timer (show only once)";
+            highNotifyTimer->stop();
+        }
     }
     else {
         qDebug() << "Battery notification timer: close notification";
@@ -164,6 +182,10 @@ void Battery::showLowNotification() {
     if(settings->getLowNotificationsEnabled() && charge <= settings->getLowAlert() && state != "charging") {
         qDebug() << "Battery notification timer: empty enough battery";
         notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationLowText(), settings->getLowAlertFile());
+        if(settings->getLowNotificationsInterval() == 50) {
+            qDebug() << "Stop low notification timer (show only once)";
+            lowNotifyTimer->stop();
+        }
     }
     else {
         qDebug() << "Battery notification timer: close notification";

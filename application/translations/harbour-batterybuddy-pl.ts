@@ -326,5 +326,13 @@
         <source>Battery low notification interval</source>
         <translation>Interwał powiadamiania o niskim poziomie naładowania</translation>
     </message>
+    <message>
+        <source>Once</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

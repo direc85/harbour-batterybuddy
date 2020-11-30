@@ -25,8 +25,8 @@ Settings::Settings(QObject *parent) : QObject(parent)
     // Read in the values
     loadInteger(sLowAlert, &lowAlert, 10, 99);
     loadInteger(sHighAlert, &highAlert, 11, 100);
-    loadInteger(sHighNotificationsInterval, &highNotificationsInterval, 60, 600);
-    loadInteger(sLowNotificationsInterval, &lowNotificationsInterval, 60, 600);
+    loadInteger(sHighNotificationsInterval, &highNotificationsInterval, 50, 610);
+    loadInteger(sLowNotificationsInterval, &lowNotificationsInterval, 50, 610);
     loadInteger(sLimitEnabled, &limitEnabled, 0, 1);
     loadInteger(sHighNotificationsEnabled, &highNotificationsEnabled, 0, 1);
     loadInteger(sLowNotificationsEnabled, &lowNotificationsEnabled, 0, 1);
