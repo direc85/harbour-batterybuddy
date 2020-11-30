@@ -87,7 +87,6 @@ public slots:
     void resetTimers();
     void showHighNotification();
     void showLowNotification();
-    void updateNotification();
 };
 
 #endif // BATTERY_H

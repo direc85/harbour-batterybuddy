@@ -89,7 +89,6 @@ Battery::Battery(QObject *parent) : QObject(parent)
     connect(lowNotifyTimer, SIGNAL(timeout()), this, SLOT(showLowNotification()));
 
     updateData();
-    resetTimers();
     updateTimer->start(5000);
 }
 
@@ -112,6 +111,9 @@ void Battery::updateData()
             chargerConnected = nextChargerConnected;
             emit chargerConnectedChanged(chargerConnected);
             qDebug() << "Charger is connected:" << chargerConnected;
+
+            // Hide/show notification right away
+            resetTimers();
         }
         chargerConnectedFile->close();
     }
@@ -121,11 +123,6 @@ void Battery::updateData()
             state = nextState;
             emit stateChanged(state);
             qDebug() << "Charging status:" << state;
-
-            // Hide/show notification right away
-            updateNotification();
-            // Reset the timer, too
-            resetTimers();
         }
         stateFile->close();
     }
@@ -149,6 +146,7 @@ void Battery::resetTimers() {
     if(settings->getHighNotificationsInterval() < 610) {
         qDebug() << "Starting high level notification timer";
         highNotifyTimer->start();
+        showHighNotification();
     }
     else {
         qDebug() << "High level notification timer not started";
@@ -156,6 +154,7 @@ void Battery::resetTimers() {
     if(settings->getLowNotificationsInterval() < 610) {
         qDebug() << "Starting low level notification timer";
         lowNotifyTimer->start();
+        showLowNotification();
     }
     else {
         qDebug() << "Low level notification timer not started";
@@ -165,15 +164,15 @@ void Battery::resetTimers() {
 void Battery::showHighNotification() {
     if(settings->getHighNotificationsInterval() < 610 && (charge >= settings->getHighAlert() && state != "discharging")
             && !(charge == 100 && state == "idle")) {
-        qDebug() << "Battery notification timer: full enough battery";
+        qDebug() << "High notification timer: full enough battery";
         notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationHighText(), settings->getHighAlertFile());
-        if(settings->getLowNotificationsInterval() == 50) {
+        if(settings->getHighNotificationsInterval() == 50) {
             qDebug() << "Stop high notification timer (show only once)";
             highNotifyTimer->stop();
         }
     }
     else {
-        qDebug() << "Battery notification timer: close notification";
+        qDebug() << "High notification timer: close notification";
         notification->close();
     }
 }
@@ -188,23 +187,7 @@ void Battery::showLowNotification() {
         }
     }
     else {
-        qDebug() << "Battery notification timer: close notification";
-        notification->close();
-    }
-}
-
-void Battery::updateNotification() {
-    if(settings->getHighNotificationsInterval() < 610 && (charge >= settings->getHighAlert() && state != "discharging")
-            && !(charge == 100 && state == "idle")) {
-        qDebug() << "Battery notification timer: full enough battery";
-        notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationHighText(), settings->getHighAlertFile());
-    }
-    else if(settings->getLowNotificationsInterval() < 610 && charge <= settings->getLowAlert() && state != "charging") {
-        qDebug() << "Battery notification timer: empty enough battery";
-        notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationLowText(), settings->getLowAlertFile());
-    }
-    else {
-        qDebug() << "Battery notification timer: close notification";
+        qDebug() << "Low notification timer: close notification";
         notification->close();
     }
 }
