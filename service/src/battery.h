@@ -26,7 +26,7 @@
 #include <QHostInfo>
 #include <QDebug>
 #include "settings.h"
-#include "notification.h"
+#include "mynotification.h"
 
 class Battery : public QObject
 {
@@ -57,7 +57,7 @@ private:
     QTimer *updateTimer = nullptr;
     QTimer *highNotifyTimer = nullptr;
     QTimer *lowNotifyTimer = nullptr;
-    Notification *notification = nullptr;
+    MyNotification *notification = nullptr;
 
     // Default values:
     int charge = 100; // 100% full

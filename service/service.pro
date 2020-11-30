@@ -16,12 +16,12 @@ DEFINES += APP_NAME=\"\\\"$$TARGET\\\"\"
 
 HEADERS += \
     src/battery.h \
-    src/notification.h \
+    src/mynotification.h \
     src/settings.h
 
 SOURCES += \
     src/battery.cpp \
-    src/notification.cpp \
+    src/mynotification.cpp \
     src/settings.cpp \
     src/harbour-batterybuddy-daemon.cpp
 

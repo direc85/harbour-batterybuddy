@@ -15,8 +15,8 @@
  *
  * Author: Matti Viljanen
  */
-#ifndef NOTIFICATION_H
-#define NOTIFICATION_H
+#ifndef MYNOTIFICATION_H
+#define MYNOTIFICATION_H
 
 #include <QObject>
 #include <QProcess>
@@ -24,13 +24,13 @@
 #include <nemonotifications-qt5/notification.h>
 #include <QDebug>
 
-class Notification : public QObject
+class MyNotification : public QObject
 {
     Q_OBJECT
 
 public:
-    Notification(QObject* parent = nullptr);
-    ~Notification();
+    MyNotification(QObject* parent = nullptr);
+    ~MyNotification();
 
 public slots:
     void send(QString title, QString body, QString soundFile);
@@ -41,4 +41,4 @@ private:
     Notification notification;
 };
 
-#endif // NOTIFICATION_H
+#endif // MYNOTIFICATION_H

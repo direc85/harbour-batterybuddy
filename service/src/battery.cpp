@@ -24,7 +24,7 @@ Battery::Battery(QObject *parent) : QObject(parent)
     updateTimer = new QTimer(this);
     highNotifyTimer = new QTimer(this);
     lowNotifyTimer = new QTimer(this);
-    notification = new Notification(this);
+    notification = new MyNotification(this);
 
     // Number: charge percentage, e.g. 42
     chargeFile   = new QFile("/sys/class/power_supply/battery/capacity", this);

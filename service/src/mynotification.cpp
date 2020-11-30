@@ -15,20 +15,20 @@
  *
  * Author: Matti Viljanen
  */
-#include "notification.h"
+#include "mynotification.h"
 
-Notification::Notification(QObject* parent) : QObject(parent)
+MyNotification::MyNotification(QObject* parent) : QObject(parent)
 {
     notification.setAppName("Battery Buddy");
     notification.setAppIcon("harbour-batterybuddy");
 }
 
-Notification::~Notification()
+MyNotification::~MyNotification()
 {
     close();
 }
 
-void Notification::send(QString title, QString body, QString soundFile)
+void MyNotification::send(QString title, QString body, QString soundFile)
 {
     title = title.replace("\"", "\\\"");
     body = body.replace("\"", "\\\"");
@@ -55,7 +55,7 @@ void Notification::send(QString title, QString body, QString soundFile)
     return;
 }
 
-void Notification::close()
+void MyNotification::close()
 {
     notification.close();
     return;
