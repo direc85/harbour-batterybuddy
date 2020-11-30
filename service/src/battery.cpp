@@ -84,7 +84,7 @@ Battery::Battery(QObject *parent) : QObject(parent)
     }
 
     connect(updateTimer, SIGNAL(timeout()), this, SLOT(updateData()));
-    connect(settings, SIGNAL(configChanged()), this, SLOT(updateConfig()));
+    connect(settings, SIGNAL(resetTimers()), this, SLOT(resetTimers()));
     connect(highNotifyTimer, SIGNAL(timeout()), this, SLOT(showHighNotification()));
     connect(lowNotifyTimer, SIGNAL(timeout()), this, SLOT(showLowNotification()));
 
@@ -123,7 +123,7 @@ void Battery::updateData()
             // Hide/show notification right away
             updateNotification();
             // Reset the timer, too
-            updateConfig();
+            resetTimers();
         }
         stateFile->close();
     }
@@ -139,7 +139,7 @@ void Battery::updateData()
     }
 }
 
-void Battery::updateConfig() {
+void Battery::resetTimers() {
     highNotifyTimer->stop();
     lowNotifyTimer->stop();
     highNotifyTimer->setInterval(settings->getHighNotificationsInterval() * 1000);

@@ -92,13 +92,15 @@ void Settings::updateConfig(QString path) {
 
     qDebug() << "Reading values...";
     // Read in the values
+    bool restartTimers = false;
+
     loadInteger(sLowAlert, &lowAlert, 10, 99);
     loadInteger(sHighAlert, &highAlert, 11, 100);
-    loadInteger(sHighNotificationsInterval, &highNotificationsInterval, 60, 600);
-    loadInteger(sLowNotificationsInterval, &lowNotificationsInterval, 60, 600);
+    restartTimers |= loadInteger(sHighNotificationsInterval, &highNotificationsInterval, 60, 600);
+    restartTimers |= loadInteger(sLowNotificationsInterval, &lowNotificationsInterval, 60, 600);
     loadInteger(sLimitEnabled, &limitEnabled, 0, 1);
-    loadInteger(sHighNotificationsEnabled, &highNotificationsEnabled, 0, 1);
-    loadInteger(sLowNotificationsEnabled, &lowNotificationsEnabled, 0, 1);
+    restartTimers |= loadInteger(sHighNotificationsEnabled, &highNotificationsEnabled, 0, 1);
+    restartTimers |= loadInteger(sLowNotificationsEnabled, &lowNotificationsEnabled, 0, 1);
     loadInteger(sLowLimit, &lowLimit, 20, 94);
     loadInteger(sHighLimit, &highLimit, 21, 95);
 
@@ -122,6 +124,10 @@ void Settings::updateConfig(QString path) {
     else {
         qDebug() << "File replaced, re-adding.";
         watcher->addPath(path);
+    }
+
+    if(restartTimers) {
+        emit resetTimers();
     }
 }
 

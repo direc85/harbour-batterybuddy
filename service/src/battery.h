@@ -84,7 +84,7 @@ signals:
     void chargerConnectedChanged(bool);
 
 public slots:
-    void updateConfig();
+    void resetTimers();
     void showHighNotification();
     void showLowNotification();
     void updateNotification();

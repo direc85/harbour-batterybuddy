@@ -96,7 +96,7 @@ private slots:
     void updateConfig(QString path);
 
 signals:
-    void configChanged();
+    void resetTimers();
 };
 
 #endif // SETTINGS_H
