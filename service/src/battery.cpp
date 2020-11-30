@@ -83,17 +83,12 @@ Battery::Battery(QObject *parent) : QObject(parent)
         }
     }
 
-    updateData();
-
     connect(updateTimer, SIGNAL(timeout()), this, SLOT(updateData()));
     connect(settings, SIGNAL(configChanged()), this, SLOT(updateConfig()));
     connect(highNotifyTimer, SIGNAL(timeout()), this, SLOT(showHighNotification()));
     connect(lowNotifyTimer, SIGNAL(timeout()), this, SLOT(showLowNotification()));
 
-    updateConfig();
-
-    updateTimer->setInterval(5000);
-    updateTimer->start();
+    updateTimer->start(5000);
 }
 
 Battery::~Battery() { }
