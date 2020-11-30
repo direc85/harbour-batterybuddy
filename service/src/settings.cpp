@@ -74,9 +74,13 @@ int Settings::bound(int value, int min, int max) {
     return (value <= min ? min : (value >= max ? max : value));
 }
 
-void Settings::loadInteger(const char* key, int *value, int min, int max) {
+bool Settings::loadInteger(const char* key, int *value, int min, int max) {
+    oldValue = *value;
     *value = bound(mySettings->value(key, *value).toInt(), min, max);
-    qInfo() << "Loaded" << key << *value;
+    if(oldValue != *value) {
+        qInfo() << "Loaded" << key << *value;
+    }
+    return oldValue != *value;
 }
 
 void Settings::updateConfig(QString path) {

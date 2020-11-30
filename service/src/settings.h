@@ -51,6 +51,8 @@ private:
     QSettings* mySettings = nullptr;
     QFileSystemWatcher *watcher = nullptr;
 
+    int oldValue;
+
     // Default values
     int lowAlert = 25;
     int highAlert = 75;
@@ -88,7 +90,7 @@ private:
     const char* sNotificationHighText = "notificationHighText";
 
     int bound(int value, int min, int max);
-    void loadInteger(const char *key, int *value, int min, int max);
+    bool loadInteger(const char *key, int *value, int min, int max);
 
 private slots:
     void updateConfig(QString path);
