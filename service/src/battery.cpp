@@ -111,9 +111,6 @@ void Battery::updateData()
             chargerConnected = nextChargerConnected;
             emit chargerConnectedChanged(chargerConnected);
             qDebug() << "Charger is connected:" << chargerConnected;
-
-            // Hide/show notification right away
-            resetTimers();
         }
         chargerConnectedFile->close();
     }
