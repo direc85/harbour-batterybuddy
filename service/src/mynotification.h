@@ -21,6 +21,7 @@
 #include <QObject>
 #include <QProcess>
 #include <QTimer>
+#include <QSoundEffect>
 #include <nemonotifications-qt5/notification.h>
 #include <QDebug>
 
@@ -39,6 +40,11 @@ public slots:
 private:
     QString noteID = "1";
     Notification notification;
+    QSoundEffect sound;
+    bool playSound;
+
+private slots:
+    void soundLoadedChanged();
 };
 
 #endif // MYNOTIFICATION_H

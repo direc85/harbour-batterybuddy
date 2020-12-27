@@ -21,6 +21,8 @@ MyNotification::MyNotification(QObject* parent) : QObject(parent)
 {
     notification.setAppName("Battery Buddy");
     notification.setAppIcon("harbour-batterybuddy");
+    playSound = false;
+    connect(&sound, SIGNAL(loadedChanged()), &sound, SLOT(play()));
 }
 
 MyNotification::~MyNotification()
@@ -33,13 +35,15 @@ void MyNotification::send(QString title, QString body, QString soundFile)
     title = title.replace("\"", "\\\"");
     body = body.replace("\"", "\\\"");
 
-    QStringList args;
-
-    QProcess aplay;
-    if(!soundFile.isEmpty()) {
-        QStringList aplayArgs;
-        aplayArgs << soundFile;
-        aplay.start("paplay", aplayArgs);
+    playSound = true;
+    if(sound.source() != QUrl::fromLocalFile(soundFile)) {
+        // Signalled to play()
+        sound.setSource(QUrl::fromLocalFile(soundFile));
+    }
+    else if (playSound){
+        // Must manually trigger play()
+        sound.play();
+        playSound = false;
     }
 
     notification.setSummary(title);
@@ -48,10 +52,6 @@ void MyNotification::send(QString title, QString body, QString soundFile)
     notification.setPreviewBody(body);
     notification.publish();
 
-    // Playing the sound may take a while, so let's do this as late as possible.
-    // Shouldn't matter though, because the minimum delay is 1:00
-    // and the sound plays for a few seconds.
-    aplay.waitForFinished();
     return;
 }
 
@@ -59,4 +59,11 @@ void MyNotification::close()
 {
     notification.close();
     return;
+}
+
+void MyNotification::soundLoadedChanged() {
+    if(playSound && sound.status() == QSoundEffect::Ready) {
+        sound.play();
+        playSound = false;
+    }
 }
