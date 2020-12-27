@@ -91,17 +91,15 @@ rm /etc/systemd/system/%{name}-oneshot.service || true
 
 # Install/update permission daemon (root)
 cp %{_datadir}/%{name}/service/%{name}-oneshot.service %{_unitdir}/%{name}-oneshot.service
+systemctl daemon-reload
 systemctl start %{name}-oneshot.service
 systemctl enable %{name}-oneshot.service
 
 # Install/update background daemon (default user)
 cp %{_datadir}/%{name}/service/%{name}.service %{_userunitdir}/%{name}.service
+su $SFOSUSER -c "systemctl --user daemon-reload"
 su $SFOSUSER -c "systemctl --user start %{name}.service"
 su $SFOSUSER -c "systemctl --user enable %{name}.service"
-
-# Cleanup
-systemctl daemon-reload
-systemctl reset-failed
 
 
 %postun
