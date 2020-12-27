@@ -22,7 +22,9 @@ MyNotification::MyNotification(QObject* parent) : QObject(parent)
     notification.setAppName("Battery Buddy");
     notification.setAppIcon("harbour-batterybuddy");
     playSound = false;
-    connect(&sound, SIGNAL(loadedChanged()), &sound, SLOT(play()));
+    sound.setAudioRole(QAudio::NotificationRole);
+    connect(&sound, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),
+            this, SLOT(soundLoadedChanged(QMediaPlayer::MediaStatus)));
 }
 
 MyNotification::~MyNotification()
@@ -36,9 +38,9 @@ void MyNotification::send(QString title, QString body, QString soundFile)
     body = body.replace("\"", "\\\"");
 
     playSound = true;
-    if(sound.source() != QUrl::fromLocalFile(soundFile)) {
+    if(sound.media() != QUrl::fromLocalFile(soundFile)) {
         // Signalled to play()
-        sound.setSource(QUrl::fromLocalFile(soundFile));
+        sound.setMedia(QUrl::fromLocalFile(soundFile));
     }
     else if (playSound){
         // Must manually trigger play()
@@ -61,8 +63,8 @@ void MyNotification::close()
     return;
 }
 
-void MyNotification::soundLoadedChanged() {
-    if(playSound && sound.status() == QSoundEffect::Ready) {
+void MyNotification::soundLoadedChanged(QMediaPlayer::MediaStatus newStatus) {
+    if(playSound && newStatus == QMediaPlayer::LoadedMedia) {
         sound.play();
         playSound = false;
     }
