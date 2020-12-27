@@ -90,6 +90,14 @@ Battery::Battery(QObject *parent) : QObject(parent)
 
     updateData();
     updateTimer->start(5000);
+
+    // If updateData() didn't start the timers
+    // aka. "charging" status didn't change
+    // (or if both times are disabled, actually)
+    //  manually trigger the timer startup.
+    if(!highNotifyTimer->isActive() && !lowNotifyTimer->isActive()) {
+        resetTimers();
+    }
 }
 
 Battery::~Battery() { }
@@ -120,6 +128,9 @@ void Battery::updateData()
             state = nextState;
             emit stateChanged(state);
             qDebug() << "Charging status:" << state;
+
+            // Hide/show notification right away
+            resetTimers();
         }
         stateFile->close();
     }
