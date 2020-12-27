@@ -171,7 +171,7 @@ void Battery::showHighNotification() {
             highNotifyTimer->stop();
         }
     }
-    else {
+    else if(charge > settings->getLowAlert()) {
         qDebug() << "High notification timer: close notification";
         notification->close();
     }
@@ -186,7 +186,7 @@ void Battery::showLowNotification() {
             lowNotifyTimer->stop();
         }
     }
-    else {
+    else if(charge < settings->getHighAlert()) {
         qDebug() << "Low notification timer: close notification";
         notification->close();
     }
