@@ -42,7 +42,7 @@ DISTFILES += qml/harbour-batterybuddy.qml \
     qml/components/MyLabel.qml \
     qml/pages\LicensePage.qml \
     qml/cover/CoverPage.qml \
-    ../rpm/harbour-batterybuddy.spec \
+    rpm/harbour-batterybuddy.spec \
     service/harbour-batterybuddy.service \
     service/harbour-batterybuddy-oneshot.service \
     service/restore-write-permissions.sh \
@@ -52,7 +52,7 @@ DISTFILES += qml/harbour-batterybuddy.qml \
     qml/pages/MainPage.qml \
     qml/pages/AboutPage.qml \
     qml/pages/InfoPage.qml \
-    ../rpm/harbour-batterybuddy.changes \
+    rpm/harbour-batterybuddy.changes \
     qml/components/BatteryGraph.qml \
     qml/pages/SettingsPage.qml \
     qml/components/MyDetailItem.qml
