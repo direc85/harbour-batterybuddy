@@ -37,6 +37,9 @@ void MyNotification::send(QString title, QString body, QString soundFile)
     title = title.replace("\"", "\\\"");
     body = body.replace("\"", "\\\"");
 
+    int vol = profile.getRingtoneVolume();
+    sound.setVolume(vol);
+
     playSound = true;
     if(sound.media() != QUrl::fromLocalFile(soundFile)) {
         // Signalled to play()

@@ -2,7 +2,7 @@ TARGET = harbour-batterybuddy-daemon
 
 CONFIG = sailfishapp qt console c++11 sailfish_build
 
-QT = core network dbus multimedia
+QT = core network dbus multimedia dbus
 
 PKGCONFIG += nemonotifications-qt5
 
@@ -17,11 +17,13 @@ DEFINES += APP_NAME=\"\\\"$$TARGET\\\"\"
 HEADERS += \
     src/battery.h \
     src/mynotification.h \
+    src/profile.h \
     src/settings.h
 
 SOURCES += \
     src/battery.cpp \
     src/mynotification.cpp \
+    src/profile.cpp \
     src/settings.cpp \
     src/harbour-batterybuddy-daemon.cpp
 

@@ -22,6 +22,7 @@
 #include <QTimer>
 #include <QMediaPlayer>
 #include <nemonotifications-qt5/notification.h>
+#include "profile.h"
 #include <QDebug>
 
 class MyNotification : public QObject
@@ -41,6 +42,7 @@ private:
     Notification notification;
     QMediaPlayer sound;
     bool playSound;
+    Profile profile;
 
 private slots:
     void soundLoadedChanged(QMediaPlayer::MediaStatus newStatus);
