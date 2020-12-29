@@ -73,40 +73,41 @@ desktop-file-install --delete-original       \
 
 %posttrans
 export SFOSUSER=$(id -un 100000)
+export DBUS_USER_ADDRESS=unix:path=/run/user/100000/dbus/user_bus_socket
 
-# Remove all service (new and old)
-systemctl stop %{name}-oneshot.service || true
-systemctl stop %{name}.service || true
-su $SFOSUSER -c "systemctl --user stop %{name}.service" || true
-
-systemctl disable %{name}-oneshot.service || true
-systemctl disable %{name}.service || true
-su $SFOSUSER -c "systemctl --user disable %{name}.service" || true
-
-rm %{_unitdir}/%{name}-oneshot.service || true
-rm %{_unitdir}/%{name}.service || true
-rm %{_userunitdir}/%{name}.service || true
-rm /etc/systemd/system/%{name}.service || true
-rm /etc/systemd/system/%{name}-oneshot.service || true
+# Remove old service
+systemctl stop %{name}.service
+systemctl disable %{name}.service
+rm %{_unitdir}/%{name}.service
 
 # Install/update permission daemon (root)
 cp %{_datadir}/%{name}/service/%{name}-oneshot.service %{_unitdir}/%{name}-oneshot.service
 systemctl daemon-reload
-systemctl start %{name}-oneshot.service
 systemctl enable %{name}-oneshot.service
+systemctl start %{name}-oneshot.service
 
 # Install/update background daemon (default user)
 cp %{_datadir}/%{name}/service/%{name}.service %{_userunitdir}/%{name}.service
-su $SFOSUSER -c "systemctl --user daemon-reload"
-su $SFOSUSER -c "systemctl --user start %{name}.service"
-su $SFOSUSER -c "systemctl --user enable %{name}.service"
-
+su $SFOSUSER -c "DBUS_SESSION_BUS_ADDRESS=$DBUS_USER_ADDRESS systemctl --user daemon-reload"
+su $SFOSUSER -c "DBUS_SESSION_BUS_ADDRESS=$DBUS_USER_ADDRESS systemctl --user enable %{name}.service"
+su $SFOSUSER -c "DBUS_SESSION_BUS_ADDRESS=$DBUS_USER_ADDRESS systemctl --user start %{name}.service"
+exit 0
 
 %postun
-# Figure out the default user name
-export SFOSUSER=$(id -un 100000)
+// Run on uninstall, not on upgrade
+if [ $1 -eq 0 ]; then
+  # Figure out the default user name
+  export SFOSUSER=$(id -un 100000)
+  export DBUS_USER_ADDRESS=unix:path=/run/user/100000/dbus/user_bus_socket
 
-su $SFOSUSER -c "systemctl --user disable --now %{name}.service" || true
-systemctl disable --now %{name}-oneshot.service || true
-rm %{_unitdir}/%{name}-oneshot.service
-rm %{_userunitdir}/%{name}.service
+  su $SFOSUSER -c "DBUS_SESSION_BUS_ADDRESS=$DBUS_USER_ADDRESS systemctl --user stop %{name}.service"
+  su $SFOSUSER -c "DBUS_SESSION_BUS_ADDRESS=$DBUS_USER_ADDRESS systemctl --user disable %{name}.service"
+  rm %{_userunitdir}/%{name}.service
+  su $SFOSUSER -c "DBUS_SESSION_BUS_ADDRESS=$DBUS_USER_ADDRESS systemctl --user daemon-reload"
+
+  systemctl stop %{name}-oneshot.service
+  systemctl disable %{name}-oneshot.service
+  rm %{_unitdir}/%{name}-oneshot.service
+  systemctl daemon-reload
+fi
+exit 0
