@@ -5,6 +5,4 @@ The application logo is a 5 minute craft at the moment, and can be considered a 
 
 The application consist of three parts: the GUI, the monitoring daemon and the filesystem permission daemon. The filesystem daemon, `harbour-batterybuddy-oneshot.service`, always starts when the device boots. Its sole purpose is to set correct permissions for the charger control file of the device, so that everything else can be started as user `nemo`, minimizing security impact. The monitoring daemon, `harbour-batterybuddy.service`, actually sends the notifications and pauses/resumes charging.
 
-Another known "issue" at the moment is that the alert sound played uses the media volume setting instead of ringtone volume setting. Any tips on this are appreciated.
-
 Keep your battery healthy and help our dying planet, even if it is just for a tiny little bit!
