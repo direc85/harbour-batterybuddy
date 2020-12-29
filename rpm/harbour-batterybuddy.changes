@@ -1,3 +1,15 @@
+* Wed Dec 30 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.7-1
+- Respect ringtone volume and silent mode
+- Fix services' startup and install/uninstall
+- Use Nemo Notification for notifications
+- Use QMediaPlayer for notification sounds
+- Drop lipstick-qt5-tools dependency
+- Implement alerting once/interval/never
+- Remove redundant options accordingly
+- Improve alert logic (again)
+- Update Finnish translation
+- Support SFOS 3.4 (defaultuser)
+
 * Mon Nov 16 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.6-3
 - Add Polish translation (thanks, atlochowski)
 - Updated Chinese translation (thanks, dashinfantry)

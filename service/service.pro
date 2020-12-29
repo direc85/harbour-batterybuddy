@@ -7,8 +7,8 @@ QT = core network dbus multimedia dbus
 PKGCONFIG += nemonotifications-qt5
 
 # Keep this in sync with "application.pro"
-VER = 3.6
-REL = 3
+VER = 3.7
+REL = 1
 
 VERSION = $${VER}-$${REL}
 DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"
