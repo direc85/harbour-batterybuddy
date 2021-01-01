@@ -37,12 +37,12 @@
     <message>
         <source>Charging</source>
         <translatorcomment>Ggf. &quot;Wird geladen&quot;</translatorcomment>
-        <translation>Lädt</translation>
+        <translation>Lade</translation>
     </message>
     <message>
         <source>Not charging</source>
         <translatorcomment>ggf. &quot;Wird nicht geladen&quot;</translatorcomment>
-        <translation>Lädt nicht</translation>
+        <translation>Kein Ladevorgang</translation>
     </message>
     <message>
         <source>Connect charger</source>
@@ -186,17 +186,17 @@
     <message>
         <source>idle</source>
         <comment>Charger plugged in, not using nor charging battery</comment>
-        <translation>nicht in Benutzung</translation>
+        <translation>untätig</translation>
     </message>
     <message>
         <source>discharging</source>
         <comment>Charger not plugged in, battery discharging</comment>
-        <translation>wird entladen</translation>
+        <translation>entlade</translation>
     </message>
     <message>
         <source>charging</source>
         <comment>Charger plugged in and battery charging</comment>
-        <translation>wird geladen</translation>
+        <translation>lade</translation>
     </message>
     <message>
         <source>unknown</source>
