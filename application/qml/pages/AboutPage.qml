@@ -116,8 +116,8 @@ Page {
                 text: "Suomi: Matti Viljanen\n"+
                       "Français: Quenty31\n"+
                       "简体中文: dashinfantry\n"+
-                      "svensk: eson57"+
-                      "Deutsche: dryo"
+                      "svensk: eson57\n"+
+                      "Deutsch: dryo, fllp"
             }
 
             AboutLabel {
