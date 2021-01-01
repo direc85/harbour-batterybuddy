@@ -21,7 +21,7 @@
     </message>
     <message>
         <source>Contributions and translations are always appreciated!</source>
-        <translation>Mitarbeit und Übersetzungen sind sehr willkommen!</translation>
+        <translation>Mitarbeit und Übersetzungen sind immer willkommen!</translation>
     </message>
     <message>
         <source>If you like my work and would like to support me, you can buy me a coffee!</source>
@@ -69,12 +69,11 @@
     </message>
     <message>
         <source>It simply monitors the battery level and if it has been charged above the limit, it plays a sound and displays a notification.</source>
-        <translation>Es überwacht den Akkufüllstand und wenn er über einer gewissen Grenze ist, erklingt ein Ton und eine Hinweis wird eingeblendet.</translation>
+        <translation>Es überwacht den Akkustand und zeigt eine Benachrichtgung mit einem Signalton an, sobald er die Obergrenze überschreitet.</translation>
     </message>
     <message>
         <source>A different sound is played and notification send when the battery has been discharged under the limit.</source>
-        <translatorcomment>Klingt hochgestochen, mir ist aber nix besseres eingefallen :D</translatorcomment>
-        <translation>Ein anderer Klang ertönt und ein Hinweis wird eingeblendet, wenn der Akku bis unter eine weitere Grenze entladen wird.</translation>
+        <translation>Ist der Akku über die Untergrenze entladen, ertönt ein zweiter Signalton mit zugehöriger Benachrichtigung.</translation>
     </message>
     <message>
         <source>Why does it matter?</source>
@@ -82,15 +81,15 @@
     </message>
     <message>
         <source>Lithium-based batteries do not last forever. Every charge and discharge wear out the battery a small amount. This is normal and currently unavoidable.</source>
-        <translation>Lithium-basierte Akkus halten nicht ewig. Jeder Lade- und Entladevorgang schädigt den Akku minimal. Das ist normal und momentan unvermeidbar.</translation>
+        <translation>Lithium-basierte Akkus halten nicht ewig. Jeder Lade- und Entladevorgang verschleißt den Akku ein wenig. Das ist normal und derzeit unvermeidbar.</translation>
     </message>
     <message>
         <source>A full charge from 0% to 100% stresses the battery more than, say, charging from 25% to 75%.</source>
-        <translation>Das komplette Laden und Entladen von 0% bis 100% beansprucht den Akku wesentlich stärker, als z.B. von 25% bis 75%.</translation>
+        <translation>Ein voller Ladevorgang von 0% auf 100% beansprucht den Akku wesentlich stärker, als z.B. einer von 25% auf 75%.</translation>
     </message>
     <message>
         <source>Charging and discharging the battery lowers the capacity over time. Small discharge wears out the capacity slower than a deep discharge and a full recharge.</source>
-        <translation>Durch das Laden und Entladen wird die Kapazität des Akkus mit der Zeit geringer. Kleine Ladebereiche lassen den Akku langsamer altern als das komplette Entladen und Aufladen.</translation>
+        <translation>Das Laden und Entladen verringert mit der Zeit die Kapazität des Akkus. Eine geringe Entladung lässt den Akku langsamer altern als das vollständige Ent- und Aufladen.</translation>
     </message>
     <message>
         <source>Is it noticable?</source>
@@ -106,11 +105,11 @@
     </message>
     <message>
         <source>More info</source>
-        <translation>Mehr Informationen</translation>
+        <translation>Weitere Informationen</translation>
     </message>
     <message>
         <source>Please keep in mind that the numbers are very coarse estimates. There are also other variables that affect the life cycle, such as charge current and battery temperature.</source>
-        <translation>Bitte denke daran, dass diese Zahlen nur zur Verdeutlichung sind. Es gibt weitere Faktoren, die einen Einfluss auf die Liebensdauer haben, wie z.B. der Ladestrom oder die Akkutemperatur.</translation>
+        <translation>Beachte bitte, dass diese Zahlen nur sehr grobe Schätzungen sind. Es gibt weitere Faktoren, die einen Einfluss auf die Lebensdauer haben, wie etwa der Ladestrom oder die Akkutemperatur.</translation>
     </message>
     <message>
         <source>Why should I care?</source>
@@ -118,7 +117,7 @@
     </message>
     <message>
         <source>Every battery produced uses a lot of energy and at least some non-renewable resources.</source>
-        <translation>Die Herstellung jedes Akkus benötigt eine Menge Energie und auch ein paar nicht erneuerbare Ressourcen.</translation>
+        <translation>Jeder hergestellte Akku verbraucht eine Menge Energie und mindestens ein wenig nicht erneuerbare Ressourcen.</translation>
     </message>
     <message>
         <source>By taking care of your devices battery, you don&apos;t have to buy a new battery so soon.</source>
@@ -126,15 +125,15 @@
     </message>
     <message>
         <source>Even better; in some devices the battery is very difficult to replace without braking the device, which means you don&apos;t have to pay for the service, either.</source>
-        <translation>Noch besser; Bei manchen Geräten ist es sehr schwierig, den Akku zu tauschen, ohne das Gerät zu beschädigen. Das heißt, dass du die Kosten eines Austausches ggf. sparen kannst.</translation>
+        <translation>Noch besser: Bei einigen Geräten ist es sehr schwierig, den Akku zu tauschen, ohne das Gerät zu beschädigen. Du  kannst dirt also die Kosten eines Austausches möglicherweise sparen.</translation>
     </message>
     <message>
         <source>What else can I do?</source>
-        <translation>Was kann ich noch machen?</translation>
+        <translation>Was kann ich sonst noch machen?</translation>
     </message>
     <message>
         <source>Uninstall battery-hungry applications you don&apos;t use. Reboot your device every now and then in order to keep it running flawlessly.</source>
-        <translation>Deinstalliere energiehungrige Programme, die du nicht benötigst. Starte dein Gerät hin und wieder neu, damit es fehlerlos läuft.</translation>
+        <translation>Deinstalliere energiehungrige Programme, die du nicht benötigst. Starte dein Gerät hin und wieder neu, damit es fehlerfrei läuft.</translation>
     </message>
     <message>
         <source>Use flight mode overnight whenever possible in order to cut power usage down. Powering the device off and on again may use a lot more battery than you think!</source>
@@ -142,7 +141,7 @@
     </message>
     <message>
         <source>Don&apos;t use your phone in hot or cold environments. In the winter keep the phone in your pocket near your body (but take note of the moisture) and use a handsfree device. Extreme temperatures are bad for the battery.</source>
-        <translation>Benutze dein Telefon möglichst nicht in heißer oder kalter Umgebung. Stecke das Telefon im Winter in eine Innentasche, die nah an deinem Körper ist (aber achte auf Feuchtigkeit) und benutze einen Kopfhörer. Extreme Temperaturen sind schlecht für den Akku.</translation>
+        <translation>Verwende dein Telefon möglichst nicht in einer heißen oder kalten Umgebung. Stecke das Telefon im Winter in eine Innentasche, die nah an deinem Körper ist (achte aber auf Feuchtigkeit) und benutze Kopfhörer. Extreme Temperaturen sind schlecht für den Akku.</translation>
     </message>
     <message>
         <source>I want to know more!</source>
@@ -150,7 +149,7 @@
     </message>
     <message>
         <source>Great! There are a lot of articles to read and papers to study, so click the link to begin!</source>
-        <translation>Großartig! Es gibt eine Menge Artikel zu lesen und Veröffentlichungen, die man studieren kann. Also klicke auf den Link, um zu beginnen!</translation>
+        <translation>Großartig! Es gibt eine Menge Artikel und Veröffentlichungen zum Nachlesen. Klicke auf den Link, um loszulegen!</translation>
     </message>
 </context>
 <context>
@@ -166,8 +165,7 @@
     <message>
         <source>Background</source>
         <comment>More to read, background information...</comment>
-        <translatorcomment>&quot;Hintergrund&quot; allein finde ich genau so doppeldeutig, wie im Englischen. Man könnte denken, es geht um den Hintergrunddienst.</translatorcomment>
-        <translation>Hintergrundinformationen</translation>
+        <translation>Technischer Hintergrund</translation>
     </message>
     <message>
         <source>yes</source>
@@ -179,7 +177,7 @@
     </message>
     <message>
         <source>Charge:</source>
-        <translation>Füllstand:</translation>
+        <translation>Ladung:</translation>
     </message>
     <message>
         <source>State:</source>
@@ -217,11 +215,11 @@
     <message>
         <source>empty</source>
         <comment>Battery fully depleted</comment>
-        <translation>leer</translation>
+        <translation>entladen</translation>
     </message>
     <message>
         <source>You can close Battery Buddy when you are done, notifications and charger control will continue working in the background.</source>
-        <translation>Du kannst Battery Buddy schließen wenn du alles erledigt hast. Hinweise und die Ladesteuerung laufen im Hintergrund weiter.</translation>
+        <translation>Du kannst Battery Buddy schließen, wenn du fertig bist. Benachrichtigungen und Ladesteuerung laufen im Hintergrund weiter.</translation>
     </message>
     <message>
         <source>Background service</source>
@@ -229,15 +227,15 @@
     </message>
     <message>
         <source>If notifications misbehave or there are problems with charger control, restarting the background service should help.</source>
-        <translation>Falls die Hinweise verrückt spielen oder es Probleme mit der Ladesteuerung gibt, sollte ein Neustart des Hintergrunddienstes Abhilfe schaffen.</translation>
+        <translation>Falls es Probleme mit Benachrichtigungen oder Ladesteuerung gibt, dürfte ein Neustart des Dienstes helfen.</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Starten</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation>Stopp</translation>
+        <translation>Anhalten</translation>
     </message>
     <message>
         <source>Current:</source>
@@ -252,11 +250,11 @@
     </message>
     <message>
         <source>Please connect the charger.</source>
-        <translation>Bitte das Ladegerät anschließen.</translation>
+        <translation>Bitte Ladegerät anschließen.</translation>
     </message>
     <message>
         <source>Please disconnect the charger.</source>
-        <translation>Bitte vom Ladegerät trennen.</translation>
+        <translation>Bitte Ladegerät trennen.</translation>
     </message>
 </context>
 <context>
@@ -267,7 +265,7 @@
     </message>
     <message>
         <source>Resume charging limit</source>
-        <translation>Laden wiederaufnehmen bei</translation>
+        <translation>Entladungsgrenze</translation>
     </message>
     <message>
         <source>Charging settings</source>
@@ -275,7 +273,7 @@
     </message>
     <message>
         <source>Notification settings</source>
-        <translation>Hinweise</translation>
+        <translation>Benachrichtigungen</translation>
     </message>
     <message>
         <source>About</source>
@@ -284,15 +282,15 @@
     </message>
     <message>
         <source>Pause charging limit</source>
-        <translation>Laden stoppen bei</translation>
+        <translation>Aufladegrenze</translation>
     </message>
     <message>
         <source>Display visual and audible notifications about reached battery charge levels, when the battery charge is below or above desired percentage.</source>
-        <translation>Visuelle und akustische Hinweise beim über- bzw. unterschreiten der eingestellten Grenzen geben.</translation>
+        <translation>Visuelle und akustische Benachrichtigungen zum Ladestand anzeigen, sobald das Ladeniveau über- bzw. unter dem gewünschtem Stand liegt.</translation>
     </message>
     <message>
         <source>Battery low notification</source>
-        <translation>Akkustand ist gering</translation>
+        <translation>Akkustand niedrig</translation>
     </message>
     <message>
         <source>Battery full notification</source>
@@ -304,7 +302,7 @@
     </message>
     <message>
         <source>This option disables charging automatically when the battery has charged above the pausing percentage and enables it again when the battery has depleted below the resuming percentage.</source>
-        <translation>Mit dieser Option kann mein einstellen, dass das Gerät automatisch aufhört zu laden, wenn der Akku über dem festgelegten Grenzwert liegt. Das Laden wird fortgesetzt, wenn der Füllstand unter den zweiten Grenzwert fällt.</translation>
+        <translation>Diese Option hält den Ladevorgang automatisch an, sobald der Akkustand die angegebene Ladegrenze überschreitet und setzt sie fort, sobald der Ladezustand unter die Entladegrenze fällt.</translation>
     </message>
     <message>
         <source>Background service</source>
@@ -316,11 +314,11 @@
     </message>
     <message>
         <source>Battery high notification interval</source>
-        <translation>Intervall für Hinweis &quot;battery voll&quot;</translation>
+        <translation>Intervall bei hoher Ladung</translation>
     </message>
     <message>
         <source>Battery low notification interval</source>
-        <translation>Intervall für Hinweis &quot;battery leer&quot;</translation>
+        <translation>Intervall bei niedriger Ladung</translation>
     </message>
     <message>
         <source>Once</source>
