@@ -60,7 +60,7 @@ private:
     int lowNotificationsInterval = 60;
 
     // Converted to boolean for QML
-    int limitEnabled = 0;
+    int limitEnabled = 1;
     int daemonEnabled = 1;
 
     int lowLimit = 65;

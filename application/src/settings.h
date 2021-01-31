@@ -74,7 +74,7 @@ private:
     int highAlert = 75;
     int highNotificationsInterval = 60;
     int lowNotificationsInterval = 60;
-    int limitEnabled = 0; // Converted to boolean for QML
+    int limitEnabled = 1; // Converted to boolean for QML
     int lowLimit = 65;
     int highLimit = 70;
     QString lowAlertFile = "/usr/share/sounds/jolla-ambient/stereo/general_warning.wav";
