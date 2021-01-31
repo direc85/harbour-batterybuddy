@@ -1,3 +1,10 @@
+* Sun Jan 31 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.8-1
+- Improve SFOS 3.4 support (don't hardcode user nemo)
+- Enable charger control by default (for new users)
+
+* Sun Jan 10 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.7-2
+- Update Deutch translation (thanks, fllp)
+
 * Wed Dec 30 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.7-1
 - Respect ringtone volume and silent mode
 - Fix services' startup and install/uninstall
