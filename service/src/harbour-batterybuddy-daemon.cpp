@@ -24,10 +24,6 @@
 
 int main(int argc, char** argv)
 {
-    // Use the same config file as the GUI application.
-    // This is used by QSettings()
-    qputenv("XDG_CONFIG_HOME", "/home/nemo/.config");
-
     const char* logEnvVar = "QT_LOGGING_RULES";
     for(int i = 1; i < argc; i++) {
         if(!strcmp(argv[i],"-v")) {
@@ -40,7 +36,7 @@ int main(int argc, char** argv)
             qputenv(logEnvVar, "*.info=true");
         else if(!strcmp(argv[i],"--help")) {
             printf("%s %s\n\n", APP_NAME, APP_VERSION);
-            printf("This binary is meant to run as a service as user nemo,\n");
+            printf("This binary is meant to run as a service as normal user,\n");
             printf("but it can be run manually for debugging purposes, too.\n\n");
             printf("Usage:\n");
             printf("  --verbose     Enable informational messages\n");
