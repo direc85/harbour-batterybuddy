@@ -27,6 +27,12 @@ Page {
     Component.onCompleted: {
     }
 
+    //////////////////////////////////////////////////
+    //
+    //   TIMERS AND PROCESSES
+    //
+    //////////////////////////////////////////////////
+
     Timer {
         id: startupTimer
         interval: 100
@@ -91,6 +97,12 @@ Page {
         }
     }
 
+    //////////////////////////////////////////////////
+    //
+    //   MAIN CONTENT
+    //
+    //////////////////////////////////////////////////
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: flow.height + Theme.horizontalPageMargin
@@ -115,6 +127,12 @@ Page {
                 id: header
                 title: qsTr("Settings")
             }
+
+            //////////////////////////////////////////////////
+            //
+            //   THE LEFT/TOP COLUMN
+            //
+            //////////////////////////////////////////////////
 
             Column {
                 id: columnOne
@@ -196,6 +214,13 @@ Page {
                     }
                 }
             }
+
+            //////////////////////////////////////////////////
+            //
+            //   THE RIGHT/BOTTOM COLUMN
+            //
+            //////////////////////////////////////////////////
+
             Column {
                 id: columnTwo
                 width: isPortrait ? parent.width : parent.width / 2
