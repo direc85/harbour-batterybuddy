@@ -62,8 +62,12 @@ int main(int argc, char *argv[])
             return 0;
         }
     }
-    if(!qEnvironmentVariableIsSet(logEnvVar))
-        qputenv(logEnvVar, "*.info=false;*.debug=false");
+    if(!qEnvironmentVariableIsSet(logEnvVar)) {
+        if(!QHostInfo::localHostName().contains("SailfishEmul"))
+            qputenv(logEnvVar, "*.info=false;*.debug=false");
+        else
+            qputenv(logEnvVar, "*.info=true");
+    }
 
 
     QGuiApplication* app = SailfishApp::application(argc, argv);
