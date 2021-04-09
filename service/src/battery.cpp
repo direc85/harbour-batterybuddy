@@ -254,7 +254,8 @@ void Battery::shutdown() {
         lowNotifyTimer->stop();
         qDebug() << "Low battery notification stopped";
     }
-    if(!setChargingEnabled(true)) {
+    // ENABLE/DISABLE CHARGING
+    if(!QHostInfo::localHostName().contains("SailfishEmul") && !setChargingEnabled(true)) {
         qWarning() << "ERROR! Could not restore charger status! Your device" << endl
                    << "may not start until reboot! If that doesn't help," << endl
                    << "uninstall Battery Buddy and reboot your device.";
