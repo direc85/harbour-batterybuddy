@@ -45,8 +45,12 @@ int main(int argc, char** argv)
             return EXIT_SUCCESS;
         }
     }
-    if(!qEnvironmentVariableIsSet(logEnvVar))
-        qputenv(logEnvVar, "*.info=false;*.debug=false");
+    if(!qEnvironmentVariableIsSet(logEnvVar)) {
+        if(!QHostInfo::localHostName().contains("SailfishEmul"))
+            qputenv(logEnvVar, "*.info=false;*.debug=false");
+        else
+            qputenv(logEnvVar, "*.info=true");
+    }
 
     QCoreApplication app(argc, argv);
 
