@@ -23,13 +23,13 @@ Settings::Settings(QObject *parent) : QObject(parent)
     qDebug() << "Using" << mySettings->fileName();
 
     // Read in the values
-    loadInteger(sLowAlert, &lowAlert, 10, 99);
-    loadInteger(sHighAlert, &highAlert, 11, 100);
+    loadInteger(sLowAlert, &lowAlert, 5, 99);
+    loadInteger(sHighAlert, &highAlert, 6, 100);
     loadInteger(sHighNotificationsInterval, &highNotificationsInterval, 50, 610);
     loadInteger(sLowNotificationsInterval, &lowNotificationsInterval, 50, 610);
     loadInteger(sLimitEnabled, &limitEnabled, 0, 1);
-    loadInteger(sLowLimit, &lowLimit, 20, 94);
-    loadInteger(sHighLimit, &highLimit, 21, 95);
+    loadInteger(sLowLimit, &lowLimit, 5, 99);
+    loadInteger(sHighLimit, &highLimit, 6, 100);
 
     notificationTitle = tr("Battery charge %1%");
     notificationLowText = tr("Please connect the charger.");

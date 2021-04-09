@@ -108,13 +108,13 @@ void Settings::updateConfig(QString path) {
     // Read in the values
     bool restartTimers = false;
 
-    loadInteger(sLowAlert, &lowAlert, 10, 99);
-    loadInteger(sHighAlert, &highAlert, 11, 100);
+    loadInteger(sLowAlert, &lowAlert, 5, 99);
+    loadInteger(sHighAlert, &highAlert, 6, 100);
     restartTimers |= loadInteger(sHighNotificationsInterval, &highNotificationsInterval, 50, 610);
     restartTimers |= loadInteger(sLowNotificationsInterval, &lowNotificationsInterval, 50, 610);
     loadInteger(sLimitEnabled, &limitEnabled, 0, 1);
-    loadInteger(sLowLimit, &lowLimit, 20, 94);
-    loadInteger(sHighLimit, &highLimit, 21, 95);
+    loadInteger(sLowLimit, &lowLimit, 5, 99);
+    loadInteger(sHighLimit, &highLimit, 6, 100);
 
     // These are translated in the GUI application
     // and delivered here via the config file

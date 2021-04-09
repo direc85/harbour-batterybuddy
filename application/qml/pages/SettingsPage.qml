@@ -181,8 +181,8 @@ Page {
 
                 MySlider {
                     id: highLimitSlider
-                    minimumValue: 21
-                    maximumValue: 95
+                    minimumValue: 6
+                    maximumValue: 100
                     stepSize: 1
                     valueText: value + "%"
                     onValueChanged: {
@@ -206,8 +206,8 @@ Page {
 
                 MySlider {
                     id: lowLimitSlider
-                    minimumValue: 20
-                    maximumValue: 94
+                    minimumValue: 5
+                    maximumValue: 99
                     stepSize: 1
                     valueText: value + "%"
                     onValueChanged: {
@@ -260,7 +260,7 @@ Page {
 
                 MySlider {
                     id: highAlertSlider
-                    minimumValue: 11
+                    minimumValue: 6
                     maximumValue: 100
                     stepSize: 1
                     valueText: value + "%"
@@ -285,7 +285,7 @@ Page {
 
                 MySlider {
                     id: lowAlertSlider
-                    minimumValue: 10
+                    minimumValue: 5
                     maximumValue: 99
                     stepSize: 1
                     valueText: value + "%"
