@@ -5,3 +5,6 @@ Icon=harbour-batterybuddy
 Exec=harbour-batterybuddy
 Name=Battery Buddy
 Name[fi]=Battery Buddy
+
+[X-HarbourBackup]
+BackupPathList=.config/harbour-batterybuddy/
