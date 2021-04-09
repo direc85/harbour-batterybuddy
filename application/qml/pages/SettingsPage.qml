@@ -59,7 +59,7 @@ Page {
         onTriggered: {
             var action = daemonEnabledSwitch.checked ? "disable" : "enable"
             console.log("Action: " + action)
-            _toggleProcess.start("/bin/systemctl", ["--user", action, "harbour-batterybuddy.service"])
+            _toggleProcess.start("systemctl", ["--user", action, "harbour-batterybuddy.service"])
         }
     }
 
@@ -78,7 +78,7 @@ Page {
         running: false
         repeat: false
         onTriggered: {
-            _checkProcess.start("/bin/systemctl", ["--user", "is-enabled", "harbour-batterybuddy.service"])
+            _checkProcess.start("systemctl", ["--user", "is-enabled", "harbour-batterybuddy.service"])
         }
     }
 
