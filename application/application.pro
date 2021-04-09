@@ -55,7 +55,9 @@ DISTFILES += qml/harbour-batterybuddy.qml \
     rpm/harbour-batterybuddy.changes \
     qml/components/BatteryGraph.qml \
     qml/pages/SettingsPage.qml \
-    qml/components/MyDetailItem.qml
+    qml/components/MyDetailItem.qml \
+    qml/components/AdjustmentButtons.qml \
+    qml/components/MySlider.qml
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 

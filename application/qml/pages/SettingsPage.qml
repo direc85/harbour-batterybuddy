@@ -177,11 +177,10 @@ Page {
                     onCheckedChanged: settings.limitEnabled = checked
                 }
 
-                Slider {
+                SectionHeader { text: qsTr("Pause charging limit") }
+
+                MySlider {
                     id: highLimitSlider
-                    handleVisible: enabled
-                    width: parent.width
-                    label: qsTr("Pause charging limit")
                     minimumValue: 21
                     maximumValue: 95
                     stepSize: 1
@@ -190,16 +189,23 @@ Page {
                         if(lowLimitSlider.value >= value)
                             lowLimitSlider.value = value - 1
                     }
-                    onReleased: {
+                    onReleased: save()
+                    function save() {
                         settings.lowLimit = lowLimitSlider.value
                         settings.highLimit = value
                     }
                 }
-                Slider {
+
+                AdjustmentButtons {
+                    targetSlider: highLimitSlider
+                    smallChange: 1
+                    largeChange: 5
+                }
+
+                SectionHeader { text: qsTr("Resume charging limit") }
+
+                MySlider {
                     id: lowLimitSlider
-                    handleVisible: enabled
-                    width: parent.width
-                    label: qsTr("Resume charging limit")
                     minimumValue: 20
                     maximumValue: 94
                     stepSize: 1
@@ -208,10 +214,17 @@ Page {
                         if(highLimitSlider.value <= value)
                             highLimitSlider.value = value + 1
                     }
-                    onReleased: {
+                    onReleased: save()
+                    function save() {
                         settings.lowLimit = value
                         settings.highLimit = highLimitSlider.value
                     }
+                }
+
+                AdjustmentButtons {
+                    targetSlider: lowLimitSlider
+                    smallChange: 1
+                    largeChange: 5
                 }
             }
 
@@ -243,10 +256,10 @@ Page {
                     wrapMode: Text.Wrap
                 }
 
-                Slider {
+                SectionHeader { text: qsTr("Battery full notification") }
+
+                MySlider {
                     id: highAlertSlider
-                    width: parent.width
-                    label: qsTr("Battery full notification")
                     minimumValue: 11
                     maximumValue: 100
                     stepSize: 1
@@ -255,15 +268,23 @@ Page {
                         if(lowAlertSlider.value >= value)
                             lowAlertSlider.value = value - 1
                     }
-                    onReleased: {
+                    onReleased: save()
+                    function save() {
                         settings.lowAlert = lowAlertSlider.value
                         settings.highAlert = value
                     }
                 }
-                Slider {
+
+                AdjustmentButtons {
+                    targetSlider: highAlertSlider
+                    smallChange: 1
+                    largeChange: 5
+                }
+
+                SectionHeader { text: qsTr("Battery low notification") }
+
+                MySlider {
                     id: lowAlertSlider
-                    width: parent.width
-                    label: qsTr("Battery low notification")
                     minimumValue: 10
                     maximumValue: 99
                     stepSize: 1
@@ -272,48 +293,73 @@ Page {
                         if(highAlertSlider.value <= value)
                             highAlertSlider.value = value + 1
                     }
-                    onReleased: {
+                    onReleased: save()
+                    function save(){
                         settings.lowAlert = value
                         settings.highAlert = highAlertSlider.value
                     }
                 }
-                Slider {
+
+                AdjustmentButtons {
+                    targetSlider: lowAlertSlider
+                    smallChange: 1
+                    largeChange: 5
+                }
+
+                SectionHeader { text: qsTr("Battery high notification interval") }
+
+                MySlider {
                     id: highIntervalSlider
-                    width: parent.width
-                    label: qsTr("Battery high notification interval")
                     minimumValue: 50
                     maximumValue: 610
                     stepSize: 10
                     valueText: updateValueText()
-                    onReleased: settings.highNotificationsInterval = value
                     onValueChanged: updateValueText()
                     function updateValueText() {
-                        console.log("UpdateValueText()")
                         if(value == 50)
                             return qsTr("Once")
                         if(value == 610)
                             return qsTr("Never")
                         return Math.floor(value / 60) + (value % 60 < 10 ? ":0" + value % 60 : ":" + value % 60)
+                    }
+                    onReleased: save()
+                    function save() {
+                        settings.highNotificationsInterval = value
                     }
                 }
-                Slider {
+
+                AdjustmentButtons {
+                    targetSlider: highIntervalSlider
+                    smallChange: 10
+                    largeChange: 60
+                }
+
+                SectionHeader { text: qsTr("Battery low notification interval") }
+
+                MySlider {
                     id: lowIntervalSlider
-                    width: parent.width
-                    label: qsTr("Battery low notification interval")
                     minimumValue: 50
                     maximumValue: 610
                     stepSize: 10
                     valueText: updateValueText()
                     onValueChanged: updateValueText()
-                    onReleased: settings.lowNotificationsInterval = value
                     function updateValueText() {
-                        console.log("UpdateValueText()")
                         if(value == 50)
                             return qsTr("Once")
                         if(value == 610)
                             return qsTr("Never")
                         return Math.floor(value / 60) + (value % 60 < 10 ? ":0" + value % 60 : ":" + value % 60)
                     }
+                    onReleased: save()
+                    function save() {
+                        settings.lowNotificationsInterval = value
+                    }
+                }
+
+                AdjustmentButtons {
+                    targetSlider: lowIntervalSlider
+                    smallChange: 10
+                    largeChange: 60
                 }
             }
         }
