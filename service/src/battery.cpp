@@ -28,15 +28,15 @@ Battery::Battery(QObject *parent) : QObject(parent)
 
     // Number: charge percentage, e.g. 42
     chargeFile   = new QFile("/sys/class/power_supply/battery/capacity", this);
-    qInfo() << "Reading capacity from" << chargeFile->fileName();
+    qInfo() << "Capacity file: " << chargeFile->fileName();
 
     // String: charging, discharging, full, empty, unknown (others?)
     stateFile   = new QFile("/sys/class/power_supply/battery/status", this);
-    qInfo() << "Reading charge state from" << stateFile->fileName();
+    qInfo() << "Charge state file: " << stateFile->fileName();
 
     // Number: 0 or 1
     chargerConnectedFile = new QFile("/sys/class/power_supply/usb/present", this);
-    qInfo() << "Reading charger status from" << chargerConnectedFile->fileName();
+    qInfo() << "Charger status file: " << chargerConnectedFile->fileName();
 
     // ENABLE/DISABLE CHARGING
     if(QHostInfo::localHostName().contains("SailfishEmul")) {
@@ -243,7 +243,7 @@ void Battery::shutdown() {
     blockSignals(true);
     if(updateTimer) {
         updateTimer->stop();
-        qDebug() << "Timer stopped";
+        qDebug() << "Update timer stopped";
     }
     notification->close();
     if(highNotifyTimer) {
