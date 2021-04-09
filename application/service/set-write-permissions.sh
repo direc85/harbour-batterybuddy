@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Battery Buddy, a Sailfish application to prolong battery lifetime
 #
