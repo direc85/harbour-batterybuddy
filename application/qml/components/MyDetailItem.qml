@@ -34,7 +34,7 @@
 
 // Modified by Matti Viljanen 2020: added text size control
 
-import QtQuick 2.0
+import QtQuick 2.2
 import Sailfish.Silica 1.0
 
 Item {
