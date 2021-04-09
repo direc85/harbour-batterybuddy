@@ -19,8 +19,10 @@
 
 Settings::Settings(QObject *parent) : QObject(parent)
 {
-    mySettings = new QSettings("harbour-batterybuddy", "harbour-batterybuddy");
-    qDebug() << "Using" << mySettings->fileName();
+    // Use the same file location as GUI for data exchange
+    if(!mySettings) {
+        mySettings = new QSettings("harbour-batterybuddy", "harbour-batterybuddy");
+    }
 
     // Read in the values
     loadInteger(sLowAlert, &lowAlert, 5, 99);
