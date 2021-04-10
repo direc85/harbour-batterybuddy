@@ -50,6 +50,7 @@ public:
 private:
     QSettings* mySettings = nullptr;
     QFileSystemWatcher *watcher = nullptr;
+    const char* appName = APP_NAME;
 
     int oldValue;
 

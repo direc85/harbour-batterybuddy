@@ -21,7 +21,7 @@ Settings::Settings(QObject *parent) : QObject(parent)
 {
     // Use the same file location as GUI for data exchange
     if(!mySettings) {
-        mySettings = new QSettings("harbour-batterybuddy", "harbour-batterybuddy");
+        mySettings = new QSettings(appName, appName, this);
     }
 
     qDebug() << "Using" << mySettings->fileName();
@@ -79,14 +79,7 @@ Settings::Settings(QObject *parent) : QObject(parent)
     // so we must monitor it and update when it changes.
 }
 
-Settings::~Settings()
-{
-    delete mySettings;
-}
-
-int Settings::bound(int value, int min, int max) {
-    return (value <= min ? min : (value >= max ? max : value));
-}
+Settings::~Settings() { }
 
 bool Settings::loadInteger(const char* key, int *value, int min, int max) {
     oldValue = *value;
@@ -101,7 +94,7 @@ void Settings::updateConfig(QString path) {
 
     // Use the same file location as GUI for data exchange
     if(!mySettings) {
-        mySettings = new QSettings("harbour-batterybuddy", "harbour-batterybuddy");
+        mySettings = new QSettings(appName, appName, this);
     }
 
     qDebug() << "Reading values...";

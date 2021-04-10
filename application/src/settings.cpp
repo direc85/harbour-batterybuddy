@@ -21,7 +21,7 @@ Settings::Settings(QObject *parent) : QObject(parent)
 {
     // Use the same file location as GUI for data exchange
     if(!mySettings) {
-        mySettings = new QSettings("harbour-batterybuddy", "harbour-batterybuddy");
+        mySettings = new QSettings(appName, appName, this);
     }
 
     // Read in the values

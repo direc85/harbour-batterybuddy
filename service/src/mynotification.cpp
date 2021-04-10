@@ -20,7 +20,7 @@
 MyNotification::MyNotification(QObject* parent) : QObject(parent)
 {
     notification.setAppName("Battery Buddy");
-    notification.setAppIcon("harbour-batterybuddy");
+    notification.setAppIcon(APP_NAME);
     playSound = false;
     sound.setAudioRole(QAudio::NotificationRole);
     connect(&sound, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),

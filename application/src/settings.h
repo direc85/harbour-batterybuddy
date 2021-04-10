@@ -68,6 +68,7 @@ public:
 
 private:
     QSettings *mySettings = nullptr;
+    const char* appName = APP_NAME;
 
     // Default values
     int lowAlert = 25;
