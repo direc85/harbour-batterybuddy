@@ -145,8 +145,6 @@ void Settings::setNotificationHighText(const QString newText) {
     emit notificationHighTextChanged(notificationHighText);
 }
 
-int Settings::bound(int value, int min, int max) {
-    return (value <= min ? min : (value >= max ? max : value));
 void Settings::loadInteger(const char *key, int &value, const int min, const int max) {
     int newValue = mySettings->value(key, value).toInt();
     value = (newValue <= min ? min : (newValue >= max ? max : newValue));

@@ -99,7 +99,6 @@ private:
     const char* sNotificationLowText = "notificationLowText";
     const char* sNotificationHighText = "notificationHighText";
 
-    int bound(int value, int min, int max);
     void loadInteger(const char *key, int &value, const int min, const int max);
     void saveInteger(const char *key, const int &value);
 

@@ -91,7 +91,6 @@ private:
     const char* sNotificationHighText = "notificationHighText";
     const char* sLogFilename = "logFilename";
 
-    int bound(int value, int min, int max);
     bool loadInteger(const char *key, int &value, const int min, const int max);
 
 private slots:
