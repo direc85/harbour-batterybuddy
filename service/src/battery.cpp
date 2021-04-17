@@ -69,18 +69,19 @@ Battery::Battery(Logger* newLogger, QObject *parent) : QObject(parent)
         }
 
         if(!chargingEnabledFile) {
-            logger->log("Charger control file not found!");
-            logger->log("Please contact the developer with your device model!");
+            logE("Charger control file not found!");
+            logE("Please contact the developer with your device model!");
         }
     }
 
     // If we found a usable file, check that it is writable
     if(chargingEnabledFile) {
+        logV("Charger control file: " + chargingEnabledFile->fileName());
         if(chargingEnabledFile->open(QIODevice::WriteOnly)) {
             chargingEnabledFile->close();
         }
         else {
-            logger->log("Charger control file" + chargingEnabledFile->fileName() + "is not writable");
+            logE("Charger control file is not writable!");
         }
     }
 
@@ -110,7 +111,7 @@ void Battery::updateData()
         if(nextCharge != charge) {
             charge = nextCharge;
             emit chargeChanged(charge);
-            logD(QString("Battery: %1%").arg(charge));
+            logV(QString("Battery: %1%").arg(charge));
         }
         chargeFile->close();
     }
@@ -119,7 +120,7 @@ void Battery::updateData()
         if(nextChargerConnected != chargerConnected) {
             chargerConnected = nextChargerConnected;
             emit chargerConnectedChanged(chargerConnected);
-            logD(QString("Charger was %1").arg(chargerConnected ? "connected" : "disconnected"));
+            logV(QString("Charger was %1").arg(chargerConnected ? "connected" : "disconnected"));
         }
         chargerConnectedFile->close();
     }
@@ -128,7 +129,7 @@ void Battery::updateData()
         if(nextState != state) {
             state = nextState;
             emit stateChanged(state);
-            logD("Charging status:" + state);
+            logV("Charging status:" + state);
 
             // Hide/show notification right away
             resetTimers();
@@ -137,11 +138,11 @@ void Battery::updateData()
     }
     if(chargingEnabledFile && settings->getLimitEnabled()) {
         if(chargingEnabled && charge >= settings->getHighLimit()) {
-            logD("Disabling");
+            logV("Stop charging");
             setChargingEnabled(false);
         }
         else if(!chargingEnabled && charge <= settings->getLowLimit()) {
-            logD("Enabling");
+            logV("Continue charging");
             setChargingEnabled(true);
         }
     }
@@ -152,51 +153,53 @@ void Battery::resetTimers() {
     lowNotifyTimer->stop();
     highNotifyTimer->setInterval(settings->getHighNotificationsInterval() * 1000);
     lowNotifyTimer->setInterval(settings->getLowNotificationsInterval() * 1000);
+
     if(settings->getHighNotificationsInterval() < 610) {
-        logD("Starting high level notification timer");
+        logD("Starting high battery timer");
         highNotifyTimer->start();
         showHighNotification();
     }
     else {
-        logD("High level notification timer not started");
+        logD("High battery timer not started");
     }
+
     if(settings->getLowNotificationsInterval() < 610) {
-        logD("Starting low level notification timer");
+        logD("Start low battery timer");
         lowNotifyTimer->start();
         showLowNotification();
     }
     else {
-        logD("Low level notification timer not started");
+        logD("Low battery timer not started");
     }
 }
 
 void Battery::showHighNotification() {
     if(settings->getHighNotificationsInterval() < 610 && (charge >= settings->getHighAlert() && state != "discharging")
             && !(charge == 100 && state == "idle")) {
-        logD("High notification timer: full enough battery");
+        logD("Send high battery notification");
         notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationHighText(), settings->getHighAlertFile());
         if(settings->getHighNotificationsInterval() == 50) {
-            logD("Stop high notification timer (show only once)");
+            logD("Stop high battery timer");
             highNotifyTimer->stop();
         }
     }
     else if(charge > settings->getLowAlert()) {
-        logD("High notification timer: close notification");
+        logD("Close high battery notification");
         notification->close();
     }
 }
 
 void Battery::showLowNotification() {
     if(settings->getLowNotificationsInterval() < 610 && charge <= settings->getLowAlert() && state != "charging") {
-        logD("Battery notification timer: empty enough battery");
+        logD("Send high battery notification");
         notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationLowText(), settings->getLowAlertFile());
         if(settings->getLowNotificationsInterval() == 50) {
-            logD("Stop low notification timer (show only once)");
+            logD("Stop low battery timer");
             lowNotifyTimer->stop();
         }
     }
     else if(charge < settings->getHighAlert()) {
-        logD("Low notification timer: close notification");
+        logD("Close low battery notification");
         notification->close();
     }
 }
@@ -224,12 +227,12 @@ bool Battery::setChargingEnabled(const bool isEnabled) {
                 }
             }
             else {
-                logger->log("Could not write new charger state");
+                logE("Could not write new charger state");
             }
             chargingEnabledFile->close();
         }
         else {
-            logger->log("Could not open charger control file");
+            logE("Could not open charger control file");
         }
     }
     return success;
@@ -257,8 +260,8 @@ void Battery::shutdown() {
     }
     // ENABLE/DISABLE CHARGING
     if(!QHostInfo::localHostName().contains("SailfishEmul") && !setChargingEnabled(true)) {
-        logger->log("ERROR! Could not restore charger status! Your device\n"
-                   "may not start until reboot! If that doesn't help,\n"
+        logE("ERROR! Could not restore charger status! Your device "
+                   "may not charge until reboot! If that doesn't help, "
                    "uninstall Battery Buddy and reboot your device.");
     }
 }
