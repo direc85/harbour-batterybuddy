@@ -58,3 +58,17 @@ void Logger::enableLogFile() {
 QString Logger::getLogFilename() {
     return filename;
 }
+
+QString Logger::readLogfile(QString logFilename) {
+    QFile logFile(logFilename);
+    QString contents;
+    if(logFile.open(QIODevice::ReadOnly)) {
+        contents = QString(logFile.readAll());
+        logFile.close();
+    }
+    else {
+        contents = "Couldn't open log file:\n" + logFilename;
+    }
+
+    return contents;
+}

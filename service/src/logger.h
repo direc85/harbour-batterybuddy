@@ -25,15 +25,18 @@
 class Logger : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(bool debug READ getDebug)
-    Q_PROPERTY(bool verbose READ getVerbose)
+
 public:
     Logger(const bool enableVerbose = false,
            const bool enableDebug = false,
            const bool useLogFile = false);
     ~Logger();
 
+    Q_PROPERTY(bool debug READ getDebug)
+    Q_PROPERTY(bool verbose READ getVerbose)
     Q_INVOKABLE void log(const QString message);
+    Q_INVOKABLE QString readLogfile(QString logFilename);
+
     bool getDebug();
     bool getVerbose();
     void enableLogFile();

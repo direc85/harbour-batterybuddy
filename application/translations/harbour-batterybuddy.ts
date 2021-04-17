@@ -151,6 +151,13 @@
     </message>
 </context>
 <context>
+    <name>LogPage</name>
+    <message>
+        <source>View log</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainPage</name>
     <message>
         <source>Battery Buddy</source>
@@ -324,6 +331,10 @@
     </message>
     <message>
         <source>Never</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View log</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

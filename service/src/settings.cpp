@@ -27,6 +27,11 @@ Settings::Settings(Logger* newLogger, QObject *parent) : QObject(parent)
 
     logV("Using " + mySettings->fileName());
 
+    QString logFilename = logger->getLogFilename();
+    if(mySettings->value(sLogFilename,QString()).toString() != logFilename) {
+        mySettings->setValue(sLogFilename, logFilename);
+    }
+
     QString migrate = "Migrated value %1";
     QString key = "";
 
@@ -113,7 +118,8 @@ void Settings::updateConfig(const QString path) {
         mySettings = new QSettings(appName, appName, this);
     }
 
-    logV("Loading values...");
+    logD("Updating configuration...");
+
     // Read in the values
     bool restartTimers = false;
 
@@ -130,13 +136,6 @@ void Settings::updateConfig(const QString path) {
     notificationTitle = mySettings->value(sNotificationTitle, "Battery charge %1%").toString();
     notificationLowText = mySettings->value(sNotificationLowText, "Please connect the charger.").toString();
     notificationHighText = mySettings->value(sNotificationHighText, "Please disconnect the charger.").toString();
-
-    QString logFilename = logger->getLogFilename();
-    if(mySettings->value(sLogFilename,QString()).toString() != logFilename) {
-        mySettings->setValue(sLogFilename, logFilename);
-    }
-
-    logV("Values loaded.");
 
     delete mySettings;
     mySettings = nullptr;
