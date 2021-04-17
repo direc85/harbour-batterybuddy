@@ -39,7 +39,7 @@ Page {
         repeat: false
         running: true
         onTriggered: {
-            console.log("Startup timer started")
+            if(logger.debug) logger.log("Startup timer started")
             daemonStatus.start()
             pageStack.pushAttached(Qt.resolvedUrl("SettingsPage.qml"))
         }
@@ -52,7 +52,7 @@ Page {
         repeat: false
         onTriggered: {
             var action = serviceRunning ? "stop" : "start"
-            console.log("Action: " + action)
+            if(logger.debug) logger.log("Action: " + action)
             _controlProcess.start("systemctl", ["--user", action, "harbour-batterybuddy.service"])
         }
     }
@@ -62,7 +62,7 @@ Page {
         id: _controlProcess
         onFinished: {
             daemonStatus.start()
-            console.debug("Service control return code " + errorCode())
+            if(logger.debug) logger.log("Service control return code " + errorCode())
         }
     }
 
@@ -88,7 +88,7 @@ Page {
                 serviceRunning = false
                 daemonStartButton.enabled = true
             }
-            console.debug("Service status return code " + errorCode())
+            if(logger.debug) logger.log("Service status return code " + errorCode())
         }
     }
 

@@ -17,12 +17,16 @@
  */
 #include "settings.h"
 
-Settings::Settings(QObject *parent) : QObject(parent)
+Settings::Settings(Logger *newLogger, QObject *parent) : QObject(parent)
 {
     // Use the same file location as GUI for data exchange
     if(!mySettings) {
         mySettings = new QSettings(appName, appName, this);
     }
+
+    logger = newLogger;
+
+    logV("Using " + mySettings->fileName());
 
     // Read in the values
     loadInteger(sLowAlert, &lowAlert, 5, 99);
@@ -51,7 +55,7 @@ Settings::~Settings()
     mySettings->setValue(sNotificationLowText, notificationLowText);
     mySettings->setValue(sNotificationHighText, notificationHighText);
     mySettings->sync();
-    qInfo() << "Settings saved:" << (mySettings->status() == QSettings::NoError);
+    logV(QString("Settings saved: %1").arg((mySettings->status() == QSettings::NoError) ? "true" : "false"));
 }
 
 // Getters condensed.
@@ -74,7 +78,7 @@ void Settings::setLowAlert(int newLimit) {
     // Lows and highs are always saved in pairs!
     //mySettings->sync();
     emit lowAlertChanged(lowAlert);
-    qDebug() << sLowAlert << newLimit;
+    logD(QString("%1 %2").arg(sLowAlert).arg(newLimit));
 }
 
 void Settings::setHighAlert(int newLimit) {
@@ -82,7 +86,6 @@ void Settings::setHighAlert(int newLimit) {
     saveInteger(sHighAlert, &highAlert);
     mySettings->sync();
     emit highAlertChanged(highAlert);
-    qDebug() << sHighAlert << newLimit;
 }
 
 void Settings::setHighNotificationsInterval(int newInterval) {
@@ -90,7 +93,6 @@ void Settings::setHighNotificationsInterval(int newInterval) {
     saveInteger(sHighNotificationsInterval, &highNotificationsInterval);
     mySettings->sync();
     emit highNotificationsIntervalChanged(highNotificationsInterval);
-    qDebug() << sHighNotificationsInterval << newInterval;
 }
 
 void Settings::setLowNotificationsInterval(int newInterval) {
@@ -98,7 +100,6 @@ void Settings::setLowNotificationsInterval(int newInterval) {
     saveInteger(sLowNotificationsInterval, &lowNotificationsInterval);
     mySettings->sync();
     emit highNotificationsIntervalChanged(lowNotificationsInterval);
-    qDebug() << sLowNotificationsInterval << newInterval;
 }
 
 void Settings::setLowLimit(int newLimit) {
@@ -107,7 +108,6 @@ void Settings::setLowLimit(int newLimit) {
     // Lows and highs are always saved in pairs!
     //mySettings->sync();
     emit lowLimitChanged(lowLimit);
-    qDebug() << sLowLimit << newLimit;
 }
 
 void Settings::setHighLimit(int newLimit) {
@@ -115,7 +115,6 @@ void Settings::setHighLimit(int newLimit) {
     saveInteger(sHighLimit, &highLimit);
     mySettings->sync();
     emit highLimitChanged(highLimit);
-    qDebug() << sHighLimit << newLimit;
 }
 
 void Settings::setLimitEnabled(bool newEnabled) {
@@ -123,7 +122,6 @@ void Settings::setLimitEnabled(bool newEnabled) {
     saveInteger(sLimitEnabled, &limitEnabled);
     mySettings->sync();
     emit limitEnabledChanged(limitEnabled);
-    qDebug() << sLimitEnabled << newEnabled;
 }
 
 void Settings::setNotificationTitle(QString newText) {
@@ -131,7 +129,6 @@ void Settings::setNotificationTitle(QString newText) {
     mySettings->setValue(sNotificationTitle, notificationTitle);
     mySettings->sync();
     emit notificationTitleChanged(notificationTitle);
-    qDebug() << sNotificationTitle << notificationTitle;
 }
 
 void Settings::setNotificationLowText(QString newText) {
@@ -139,7 +136,6 @@ void Settings::setNotificationLowText(QString newText) {
     mySettings->setValue(sNotificationLowText, notificationLowText);
     mySettings->sync();
     emit notificationLowTextChanged(notificationLowText);
-    qDebug() << sNotificationLowText << notificationLowText;
 }
 
 void Settings::setNotificationHighText(QString newText) {
@@ -147,19 +143,18 @@ void Settings::setNotificationHighText(QString newText) {
     mySettings->setValue(sNotificationHighText, notificationHighText);
     mySettings->sync();
     emit notificationHighTextChanged(notificationHighText);
-    qDebug() << sNotificationHighText << notificationHighText;
 }
 
 int Settings::bound(int value, int min, int max) {
     return (value <= min ? min : (value >= max ? max : value));
+    logV(QString("Load: %1 %2").arg(key).arg(value));
 }
 
 void Settings::loadInteger(const char* key, int *value, int min, int max) {
     *value = bound(mySettings->value(key, *value).toInt(), min, max);
-    qInfo() << "Loaded" << key << *value;
 }
 
 void Settings::saveInteger(const char* key, int *value) {
     mySettings->setValue(key, QByteArray::number(*value));
-    qInfo() << "Saved" << key << *value;
+    logV(QString("Save: %1 %2").arg(key).arg(value));
 }

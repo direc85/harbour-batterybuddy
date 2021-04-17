@@ -23,9 +23,9 @@
 #include <QFile>
 #include <QStandardPaths>
 #include <QHostInfo>
-#include <QDebug>
 #include "settings.h"
 #include "process.h"
+#include "logger.h"
 
 class Battery : public QObject
 {
@@ -37,7 +37,7 @@ class Battery : public QObject
     Q_PROPERTY(bool chargingEnabled READ getChargingEnabled  WRITE setChargingEnabled NOTIFY chargingEnabledChanged)
 
 public:
-    Battery(Settings* newSettings, QObject* parent = nullptr);
+    Battery(Settings* newSettings, Logger* newLogger, QObject* parent = nullptr);
     ~Battery();
 
     int getCharge();
@@ -47,7 +47,7 @@ public:
     QString getState();
 
     bool getChargingEnabled();
-    void setChargingEnabled(bool);
+    void setChargingEnabled(const bool isEnabled);
 
 public slots:
     void updateData();
@@ -59,6 +59,7 @@ private:
     QFile* stateFile = nullptr;
     QFile* chargingEnabledFile = nullptr;
     Settings* settings = nullptr;
+    Logger* logger = nullptr;
 
     // Default values:
     int charge = 100; // 100% full

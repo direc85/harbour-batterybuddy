@@ -22,14 +22,14 @@
 #include <QSettings>
 #include <QFileSystemWatcher>
 #include <QThread>
-#include <QDebug>
+#include "logger.h"
 
 class Settings : public QObject
 {
     Q_OBJECT
 
 public:
-    Settings(QObject* parent = nullptr);
+    Settings(Logger* newLogger, QObject* parent = nullptr);
     ~Settings();
 
     int  getLowAlert();
@@ -48,9 +48,13 @@ public:
     QString getNotificationHighText();
 
 private:
+    Logger* logger;
     QSettings* mySettings = nullptr;
     QFileSystemWatcher *watcher = nullptr;
-    const char* appName = APP_NAME;
+
+    // Set this manually, because we want to use
+    // the same config file as the GUI application
+    const char* appName = "harbour-batterybuddy";
 
     int oldValue;
 
@@ -85,6 +89,7 @@ private:
     const char* sNotificationTitle = "notificationTitle";
     const char* sNotificationLowText = "notificationLowText";
     const char* sNotificationHighText = "notificationHighText";
+    const char* sLogFilename = "logFilename";
 
     int bound(int value, int min, int max);
     bool loadInteger(const char *key, int *value, int min, int max);

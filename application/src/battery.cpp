@@ -17,30 +17,31 @@
  */
 #include "battery.h"
 
-Battery::Battery(Settings* newSettings, QObject* parent) : QObject(parent)
+Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QObject(parent)
 {
     QString filename;
     settings = newSettings;
+    logger = newLogger;
 
     // Number: charge percentage, e.g. 42
     chargeFile   = new QFile("/sys/class/power_supply/battery/capacity", this);
-    qInfo() << "Reading capacity from" << chargeFile->fileName();
+    logV("Capacity file: " + chargeFile->fileName());
 
     // Number: battery/charging current, e.g. -1450000 (-145mA)
     currentFile   = new QFile("/sys/class/power_supply/battery/current_now", this);
-    qInfo() << "Reading current from" << currentFile->fileName();
+    logV("Charge state file: " + currentFile->fileName());
 
     // String: charging, discharging, full, empty, unknown (others?)
     stateFile   = new QFile("/sys/class/power_supply/battery/status", this);
-    qInfo() << "Reading charge state from" << stateFile->fileName();
+    logV("Charger status file: " + stateFile->fileName());
 
     // Number: 0 or 1
     chargerConnectedFile = new QFile("/sys/class/power_supply/usb/present", this);
-    qInfo() << "Reading charger status from" << chargerConnectedFile->fileName();
+    logV("Reading charger status from" + chargerConnectedFile->fileName());
 
     // ENABLE/DISABLE CHARGING
     if(QHostInfo::localHostName().contains("SailfishEmul")) {
-        qInfo() << "Sailfish SDK detected, not using charger control file";
+        logV("Sailfish SDK detected, not using charger control file");
     }
     else {
         // e.g. for Sony Xperia XA2
@@ -69,20 +70,20 @@ Battery::Battery(Settings* newSettings, QObject* parent) : QObject(parent)
 
 
         if(!chargingEnabledFile) {
-            qWarning() << "Charger control file not found!";
-            qWarning() << "Please contact the developer with your device model!";
+            logE("Charger control file not found!");
+            logE("Please contact the developer with your device model!");
         }
     }
 
     // If we found a usable file, check that it is writable
     if(chargingEnabledFile) {
         if(chargingEnabledFile->open(QIODevice::WriteOnly)) {
-            qInfo() << "Controlling charging via" << chargingEnabledFile->fileName();
+            logV("Controlling charging via" + chargingEnabledFile->fileName());
             chargingEnabledFile->close();
         }
         else {
-            qWarning() << "Charger control file" << chargingEnabledFile->fileName() << "is not writable";
-            qWarning() << "Charger control feature disabled";
+            logE("Charger control file" + chargingEnabledFile->fileName() + "is not writable");
+            logE("Charger control feature disabled");
             delete chargingEnabledFile;
             chargingEnabledFile = Q_NULLPTR;
         }
@@ -105,7 +106,7 @@ void Battery::updateData()
         if(nextCharge != charge) {
             charge = nextCharge;
             emit chargeChanged(charge);
-            qDebug() << "Battery:" << charge;
+            logV(QString("Battery: %1").arg(charge));
         }
         chargeFile->close();
     }
@@ -114,7 +115,7 @@ void Battery::updateData()
         if(nextCurrent != current) {
             current = nextCurrent;
             emit currentChanged(current);
-            qDebug() << "Current:" << current;
+            logV(QString("Current: %1").arg(current));
         }
         currentFile->close();
     }
@@ -123,7 +124,7 @@ void Battery::updateData()
         if(nextChargerConnected != chargerConnected) {
             chargerConnected = nextChargerConnected;
             emit chargerConnectedChanged(chargerConnected);
-            qDebug() << "Charger is connected:" << chargerConnected;
+            logV(QString("Charger is connected: %1").arg(chargerConnected));
         }
         chargerConnectedFile->close();
     }
@@ -132,7 +133,7 @@ void Battery::updateData()
         if(nextState != state) {
             state = nextState;
             emit stateChanged(state);
-            qDebug() << "Charging status:" << state;
+            logV(QString("Charging status: %1").arg(state));
         }
         stateFile->close();
     }
@@ -146,17 +147,17 @@ QString Battery::getState() { return state; }
 
 bool Battery::getChargingEnabled() { return chargingEnabled; }
 
-void Battery::setChargingEnabled(bool isEnabled) {
+void Battery::setChargingEnabled(const bool isEnabled) {
     if(chargingEnabledFile && chargingEnabledFile->open(QIODevice::WriteOnly)) {
         if(chargingEnabledFile->write(QString("%1").arg(isEnabled ? enableChargingValue : disableChargingValue).toLatin1())) {
             chargingEnabled = isEnabled;
             emit chargingEnabledChanged(chargingEnabled);
 
             if(isEnabled) {
-                qInfo() << "Charging resumed";
+                logD("Charging resumed");
             }
             else {
-                qInfo() << "Charging paused";
+                logD("Charging paused");
             }
         }
         chargingEnabledFile->close();

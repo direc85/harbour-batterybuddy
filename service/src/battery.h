@@ -24,16 +24,16 @@
 #include <QFile>
 #include <QStandardPaths>
 #include <QHostInfo>
-#include <QDebug>
 #include "settings.h"
 #include "mynotification.h"
+#include "logger.h"
 
 class Battery : public QObject
 {
     Q_OBJECT
 
 public:
-    Battery(QObject *parent = nullptr);
+    Battery(Logger* newLogger, QObject *parent = nullptr);
     ~Battery();
 
     int getCharge();
@@ -49,6 +49,7 @@ public slots:
     void shutdown();
 
 private:
+    Logger *logger;
     QFile *chargeFile = nullptr;
     QFile *chargerConnectedFile = nullptr;
     QFile *stateFile = nullptr;

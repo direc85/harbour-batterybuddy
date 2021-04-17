@@ -20,15 +20,17 @@
 
 #include <QObject>
 #include <QtDBus/QtDBus>
+#include "logger.h"
 
 class Profile : public QObject
 {
     Q_OBJECT
 public:
-    explicit Profile(QObject *parent = nullptr);
     uint getRingtoneVolume();
+    explicit Profile(Logger* newLogger, QObject *parent = nullptr);
 
 private:
+    Logger* logger;
     QDBusConnection connection = QDBusConnection::sessionBus();
 };
 

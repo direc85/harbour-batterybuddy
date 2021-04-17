@@ -23,18 +23,19 @@ $$system(bash update-spec-version.sh $$TARGET $$VER $$REL)
 DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"
 DEFINES += APP_NAME=\"\\\"$$TARGET\\\"\"
 
-# Do not define QT_NO_DEBUG_OUTPUT!
-# Use "--verbose" and "--debug" at runtime instead.
-# See main() for details.
-#DEFINES += QT_NO_DEBUG_OUTPUT
+# Use "--verbose" and "--debug" at runtime.
+# See main() and logger.h for details.
+DEFINES += QT_NO_DEBUG_OUTPUT
 
 HEADERS += \
     src/battery.h \
+    src/logger.h \
     src/settings.h \
     src/process.h
 
 SOURCES += src/harbour-batterybuddy.cpp \
     src/battery.cpp \
+    src/logger.cpp \
     src/settings.cpp
 
 DISTFILES += qml/harbour-batterybuddy.qml \

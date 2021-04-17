@@ -17,63 +17,78 @@
  */
 #include "settings.h"
 
-Settings::Settings(QObject *parent) : QObject(parent)
+Settings::Settings(Logger* newLogger, QObject *parent) : QObject(parent)
 {
+    logger = newLogger;
     // Use the same file location as GUI for data exchange
     if(!mySettings) {
         mySettings = new QSettings(appName, appName, this);
     }
 
-    qDebug() << "Using" << mySettings->fileName();
+    logV("Using " + mySettings->fileName());
+
+    QString migrate = "Migrated value %1";
+    QString key = "";
 
     // Migrate old settings
-    if(mySettings->contains("lowerLimit")) {
-        mySettings->setValue(sLowAlert, mySettings->value("lowerLimit"));
-        mySettings->remove("lowerLimit");
-        qInfo() << "Migrated old lowerLimit value";
+    key = "lowerLimit";
+    if(mySettings->contains(key)) {
+        mySettings->setValue(sLowAlert, mySettings->value(key));
+        mySettings->remove(key);
+        logV(migrate.arg(key));
     }
 
-    if(mySettings->contains("upperLimit")) {
-        mySettings->setValue(sHighAlert, mySettings->value("upperLimit"));
-        mySettings->remove("upperLimit");
-        qInfo() << "Migrated old upperLimit value";
+    key = "upperLimit";
+    if(mySettings->contains(key)) {
+        mySettings->setValue(sHighAlert, mySettings->value(key));
+        mySettings->remove(key);
+        logV(migrate.arg(key));
     }
 
-    if(mySettings->contains("notificationsEnabled")) {
-        mySettings->setValue("highNotificationsEnabled", mySettings->value("notificationsEnabled"));
-        mySettings->remove("notificationsEnabled");
-        qInfo() << "Migrated old notificationsEnabled value";
-    }
-
-    if(mySettings->contains("interval")) {
-        mySettings->setValue(sHighNotificationsInterval, mySettings->value("interval"));
-        mySettings->setValue(sLowNotificationsInterval, mySettings->value("interval"));
-        mySettings->remove("interval");
-        qInfo() << "Migrated old notification interval value";
-    }
-
-    if(mySettings->contains("highNotificationsEnabled")) {
-        if(mySettings->value("highNotificationsEnabled").toInt() == 0)
+    key = "notificationsEnabled";
+    if(mySettings->contains(key)) {
+        if(mySettings->value(key).toInt() == 0) {
             mySettings->setValue(sHighNotificationsInterval, 610);
-        mySettings->remove("highNotificationsEnabled");
-        qInfo() << "Migrated old highNotificationsEnabled value";
+            mySettings->setValue(sLowNotificationsInterval, 610);
+        }
+        else {
+            mySettings->setValue(sHighNotificationsInterval, highNotificationsInterval);
+            mySettings->setValue(sLowNotificationsInterval, lowNotificationsInterval);
+        }
+        mySettings->remove(key);
+        logV(migrate.arg(key));
     }
 
-    if(mySettings->contains("lowNotificationsEnabled")) {
-        if(mySettings->value("lowNotificationsEnabled").toInt() == 0)
+    key = "interval";
+    if(mySettings->contains(key)) {
+        mySettings->setValue(sHighNotificationsInterval, mySettings->value(key));
+        mySettings->setValue(sLowNotificationsInterval, mySettings->value(key));
+        mySettings->remove(key);
+        logV(migrate.arg(key));
+    }
+
+    key = "highNotificationsEnabled";
+    if(mySettings->contains(key)) {
+        if(mySettings->value(key).toInt() == 0)
+            mySettings->setValue(sHighNotificationsInterval, 610);
+        mySettings->remove(key);
+        logV(migrate.arg(key));
+    }
+
+    key = "lowNotificationsEnabled";
+    if(mySettings->contains(key)) {
+        if(mySettings->value(key).toInt() == 0)
             mySettings->setValue(sLowNotificationsInterval, 610);
-        mySettings->remove("lowNotificationsEnabled");
-        qInfo() << "Migrated old lowNotificationsEnabled value";
+        mySettings->remove(key);
+        logV(migrate.arg(key));
     }
 
     // Do this here, because...
-    watcher = new QFileSystemWatcher(QStringList(mySettings->fileName()));
+    watcher = new QFileSystemWatcher(QStringList(mySettings->fileName()), this);
     connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(updateConfig(QString)));
 
     // ...calling this deletes mySettings!
     updateConfig(mySettings->fileName());
-
-    qInfo() << "Loaded" << sLimitEnabled << limitEnabled;
 
     // Battery Buddy GUI application changes the settings file,
     // so we must monitor it and update when it changes.
@@ -85,7 +100,7 @@ bool Settings::loadInteger(const char* key, int *value, int min, int max) {
     oldValue = *value;
     *value = bound(mySettings->value(key, *value).toInt(), min, max);
     if(oldValue != *value) {
-        qInfo() << "Loaded" << key << *value;
+        logV(QString("Load: %1 %2").arg(key).arg(value));
     }
     return oldValue != *value;
 }
@@ -97,7 +112,7 @@ void Settings::updateConfig(QString path) {
         mySettings = new QSettings(appName, appName, this);
     }
 
-    qDebug() << "Reading values...";
+    logV("Loading values...");
     // Read in the values
     bool restartTimers = false;
 
@@ -115,20 +130,25 @@ void Settings::updateConfig(QString path) {
     notificationLowText = mySettings->value(sNotificationLowText, "Please connect the charger.").toString();
     notificationHighText = mySettings->value(sNotificationHighText, "Please disconnect the charger.").toString();
 
-    qDebug() << "Values read.";
+    QString logFilename = logger->getLogFilename();
+    if(mySettings->value(sLogFilename,QString()).toString() != logFilename) {
+        mySettings->setValue(sLogFilename, logFilename);
+    }
+
+    logV("Values loaded.");
 
     delete mySettings;
     mySettings = nullptr;
 
     // Let the file system settle...
-    QThread::msleep(50);
+    QThread::msleep(100);
 
     if(watcher->files().contains(path)) {
-        qDebug() << "File OK";
+        logD("Config file already on watchlist");
     }
     else {
-        qDebug() << "File replaced, re-adding.";
         watcher->addPath(path);
+        logD("Config file added to watchlist.");
     }
 
     if(restartTimers) {

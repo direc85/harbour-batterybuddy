@@ -6,15 +6,12 @@
 
 #include <QProcess>
 #include <QVariant>
-//#include <QDebug>
 
 class Process : public QProcess {
     Q_OBJECT
 
 public:
-    Process(QObject *parent = nullptr) : QProcess(parent) {
-
-    }
+    Process(QObject *parent = nullptr) : QProcess(parent) { }
 
     Q_INVOKABLE void start(const QString &program, const QVariantList &arguments) {
         QStringList args;
@@ -24,7 +21,6 @@ public:
         for (int i = 0; i < arguments.length(); i++)
             args << arguments[i].toString();
 
-        //qDebug() << program + " " + args.join(" ");
         QProcess::start(program, args);
         QProcess::waitForStarted(1000);
         QProcess::waitForFinished(1000);

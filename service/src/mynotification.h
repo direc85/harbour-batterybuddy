@@ -23,14 +23,14 @@
 #include <QMediaPlayer>
 #include <nemonotifications-qt5/notification.h>
 #include "profile.h"
-#include <QDebug>
+#include "logger.h"
 
 class MyNotification : public QObject
 {
     Q_OBJECT
 
 public:
-    MyNotification(QObject* parent = nullptr);
+    MyNotification(Logger* newLogger, QObject* parent = nullptr);
     ~MyNotification();
 
 public slots:
@@ -38,11 +38,12 @@ public slots:
     void close();
 
 private:
+    Logger* logger;
     QString noteID = "1";
     Notification notification;
     QMediaPlayer sound;
     bool playSound;
-    Profile profile;
+    Profile* profile;
 
 private slots:
     void soundLoadedChanged(QMediaPlayer::MediaStatus newStatus);

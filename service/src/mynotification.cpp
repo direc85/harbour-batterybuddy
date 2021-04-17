@@ -17,10 +17,12 @@
  */
 #include "mynotification.h"
 
-MyNotification::MyNotification(QObject* parent) : QObject(parent)
+MyNotification::MyNotification(Logger* newLogger, QObject* parent) : QObject(parent)
 {
+    logger = newLogger;
     notification.setAppName("Battery Buddy");
-    notification.setAppIcon(APP_NAME);
+    // Set this manually, so that the correct icon is used.
+    notification.setAppIcon("harbour-batterybuddy");
     playSound = false;
     sound.setAudioRole(QAudio::NotificationRole);
     connect(&sound, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),

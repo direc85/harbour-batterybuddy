@@ -46,7 +46,7 @@ Page {
             lowAlertSlider.value = settings.lowAlert
             highIntervalSlider.value = settings.highNotificationsInterval
             lowIntervalSlider.value = settings.lowNotificationsInterval
-            console.debug("SettingsPage values updated")
+            if(logger.debug) logger.log("SettingsPage values updated")
             daemonCheck.start()
         }
     }
@@ -58,7 +58,7 @@ Page {
         repeat: false
         onTriggered: {
             var action = daemonEnabledSwitch.checked ? "disable" : "enable"
-            console.log("Action: " + action)
+            if(logger.verbose) logger.log("Action: " + action)
             _toggleProcess.start("systemctl", ["--user", action, "harbour-batterybuddy.service"])
         }
     }
@@ -68,7 +68,7 @@ Page {
         id: _toggleProcess
         onFinished: {
             daemonCheck.start()
-            console.debug("Service toggle " + (errorCode() === 0 ? "succeeded" : "failed"))
+            if(logger.debug) logger.log("Service toggle " + (errorCode() === 0 ? "succeeded" : "failed"))
         }
     }
 
@@ -93,7 +93,7 @@ Page {
                 daemonEnabledSwitch.checked = false
             }
             daemonEnabledSwitch.busy = false
-            console.info("Service is " + (errorCode() === 0 ? "enabled" : "disabled"))
+            if(logger.verbose) logger.log("Service is " + (errorCode() === 0 ? "enabled" : "disabled"))
         }
     }
 

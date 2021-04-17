@@ -18,50 +18,70 @@
 #include <QCoreApplication>
 #include <QObject>
 #include <QTimer>
+
+#include "logger.h"
 #include "battery.h"
-#include <iostream>
+
 #include <signal.h>
 
 int main(int argc, char** argv)
 {
-    const char* logEnvVar = "QT_LOGGING_RULES";
-    for(int i = 1; i < argc; i++) {
+    bool logLevelSet = false;
+    bool verbose = false;
+    bool debug = false;
+    bool logfile = false;
+
+    for(int i = 0; i < argc; i++) {
         if(!strcmp(argv[i],"-v")) {
             printf("%s %s\n", APP_NAME, APP_VERSION);
-            return EXIT_SUCCESS;
+            return 0;
         }
-        else if(!strcmp(argv[i],"--verbose"))
-            qputenv(logEnvVar, "*.info=true;*.debug=false");
-        else if(!strcmp(argv[i],"--debug"))
-            qputenv(logEnvVar, "*.info=true");
+        else if(!strcmp(argv[i],"--verbose")) {
+            verbose = true;
+            debug = false;
+            logLevelSet = true;
+        }
+        else if(!strcmp(argv[i],"--debug")) {
+            verbose = true;
+            debug = true;
+            logLevelSet = true;
+        }
+        else if(!logLevelSet && QHostInfo::localHostName().contains("SailfishEmul")) {
+            verbose = true;
+            debug = true;
+            logLevelSet = true;
+        }
+        else if(!strcmp(argv[i],"--logfile")) {
+            logfile = true;
+        }
         else if(!strcmp(argv[i],"--help")) {
-            printf("%s %s\n\n", APP_NAME, APP_VERSION);
-            printf("This binary is meant to run as a service as normal user,\n");
-            printf("but it can be run manually for debugging purposes, too.\n\n");
+            printf("%s %s\n", APP_NAME, APP_VERSION);
             printf("Usage:\n");
             printf("  --verbose     Enable informational messages\n");
             printf("  --debug       Enable informational and debugging messages\n");
             printf("  --help        Print version string and exit\n");
-            return EXIT_SUCCESS;
+            return 0;
         }
-    }
-    if(!qEnvironmentVariableIsSet(logEnvVar)) {
-        if(!QHostInfo::localHostName().contains("SailfishEmul"))
-            qputenv(logEnvVar, "*.info=false;*.debug=false");
-        else
-            qputenv(logEnvVar, "*.info=true");
     }
 
     QCoreApplication app(argc, argv);
+    app.setApplicationName(APP_NAME);
+    app.setApplicationVersion(APP_VERSION);
 
-    Battery battery;
+    Logger* logger = new Logger(verbose, debug, logfile);
+    logE(QString("%1 %2").arg(APP_NAME, APP_VERSION));
+
+    Battery* battery = new Battery(logger);
 
     // Exit gracefully on Ctrl-C and service stop
-    QObject::connect(&app, SIGNAL(aboutToQuit()), &battery, SLOT(shutdown()));
+    QObject::connect(&app, SIGNAL(aboutToQuit()), battery, SLOT(shutdown()));
     signal(SIGINT, app.exit);
     signal(SIGTERM, app.exit);
 
     int retval = app.exec();
+
+    delete battery;
+    delete logger;
 
     return retval;
 }

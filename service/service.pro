@@ -14,16 +14,22 @@ VERSION = $${VER}-$${REL}
 DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"
 DEFINES += APP_NAME=\"\\\"$$TARGET\\\"\"
 
+# Use "--verbose" and "--debug" at runtime.
+# See main() and logger.h for details.
+DEFINES += QT_NO_DEBUG_OUTPUT
+
 HEADERS += \
     src/battery.h \
     src/mynotification.h \
     src/profile.h \
+    src/logger.h \
     src/settings.h
 
 SOURCES += \
     src/battery.cpp \
     src/mynotification.cpp \
     src/profile.cpp \
+    src/logger.cpp \
     src/settings.cpp \
     src/harbour-batterybuddy-daemon.cpp
 

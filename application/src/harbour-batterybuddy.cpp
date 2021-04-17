@@ -26,8 +26,8 @@
 #include <QQuickView>
 #include <QQmlEngine>
 #include <QTimer>
-#include <QDebug>
 
+#include "logger.h"
 #include "battery.h"
 #include "settings.h"
 
@@ -43,16 +43,26 @@ int main(int argc, char *argv[])
     //
     // To display the view, call "show()" (will show fullscreen on device).
 
-    const char* logEnvVar = "QT_LOGGING_RULES";
-    for(int i = 1; i < argc; i++) {
+    bool verbose = false;
+    bool debug = false;
+
+    for(int i = 0; i < argc; i++) {
         if(!strcmp(argv[i],"-v")) {
             printf("%s %s\n", APP_NAME, APP_VERSION);
             return 0;
         }
-        else if(!strcmp(argv[i],"--verbose"))
-            qputenv(logEnvVar, "*.info=true;*.debug=false");
-        else if(!strcmp(argv[i],"--debug"))
-            qputenv(logEnvVar, "*.info=true");
+        else if(QHostInfo::localHostName().contains("SailfishEmul")) {
+            verbose = true;
+            debug = true;
+        }
+        else if(!strcmp(argv[i],"--verbose")) {
+            verbose = true;
+            debug = false;
+        }
+        else if(!strcmp(argv[i],"--debug")) {
+            verbose = true;
+            debug = true;
+        }
         else if(!strcmp(argv[i],"--help")) {
             printf("%s %s\n", APP_NAME, APP_VERSION);
             printf("Usage:\n");
@@ -62,19 +72,13 @@ int main(int argc, char *argv[])
             return 0;
         }
     }
-    if(!qEnvironmentVariableIsSet(logEnvVar)) {
-        if(!QHostInfo::localHostName().contains("SailfishEmul"))
-            qputenv(logEnvVar, "*.info=false;*.debug=false");
-        else
-            qputenv(logEnvVar, "*.info=true");
-    }
-
 
     QGuiApplication* app = SailfishApp::application(argc, argv);
     QQuickView* view = SailfishApp::createView();
 
-    Settings* settings = new Settings();
-    Battery* battery = new Battery(settings);
+    Logger *logger = new Logger(verbose, debug, false);
+    Settings* settings = new Settings(logger);
+    Battery* battery = new Battery(settings, logger);
 
     QTimer* updater = new QTimer();
     QObject::connect(updater, SIGNAL(timeout()), battery, SLOT(updateData()));
@@ -84,16 +88,17 @@ int main(int argc, char *argv[])
 
     view->rootContext()->setContextProperty("battery", battery);
     view->rootContext()->setContextProperty("settings", settings);
+    view->rootContext()->setContextProperty("logger", logger);
     view->rootContext()->setContextProperty("app_version", APP_VERSION);
 
     view->setSource(SailfishApp::pathTo("qml/harbour-batterybuddy.qml"));
     view->showFullScreen();
 
-    qInfo() << "Launching GUI...";
+    logV("Launching GUI...");
 
     int retval = app->exec();
 
-    qInfo() << "Exiting...";
+    logV("Exiting...");
 
     updater->stop();
 
@@ -101,7 +106,9 @@ int main(int argc, char *argv[])
     delete battery;
     delete settings;
 
-    qInfo() << "Goodbye!";
+    logV("Goodbye!");
+
+    delete logger;
 
     return retval;
 }

@@ -20,7 +20,7 @@
 
 #include <QObject>
 #include <QSettings>
-#include <QDebug>
+#include "logger.h"
 
 class Settings : public QObject
 {
@@ -39,7 +39,7 @@ class Settings : public QObject
     Q_PROPERTY(QString notificationHighText READ getNotificationHighText WRITE setNotificationHighText NOTIFY notificationHighTextChanged)
 
 public:
-    Settings(QObject* parent = nullptr);
+    Settings(Logger* newLogger, QObject* parent = nullptr);
     ~Settings();
 
     int  getLowAlert();
@@ -69,6 +69,7 @@ public:
 private:
     QSettings *mySettings = nullptr;
     const char* appName = APP_NAME;
+    Logger* logger = nullptr;
 
     // Default values
     int lowAlert = 25;
