@@ -46,7 +46,7 @@ private:
     Profile* profile;
 
 private slots:
-    void soundLoadedChanged(QMediaPlayer::MediaStatus newStatus);
+    void soundLoadedChanged(const QMediaPlayer::MediaStatus newStatus);
 };
 
 #endif // MYNOTIFICATION_H

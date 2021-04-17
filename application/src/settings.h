@@ -55,16 +55,16 @@ public:
     QString getNotificationLowText();
     QString getNotificationHighText();
 
-    void setLowAlert(int newLimit);
-    void setHighAlert(int newLimit);
-    void setHighNotificationsInterval(int newInterval);
-    void setLowNotificationsInterval(int newInterval);
-    void setLowLimit(int newLimit);
-    void setHighLimit(int newLimit);
-    void setLimitEnabled(bool newEnabled);
-    void setNotificationTitle(QString newText);
-    void setNotificationLowText(QString newText);
-    void setNotificationHighText(QString newText);
+    void setLowAlert(const int newLimit);
+    void setHighAlert(const int newLimit);
+    void setHighNotificationsInterval(const int newInterval);
+    void setLowNotificationsInterval(const int newInterval);
+    void setLowLimit(const int newLimit);
+    void setHighLimit(const int newLimit);
+    void setLimitEnabled(const bool newEnabled);
+    void setNotificationTitle(const QString newText);
+    void setNotificationLowText(const QString newText);
+    void setNotificationHighText(const QString newText);
 
 private:
     QSettings *mySettings = nullptr;
@@ -100,8 +100,8 @@ private:
     const char* sNotificationHighText = "notificationHighText";
 
     int bound(int value, int min, int max);
-    void loadInteger(const char *key, int *value, int min, int max);
-    void saveInteger(const char *key, int *value);
+    void loadInteger(const char *key, int &value, const int min, const int max);
+    void saveInteger(const char *key, const int &value);
 
 signals:
     void lowAlertChanged(int);

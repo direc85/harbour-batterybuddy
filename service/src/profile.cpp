@@ -22,11 +22,10 @@ Profile::Profile(Logger* newLogger, QObject *parent) : QObject(parent)
     logger = newLogger;
 }
 
-uint Profile::getRingtoneVolume() {
-    QDBusInterface interface("com.nokia.profiled",
-                              "/com/nokia/profiled",
-                              "com.nokia.profiled",
-                             connection);
+int Profile::getRingtoneVolume() {
+    const QString dots = "com.nokia.profiled";
+    const QString slashes = "/com/nokia/profiled";
+    QDBusInterface interface(dots, slashes, dots, connection);
 
     QDBusMessage message = interface.call("get_profile");
     QString profile = message.arguments().at(0).toString();

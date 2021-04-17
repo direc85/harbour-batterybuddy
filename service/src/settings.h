@@ -92,10 +92,10 @@ private:
     const char* sLogFilename = "logFilename";
 
     int bound(int value, int min, int max);
-    bool loadInteger(const char *key, int *value, int min, int max);
+    bool loadInteger(const char *key, int &value, const int min, const int max);
 
 private slots:
-    void updateConfig(QString path);
+    void updateConfig(const QString path);
 
 signals:
     void resetTimers();

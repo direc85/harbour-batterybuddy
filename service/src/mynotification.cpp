@@ -39,7 +39,7 @@ void MyNotification::send(QString title, QString body, QString soundFile)
     title = title.replace("\"", "\\\"");
     body = body.replace("\"", "\\\"");
 
-    int vol = profile.getRingtoneVolume();
+    int vol = profile->getRingtoneVolume();
     sound.setVolume(vol);
 
     playSound = true;
@@ -68,7 +68,7 @@ void MyNotification::close()
     return;
 }
 
-void MyNotification::soundLoadedChanged(QMediaPlayer::MediaStatus newStatus) {
+void MyNotification::soundLoadedChanged(const QMediaPlayer::MediaStatus newStatus) {
     if(playSound && newStatus == QMediaPlayer::LoadedMedia) {
         sound.play();
         playSound = false;

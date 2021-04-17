@@ -42,7 +42,7 @@ public:
     QString getState();
 
     bool getChargingEnabled();
-    bool setChargingEnabled(bool);
+    bool setChargingEnabled(const bool isEnabled);
 
 public slots:
     void updateData();

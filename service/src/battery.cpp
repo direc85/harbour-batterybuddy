@@ -207,7 +207,7 @@ QString Battery::getState() { return state; }
 
 bool Battery::getChargingEnabled() { return chargingEnabled; }
 
-bool Battery::setChargingEnabled(bool isEnabled) {
+bool Battery::setChargingEnabled(const bool isEnabled) {
     bool success = false;
     if(chargingEnabledFile) {
         if(chargingEnabledFile->open(QIODevice::WriteOnly)) {

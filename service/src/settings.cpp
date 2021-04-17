@@ -96,16 +96,17 @@ Settings::Settings(Logger* newLogger, QObject *parent) : QObject(parent)
 
 Settings::~Settings() { }
 
-bool Settings::loadInteger(const char* key, int *value, int min, int max) {
-    oldValue = *value;
-    *value = bound(mySettings->value(key, *value).toInt(), min, max);
-    if(oldValue != *value) {
+bool Settings::loadInteger(const char *key, int &value, const int min, const int max) {
+    oldValue = value;
+    value = mySettings->value(key, value).toInt();
+    value = (value <= min ? min : (value >= max ? max : value));
+    if(oldValue != value) {
         logV(QString("Load: %1 %2").arg(key).arg(value));
     }
-    return oldValue != *value;
+    return oldValue != value;
 }
 
-void Settings::updateConfig(QString path) {
+void Settings::updateConfig(const QString path) {
 
     // Use the same file location as GUI for data exchange
     if(!mySettings) {
@@ -116,13 +117,13 @@ void Settings::updateConfig(QString path) {
     // Read in the values
     bool restartTimers = false;
 
-    loadInteger(sLowAlert, &lowAlert, 5, 99);
-    loadInteger(sHighAlert, &highAlert, 6, 100);
-    restartTimers |= loadInteger(sHighNotificationsInterval, &highNotificationsInterval, 50, 610);
-    restartTimers |= loadInteger(sLowNotificationsInterval, &lowNotificationsInterval, 50, 610);
-    loadInteger(sLimitEnabled, &limitEnabled, 0, 1);
-    loadInteger(sLowLimit, &lowLimit, 5, 99);
-    loadInteger(sHighLimit, &highLimit, 6, 100);
+    loadInteger(sLowAlert, lowAlert, 5, 99);
+    loadInteger(sHighAlert, highAlert, 6, 100);
+    restartTimers |= loadInteger(sHighNotificationsInterval, highNotificationsInterval, 50, 610);
+    restartTimers |= loadInteger(sLowNotificationsInterval, lowNotificationsInterval, 50, 610);
+    loadInteger(sLimitEnabled, limitEnabled, 0, 1);
+    loadInteger(sLowLimit, lowLimit, 5, 99);
+    loadInteger(sHighLimit, highLimit, 6, 100);
 
     // These are translated in the GUI application
     // and delivered here via the config file
