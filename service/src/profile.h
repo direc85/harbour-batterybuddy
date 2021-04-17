@@ -26,7 +26,7 @@ class Profile : public QObject
 {
     Q_OBJECT
 public:
-    uint getRingtoneVolume();
+    int getRingtoneVolume();
     explicit Profile(Logger* newLogger, QObject *parent = nullptr);
 
 private:
