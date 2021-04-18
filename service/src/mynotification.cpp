@@ -17,21 +17,16 @@
  */
 #include "mynotification.h"
 
-MyNotification::MyNotification(Logger* newLogger, QObject* parent) : QObject(parent)
+MyNotification::MyNotification(QObject* parent) : QObject(parent)
 {
-    logger = newLogger;
     notification.setAppName("Battery Buddy");
     // Set this manually, so that the correct icon is used.
     notification.setAppIcon("harbour-batterybuddy");
-    playSound = false;
-    sound.setAudioRole(QAudio::NotificationRole);
-    connect(&sound, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),
-            this, SLOT(soundLoadedChanged(QMediaPlayer::MediaStatus)));
 }
 
 MyNotification::~MyNotification()
 {
-    close();
+    notification.close();
 }
 
 void MyNotification::send(QString title, QString body, QString soundFile)
@@ -39,24 +34,12 @@ void MyNotification::send(QString title, QString body, QString soundFile)
     title = title.replace("\"", "\\\"");
     body = body.replace("\"", "\\\"");
 
-    int vol = profile->getRingtoneVolume();
-    sound.setVolume(vol);
-
-    playSound = true;
-    if(sound.media() != QUrl::fromLocalFile(soundFile)) {
-        // Signalled to play()
-        sound.setMedia(QUrl::fromLocalFile(soundFile));
-    }
-    else if (playSound){
-        // Must manually trigger play()
-        sound.play();
-        playSound = false;
-    }
-
     notification.setSummary(title);
     notification.setBody(body);
     notification.setPreviewSummary(title);
     notification.setPreviewBody(body);
+    notification.setSound(soundFile);
+    notification.setUrgency(Notification::Normal);
     notification.publish();
 
     return;
@@ -66,11 +49,4 @@ void MyNotification::close()
 {
     notification.close();
     return;
-}
-
-void MyNotification::soundLoadedChanged(const QMediaPlayer::MediaStatus newStatus) {
-    if(playSound && newStatus == QMediaPlayer::LoadedMedia) {
-        sound.play();
-        playSound = false;
-    }
 }

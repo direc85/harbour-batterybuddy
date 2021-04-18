@@ -19,18 +19,14 @@
 #define MYNOTIFICATION_H
 
 #include <QObject>
-#include <QTimer>
-#include <QMediaPlayer>
 #include <nemonotifications-qt5/notification.h>
-#include "profile.h"
-#include "logger.h"
 
 class MyNotification : public QObject
 {
     Q_OBJECT
 
 public:
-    MyNotification(Logger* newLogger, QObject* parent = nullptr);
+    MyNotification(QObject* parent = nullptr);
     ~MyNotification();
 
 public slots:
@@ -38,15 +34,7 @@ public slots:
     void close();
 
 private:
-    Logger* logger;
-    QString noteID = "1";
     Notification notification;
-    QMediaPlayer sound;
-    bool playSound;
-    Profile* profile;
-
-private slots:
-    void soundLoadedChanged(const QMediaPlayer::MediaStatus newStatus);
 };
 
 #endif // MYNOTIFICATION_H
