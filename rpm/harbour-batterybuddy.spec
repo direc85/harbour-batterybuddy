@@ -90,6 +90,7 @@ systemctl start %{name}-oneshot.service
 cp %{_datadir}/%{name}/service/%{name}.service %{_userunitdir}/%{name}.service
 su $SFOSUSER -c "DBUS_SESSION_BUS_ADDRESS=$DBUS_USER_ADDRESS systemctl --user daemon-reload"
 su $SFOSUSER -c "DBUS_SESSION_BUS_ADDRESS=$DBUS_USER_ADDRESS systemctl --user enable %{name}.service"
+su $SFOSUSER -c "DBUS_SESSION_BUS_ADDRESS=$DBUS_USER_ADDRESS systemctl --user stop %{name}.service"
 su $SFOSUSER -c "DBUS_SESSION_BUS_ADDRESS=$DBUS_USER_ADDRESS systemctl --user start %{name}.service"
 exit 0
 
