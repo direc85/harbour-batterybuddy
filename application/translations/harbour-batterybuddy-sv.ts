@@ -154,34 +154,34 @@
     <name>LogPage</name>
     <message>
         <source>View log</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa logg</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Uppdatera</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiera</translation>
     </message>
     <message>
         <source>Log level</source>
-        <translation type="unfinished"></translation>
+        <translation>Loggnivå</translation>
     </message>
     <message>
         <source>Quiet</source>
         <comment>Low log setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tyst</translation>
     </message>
     <message>
         <source>Verbose</source>
         <comment>Medium log setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Utförlig</translation>
     </message>
     <message>
         <source>Debug</source>
         <comment>High log setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Felsökning</translation>
     </message>
 </context>
 <context>
@@ -342,27 +342,27 @@
     </message>
     <message>
         <source>Start background service at startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Starta bakgrundstjänsten vid systemstart</translation>
     </message>
     <message>
         <source>Battery high notification interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Aviseringsintervall för hög batterinivå</translation>
     </message>
     <message>
         <source>Battery low notification interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Aviseringsintervall för låg batterinivå</translation>
     </message>
     <message>
         <source>Once</source>
-        <translation type="unfinished"></translation>
+        <translation>En gång</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldrig</translation>
     </message>
     <message>
         <source>View log</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa logg</translation>
     </message>
 </context>
 </TS>
