@@ -7,7 +7,7 @@ QT = core dbus
 PKGCONFIG += nemonotifications-qt5
 
 # Keep this in sync with "application.pro"
-VER = 3.8
+VER = 3.9
 REL = 1
 
 VERSION = $${VER}-$${REL}

@@ -1,3 +1,15 @@
+* Sat Apr 24 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.9-1
+- Fix enabling/disabling background service (again)
+- Add log viewer (and a copy button)
+- Add buttons to help fine-tuning slider values
+- Add support for My Backup
+- Implement custom logger
+- Simplify notification sound handling
+- Explicitly stop and start the service during install/upgrade
+- Use sh instead of bash
+- Improve code quality and efficiency
+- Remove and simplift a lot of code
+
 * Sun Jan 31 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.8-1
 - Improve SFOS 3.4 support (don't hardcode user nemo)
 - Enable charger control by default (for new users)
