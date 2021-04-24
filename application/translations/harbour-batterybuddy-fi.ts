@@ -154,7 +154,34 @@
     <name>LogPage</name>
     <message>
         <source>View log</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä loki</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>Päivitä</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopioi</translation>
+    </message>
+    <message>
+        <source>Log level</source>
+        <translation>Lokitaso</translation>
+    </message>
+    <message>
+        <source>Quiet</source>
+        <comment>Low log setting</comment>
+        <translation>Vähäinen</translation>
+    </message>
+    <message>
+        <source>Verbose</source>
+        <comment>Medium log setting</comment>
+        <translation>Korkea</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <comment>High log setting</comment>
+        <translation>Vianetsintä</translation>
     </message>
 </context>
 <context>
@@ -335,7 +362,7 @@
     </message>
     <message>
         <source>View log</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä loki</translation>
     </message>
 </context>
 </TS>
