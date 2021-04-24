@@ -94,19 +94,13 @@ int main(int argc, char *argv[])
     view->setSource(SailfishApp::pathTo("qml/harbour-batterybuddy.qml"));
     view->showFullScreen();
 
-    logV("Launching GUI...");
-
     int retval = app->exec();
-
-    logV("Exiting...");
 
     updater->stop();
 
     delete updater;
     delete battery;
     delete settings;
-
-    logV("Goodbye!");
 
     delete logger;
 

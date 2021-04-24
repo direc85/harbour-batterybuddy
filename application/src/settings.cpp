@@ -57,7 +57,7 @@ Settings::~Settings()
     mySettings->setValue(sNotificationLowText, notificationLowText);
     mySettings->setValue(sNotificationHighText, notificationHighText);
     mySettings->sync();
-    logV(QString("Settings saved: %1").arg((mySettings->status() == QSettings::NoError) ? "true" : "false"));
+    logV(QString("Settings saved: %1").arg(mySettings->status() == QSettings::NoError));
 }
 
 // Getters condensed.

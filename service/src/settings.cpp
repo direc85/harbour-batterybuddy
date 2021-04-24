@@ -137,7 +137,7 @@ void Settings::updateConfig(const QString path) {
         if(oldLogLevel != logLevel) {
         logger->debug = (logLevel == 2);
         logger->verbose = (logLevel > 1);
-        logE(QString("Log level set to %1").arg(logLevel));
+        logE(QString("Log level set to %1").arg((logLevel == 0 ? "low" : (logLevel == 1 ? "medium" : "high"))));
     }
 
 
