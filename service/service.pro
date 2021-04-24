@@ -1,8 +1,8 @@
 TARGET = harbour-batterybuddy-daemon
 
-CONFIG = sailfishapp qt console c++11 sailfish_build
+CONFIG += sailfishapp console
 
-QT = core network dbus multimedia dbus
+QT = core dbus
 
 PKGCONFIG += nemonotifications-qt5
 
