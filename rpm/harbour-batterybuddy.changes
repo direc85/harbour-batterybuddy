@@ -1,4 +1,4 @@
-* Sat Apr 24 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.9-1
+* Sat Apr 24 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.9-2
 - Fix enabling/disabling background service (again)
 - Add log viewer (and a copy button)
 - Add buttons to help fine-tuning slider values
@@ -8,7 +8,8 @@
 - Explicitly stop and start the service during install/upgrade
 - Use sh instead of bash
 - Improve code quality and efficiency
-- Remove and simplift a lot of code
+- Remove and simplify a lot of code
+- Update Swedish translation (thanks, eson57) (3.9-2)
 
 * Sun Jan 31 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.8-1
 - Improve SFOS 3.4 support (don't hardcode user nemo)
