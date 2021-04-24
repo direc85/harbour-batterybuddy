@@ -131,6 +131,16 @@ void Settings::updateConfig(const QString path) {
     loadInteger(sLowLimit, lowLimit, 5, 99);
     loadInteger(sHighLimit, highLimit, 6, 100);
 
+    // Update log level
+    int oldLogLevel = logLevel;
+    loadInteger(sLogLevel, logLevel, 0, 2);
+        if(oldLogLevel != logLevel) {
+        logger->debug = (logLevel == 2);
+        logger->verbose = (logLevel > 1);
+        logE(QString("Log level set to %1").arg(logLevel));
+    }
+
+
     // These are translated in the GUI application
     // and delivered here via the config file
     notificationTitle = mySettings->value(sNotificationTitle, "Battery charge %1%").toString();
@@ -169,3 +179,4 @@ QString Settings::getHighAlertFile()             { return highAlertFile; }
 QString Settings::getNotificationTitle()         { return notificationTitle; }
 QString Settings::getNotificationLowText()       { return notificationLowText; }
 QString Settings::getNotificationHighText()      { return notificationHighText; }
+int     Settings::getLogLevel()                  { return logLevel; }

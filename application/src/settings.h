@@ -38,6 +38,7 @@ class Settings : public QObject
     Q_PROPERTY(QString notificationLowText READ getNotificationLowText WRITE setNotificationLowText NOTIFY notificationLowTextChanged)
     Q_PROPERTY(QString notificationHighText READ getNotificationHighText WRITE setNotificationHighText NOTIFY notificationHighTextChanged)
     Q_PROPERTY(QString logFilename READ getLogFilename NOTIFY logFilenameChanged)
+    Q_PROPERTY(int logLevel READ getLogLevel WRITE setLogLevel NOTIFY logLevelChanged)
 
 public:
     Settings(Logger* newLogger, QObject* parent = nullptr);
@@ -56,6 +57,7 @@ public:
     QString getNotificationLowText();
     QString getNotificationHighText();
     QString getLogFilename();
+    int getLogLevel();
 
     void setLowAlert(const int newLimit);
     void setHighAlert(const int newLimit);
@@ -67,6 +69,7 @@ public:
     void setNotificationTitle(const QString newText);
     void setNotificationLowText(const QString newText);
     void setNotificationHighText(const QString newText);
+    void setLogLevel(const int newLogLevel);
 
 private:
     QSettings *mySettings = nullptr;
@@ -87,6 +90,7 @@ private:
     QString notificationLowText;
     QString notificationHighText;
     QString logFilename;
+    int logLevel;
 
     // To avoid repeating the same string over and over and over...
     const char* sLowAlert = "lowAlert";
@@ -102,6 +106,7 @@ private:
     const char* sNotificationLowText = "notificationLowText";
     const char* sNotificationHighText = "notificationHighText";
     const char* sLogFilename = "logFilename";
+    const char* sLogLevel = "logLevel";
 
     void loadInteger(const char *key, int &value, const int min, const int max);
     void saveInteger(const char *key, const int &value);
@@ -120,6 +125,7 @@ signals:
     void notificationLowTextChanged(QString);
     void notificationHighTextChanged(QString);
     void logFilenameChanged(QString);
+    void logLevelChanged(int);
 };
 
 #endif // SETTINGS_H

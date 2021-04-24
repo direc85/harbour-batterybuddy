@@ -36,6 +36,7 @@ Settings::Settings(Logger *newLogger, QObject *parent) : QObject(parent)
     loadInteger(sLimitEnabled, limitEnabled, 0, 1);
     loadInteger(sLowLimit, lowLimit, 5, 99);
     loadInteger(sHighLimit, highLimit, 6, 100);
+    loadInteger(sLogLevel, logLevel, 0, 2);
     logFilename = mySettings->value(sLogFilename).toString();
 
     notificationTitle = tr("Battery charge %1%");
@@ -73,6 +74,7 @@ QString Settings::getLogFilename()               { return logFilename; }
 QString Settings::getNotificationTitle()         { return notificationTitle; }
 QString Settings::getNotificationLowText()       { return notificationLowText; }
 QString Settings::getNotificationHighText()      { return notificationHighText; }
+int     Settings::getLogLevel()                  { return logLevel; }
 
 void Settings::setLowAlert(const int newLimit) {
     lowAlert = newLimit;
@@ -145,6 +147,13 @@ void Settings::setNotificationHighText(const QString newText) {
     mySettings->setValue(sNotificationHighText, notificationHighText);
     mySettings->sync();
     emit notificationHighTextChanged(notificationHighText);
+}
+
+void Settings::setLogLevel(const int newLogLevel) {
+    logLevel = newLogLevel;
+    saveInteger(sLogLevel, logLevel);
+    mySettings->sync();
+    emit logLevelChanged(logLevel);
 }
 
 void Settings::loadInteger(const char *key, int &value, const int min, const int max) {

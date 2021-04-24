@@ -2,7 +2,6 @@
 #define LOGGER_H
 
 #include <QObject>
-#include <QString>
 #include <QFile>
 #include <QDir>
 #include <QStandardPaths>

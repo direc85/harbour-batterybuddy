@@ -38,6 +38,7 @@ public:
     int  getLowNotificationsInterval();
     int  getLowLimit();
     int  getHighLimit();
+    int  getLogLevel();
     bool getLimitEnabled();
     bool getHighNotificationsEnabled();
     bool getLowNotificationsEnabled();
@@ -57,6 +58,7 @@ private:
     const char* appName = "harbour-batterybuddy";
 
     int oldValue;
+    int logLevel = 1;
 
     // Default values
     int lowAlert = 25;
@@ -90,6 +92,7 @@ private:
     const char* sNotificationLowText = "notificationLowText";
     const char* sNotificationHighText = "notificationHighText";
     const char* sLogFilename = "logFilename";
+    const char* sLogLevel = "logLevel";
 
     bool loadInteger(const char *key, int &value, const int min, const int max);
 

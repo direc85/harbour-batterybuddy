@@ -43,9 +43,52 @@ Page {
             width: parent.width - 2*Theme.horizontalPageMargin
             spacing: Theme.paddingLarge
 
+            ComboBox {
+                label: qsTr("Log level")
+                currentIndex: 0
+                menu: ContextMenu {
+                    MenuItem { text: qsTr("Quiet", "Low log setting") }
+                    MenuItem { text: qsTr("Verbose", "Medium log setting") }
+                    MenuItem { text: qsTr("Debug", "High log setting") }
+                }
+                onCurrentIndexChanged: settings.logLevel = currentIndex
+                Component.onCompleted: currentIndex = settings.logLevel
+            }
+
+            Row {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                height: updateButton.height
+
+                Column {
+                    width: parent.width / 2
+                    Button {
+                        id: updateButton
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: qsTr("Update")
+                        onClicked: logLabel.updateText()
+                    }
+                }
+                Column {
+                    width: parent.width / 2
+                    Button {
+                        id: daemonStopButton
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: qsTr("Copy")
+                        onClicked: Clipboard.text = logLabel.text
+                    }
+                }
+            }
+
             MyLabel {
+                id: logLabel
                 text: logger.readLogfile(settings.logFilename)
                 font.pixelSize: Theme.fontSizeTiny
+                function updateText() {
+                    logLabel.text = logger.readLogfile(settings.logFilename)
+                }
             }
         }
     }
