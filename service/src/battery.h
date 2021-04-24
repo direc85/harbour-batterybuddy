@@ -33,7 +33,7 @@ class Battery : public QObject
     Q_OBJECT
 
 public:
-    Battery(Logger* newLogger, QObject *parent = nullptr);
+    Battery(Logger* newLogger, bool loglevelSet, QObject *parent = nullptr);
     ~Battery();
 
     int getCharge();

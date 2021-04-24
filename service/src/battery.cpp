@@ -17,11 +17,19 @@
  */
 #include "battery.h"
 
-Battery::Battery(Logger* newLogger, QObject *parent) : QObject(parent)
+Battery::Battery(Logger* newLogger, bool loglevelSet, QObject *parent) : QObject(parent)
 {
     logger = newLogger;
-    QString filename;
     settings = new Settings(logger, this);
+
+    // Read log level from config - if not already set
+    if(!loglevelSet) {
+        int logLevel = settings->getLogLevel();
+        logger->debug = (logLevel == 2);
+        logger->verbose = (logLevel > 1);
+        logE(QString("Log level set to %1").arg(logLevel));
+    }
+
     updateTimer = new QTimer(this);
     highNotifyTimer = new QTimer(this);
     lowNotifyTimer = new QTimer(this);
@@ -40,6 +48,7 @@ Battery::Battery(Logger* newLogger, QObject *parent) : QObject(parent)
     logV("Charger status file: " + chargerConnectedFile->fileName());
 
     // ENABLE/DISABLE CHARGING
+    QString filename;
     if(QHostInfo::localHostName().contains("SailfishEmul")) {
         logV("Sailfish SDK detected, not using charger control file");
     }

@@ -46,13 +46,11 @@ int main(int argc, char** argv)
             debug = true;
             logLevelSet = true;
         }
-        else if(!logLevelSet && QHostInfo::localHostName().contains("SailfishEmul")) {
-            verbose = true;
-            debug = true;
-            logLevelSet = true;
-        }
         else if(!strcmp(argv[i],"--logfile")) {
             logfile = true;
+            verbose = true;
+            debug = false;
+            logLevelSet = true;
         }
         else if(!strcmp(argv[i],"--help")) {
             printf("%s %s\n", APP_NAME, APP_VERSION);
@@ -60,6 +58,8 @@ int main(int argc, char** argv)
             printf("  --verbose     Enable informational messages\n");
             printf("  --debug       Enable informational and debugging messages\n");
             printf("  --help        Print version string and exit\n");
+            printf("  --logfile     Write log to a file. Implies --verbose\n\n");
+            printf("Log file: ~/.cache/harbour-batterybuddy-daemon/harbour-batterybuddy-daemon.log\n");
             return 0;
         }
     }
@@ -71,7 +71,7 @@ int main(int argc, char** argv)
     Logger* logger = new Logger(verbose, debug, logfile);
     logE(QString("%1 %2").arg(APP_NAME, APP_VERSION));
 
-    Battery* battery = new Battery(logger);
+    Battery* battery = new Battery(logger, logLevelSet);
 
     // Exit gracefully on Ctrl-C and service stop
     QObject::connect(&app, SIGNAL(aboutToQuit()), battery, SLOT(shutdown()));
