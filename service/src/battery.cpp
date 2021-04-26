@@ -197,9 +197,6 @@ void Battery::showHighNotification() {
         logD("Close high battery notification");
         notification->close();
     }
-    else {
-        logD("No high notification action");
-    }
 }
 
 void Battery::showLowNotification() {
@@ -215,9 +212,6 @@ void Battery::showLowNotification() {
     else if(charge < settings->getHighAlert()) {
         logD("Close low battery notification");
         notification->close();
-    }
-    else {
-        logD("No low notification action");
     }
 }
 
