@@ -24,10 +24,7 @@ MyNotification::MyNotification(QObject* parent) : QObject(parent)
     notification.setAppIcon("harbour-batterybuddy");
 }
 
-MyNotification::~MyNotification()
-{
-    notification.close();
-}
+MyNotification::~MyNotification() { }
 
 void MyNotification::send(QString title, QString body, QString soundFile)
 {

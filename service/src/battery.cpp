@@ -252,13 +252,13 @@ bool Battery::getChargerConnected() {
 }
 
 void Battery::shutdown() {
-    logV("Service shut down...");
+    logV("Shutting down...");
+    notification->close();
     blockSignals(true);
     if(updateTimer) {
         updateTimer->stop();
         logD("Update timer stopped");
     }
-    notification->close();
     if(highNotifyTimer) {
         highNotifyTimer->stop();
         logD("High battery notification stopped");
