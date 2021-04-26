@@ -158,7 +158,7 @@ void Settings::updateConfig(const QString path) {
     }
     else {
         watcher->addPath(path);
-        logD("Config file added to watchlist.");
+        logD("Config file added to watchlist");
     }
 
     if(restartTimers) {

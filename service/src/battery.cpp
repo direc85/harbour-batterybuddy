@@ -50,34 +50,29 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QObject *parent) : QObject
     // ENABLE/DISABLE CHARGING
     QString filename;
 
-        // e.g. for Sony Xperia XA2
-        filename = "/sys/class/power_supply/battery/input_suspend";
-        if(!chargingEnabledFile && QFile::exists(filename)) {
-            chargingEnabledFile = new QFile(filename, this);
-            enableChargingValue = 0;
-            disableChargingValue = 1;
-        }
+    // e.g. for Sony Xperia XA2
+    filename = "/sys/class/power_supply/battery/input_suspend";
+    if(!chargingEnabledFile && QFile::exists(filename)) {
+        chargingEnabledFile = new QFile(filename, this);
+        enableChargingValue = 0;
+        disableChargingValue = 1;
+    }
 
-        // e.g. for Sony Xperia Z3 Compact Tablet
-        filename = "/sys/class/power_supply/battery/charging_enabled";
-        if(!chargingEnabledFile && QFile::exists(filename)) {
-            chargingEnabledFile = new QFile(filename, this);
-            enableChargingValue = 1;
-            disableChargingValue = 0;
-        }
+    // e.g. for Sony Xperia Z3 Compact Tablet
+    filename = "/sys/class/power_supply/battery/charging_enabled";
+    if(!chargingEnabledFile && QFile::exists(filename)) {
+        chargingEnabledFile = new QFile(filename, this);
+        enableChargingValue = 1;
+        disableChargingValue = 0;
+    }
 
-        // e.g. for Jolla Phone
-        filename = "/sys/class/power_supply/usb/charger_disable";
-        if(!chargingEnabledFile && QFile::exists(filename)) {
-            chargingEnabledFile = new QFile(filename, this);
-            enableChargingValue = 0;
-            disableChargingValue = 1;
-        }
-
-        if(!chargingEnabledFile && QHostInfo::localHostName().contains("SailfishEmul")) {
-            logE("Charger control file not found!");
-            logE("Please contact the developer with your device model!");
-        }
+    // e.g. for Jolla Phone
+    filename = "/sys/class/power_supply/usb/charger_disable";
+    if(!chargingEnabledFile && QFile::exists(filename)) {
+        chargingEnabledFile = new QFile(filename, this);
+        enableChargingValue = 0;
+        disableChargingValue = 1;
+    }
 
     // If we found a usable file, check that it is writable
     if(chargingEnabledFile) {
@@ -86,9 +81,17 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QObject *parent) : QObject
             chargingEnabledFile->close();
         }
         else {
-            logE("Charger control file is not writable!");
+            logE("Charger control file" + chargingEnabledFile->fileName() + "is not writable");
+            logE("Charger control feature disabled");
+            delete chargingEnabledFile;
+            chargingEnabledFile = Q_NULLPTR;
         }
     }
+    else if(!QHostInfo::localHostName().contains("SailfishEmul")) {
+        logE("Charger control file not found!");
+        logE("Please contact the developer with your device model!");
+    }
+
 
     connect(updateTimer, SIGNAL(timeout()), this, SLOT(updateData()));
     connect(settings, SIGNAL(resetTimers()), this, SLOT(resetTimers()));
@@ -125,7 +128,7 @@ void Battery::updateData()
         if(nextChargerConnected != chargerConnected) {
             chargerConnected = nextChargerConnected;
             emit chargerConnectedChanged(chargerConnected);
-            logV(QString("Charger was %1").arg(chargerConnected ? "connected" : "disconnected"));
+            logV(QString("Charger: %1").arg(chargerConnected ? "connected" : "disconnected"));
         }
         chargerConnectedFile->close();
     }
@@ -134,7 +137,7 @@ void Battery::updateData()
         if(nextState != state) {
             state = nextState;
             emit stateChanged(state);
-            logV("Charging state: " + state);
+            logV("State: " + state);
 
             // Hide/show notification right away
             resetTimers();
@@ -196,7 +199,6 @@ void Battery::showHighNotification() {
 }
 
 void Battery::showLowNotification() {
-    logD(QString("Low notification if %1% < %2%)").arg(charge).arg(settings->getLowAlert()));
     if(settings->getLowNotificationsInterval() < 610 && charge <= settings->getLowAlert() && state != "charging") {
         logV(QString("Notification: %1").arg(settings->getNotificationTitle().arg(charge)));
         notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationLowText(), settings->getLowAlertFile());
@@ -266,9 +268,9 @@ void Battery::shutdown() {
         logD("Low battery notification stopped");
     }
     // ENABLE/DISABLE CHARGING
-    if(!QHostInfo::localHostName().contains("SailfishEmul") && !setChargingEnabled(true)) {
+    if(!setChargingEnabled(true) && !QHostInfo::localHostName().contains("SailfishEmul")) {
         logE("ERROR! Could not restore charger status! Your device "
-                   "may not charge until reboot! If that doesn't help, "
-                   "uninstall Battery Buddy and reboot your device.");
+             "may not charge until reboot! If that doesn't help, "
+             "uninstall Battery Buddy and reboot your device.");
     }
 }
