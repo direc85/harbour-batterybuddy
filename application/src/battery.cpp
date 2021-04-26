@@ -19,7 +19,6 @@
 
 Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QObject(parent)
 {
-    QString filename;
     settings = newSettings;
     logger = newLogger;
 
@@ -39,11 +38,8 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     chargerConnectedFile = new QFile("/sys/class/power_supply/usb/present", this);
     logV("Reading charger status from" + chargerConnectedFile->fileName());
 
-    // ENABLE/DISABLE CHARGING
-    if(QHostInfo::localHostName().contains("SailfishEmul")) {
-        logV("Sailfish SDK detected, not using charger control file");
-    }
-    else {
+    QString filename;
+
         // e.g. for Sony Xperia XA2
         filename = "/sys/class/power_supply/battery/input_suspend";
         if(!chargingEnabledFile && QFile::exists(filename)) {
@@ -68,12 +64,10 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
             disableChargingValue = 1;
         }
 
-
-        if(!chargingEnabledFile) {
+        if(!chargingEnabledFile && !QHostInfo::localHostName().contains("SailfishEmul")) {
             logE("Charger control file not found!");
             logE("Please contact the developer with your device model!");
         }
-    }
 
     // If we found a usable file, check that it is writable
     if(chargingEnabledFile) {

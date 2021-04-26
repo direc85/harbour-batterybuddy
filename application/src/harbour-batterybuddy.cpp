@@ -46,14 +46,15 @@ int main(int argc, char *argv[])
     bool verbose = false;
     bool debug = false;
 
+    if(QHostInfo::localHostName().contains("SailfishEmul")) {
+        verbose = true;
+        debug = true;
+    }
+
     for(int i = 0; i < argc; i++) {
         if(!strcmp(argv[i],"-v")) {
             printf("%s %s\n", APP_NAME, APP_VERSION);
             return 0;
-        }
-        else if(QHostInfo::localHostName().contains("SailfishEmul")) {
-            verbose = true;
-            debug = true;
         }
         else if(!strcmp(argv[i],"--verbose")) {
             verbose = true;
