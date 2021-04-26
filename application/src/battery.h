@@ -34,7 +34,7 @@ class Battery : public QObject
     Q_PROPERTY(int current READ getCurrent NOTIFY currentChanged)
     Q_PROPERTY(bool chargerConnected READ getChargerConnected NOTIFY chargerConnectedChanged)
     Q_PROPERTY(QString state READ getState NOTIFY stateChanged)
-    Q_PROPERTY(bool chargingEnabled READ getChargingEnabled  WRITE setChargingEnabled NOTIFY chargingEnabledChanged)
+    Q_PROPERTY(bool chargingEnabled READ getChargingEnabled NOTIFY chargingEnabledChanged)
 
 public:
     Battery(Settings* newSettings, Logger* newLogger, QObject* parent = nullptr);
@@ -47,7 +47,6 @@ public:
     QString getState();
 
     bool getChargingEnabled();
-    void setChargingEnabled(const bool isEnabled);
 
 public slots:
     void updateData();
