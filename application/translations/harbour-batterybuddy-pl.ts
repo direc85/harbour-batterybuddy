@@ -154,34 +154,34 @@
     <name>LogPage</name>
     <message>
         <source>View log</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż logi</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualizuj</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiuj</translation>
     </message>
     <message>
         <source>Log level</source>
-        <translation type="unfinished"></translation>
+        <translation>Poziom logów</translation>
     </message>
     <message>
         <source>Quiet</source>
         <comment>Low log setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Niskie ustawienie logów</translation>
     </message>
     <message>
         <source>Verbose</source>
         <comment>Medium log setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Średnie ustawienie logów</translation>
     </message>
     <message>
         <source>Debug</source>
         <comment>High log setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Wysokie ustawienie logów</translation>
     </message>
 </context>
 <context>
@@ -354,15 +354,15 @@
     </message>
     <message>
         <source>Once</source>
-        <translation type="unfinished"></translation>
+        <translation>Raz</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>Nigdy</translation>
     </message>
     <message>
         <source>View log</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż logi</translation>
     </message>
 </context>
 </TS>
