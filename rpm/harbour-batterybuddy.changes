@@ -1,4 +1,8 @@
-* Mon Apr 26 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.9-2
+* Tue Apr 27 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.11-1
+- Don't trigger config save when loading Settings page
+- Use smaller Ko-Fi icon
+
+* Mon Apr 26 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.10-1
 - Fix and improve logged messages
 - Remove more unused code
 - Handle emulator more like an actual device
