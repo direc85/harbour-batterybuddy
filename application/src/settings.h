@@ -108,8 +108,11 @@ private:
     const char* sLogFilename = "logFilename";
     const char* sLogLevel = "logLevel";
 
-    void loadInteger(const char *key, int &value, const int min, const int max);
-    void saveInteger(const char *key, const int &value);
+    bool loadInteger(const char *key, int &currValue, const int min, const int max);
+    bool loadString(const char *key, QString & currValue);
+    bool saveInteger(const char* key, const int &newValue, int &currValue);
+    bool saveString(const char* key, const QString &newValue, QString &currValue);
+    void save();
 
 signals:
     void lowAlertChanged(int);

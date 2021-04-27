@@ -88,28 +88,44 @@ Settings::Settings(Logger* newLogger, QObject *parent) : QObject(parent)
         logV(migrate.arg(key));
     }
 
+    // These are updated and localized from the config file
+    notificationTitle = "Battery charge %1%";
+    notificationLowText = "Please connect the charger.";
+    notificationHighText = "Please disconnect the charger.";
+
     // Do this here, because...
     watcher = new QFileSystemWatcher(QStringList(mySettings->fileName()), this);
     connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(updateConfig(QString)));
 
     // ...calling this deletes mySettings!
     updateConfig(mySettings->fileName());
-
-    // Battery Buddy GUI application changes the settings file,
-    // so we must monitor it and update when it changes.
 }
 
 Settings::~Settings() { }
 
-bool Settings::loadInteger(const char *key, int &value, const int min, const int max) {
-    oldValue = value;
-    value = mySettings->value(key, value).toInt();
-    value = (value <= min ? min : (value >= max ? max : value));
-    if(oldValue != value) {
-        logV(QString("Load: %1 %2").arg(key).arg(value));
+bool Settings::loadInteger(const char *key, int &currValue, const int min, const int max) {
+    int newValue = mySettings->value(key, currValue).toInt();
+    newValue = (newValue <= min ? min : (newValue >= max ? max : newValue));
+    if(currValue == newValue) {
+        logD(QString("Load: %1 %2 (unchanged)").arg(key).arg(currValue));
+        return false;
     }
-    return oldValue != value;
+    currValue = newValue;
+    logV(QString("Load: %1 %2").arg(key).arg(currValue));
+    return true;
 }
+
+bool Settings::loadString(const char *key, QString & currValue) {
+    QString newValue = mySettings->value(key, currValue).toString();
+    if(currValue == newValue) {
+        logD(QString("Load: %1 %2 (unchanged)").arg(key).arg(currValue));
+        return false;
+    }
+    currValue = newValue;
+    logV(QString("Load: %1 %2").arg(key).arg(currValue));
+    return true;
+}
+
 
 void Settings::updateConfig(const QString path) {
 
@@ -131,21 +147,18 @@ void Settings::updateConfig(const QString path) {
     loadInteger(sLowLimit, lowLimit, 5, 99);
     loadInteger(sHighLimit, highLimit, 6, 100);
 
+    loadString(sNotificationTitle, notificationTitle);
+    loadString(sNotificationLowText, notificationLowText);
+    loadString(sNotificationHighText, notificationHighText);
+
     // Update log level
     int oldLogLevel = logLevel;
     loadInteger(sLogLevel, logLevel, 0, 2);
-        if(oldLogLevel != logLevel) {
+    if(oldLogLevel != logLevel) {
         logger->debug = (logLevel == 2);
         logger->verbose = (logLevel > 1);
         logE(QString("Log level set to %1").arg((logLevel == 0 ? "low" : (logLevel == 1 ? "medium" : "high"))));
     }
-
-
-    // These are translated in the GUI application
-    // and delivered here via the config file
-    notificationTitle = mySettings->value(sNotificationTitle, "Battery charge %1%").toString();
-    notificationLowText = mySettings->value(sNotificationLowText, "Please connect the charger.").toString();
-    notificationHighText = mySettings->value(sNotificationHighText, "Please disconnect the charger.").toString();
 
     delete mySettings;
     mySettings = nullptr;

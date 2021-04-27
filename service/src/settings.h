@@ -94,7 +94,8 @@ private:
     const char* sLogFilename = "logFilename";
     const char* sLogLevel = "logLevel";
 
-    bool loadInteger(const char *key, int &value, const int min, const int max);
+    bool loadInteger(const char *key, int &currValue, const int min, const int max);
+    bool loadString(const char *key, QString & currValue);
 
 private slots:
     void updateConfig(const QString path);

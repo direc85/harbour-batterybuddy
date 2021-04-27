@@ -37,25 +37,20 @@ Settings::Settings(Logger *newLogger, QObject *parent) : QObject(parent)
     loadInteger(sLowLimit, lowLimit, 5, 99);
     loadInteger(sHighLimit, highLimit, 6, 100);
     loadInteger(sLogLevel, logLevel, 0, 2);
-    logFilename = mySettings->value(sLogFilename).toString();
 
-    notificationTitle = tr("Battery charge %1%");
-    notificationLowText = tr("Please connect the charger.");
-    notificationHighText = tr("Please disconnect the charger.");
+    loadString(sLogFilename, logFilename);
+
+    loadString(sNotificationTitle, notificationTitle);
+    loadString(sNotificationLowText, notificationLowText);
+    loadString(sNotificationHighText, notificationHighText);
+
+    saveString(sNotificationTitle, tr("Battery charge %1%"), notificationTitle);
+    saveString(sNotificationLowText, tr("Please connect the charger."), notificationLowText);
+    saveString(sNotificationHighText, tr("Please disconnect the charger."), notificationHighText);
 }
 
 Settings::~Settings()
 {
-    saveInteger(sLowAlert, lowAlert);
-    saveInteger(sHighAlert, highAlert);
-    saveInteger(sHighNotificationsInterval, highNotificationsInterval);
-    saveInteger(sLowNotificationsInterval, lowNotificationsInterval);
-    saveInteger(sLimitEnabled, limitEnabled);
-    saveInteger(sLowLimit, lowLimit);
-    saveInteger(sHighLimit, highLimit);
-    mySettings->setValue(sNotificationTitle, notificationTitle);
-    mySettings->setValue(sNotificationLowText, notificationLowText);
-    mySettings->setValue(sNotificationHighText, notificationHighText);
     mySettings->sync();
     logV(QString("Settings saved: %1").arg(mySettings->status() == QSettings::NoError));
 }
@@ -77,92 +72,105 @@ QString Settings::getNotificationHighText()      { return notificationHighText; 
 int     Settings::getLogLevel()                  { return logLevel; }
 
 void Settings::setLowAlert(const int newLimit) {
-    lowAlert = newLimit;
-    saveInteger(sLowAlert, lowAlert);
-    // Lows and highs are always saved in pairs!
-    //mySettings->sync();
-    emit lowAlertChanged(lowAlert);
-    logD(QString("%1 %2").arg(sLowAlert).arg(newLimit));
+    if(saveInteger(sLowAlert, newLimit, lowAlert)) {
+        emit lowAlertChanged(lowAlert);
+    }
 }
 
 void Settings::setHighAlert(const int newLimit) {
-    highAlert = newLimit;
-    saveInteger(sHighAlert, highAlert);
-    mySettings->sync();
-    emit highAlertChanged(highAlert);
+    if(saveInteger(sHighAlert, newLimit, highAlert)) {
+        emit highAlertChanged(highAlert);
+    }
 }
 
 void Settings::setHighNotificationsInterval(const int newInterval) {
-    highNotificationsInterval = newInterval;
-    saveInteger(sHighNotificationsInterval, highNotificationsInterval);
-    mySettings->sync();
-    emit highNotificationsIntervalChanged(highNotificationsInterval);
+    if(saveInteger(sHighNotificationsInterval, newInterval, highNotificationsInterval)) {
+        emit highNotificationsIntervalChanged(highNotificationsInterval);
+    }
 }
 
 void Settings::setLowNotificationsInterval(const int newInterval) {
-    lowNotificationsInterval = newInterval;
-    saveInteger(sLowNotificationsInterval, lowNotificationsInterval);
-    mySettings->sync();
-    emit highNotificationsIntervalChanged(lowNotificationsInterval);
+    if(saveInteger(sLowNotificationsInterval, newInterval, lowNotificationsInterval)) {
+        emit highNotificationsIntervalChanged(lowNotificationsInterval);
+    }
 }
 
 void Settings::setLowLimit(const int newLimit) {
-    lowLimit = newLimit;
-    saveInteger(sLowLimit, lowLimit);
-    // Lows and highs are always saved in pairs!
-    //mySettings->sync();
-    emit lowLimitChanged(lowLimit);
+    if(saveInteger(sLowLimit, newLimit, lowLimit)) {
+        emit lowLimitChanged(lowLimit);
+    }
 }
 
 void Settings::setHighLimit(const int newLimit) {
-    highLimit = newLimit;
-    saveInteger(sHighLimit, highLimit);
-    mySettings->sync();
-    emit highLimitChanged(highLimit);
+    if(saveInteger(sHighLimit, newLimit, highLimit))
+        emit highLimitChanged(highLimit);
 }
 
 void Settings::setLimitEnabled(const bool newEnabled) {
-    limitEnabled = (newEnabled ? 1 : 0);
-    saveInteger(sLimitEnabled, limitEnabled);
-    mySettings->sync();
-    emit limitEnabledChanged(limitEnabled);
+    if(saveInteger(sLimitEnabled, (newEnabled ? 1 : 0), limitEnabled))
+        emit limitEnabledChanged(limitEnabled);
 }
 
 void Settings::setNotificationTitle(const QString newText) {
-    notificationTitle = QString(newText).replace("\"", "\\\"");
-    mySettings->setValue(sNotificationTitle, notificationTitle);
-    mySettings->sync();
-    emit notificationTitleChanged(notificationTitle);
+    if(saveString(sNotificationTitle, newText, notificationTitle))
+        emit notificationTitleChanged(notificationTitle);
 }
 
 void Settings::setNotificationLowText(const QString newText) {
-    notificationLowText = QString(newText).replace("\"", "\\\"");
-    mySettings->setValue(sNotificationLowText, notificationLowText);
-    mySettings->sync();
-    emit notificationLowTextChanged(notificationLowText);
+    if(saveString(sNotificationLowText, newText, notificationLowText))
+        emit notificationLowTextChanged(notificationLowText);
 }
 
 void Settings::setNotificationHighText(const QString newText) {
-    notificationHighText = QString(newText).replace("\"", "\\\"");
-    mySettings->setValue(sNotificationHighText, notificationHighText);
-    mySettings->sync();
-    emit notificationHighTextChanged(notificationHighText);
+    if(saveString(sNotificationHighText, newText, notificationHighText))
+        emit notificationHighTextChanged(notificationHighText);
 }
 
 void Settings::setLogLevel(const int newLogLevel) {
-    logLevel = newLogLevel;
-    saveInteger(sLogLevel, logLevel);
-    mySettings->sync();
-    emit logLevelChanged(logLevel);
+    if(saveInteger(sLogLevel, newLogLevel, logLevel))
+        emit logLevelChanged(logLevel);
 }
 
-void Settings::loadInteger(const char *key, int &value, const int min, const int max) {
-    int newValue = mySettings->value(key, value).toInt();
-    value = (newValue <= min ? min : (newValue >= max ? max : newValue));
-    logV(QString("Load: %1 %2").arg(key).arg(value));
+bool Settings::loadInteger(const char *key, int &currValue, const int min, const int max) {
+    int newValue = mySettings->value(key, currValue).toInt();
+    newValue = (newValue <= min ? min : (newValue >= max ? max : newValue));
+    if(currValue == newValue) {
+        logD(QString("Load: %1 %2 (unchanged)").arg(key).arg(currValue));
+        return false;
+    }
+    currValue = newValue;
+    logV(QString("Load: %1 %2").arg(key).arg(currValue));
+    return true;
 }
 
-void Settings::saveInteger(const char* key, const int &value) {
-    mySettings->setValue(key, QByteArray::number(value));
-    logV(QString("Save: %1 %2").arg(key).arg(value));
+bool Settings::loadString(const char *key, QString & currValue) {
+    QString newValue = mySettings->value(key, currValue).toString();
+    if(currValue == newValue) {
+        logD(QString("Load: %1 %2 (unchanged)").arg(key).arg(currValue));
+        return false;
+    }
+    currValue = newValue;
+    logV(QString("Load: %1 %2").arg(key).arg(currValue));
+    return true;
+}
+
+bool Settings::saveInteger(const char* key, const int &newValue, int &currValue) {
+    if(currValue == newValue) {
+        logD(QString("Save: %1 %2 (unchanged)").arg(key).arg(currValue));
+        return false;
+    }
+    currValue = newValue;
+    mySettings->setValue(key, QByteArray::number(newValue));
+    logV(QString("Save: %1 %2").arg(key).arg(newValue));
+    return true;
+}
+
+bool Settings::saveString(const char* key, const QString &newValue, QString &currValue) {
+    if(currValue == newValue) {
+        return false;
+    }
+    currValue = newValue;
+    mySettings->setValue(key, QString(newValue).replace("\"", "\\\"").toUtf8());
+    logV(QString("Save: %1 %2").arg(key).arg(newValue));
+    return true;
 }
