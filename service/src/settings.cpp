@@ -147,9 +147,9 @@ void Settings::updateConfig(const QString path) {
     loadInteger(sLowLimit, lowLimit, 5, 99);
     loadInteger(sHighLimit, highLimit, 6, 100);
 
-    loadString(sNotificationTitle, notificationTitle);
-    loadString(sNotificationLowText, notificationLowText);
-    loadString(sNotificationHighText, notificationHighText);
+    notificationTitle = mySettings->value(sNotificationTitle, notificationTitle).toString();
+    notificationLowText = mySettings->value(sNotificationLowText, notificationLowText).toString();
+    notificationHighText = mySettings->value(sNotificationHighText, notificationHighText).toString();
 
     // Update log level
     int oldLogLevel = logLevel;
