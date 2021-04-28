@@ -115,18 +115,6 @@ bool Settings::loadInteger(const char *key, int &currValue, const int min, const
     return true;
 }
 
-bool Settings::loadString(const char *key, QString & currValue) {
-    QString newValue = mySettings->value(key, currValue).toString();
-    if(currValue == newValue) {
-        logD(QString("Load: %1 %2 (unchanged)").arg(key).arg(currValue));
-        return false;
-    }
-    currValue = newValue;
-    logV(QString("Load: %1 %2").arg(key).arg(currValue));
-    return true;
-}
-
-
 void Settings::updateConfig(const QString path) {
 
     // Use the same file location as GUI for data exchange
