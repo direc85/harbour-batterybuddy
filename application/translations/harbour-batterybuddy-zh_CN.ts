@@ -155,34 +155,34 @@
     <name>LogPage</name>
     <message>
         <source>View log</source>
-        <translation type="unfinished"></translation>
+        <translation>查看日志</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>更新</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>复制</translation>
     </message>
     <message>
         <source>Log level</source>
-        <translation type="unfinished"></translation>
+        <translation>日志级别</translation>
     </message>
     <message>
         <source>Quiet</source>
         <comment>Low log setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>安静</translation>
     </message>
     <message>
         <source>Verbose</source>
         <comment>Medium log setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>冗长</translation>
     </message>
     <message>
         <source>Debug</source>
         <comment>High log setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>排除故障</translation>
     </message>
 </context>
 <context>
@@ -356,15 +356,15 @@
     </message>
     <message>
         <source>Once</source>
-        <translation type="unfinished"></translation>
+        <translation>仅一次</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>绝不</translation>
     </message>
     <message>
         <source>View log</source>
-        <translation type="unfinished"></translation>
+        <translation>查看日志</translation>
     </message>
 </context>
 </TS>
