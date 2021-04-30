@@ -5,7 +5,7 @@
     <name>AboutPage</name>
     <message>
         <source>Battery Buddy is a small and simple utility designed to improve the lifetime of the battery.</source>
-        <translation>A Battery Buddy egy apró és egyszerű segédprogram, amely az akkumulátor élethossza megnövelésének céljából alkottak.</translation>
+        <translation>A Battery Buddy egy apró és egyszerű segédprogram, amelyet az akkumulátor élethossza megnövelésének céljából alkottak.</translation>
     </message>
     <message>
         <source>Version</source>
@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>Battery Buddy is a small and simple utility designed to improve the lifetime of the battery.</source>
-        <translation>A Battery Buddy egy apró és egyszerű segédprogram, amely az akkumulátor élethossza megnövelésének céljából alkottak.</translation>
+        <translation>A Battery Buddy egy apró és egyszerű segédprogram, amelyet az akkumulátor élethossza megnövelésének céljából alkottak.</translation>
     </message>
     <message>
         <source>It simply monitors the battery level and if it has been charged above the limit, it plays a sound and displays a notification.</source>
@@ -79,11 +79,11 @@
     </message>
     <message>
         <source>Lithium-based batteries do not last forever. Every charge and discharge wear out the battery a small amount. This is normal and currently unavoidable.</source>
-        <translation>Alítium alapú akkumulátorok nem örök életűek. Minden töltés és lemerülés kissé elhasználja az akkut. Ez normális, és jelenleg elkerülhetetlen.</translation>
+        <translation>A lítium alapú akkumulátorok nem örök életűek. Minden töltés és lemerülés kissé elhasználja az akkut. Ez normális, és jelenleg elkerülhetetlen.</translation>
     </message>
     <message>
         <source>A full charge from 0% to 100% stresses the battery more than, say, charging from 25% to 75%.</source>
-        <translation>Egy teljes 0%-100%-os töltés nagyobb stressznek tesziki az akkumulátort, mint mondjuk egy 25%-75%-os.</translation>
+        <translation>Egy teljes 0%-100%-os töltés nagyobb stressznek teszi ki az akkumulátort, mint mondjuk egy 25%-75%-os.</translation>
     </message>
     <message>
         <source>Charging and discharging the battery lowers the capacity over time. Small discharge wears out the capacity slower than a deep discharge and a full recharge.</source>
@@ -131,7 +131,7 @@
     </message>
     <message>
         <source>Uninstall battery-hungry applications you don&apos;t use. Reboot your device every now and then in order to keep it running flawlessly.</source>
-        <translation>Távolítsd el a nem használt energiazabáló alkalmazásokat. Néha indítsd újra a készülékedet, a gyors működés érdekében.</translation>
+        <translation>Távolítsd el a nem használt, energiazabáló alkalmazásokat. Néha indítsd újra a készülékedet, a gyors működés érdekében.</translation>
     </message>
     <message>
         <source>Use flight mode overnight whenever possible in order to cut power usage down. Powering the device off and on again may use a lot more battery than you think!</source>
@@ -139,7 +139,7 @@
     </message>
     <message>
         <source>Don&apos;t use your phone in hot or cold environments. In the winter keep the phone in your pocket near your body (but take note of the moisture) and use a handsfree device. Extreme temperatures are bad for the battery.</source>
-        <translation>Ne használd a készüléket nagyon forró, vagy hideg környezetben. Télen tartsd a telefonod a zsebedben a testedhez közel (), és használj handsfree eszközt. Az extrém hőmérséklet árt az akkumulátornak.</translation>
+        <translation>Ne használd a készüléket nagyon forró, vagy hideg környezetben. Télen tartsd a telefonod a zsebedben a testedhez közel (de figyelj a nedvességtartalomra), és használj handsfree eszközt. Az extrém hőmérséklet árt az akkumulátornak.</translation>
     </message>
     <message>
         <source>I want to know more!</source>
@@ -255,7 +255,7 @@
     </message>
     <message>
         <source>Background service</source>
-        <translation></translation>
+        <translation>Háttérfolyamat</translation>
     </message>
     <message>
         <source>If notifications misbehave or there are problems with charger control, restarting the background service should help.</source>
