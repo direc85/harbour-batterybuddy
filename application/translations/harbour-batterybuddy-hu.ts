@@ -202,7 +202,7 @@
     <message>
         <source>yes</source>
         <translation>igen</translation>
-    </message>"
+    </message>
     <message>
         <source>no</source>
         <translation>nem</translation>
