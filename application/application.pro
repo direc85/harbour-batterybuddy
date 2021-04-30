@@ -62,7 +62,14 @@ DISTFILES += qml/harbour-batterybuddy.qml \
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 
-TRANSLATIONS += translations/*.ts
+TRANSLATIONS += translations/harbour-batterybuddy.ts \
+   translations/harbour-batterybuddy-de_DE.ts \
+   translations/harbour-batterybuddy-fi.ts \
+   translations/harbour-batterybuddy-fr.ts \
+   translations/harbour-batterybuddy-hu.ts \
+   translations/harbour-batterybuddy-pl.ts \
+   translations/harbour-batterybuddy-sv.ts \
+   translations/harbour-batterybuddy-zh_CN.ts
 
 # Executable provided by "service.pro"
 # Two services, actually
