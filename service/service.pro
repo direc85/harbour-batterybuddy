@@ -8,7 +8,7 @@ PKGCONFIG += nemonotifications-qt5
 
 # Keep this in sync with "application.pro"
 VER = 3.12
-REL = 2
+REL = 3
 
 VERSION = $${VER}-$${REL}
 DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"
