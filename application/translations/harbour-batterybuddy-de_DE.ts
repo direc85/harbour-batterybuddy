@@ -395,19 +395,19 @@
     </message>
     <message>
         <source>Display visual and audible notifications about battery health, when the battery temperature is below or above safe values.</source>
-        <translation>Visuelle und akustische Benachrichtigungen zum Batteriezustand anzeigen, sobald die Temperatur über gewissen Schwellwerten liegt.</translation>
+        <translation type="vanished">Visuelle und akustische Benachrichtigungen zum Batteriezustand anzeigen, sobald die Temperatur über gewissen Schwellwerten liegt.</translation>
     </message>
     <message>
         <source>Battery health notification</source>
-        <translation>Zustandsbenachrichtigung</translation>
+        <translation type="vanished">Zustandsbenachrichtigung</translation>
     </message>
     <message>
         <source>Warn on Health status:</source>
-        <translation>Benachrichtigung bei Zustand:</translation>
+        <translation type="vanished">Benachrichtigung bei Zustand:</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Keine</translation>
+        <translation type="vanished">Keine</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -419,6 +419,22 @@
     </message>
     <message>
         <source>Battery health warning interval</source>
+        <translation type="vanished">Zustandsbenachrichtigungsintervall</translation>
+    </message>
+    <message>
+        <source>Display visual and audible notifications about battery health, when the battery status exceeds safe values.&lt;br /&gt;This usually means high temperature but can be affected by other factors depending on the hardware.</source>
+        <translation>Visuelle und akustische Benachrichtigungen zum Batteriezustand anzeigen, sobald gewisse Schwellwerte erreicht werden.&lt;br /&gt;Das betrifft meist die Temperatur, kann aber je nach Hardware auch andere Faktoren beinhalten.</translation>
+    </message>
+    <message>
+        <source>Health notification</source>
+        <translation>Zustandsbenachrichtigung</translation>
+    </message>
+    <message>
+        <source>Notify on Health status:</source>
+        <translation>Benachrichtigung zum Zustand:</translation>
+    </message>
+    <message>
+        <source>Health notification interval</source>
         <translation>Zustandsbenachrichtigungsintervall</translation>
     </message>
 </context>
