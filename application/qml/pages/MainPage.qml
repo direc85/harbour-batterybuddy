@@ -177,9 +177,7 @@ Page {
                     }
                     MyDetailItem {
                         label: qsTr("Temperature:")
-                        // TODO: use weird degrees for US users
-                        //value: useImperial ? celsiusToFahrenheit(battery.temperature) + " F" : Math.floor(battery.temperature / 10) + " °C"
-                        value: Math.floor(battery.temperature / 10) + " °C"
+                        value: (Qt.locale().measurementSystem == Locale.ImperialUSSystem) ? Math.floor((battery.temperature / 10) * 1.8 + 32) + " F" : Math.floor(battery.temperature / 10) + " °C"
                     }
                 }
             }
