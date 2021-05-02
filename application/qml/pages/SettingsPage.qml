@@ -43,7 +43,7 @@ Page {
             highLimitSlider.value = settings.highLimit
             lowLimitSlider.value = settings.lowLimit
             highAlertSlider.value = settings.highAlert
-            healthAlertSlider.value = settings.healthAlert
+            healthSelector.currentIndex = settings.healthAlert
             lowAlertSlider.value = settings.lowAlert
             highIntervalSlider.value = settings.highNotificationsInterval
             lowIntervalSlider.value = settings.lowNotificationsInterval
@@ -368,28 +368,39 @@ Page {
                     largeChange: 60
                 }
 
+                Label {
+                    x: Theme.paddingLarge
+                    text: qsTr("Health Notification settings")
+                    color: Theme.highlightColor
+                }
+                Label {
+                    text: qsTr("Display visual and audible notifications about battery health, when the battery temperature is below or above safe values.")
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        leftMargin: Theme.horizontalPageMargin*2
+                        rightMargin: Theme.horizontalPageMargin
+                    }
+                    color: Theme.primaryColor
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    wrapMode: Text.Wrap
+                }
+
                 SectionHeader { text: qsTr("Battery health notification") }
 
-                MySlider {
-                    id: healthAlertSlider
-                    minimumValue: 0
-                    maximumValue: 2
-                    stepSize: 1
-                    onValueChanged: {
-                        if(healthAlertSlider.value <= value)
-                            healthAlertSlider.value = value + 1
+                ComboBox {
+                    id: healthSelector
+                    width: parent.width
+                    label: qsTr("Warn on Health status" + ":")
+                    currentIndex: settings.healthAlert
+                    menu: ContextMenu {
+                        MenuItem { text: qsTr("None") }
+                        MenuItem { text: qsTr("Warning") }
+                        MenuItem { text: qsTr("Critical") }
                     }
-                    valueText: {
-                      if (value === 0)
-                        return "None"
-                      if (value === 1)
-                        return "Warning"
-                      if (value === 2)
-                        return "Critical"
-                    }
-                    onReleased: save()
-                    function save(){
-                        settings.healthAlert = value
+                    onValueChanged: save()
+                    function save() {
+                        settings.healthAlert = healthSelector.currentIndex
                     }
                 }
 

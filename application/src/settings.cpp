@@ -31,8 +31,10 @@ Settings::Settings(Logger *newLogger, QObject *parent) : QObject(parent)
     // Read in the values
     loadInteger(sLowAlert, lowAlert, 5, 99);
     loadInteger(sHighAlert, highAlert, 6, 100);
+    loadInteger(sHealthAlert, healthAlert, 0, 2);
     loadInteger(sHighNotificationsInterval, highNotificationsInterval, 50, 610);
     loadInteger(sLowNotificationsInterval, lowNotificationsInterval, 50, 610);
+    loadInteger(sHealthNotificationsInterval, healthNotificationsInterval, 50, 610);
     loadInteger(sLimitEnabled, limitEnabled, 0, 1);
     loadInteger(sLowLimit, lowLimit, 5, 99);
     loadInteger(sHighLimit, highLimit, 6, 100);
@@ -43,10 +45,12 @@ Settings::Settings(Logger *newLogger, QObject *parent) : QObject(parent)
     loadString(sNotificationTitle, notificationTitle);
     loadString(sNotificationLowText, notificationLowText);
     loadString(sNotificationHighText, notificationHighText);
+    loadString(sNotificationHealthText, notificationHealthText);
 
     saveString(sNotificationTitle, tr("Battery charge %1%"), notificationTitle);
     saveString(sNotificationLowText, tr("Please connect the charger."), notificationLowText);
     saveString(sNotificationHighText, tr("Please disconnect the charger."), notificationHighText);
+    saveString(sNotificationHealthText, tr("Battery health"), notificationHealthText);
 }
 
 Settings::~Settings()
@@ -105,6 +109,12 @@ void Settings::setLowNotificationsInterval(const int newInterval) {
     }
 }
 
+void Settings::setHealthNotificationsInterval(const int newInterval) {
+    if(saveInteger(sHealthNotificationsInterval, newInterval, healthNotificationsInterval)) {
+        emit healthNotificationsIntervalChanged(healthNotificationsInterval);
+    }
+}
+
 void Settings::setLowLimit(const int newLimit) {
     if(saveInteger(sLowLimit, newLimit, lowLimit)) {
         emit lowLimitChanged(lowLimit);
@@ -134,6 +144,11 @@ void Settings::setNotificationLowText(const QString newText) {
 void Settings::setNotificationHighText(const QString newText) {
     if(saveString(sNotificationHighText, newText, notificationHighText))
         emit notificationHighTextChanged(notificationHighText);
+}
+
+void Settings::setNotificationHealthText(const QString newText) {
+    if(saveString(sNotificationHealthText, newText, notificationHealthText))
+        emit notificationHealthTextChanged(notificationHealthText);
 }
 
 void Settings::setLogLevel(const int newLogLevel) {
