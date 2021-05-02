@@ -298,6 +298,16 @@
         <source>Temperature:</source>
         <translation>Temperatur:</translation>
     </message>
+    <message>
+        <source>Cool</source>
+        <comment>Battery is cool</comment>
+        <translation>der Batterie ist kalt</translation>
+    </message>
+    <message>
+        <source>Cold</source>
+        <comment>Battery is very cold</comment>
+        <translation>der Batterie ist sehr kalt</translation>
+    </message>
 </context>
 <context>
     <name>Settings</name>
@@ -423,7 +433,7 @@
     </message>
     <message>
         <source>Display visual and audible notifications about battery health, when the battery status exceeds safe values.&lt;br /&gt;This usually means high temperature but can be affected by other factors depending on the hardware.</source>
-        <translation>Visuelle und akustische Benachrichtigungen zum Batteriezustand anzeigen, sobald gewisse Schwellwerte erreicht werden.&lt;br /&gt;Das betrifft meist die Temperatur, kann aber je nach Hardware auch andere Faktoren beinhalten.</translation>
+        <translation type="vanished">Visuelle und akustische Benachrichtigungen zum Batteriezustand anzeigen, sobald gewisse Schwellwerte erreicht werden.&lt;br /&gt;Das betrifft meist die Temperatur, kann aber je nach Hardware auch andere Faktoren beinhalten.</translation>
     </message>
     <message>
         <source>Health notification</source>
@@ -436,6 +446,10 @@
     <message>
         <source>Health notification interval</source>
         <translation>Zustandsbenachrichtigungsintervall</translation>
+    </message>
+    <message>
+        <source>Display visual and audible notifications when the battery status exceeds safe values.&lt;br /&gt;This usually means high (or low) temperature but can include other parameters depending on the hardware.</source>
+        <translation type="vanished">Visuelle und akustische Benachrichtigungen anzeigen, wenn gewissen Schwellwerte erreicht werden. Meistens gilt das fuer die Temperatur, aber je nach Hardware koennen auch andere Faktoren zu einer Meldung fuehren.</translation>
     </message>
 </context>
 </TS>

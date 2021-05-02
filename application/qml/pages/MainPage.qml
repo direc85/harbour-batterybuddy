@@ -35,6 +35,8 @@ Page {
         "good": qsTr("Good", "Battery is OK"),
         "warm": qsTr("Warm", "Battery is warm"),
         "overheat": qsTr("Overheated", "Battery is very hot"),
+        "cool": qsTr("Cool", "Battery is cool"),
+        "cold": qsTr("Cold", "Battery is very cold"),
     }
     property bool serviceRunning: true
 
