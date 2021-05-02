@@ -40,7 +40,9 @@ class Settings : public QObject
     Q_PROPERTY(QString notificationTitle READ getNotificationTitle WRITE setNotificationTitle NOTIFY notificationTitleChanged)
     Q_PROPERTY(QString notificationLowText READ getNotificationLowText WRITE setNotificationLowText NOTIFY notificationLowTextChanged)
     Q_PROPERTY(QString notificationHighText READ getNotificationHighText WRITE setNotificationHighText NOTIFY notificationHighTextChanged)
-    Q_PROPERTY(QString notificationHealthText READ getNotificationHealthText WRITE setNotificationHealthText NOTIFY notificationHealthTextChanged)
+    Q_PROPERTY(QString notificationHealthTitle READ getNotificationHealthTitle WRITE setNotificationHealthTitle NOTIFY notificationHealthTitleChanged)
+    Q_PROPERTY(QString notificationHealthWarnText READ getNotificationHealthWarnText WRITE setNotificationHealthWarnText NOTIFY notificationHealthWarnTextChanged)
+    Q_PROPERTY(QString notificationHealthCritText READ getNotificationHealthCritText WRITE setNotificationHealthCritText NOTIFY notificationHealthCritTextChanged)
     Q_PROPERTY(QString logFilename READ getLogFilename NOTIFY logFilenameChanged)
     Q_PROPERTY(int logLevel READ getLogLevel WRITE setLogLevel NOTIFY logLevelChanged)
 
@@ -63,7 +65,9 @@ public:
     QString getNotificationTitle();
     QString getNotificationLowText();
     QString getNotificationHighText();
-    QString getNotificationHealthText();
+    QString getNotificationHealthTitle();
+    QString getNotificationHealthWarnText();
+    QString getNotificationHealthCritText();
     QString getLogFilename();
     int getLogLevel();
 
@@ -79,7 +83,9 @@ public:
     void setNotificationTitle(const QString newText);
     void setNotificationLowText(const QString newText);
     void setNotificationHighText(const QString newText);
-    void setNotificationHealthText(const QString newText);
+    void setNotificationHealthTitle(const QString newText);
+    void setNotificationHealthWarnText(const QString newText);
+    void setNotificationHealthCritText(const QString newText);
     void setLogLevel(const int newLogLevel);
 
 private:
@@ -103,7 +109,9 @@ private:
     QString notificationTitle;
     QString notificationLowText;
     QString notificationHighText;
-    QString notificationHealthText;
+    QString notificationHealthTitle;
+    QString notificationHealthWarnText;
+    QString notificationHealthCritText;
     QString logFilename;
     int logLevel;
 
@@ -123,7 +131,9 @@ private:
     const char* sNotificationTitle = "notificationTitle";
     const char* sNotificationLowText = "notificationLowText";
     const char* sNotificationHighText = "notificationHighText";
-    const char* sNotificationHealthText = "notificationHealthText";
+    const char* sNotificationHealthTitle = "notificationHealthTitle";
+    const char* sNotificationHealthWarnText = "notificationHealthWarnText";
+    const char* sNotificationHealthCritText = "notificationHealthCritText";
     const char* sLogFilename = "logFilename";
     const char* sLogLevel = "logLevel";
 
@@ -149,7 +159,9 @@ signals:
     void notificationTitleChanged(QString);
     void notificationLowTextChanged(QString);
     void notificationHighTextChanged(QString);
-    void notificationHealthTextChanged(QString);
+    void notificationHealthTitleChanged(QString);
+    void notificationHealthWarnTextChanged(QString);
+    void notificationHealthCritTextChanged(QString);
     void logFilenameChanged(QString);
     void logLevelChanged(int);
 };

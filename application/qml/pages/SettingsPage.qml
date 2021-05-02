@@ -374,7 +374,7 @@ Page {
                     color: Theme.highlightColor
                 }
                 Label {
-                    text: qsTr("Display visual and audible notifications about battery health, when the battery temperature is below or above safe values.")
+                    text: qsTr("Display visual and audible notifications about battery health, when the battery status exceeds safe values.<br />This usually means high temperature but can be affected by other factors depending on the hardware.")
                     anchors {
                         left: parent.left
                         right: parent.right
@@ -386,15 +386,15 @@ Page {
                     wrapMode: Text.Wrap
                 }
 
-                SectionHeader { text: qsTr("Battery health notification") }
+                SectionHeader { text: qsTr("Health notification") }
 
                 ComboBox {
                     id: healthSelector
                     width: parent.width
-                    label: qsTr("Warn on Health status" + ":")
+                    label: qsTr("Notify on Health status" + ":")
                     currentIndex: settings.healthAlert
                     menu: ContextMenu {
-                        MenuItem { text: qsTr("None") }
+                        MenuItem { text: qsTr("Never") }
                         MenuItem { text: qsTr("Warning") }
                         MenuItem { text: qsTr("Critical") }
                     }
@@ -404,7 +404,7 @@ Page {
                     }
                 }
 
-                SectionHeader { text: qsTr("Battery health warning interval") }
+                SectionHeader { text: qsTr("Health notification interval") }
 
                 MySlider {
                     id: healthIntervalSlider

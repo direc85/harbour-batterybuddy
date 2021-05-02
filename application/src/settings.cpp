@@ -45,12 +45,16 @@ Settings::Settings(Logger *newLogger, QObject *parent) : QObject(parent)
     loadString(sNotificationTitle, notificationTitle);
     loadString(sNotificationLowText, notificationLowText);
     loadString(sNotificationHighText, notificationHighText);
-    loadString(sNotificationHealthText, notificationHealthText);
+    loadString(sNotificationHealthTitle, notificationHealthTitle);
+    loadString(sNotificationHealthWarnText, notificationHealthWarnText);
+    loadString(sNotificationHealthCritText, notificationHealthCritText);
 
     saveString(sNotificationTitle, tr("Battery charge %1%"), notificationTitle);
     saveString(sNotificationLowText, tr("Please connect the charger."), notificationLowText);
     saveString(sNotificationHighText, tr("Please disconnect the charger."), notificationHighText);
-    saveString(sNotificationHealthText, tr("Battery health"), notificationHealthText);
+    saveString(sNotificationHealthTitle, tr("Battery health %1"), notificationHealthTitle);
+    saveString(sNotificationHealthWarnText, tr("Battery health is not good"), notificationHealthWarnText);
+    saveString(sNotificationHealthCritText, tr("Battery health is critical"), notificationHealthCritText);
 }
 
 Settings::~Settings()
@@ -76,7 +80,9 @@ QString Settings::getLogFilename()                 { return logFilename; }
 QString Settings::getNotificationTitle()           { return notificationTitle; }
 QString Settings::getNotificationLowText()         { return notificationLowText; }
 QString Settings::getNotificationHighText()        { return notificationHighText; }
-QString Settings::getNotificationHealthText()      { return notificationHealthText; }
+QString Settings::getNotificationHealthTitle()         { return notificationHealthTitle; }
+QString Settings::getNotificationHealthWarnText()      { return notificationHealthWarnText; }
+QString Settings::getNotificationHealthCritText()      { return notificationHealthCritText; }
 int     Settings::getLogLevel()                    { return logLevel; }
 
 void Settings::setLowAlert(const int newLimit) {
@@ -146,9 +152,19 @@ void Settings::setNotificationHighText(const QString newText) {
         emit notificationHighTextChanged(notificationHighText);
 }
 
-void Settings::setNotificationHealthText(const QString newText) {
-    if(saveString(sNotificationHealthText, newText, notificationHealthText))
-        emit notificationHealthTextChanged(notificationHealthText);
+void Settings::setNotificationHealthTitle(const QString newText) {
+    if(saveString(sNotificationHealthTitle, newText, notificationTitle))
+        emit notificationHealthTitleChanged(notificationTitle);
+}
+
+void Settings::setNotificationHealthWarnText(const QString newText) {
+    if(saveString(sNotificationHealthWarnText, newText, notificationHealthWarnText))
+        emit notificationHealthWarnTextChanged(notificationHealthWarnText);
+}
+
+void Settings::setNotificationHealthCritText(const QString newText) {
+    if(saveString(sNotificationHealthCritText, newText, notificationHealthCritText))
+        emit notificationHealthCritTextChanged(notificationHealthCritText);
 }
 
 void Settings::setLogLevel(const int newLogLevel) {
