@@ -91,7 +91,7 @@ void Settings::setHighNotificationsInterval(const int newInterval) {
 
 void Settings::setLowNotificationsInterval(const int newInterval) {
     if(saveInteger(sLowNotificationsInterval, newInterval, lowNotificationsInterval)) {
-        emit highNotificationsIntervalChanged(lowNotificationsInterval);
+        emit lowNotificationsIntervalChanged(lowNotificationsInterval);
     }
 }
 
