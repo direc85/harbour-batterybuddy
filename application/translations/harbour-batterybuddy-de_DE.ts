@@ -156,34 +156,34 @@
     <name>LogPage</name>
     <message>
         <source>View log</source>
-        <translation type="unfinished"></translation>
+        <translation>Logdatei ansehen</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisieren</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopieren</translation>
     </message>
     <message>
         <source>Log level</source>
-        <translation type="unfinished"></translation>
+        <translation>Log Level</translation>
     </message>
     <message>
         <source>Quiet</source>
         <comment>Low log setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Still</translation>
     </message>
     <message>
         <source>Verbose</source>
         <comment>Medium log setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mittel</translation>
     </message>
     <message>
         <source>Debug</source>
         <comment>High log setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Debug</translation>
     </message>
 </context>
 <context>
@@ -275,20 +275,43 @@
         <source>Current:</source>
         <translation>Strom:</translation>
     </message>
+    <message>
+        <source>Good</source>
+        <comment>Battery is OK</comment>
+        <translation>die Batterie ist OK</translation>
+    </message>
+    <message>
+        <source>Warm</source>
+        <comment>Battery is warm</comment>
+        <translation>die Batterie ist warm</translation>
+    </message>
+    <message>
+        <source>Overheated</source>
+        <comment>Battery is very hot</comment>
+        <translation>die Batterie ist sehr heiss</translation>
+    </message>
+    <message>
+        <source>Health:</source>
+        <translation>Zustand:</translation>
+    </message>
+    <message>
+        <source>Temperature:</source>
+        <translation>Temperatur:</translation>
+    </message>
 </context>
 <context>
     <name>Settings</name>
     <message>
         <source>Battery charge %1%</source>
-        <translation>Akkustand %1%</translation>
+        <translation type="vanished">Akkustand %1%</translation>
     </message>
     <message>
         <source>Please connect the charger.</source>
-        <translation>Bitte Ladegerät anschließen.</translation>
+        <translation type="vanished">Bitte Ladegerät anschließen.</translation>
     </message>
     <message>
         <source>Please disconnect the charger.</source>
-        <translation>Bitte Ladegerät trennen.</translation>
+        <translation type="vanished">Bitte Ladegerät trennen.</translation>
     </message>
 </context>
 <context>
@@ -364,7 +387,39 @@
     </message>
     <message>
         <source>View log</source>
-        <translation type="unfinished"></translation>
+        <translation>Logdatei ansehen</translation>
+    </message>
+    <message>
+        <source>Health Notification settings</source>
+        <translation>Einstellungen zur Zustandbenachrichtigung</translation>
+    </message>
+    <message>
+        <source>Display visual and audible notifications about battery health, when the battery temperature is below or above safe values.</source>
+        <translation>Visuelle und akustische Benachrichtigungen zum Batteriezustand anzeigen, sobald die Temperatur über gewissen Schwellwerten liegt.</translation>
+    </message>
+    <message>
+        <source>Battery health notification</source>
+        <translation>Zustandsbenachrichtigung</translation>
+    </message>
+    <message>
+        <source>Warn on Health status:</source>
+        <translation>Benachrichtigung bei Zustand:</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Keine</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Warnung</translation>
+    </message>
+    <message>
+        <source>Critical</source>
+        <translation>Kritisch</translation>
+    </message>
+    <message>
+        <source>Battery health warning interval</source>
+        <translation>Zustandsbenachrichtigungsintervall</translation>
     </message>
 </context>
 </TS>
