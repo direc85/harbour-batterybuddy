@@ -56,20 +56,24 @@ Settings::~Settings()
 }
 
 // Getters condensed.
-int     Settings::getLowAlert()                  { return lowAlert; }
-int     Settings::getHighAlert()                 { return highAlert; }
-int     Settings::getHighNotificationsInterval() { return highNotificationsInterval; }
-int     Settings::getLowNotificationsInterval()  { return lowNotificationsInterval; }
-int     Settings::getLowLimit()                  { return lowLimit; }
-int     Settings::getHighLimit()                 { return highLimit; }
-bool    Settings::getLimitEnabled()              { return limitEnabled == 1; }
-QString Settings::getLowAlertFile()              { return lowAlertFile; }
-QString Settings::getHighAlertFile()             { return highAlertFile; }
-QString Settings::getLogFilename()               { return logFilename; }
-QString Settings::getNotificationTitle()         { return notificationTitle; }
-QString Settings::getNotificationLowText()       { return notificationLowText; }
-QString Settings::getNotificationHighText()      { return notificationHighText; }
-int     Settings::getLogLevel()                  { return logLevel; }
+int     Settings::getLowAlert()                    { return lowAlert; }
+int     Settings::getHighAlert()                   { return highAlert; }
+int     Settings::getHealthAlert()                 { return healthAlert; }
+int     Settings::getHighNotificationsInterval()   { return highNotificationsInterval; }
+int     Settings::getLowNotificationsInterval()    { return lowNotificationsInterval; }
+int     Settings::getHealthNotificationsInterval() { return healthNotificationsInterval; }
+int     Settings::getLowLimit()                    { return lowLimit; }
+int     Settings::getHighLimit()                   { return highLimit; }
+bool    Settings::getLimitEnabled()                { return limitEnabled == 1; }
+QString Settings::getLowAlertFile()                { return lowAlertFile; }
+QString Settings::getHighAlertFile()               { return highAlertFile; }
+QString Settings::getHealthAlertFile()             { return healthAlertFile; }
+QString Settings::getLogFilename()                 { return logFilename; }
+QString Settings::getNotificationTitle()           { return notificationTitle; }
+QString Settings::getNotificationLowText()         { return notificationLowText; }
+QString Settings::getNotificationHighText()        { return notificationHighText; }
+QString Settings::getNotificationHealthText()      { return notificationHealthText; }
+int     Settings::getLogLevel()                    { return logLevel; }
 
 void Settings::setLowAlert(const int newLimit) {
     if(saveInteger(sLowAlert, newLimit, lowAlert)) {
@@ -80,6 +84,12 @@ void Settings::setLowAlert(const int newLimit) {
 void Settings::setHighAlert(const int newLimit) {
     if(saveInteger(sHighAlert, newLimit, highAlert)) {
         emit highAlertChanged(highAlert);
+    }
+}
+
+void Settings::setHealthAlert(const int newLimit) {
+    if(saveInteger(sHealthAlert, newLimit, healthAlert)) {
+        emit healthAlertChanged(healthAlert);
     }
 }
 

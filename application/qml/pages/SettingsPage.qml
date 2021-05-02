@@ -43,9 +43,11 @@ Page {
             highLimitSlider.value = settings.highLimit
             lowLimitSlider.value = settings.lowLimit
             highAlertSlider.value = settings.highAlert
+            healthAlertSlider.value = settings.healthAlert
             lowAlertSlider.value = settings.lowAlert
             highIntervalSlider.value = settings.highNotificationsInterval
             lowIntervalSlider.value = settings.lowNotificationsInterval
+            healthIntervalSlider.value = settings.healthNotificationsInterval
             if(logger.debug) logger.log("SettingsPage values updated")
             daemonCheck.start()
         }
@@ -362,6 +364,59 @@ Page {
 
                 AdjustmentButtons {
                     targetSlider: lowIntervalSlider
+                    smallChange: 10
+                    largeChange: 60
+                }
+
+                SectionHeader { text: qsTr("Battery health notification") }
+
+                MySlider {
+                    id: healthAlertSlider
+                    minimumValue: 0
+                    maximumValue: 2
+                    stepSize: 1
+                    onValueChanged: {
+                        if(healthAlertSlider.value <= value)
+                            healthAlertSlider.value = value + 1
+                    }
+                    valueText: {
+                      if (value === 0)
+                        return "None"
+                      if (value === 1)
+                        return "Warning"
+                      if (value === 2)
+                        return "Critical"
+                    }
+                    onReleased: save()
+                    function save(){
+                        settings.healthAlert = value
+                    }
+                }
+
+                SectionHeader { text: qsTr("Battery health warning interval") }
+
+                MySlider {
+                    id: healthIntervalSlider
+                    minimumValue: 50
+                    maximumValue: 610
+                    stepSize: 10
+                    valueText: updateValueText()
+                    onValueChanged: updateValueText()
+                    function updateValueText() {
+                        if(value == 50)
+                            return qsTr("Once")
+                        if(value == 610)
+                            return qsTr("Never")
+                        return Math.floor(value / 60) + (value % 60 < 10 ? ":0" + value % 60 : ":" + value % 60)
+                    }
+                    onReleased: save()
+                    function save() {
+                        settings.healthNotificationsInterval = value
+                    }
+                }
+
+                AdjustmentButtons {
+                    targetSlider: healthIntervalSlider
                     smallChange: 10
                     largeChange: 60
                 }
