@@ -38,14 +38,6 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     chargerConnectedFile = new QFile("/sys/class/power_supply/usb/present", this);
     logE("Reading charger status from" + chargerConnectedFile->fileName());
 
-    // Number: temperature
-    temperatureFile   = new QFile("/sys/class/power_supply/battery/temp", this);
-    logE("Temperature file: " + temperatureFile->fileName());
-
-    // String: health state
-    healthFile   = new QFile("/sys/class/power_supply/battery/health", this);
-    logE("Health file: " + healthFile->fileName());
-
     QString filename;
 
     // e.g. for Sony Xperia XA2
@@ -120,26 +112,6 @@ void Battery::updateData()
         }
         currentFile->close();
     }
-    if(healthFile && healthFile->open(QIODevice::ReadOnly)) {
-        nextHealth = (QString(healthFile->readLine().trimmed().toLower()));
-        if(nextHealth != health) {
-            health = nextHealth;
-            emit healthChanged(health);
-            logV("Health: " + health);
-        }
-        healthFile->close();
-    }
-    if(temperatureFile && temperatureFile->open(QIODevice::ReadOnly)) {
-        nextTemperature = temperatureFile->readLine().trimmed().toInt();
-        if(nextTemperature != temperature) {
-            temperature = nextTemperature;
-            emit temperatureChanged(temperature);
-            // TODO: factor might be different depending on device
-            // X10 has degrees * 10
-            logD(QString("Temperature: %1°C").arg(temperature / 10));
-        }
-        temperatureFile->close();
-    }
 }
 
 int Battery::getCharge(){ return charge; }
@@ -147,10 +119,6 @@ int Battery::getCharge(){ return charge; }
 int Battery::getCurrent(){ return current; }
 
 QString Battery::getState() { return state; }
-
-QString Battery::getHealth() { return health; }
-
-int Battery::getTemperature(){ return temperature; }
 
 bool Battery::getChargingEnabled() { return chargingEnabled; }
 
