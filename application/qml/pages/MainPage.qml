@@ -31,6 +31,11 @@ Page {
         "empty": qsTr("empty", "Battery fully depleted"),
         "unknown": qsTr("unknown", "Battery not detected, or faulty, or something")
     }
+    property variant healthText: {
+        "good": qsTr("Good", "Battery is OK"),
+        "warm": qsTr("Warm", "Battery is warm"),
+        "overheat": qsTr("Overheated", "Battery is very hot"),
+    }
     property bool serviceRunning: true
 
     Timer {
@@ -165,6 +170,16 @@ Page {
                     MyDetailItem {
                         label: qsTr("State:")
                         value: statusText[battery.state]
+                    }
+                    MyDetailItem {
+                        label: qsTr("Health:")
+                        value: healthText[battery.health]
+                    }
+                    MyDetailItem {
+                        label: qsTr("Temperature:")
+                        // TODO: use weird degrees for US users
+                        //value: useImperial ? celsiusToFahrenheit(battery.temperature) + " F" : Math.floor(battery.temperature / 10) + " °C"
+                        value: Math.floor(battery.temperature / 10) + " °C"
                     }
                 }
             }
