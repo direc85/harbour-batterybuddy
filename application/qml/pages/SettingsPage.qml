@@ -374,7 +374,7 @@ Page {
                     color: Theme.highlightColor
                 }
                 Label {
-                    text: qsTr("Display visual and audible notifications about battery health, when the battery status exceeds safe values.<br />This usually means high temperature but can be affected by other factors depending on the hardware.")
+                    text: qsTr("Display visual and audible notifications when the battery status exceeds safe values.<br />This usually means high (or low) temperature but can include other parameters depending on the hardware.")
                     anchors {
                         left: parent.left
                         right: parent.right

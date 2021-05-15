@@ -92,6 +92,9 @@ Settings::Settings(Logger* newLogger, QObject *parent) : QObject(parent)
     notificationTitle = "Battery charge %1%";
     notificationLowText = "Please connect the charger.";
     notificationHighText = "Please disconnect the charger.";
+    notificationHealthTitle = "Battery health %1";
+    notificationHealthWarnText = "Battery health is not good";
+    notificationHealthCritText = "Battery health is critical";
 
     // Do this here, because...
     watcher = new QFileSystemWatcher(QStringList(mySettings->fileName()), this);
@@ -129,8 +132,10 @@ void Settings::updateConfig(const QString path) {
 
     loadInteger(sLowAlert, lowAlert, 5, 99);
     loadInteger(sHighAlert, highAlert, 6, 100);
+    loadInteger(sHealthAlert, healthAlert, 0, 2);
     restartTimers |= loadInteger(sHighNotificationsInterval, highNotificationsInterval, 50, 610);
     restartTimers |= loadInteger(sLowNotificationsInterval, lowNotificationsInterval, 50, 610);
+    restartTimers |= loadInteger(sHealthNotificationsInterval, healthNotificationsInterval, 50, 610);
     loadInteger(sLimitEnabled, limitEnabled, 0, 1);
     loadInteger(sLowLimit, lowLimit, 5, 99);
     loadInteger(sHighLimit, highLimit, 6, 100);
@@ -138,6 +143,11 @@ void Settings::updateConfig(const QString path) {
     notificationTitle = mySettings->value(sNotificationTitle, notificationTitle).toString();
     notificationLowText = mySettings->value(sNotificationLowText, notificationLowText).toString();
     notificationHighText = mySettings->value(sNotificationHighText, notificationHighText).toString();
+
+    notificationHealthTitle    = mySettings->value(sNotificationHealthTitle, notificationHealthTitle).toString();
+    notificationHealthWarnText = mySettings->value(sNotificationHealthWarnText, notificationHealthWarnText).toString();
+    notificationHealthCritText = mySettings->value(sNotificationHealthCritText, notificationHealthCritText).toString();
+
 
     // Update log level
     int oldLogLevel = logLevel;
@@ -168,16 +178,22 @@ void Settings::updateConfig(const QString path) {
 }
 
 // Getters condensed
-int     Settings::getLowAlert()                  { return lowAlert; }
-int     Settings::getHighAlert()                 { return highAlert; }
-int     Settings::getHighNotificationsInterval() { return highNotificationsInterval; }
-int     Settings::getLowNotificationsInterval()  { return lowNotificationsInterval; }
-int     Settings::getLowLimit()                  { return lowLimit; }
-int     Settings::getHighLimit()                 { return highLimit; }
-bool    Settings::getLimitEnabled()              { return limitEnabled == 1; }
-QString Settings::getLowAlertFile()              { return lowAlertFile; }
-QString Settings::getHighAlertFile()             { return highAlertFile; }
-QString Settings::getNotificationTitle()         { return notificationTitle; }
-QString Settings::getNotificationLowText()       { return notificationLowText; }
-QString Settings::getNotificationHighText()      { return notificationHighText; }
-int     Settings::getLogLevel()                  { return logLevel; }
+int     Settings::getLowAlert()                    { return lowAlert; }
+int     Settings::getHighAlert()                   { return highAlert; }
+int     Settings::getHealthAlert()                 { return healthAlert; }
+int     Settings::getHighNotificationsInterval()   { return highNotificationsInterval; }
+int     Settings::getLowNotificationsInterval()    { return lowNotificationsInterval; }
+int     Settings::getHealthNotificationsInterval() { return healthNotificationsInterval; }
+int     Settings::getLowLimit()                    { return lowLimit; }
+int     Settings::getHighLimit()                   { return highLimit; }
+bool    Settings::getLimitEnabled()                { return limitEnabled == 1; }
+QString Settings::getLowAlertFile()                { return lowAlertFile; }
+QString Settings::getHighAlertFile()               { return highAlertFile; }
+QString Settings::getHealthAlertFile()             { return healthAlertFile; }
+QString Settings::getNotificationTitle()           { return notificationTitle; }
+QString Settings::getNotificationLowText()         { return notificationLowText; }
+QString Settings::getNotificationHighText()        { return notificationHighText; }
+QString Settings::getNotificationHealthTitle()     { return notificationHealthTitle; }
+QString Settings::getNotificationHealthWarnText()  { return notificationHealthWarnText; }
+QString Settings::getNotificationHealthCritText()  { return notificationHealthCritText; }
+int     Settings::getLogLevel()                    { return logLevel; }

@@ -24,6 +24,7 @@
 #include <QFile>
 #include <QStandardPaths>
 #include <QHostInfo>
+#include <QLocale>
 #include "settings.h"
 #include "mynotification.h"
 #include "logger.h"
@@ -44,6 +45,9 @@ public:
     bool getChargingEnabled();
     bool setChargingEnabled(const bool isEnabled);
 
+    int getTemperature();
+    QString getHealth();
+
 public slots:
     void updateData();
     void shutdown();
@@ -54,17 +58,23 @@ private:
     QFile *chargerConnectedFile = nullptr;
     QFile *stateFile = nullptr;
     QFile *chargingEnabledFile = nullptr;
+    QFile *temperatureFile = nullptr;
+    QFile *healthFile = nullptr;
     Settings *settings = nullptr;
     QTimer *updateTimer = nullptr;
     QTimer *highNotifyTimer = nullptr;
     QTimer *lowNotifyTimer = nullptr;
+    QTimer *healthNotifyTimer = nullptr;
     MyNotification *notification = nullptr;
+
 
     // Default values:
     int charge = 100; // 100% full
     bool chargerConnected = false; // Charger plugged in
     QString state = "idle"; // dis/charging, idle, unknown
     bool chargingEnabled = true; // Only ever disabled manually
+    int temperature = 0; // freezing
+    QString health = "Good"; // good, warm, overheat, possibly more
 
     int enableChargingValue = 1;
     int disableChargingValue = 0;
@@ -74,6 +84,8 @@ private:
     bool nextChargerConnected = chargerConnected;
     QString nextState = state;
     bool nextChargingEnabled = chargingEnabled;
+    int nextTemperature = temperature;
+    QString nextHealth = health;
 
     QFileDevice::Permissions originalPerms; // Updated in constructor
     QFileDevice::Permissions customPerms = static_cast<QFileDevice::Permissions>(0x0666);
@@ -83,11 +95,14 @@ signals:
     void stateChanged(QString);
     void chargingEnabledChanged(bool);
     void chargerConnectedChanged(bool);
+    void temperatureChanged(int);
+    void healthChanged(QString);
 
 public slots:
     void resetTimers();
     void showHighNotification();
     void showLowNotification();
+    void showHealthNotification();
 };
 
 #endif // BATTERY_H
