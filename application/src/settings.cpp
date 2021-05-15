@@ -31,8 +31,10 @@ Settings::Settings(Logger *newLogger, QObject *parent) : QObject(parent)
     // Read in the values
     loadInteger(sLowAlert, lowAlert, 5, 99);
     loadInteger(sHighAlert, highAlert, 6, 100);
+    loadInteger(sHealthAlert, healthAlert, 0, 2);
     loadInteger(sHighNotificationsInterval, highNotificationsInterval, 50, 610);
     loadInteger(sLowNotificationsInterval, lowNotificationsInterval, 50, 610);
+    loadInteger(sHealthNotificationsInterval, healthNotificationsInterval, 50, 610);
     loadInteger(sLimitEnabled, limitEnabled, 0, 1);
     loadInteger(sLowLimit, lowLimit, 5, 99);
     loadInteger(sHighLimit, highLimit, 6, 100);
@@ -43,10 +45,16 @@ Settings::Settings(Logger *newLogger, QObject *parent) : QObject(parent)
     loadString(sNotificationTitle, notificationTitle);
     loadString(sNotificationLowText, notificationLowText);
     loadString(sNotificationHighText, notificationHighText);
+    loadString(sNotificationHealthTitle, notificationHealthTitle);
+    loadString(sNotificationHealthWarnText, notificationHealthWarnText);
+    loadString(sNotificationHealthCritText, notificationHealthCritText);
 
     saveString(sNotificationTitle, tr("Battery charge %1%"), notificationTitle);
     saveString(sNotificationLowText, tr("Please connect the charger."), notificationLowText);
     saveString(sNotificationHighText, tr("Please disconnect the charger."), notificationHighText);
+    saveString(sNotificationHealthTitle, tr("Battery health %1"), notificationHealthTitle);
+    saveString(sNotificationHealthWarnText, tr("Battery health is not good"), notificationHealthWarnText);
+    saveString(sNotificationHealthCritText, tr("Battery health is critical"), notificationHealthCritText);
 }
 
 Settings::~Settings()
@@ -56,20 +64,26 @@ Settings::~Settings()
 }
 
 // Getters condensed.
-int     Settings::getLowAlert()                  { return lowAlert; }
-int     Settings::getHighAlert()                 { return highAlert; }
-int     Settings::getHighNotificationsInterval() { return highNotificationsInterval; }
-int     Settings::getLowNotificationsInterval()  { return lowNotificationsInterval; }
-int     Settings::getLowLimit()                  { return lowLimit; }
-int     Settings::getHighLimit()                 { return highLimit; }
-bool    Settings::getLimitEnabled()              { return limitEnabled == 1; }
-QString Settings::getLowAlertFile()              { return lowAlertFile; }
-QString Settings::getHighAlertFile()             { return highAlertFile; }
-QString Settings::getLogFilename()               { return logFilename; }
-QString Settings::getNotificationTitle()         { return notificationTitle; }
-QString Settings::getNotificationLowText()       { return notificationLowText; }
-QString Settings::getNotificationHighText()      { return notificationHighText; }
-int     Settings::getLogLevel()                  { return logLevel; }
+int     Settings::getLowAlert()                    { return lowAlert; }
+int     Settings::getHighAlert()                   { return highAlert; }
+int     Settings::getHealthAlert()                 { return healthAlert; }
+int     Settings::getHighNotificationsInterval()   { return highNotificationsInterval; }
+int     Settings::getLowNotificationsInterval()    { return lowNotificationsInterval; }
+int     Settings::getHealthNotificationsInterval() { return healthNotificationsInterval; }
+int     Settings::getLowLimit()                    { return lowLimit; }
+int     Settings::getHighLimit()                   { return highLimit; }
+bool    Settings::getLimitEnabled()                { return limitEnabled == 1; }
+QString Settings::getLowAlertFile()                { return lowAlertFile; }
+QString Settings::getHighAlertFile()               { return highAlertFile; }
+QString Settings::getHealthAlertFile()             { return healthAlertFile; }
+QString Settings::getLogFilename()                 { return logFilename; }
+QString Settings::getNotificationTitle()           { return notificationTitle; }
+QString Settings::getNotificationLowText()         { return notificationLowText; }
+QString Settings::getNotificationHighText()        { return notificationHighText; }
+QString Settings::getNotificationHealthTitle()         { return notificationHealthTitle; }
+QString Settings::getNotificationHealthWarnText()      { return notificationHealthWarnText; }
+QString Settings::getNotificationHealthCritText()      { return notificationHealthCritText; }
+int     Settings::getLogLevel()                    { return logLevel; }
 
 void Settings::setLowAlert(const int newLimit) {
     if(saveInteger(sLowAlert, newLimit, lowAlert)) {
@@ -83,6 +97,12 @@ void Settings::setHighAlert(const int newLimit) {
     }
 }
 
+void Settings::setHealthAlert(const int newLimit) {
+    if(saveInteger(sHealthAlert, newLimit, healthAlert)) {
+        emit healthAlertChanged(healthAlert);
+    }
+}
+
 void Settings::setHighNotificationsInterval(const int newInterval) {
     if(saveInteger(sHighNotificationsInterval, newInterval, highNotificationsInterval)) {
         emit highNotificationsIntervalChanged(highNotificationsInterval);
@@ -92,6 +112,12 @@ void Settings::setHighNotificationsInterval(const int newInterval) {
 void Settings::setLowNotificationsInterval(const int newInterval) {
     if(saveInteger(sLowNotificationsInterval, newInterval, lowNotificationsInterval)) {
         emit lowNotificationsIntervalChanged(lowNotificationsInterval);
+    }
+}
+
+void Settings::setHealthNotificationsInterval(const int newInterval) {
+    if(saveInteger(sHealthNotificationsInterval, newInterval, healthNotificationsInterval)) {
+        emit healthNotificationsIntervalChanged(healthNotificationsInterval);
     }
 }
 
@@ -124,6 +150,21 @@ void Settings::setNotificationLowText(const QString newText) {
 void Settings::setNotificationHighText(const QString newText) {
     if(saveString(sNotificationHighText, newText, notificationHighText))
         emit notificationHighTextChanged(notificationHighText);
+}
+
+void Settings::setNotificationHealthTitle(const QString newText) {
+    if(saveString(sNotificationHealthTitle, newText, notificationTitle))
+        emit notificationHealthTitleChanged(notificationTitle);
+}
+
+void Settings::setNotificationHealthWarnText(const QString newText) {
+    if(saveString(sNotificationHealthWarnText, newText, notificationHealthWarnText))
+        emit notificationHealthWarnTextChanged(notificationHealthWarnText);
+}
+
+void Settings::setNotificationHealthCritText(const QString newText) {
+    if(saveString(sNotificationHealthCritText, newText, notificationHealthCritText))
+        emit notificationHealthCritTextChanged(notificationHealthCritText);
 }
 
 void Settings::setLogLevel(const int newLogLevel) {
