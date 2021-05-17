@@ -325,15 +325,15 @@
     </message>
     <message>
         <source>Battery health %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Batteriezustand</translation>
     </message>
     <message>
         <source>Battery health is not good</source>
-        <translation type="unfinished"></translation>
+        <translation>Batteriezustand ist nicht gut</translation>
     </message>
     <message>
         <source>Battery health is critical</source>
-        <translation type="unfinished"></translation>
+        <translation>Batteriezustand ist kritisch</translation>
     </message>
 </context>
 <context>
@@ -429,7 +429,7 @@
     </message>
     <message>
         <source>Display visual and audible notifications when the battery status exceeds safe values.&lt;br /&gt;This usually means high (or low) temperature but can include other parameters depending on the hardware.</source>
-        <translation>Visuelle und akustische Benachrichtigungen anzeigen, wenn gewissen Schwellwerte erreicht werden. Meistens gilt das fuer die Temperatur, aber je nach Hardware koennen auch andere Faktoren zu einer Meldung fuehren.</translation>
+        <translation>Visuelle und akustische Benachrichtigungen anzeigen, wenn gewisse Schwellwerte erreicht werden. Meistens gilt das für die Temperatur, aber je nach Hardware können auch andere Faktoren zu einer Meldung führen.</translation>
     </message>
     <message>
         <source>Health notification settings</source>
