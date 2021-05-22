@@ -73,8 +73,9 @@ private:
     bool chargerConnected = false; // Charger plugged in
     QString state = "idle"; // dis/charging, idle, unknown
     bool chargingEnabled = true; // Only ever disabled manually
-    int temperature = 0; // freezing
-    QString health = "Good"; // good, warm, overheat, possibly more
+
+    QString health = "unknown"; // Good, warm, overheat. Might have Cold or Overvoltage depending on driver
+    int temperature = 0x7FFFFFFF; // This value means "unknown" (32-bit INT_MAX)
 
     int enableChargingValue = 1;
     int disableChargingValue = 0;

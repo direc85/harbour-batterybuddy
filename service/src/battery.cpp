@@ -266,13 +266,14 @@ void Battery::showHealthNotification() {
     };
     // map string values from sysfs file to alert category
     static const QMap<QString, int> HealthState {
+        { "unknown"  , HealthThresh["ok"] },
         { "good"     , HealthThresh["ok"] },
         { "warm"     , HealthThresh["warn"] },
         { "cool"     , HealthThresh["warn"] },
         { "overheat" , HealthThresh["crit"] },
         { "cold"     , HealthThresh["crit"] }
     };
-    if(settings->getHealthNotificationsInterval() < 610 && ( HealthState[health] != HealthThresh["ok"] && HealthState[health] >= settings->getHealthAlert() ) ) {
+    if(settings->getHealthNotificationsInterval() < 610 && temperature != 0x7FFFFFFF && ( HealthState[health] != HealthThresh["ok"] && HealthState[health] >= settings->getHealthAlert() ) ) {
         QString displayTemp = QString::number(temperature / 10.0);
         if (QLocale().measurementSystem() == QLocale::ImperialUSSystem)
             displayTemp = QString::number((temperature / 10) * 1.8 + 32) + " F";
