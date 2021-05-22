@@ -273,6 +273,39 @@
         <source>Current:</source>
         <translation>Courant:</translation>
     </message>
+    <message>
+        <source>Good</source>
+        <comment>Battery is OK</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warm</source>
+        <comment>Battery is warm</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overheated</source>
+        <comment>Battery is very hot</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cool</source>
+        <comment>Battery is cool</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cold</source>
+        <comment>Battery is very cold</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Health:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temperature:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Settings</name>
@@ -287,6 +320,18 @@
     <message>
         <source>Please disconnect the charger.</source>
         <translation>Merci de débrancher le chargeur.</translation>
+    </message>
+    <message>
+        <source>Battery health %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery health is not good</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery health is critical</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -362,6 +407,34 @@
     </message>
     <message>
         <source>View log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Health notification settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display visual and audible notifications when the battery status exceeds safe values.&lt;br /&gt;This usually means high (or low) temperature but can include other parameters depending on the hardware.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery health notification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notification treshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Critical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Health notification interval</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

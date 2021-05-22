@@ -313,15 +313,27 @@
     <name>Settings</name>
     <message>
         <source>Battery charge %1%</source>
-        <translation type="vanished">Akkustand %1%</translation>
+        <translation>Akkustand %1%</translation>
     </message>
     <message>
         <source>Please connect the charger.</source>
-        <translation type="vanished">Bitte Ladegerät anschließen.</translation>
+        <translation>Bitte Ladegerät anschließen.</translation>
     </message>
     <message>
         <source>Please disconnect the charger.</source>
-        <translation type="vanished">Bitte Ladegerät trennen.</translation>
+        <translation>Bitte Ladegerät trennen.</translation>
+    </message>
+    <message>
+        <source>Battery health %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery health is not good</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery health is critical</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -400,24 +412,8 @@
         <translation>Logdatei ansehen</translation>
     </message>
     <message>
-        <source>Health Notification settings</source>
-        <translation>Einstellungen zur Zustandbenachrichtigung</translation>
-    </message>
-    <message>
-        <source>Display visual and audible notifications about battery health, when the battery temperature is below or above safe values.</source>
-        <translation type="vanished">Visuelle und akustische Benachrichtigungen zum Batteriezustand anzeigen, sobald die Temperatur über gewissen Schwellwerten liegt.</translation>
-    </message>
-    <message>
         <source>Battery health notification</source>
-        <translation type="vanished">Zustandsbenachrichtigung</translation>
-    </message>
-    <message>
-        <source>Warn on Health status:</source>
-        <translation type="vanished">Benachrichtigung bei Zustand:</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Keine</translation>
+        <translation>Zustandsbenachrichtigung</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -428,24 +424,20 @@
         <translation>Kritisch</translation>
     </message>
     <message>
-        <source>Battery health warning interval</source>
-        <translation type="vanished">Zustandsbenachrichtigungsintervall</translation>
-    </message>
-    <message>
-        <source>Health notification</source>
-        <translation>Zustandsbenachrichtigung</translation>
-    </message>
-    <message>
-        <source>Notify on Health status:</source>
-        <translation>Benachrichtigung zum Zustand:</translation>
-    </message>
-    <message>
         <source>Health notification interval</source>
         <translation>Zustandsbenachrichtigungsintervall</translation>
     </message>
     <message>
         <source>Display visual and audible notifications when the battery status exceeds safe values.&lt;br /&gt;This usually means high (or low) temperature but can include other parameters depending on the hardware.</source>
         <translation>Visuelle und akustische Benachrichtigungen anzeigen, wenn gewissen Schwellwerte erreicht werden. Meistens gilt das fuer die Temperatur, aber je nach Hardware koennen auch andere Faktoren zu einer Meldung fuehren.</translation>
+    </message>
+    <message>
+        <source>Health notification settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notification treshold</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
