@@ -37,6 +37,7 @@ Page {
         "overheat": qsTr("Overheated", "Battery is very hot"),
         "cool": qsTr("Cool", "Battery is cool"),
         "cold": qsTr("Cold", "Battery is very cold"),
+        "unknown": qsTr("unknown", "Battery not detected, or faulty, or something")
     }
     property bool serviceRunning: true
 

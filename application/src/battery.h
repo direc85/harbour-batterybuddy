@@ -77,7 +77,7 @@ private:
     bool chargingEnabled = true; // Only ever disabled manually
 
 
-    QString health = "Good"; // Good, Warm, Overheat. Might have Cold or Overvoltage depending on driver
+    QString health = "unknown"; // Good, warm, overheat. Might have Cold or Overvoltage depending on driver
     int temperature = 0; // freezing
 
     int enableChargingValue = 1;
