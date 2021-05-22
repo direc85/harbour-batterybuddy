@@ -370,7 +370,7 @@ Page {
 
                 Label {
                     x: Theme.paddingLarge
-                    text: qsTr("Health Notification settings")
+                    text: qsTr("Health notification settings")
                     color: Theme.highlightColor
                 }
                 Label {
@@ -386,12 +386,12 @@ Page {
                     wrapMode: Text.Wrap
                 }
 
-                SectionHeader { text: qsTr("Health notification") }
+                SectionHeader { text: qsTr("Battery health notification") }
 
                 ComboBox {
                     id: healthSelector
                     width: parent.width
-                    label: qsTr("Notify on Health status" + ":")
+                    label: qsTr("Notification treshold")
                     currentIndex: settings.healthAlert
                     menu: ContextMenu {
                         MenuItem { text: qsTr("Never") }
