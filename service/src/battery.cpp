@@ -34,7 +34,8 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QObject *parent) : QObject
     highNotifyTimer = new QTimer(this);
     lowNotifyTimer = new QTimer(this);
     healthNotifyTimer = new QTimer(this);
-    notification = new MyNotification(this);
+    chargeNotification = new MyNotification(this);
+    healthNotification = new MyNotification(this);
 
     // Number: charge percentage, e.g. 42
     chargeFile   = new QFile("/sys/class/power_supply/battery/capacity", this);
@@ -229,7 +230,7 @@ void Battery::showHighNotification() {
     if(settings->getHighNotificationsInterval() < 610 && (charge >= settings->getHighAlert() && state != "discharging")
             && !(charge == 100 && state == "idle")) {
         logV(QString("Notification: %1").arg(settings->getNotificationTitle().arg(charge)));
-        notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationHighText(), settings->getHighAlertFile());
+        chargeNotification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationHighText(), settings->getHighAlertFile());
         if(settings->getHighNotificationsInterval() == 50) {
             logD("Stop high battery timer");
             highNotifyTimer->stop();
@@ -237,14 +238,14 @@ void Battery::showHighNotification() {
     }
     else if(charge > settings->getLowAlert()) {
         logD("Close high battery notification");
-        notification->close();
+        chargeNotification->close();
     }
 }
 
 void Battery::showLowNotification() {
     if(settings->getLowNotificationsInterval() < 610 && charge <= settings->getLowAlert() && state != "charging") {
         logV(QString("Notification: %1").arg(settings->getNotificationTitle().arg(charge)));
-        notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationLowText(), settings->getLowAlertFile());
+        chargeNotification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationLowText(), settings->getLowAlertFile());
         if(settings->getLowNotificationsInterval() == 50) {
             logD("Stop low battery timer");
             lowNotifyTimer->stop();
@@ -252,7 +253,7 @@ void Battery::showLowNotification() {
     }
     else if(charge < settings->getHighAlert()) {
         logD("Close low battery notification");
-        notification->close();
+        chargeNotification->close();
     }
 }
 
@@ -289,7 +290,7 @@ void Battery::showHealthNotification() {
             notificationText =  settings->getNotificationHealthCritText();
         }
         logD(QString("Notification: %1").arg(settings->getNotificationHealthTitle().arg(titleArgs)));
-        notification->send(settings->getNotificationHealthTitle().arg(titleArgs), notificationText, settings->getHealthAlertFile());
+        healthNotification->send(settings->getNotificationHealthTitle().arg(titleArgs), notificationText, settings->getHealthAlertFile());
         if(settings->getHealthNotificationsInterval() == 50) {
             logD("Stop health timer");
             healthNotifyTimer->stop();
@@ -297,7 +298,7 @@ void Battery::showHealthNotification() {
     }
     else if(HealthState[health] == HealthThresh["ok"] || HealthState[health] < settings->getHealthAlert()) {
         logD("Close health notification");
-        notification->close();
+        healthNotification->close();
     }
 }
 
@@ -345,7 +346,7 @@ bool Battery::getChargerConnected() {
 
 void Battery::shutdown() {
     logV("Shutting down...");
-    notification->close();
+    chargeNotification->close();
     blockSignals(true);
     if(updateTimer) {
         updateTimer->stop();

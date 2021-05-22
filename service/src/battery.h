@@ -65,7 +65,8 @@ private:
     QTimer *highNotifyTimer = nullptr;
     QTimer *lowNotifyTimer = nullptr;
     QTimer *healthNotifyTimer = nullptr;
-    MyNotification *notification = nullptr;
+    MyNotification *chargeNotification = nullptr;
+    MyNotification *healthNotification = nullptr;
 
 
     // Default values:
