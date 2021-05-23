@@ -43,9 +43,11 @@ Page {
             highLimitSlider.value = settings.highLimit
             lowLimitSlider.value = settings.lowLimit
             highAlertSlider.value = settings.highAlert
+            healthSelector.currentIndex = settings.healthAlert
             lowAlertSlider.value = settings.lowAlert
             highIntervalSlider.value = settings.highNotificationsInterval
             lowIntervalSlider.value = settings.lowNotificationsInterval
+            healthIntervalSlider.value = settings.healthNotificationsInterval
             if(logger.debug) logger.log("SettingsPage values updated")
             daemonCheck.start()
         }
@@ -362,6 +364,70 @@ Page {
 
                 AdjustmentButtons {
                     targetSlider: lowIntervalSlider
+                    smallChange: 10
+                    largeChange: 60
+                }
+
+                Label {
+                    x: Theme.paddingLarge
+                    text: qsTr("Health notification settings")
+                    color: Theme.highlightColor
+                }
+                Label {
+                    text: qsTr("Display visual and audible notifications when the battery status exceeds safe values.<br />This usually means high (or low) temperature but can include other parameters depending on the hardware.")
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        leftMargin: Theme.horizontalPageMargin*2
+                        rightMargin: Theme.horizontalPageMargin
+                    }
+                    color: Theme.primaryColor
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    wrapMode: Text.Wrap
+                }
+
+                SectionHeader { text: qsTr("Battery health notification") }
+
+                ComboBox {
+                    id: healthSelector
+                    width: parent.width
+                    label: qsTr("Notification treshold")
+                    currentIndex: settings.healthAlert
+                    menu: ContextMenu {
+                        MenuItem { text: qsTr("Never") }
+                        MenuItem { text: qsTr("Warning") }
+                        MenuItem { text: qsTr("Critical") }
+                    }
+                    onValueChanged: save()
+                    function save() {
+                        settings.healthAlert = healthSelector.currentIndex
+                    }
+                }
+
+                SectionHeader { text: qsTr("Health notification interval") }
+
+                MySlider {
+                    id: healthIntervalSlider
+                    minimumValue: 50
+                    maximumValue: 610
+                    stepSize: 10
+                    valueText: updateValueText()
+                    onValueChanged: updateValueText()
+                    function updateValueText() {
+                        if(value == 50)
+                            return qsTr("Once")
+                        if(value == 610)
+                            return qsTr("Never")
+                        return Math.floor(value / 60) + (value % 60 < 10 ? ":0" + value % 60 : ":" + value % 60)
+                    }
+                    onReleased: save()
+                    function save() {
+                        settings.healthNotificationsInterval = value
+                    }
+                }
+
+                AdjustmentButtons {
+                    targetSlider: healthIntervalSlider
                     smallChange: 10
                     largeChange: 60
                 }

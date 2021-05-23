@@ -40,6 +40,18 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
 
     QString filename;
 
+    // Number: temperature
+    filename = "/sys/class/power_supply/battery/temp";
+    if(!temperatureFile && QFile::exists(filename)) {
+        temperatureFile = new QFile(filename, this);
+    }
+
+    // String: health state
+    filename = "/sys/class/power_supply/battery/health";
+    if(!healthFile && QFile::exists(filename)) {
+        healthFile = new QFile(filename, this);
+    }
+
     // e.g. for Sony Xperia XA2
     filename = "/sys/class/power_supply/battery/input_suspend";
     if(!chargingEnabledFile && QFile::exists(filename)) {

@@ -273,6 +273,39 @@
         <source>Current:</source>
         <translation>Virta:</translation>
     </message>
+    <message>
+        <source>Good</source>
+        <comment>Battery is OK</comment>
+        <translation>Hyvä</translation>
+    </message>
+    <message>
+        <source>Warm</source>
+        <comment>Battery is warm</comment>
+        <translation>Lämmin</translation>
+    </message>
+    <message>
+        <source>Overheated</source>
+        <comment>Battery is very hot</comment>
+        <translation>Ylikuumentunut</translation>
+    </message>
+    <message>
+        <source>Cool</source>
+        <comment>Battery is cool</comment>
+        <translation>Viileä</translation>
+    </message>
+    <message>
+        <source>Cold</source>
+        <comment>Battery is very cold</comment>
+        <translation>Kylmä</translation>
+    </message>
+    <message>
+        <source>Health:</source>
+        <translation>Kunto:</translation>
+    </message>
+    <message>
+        <source>Temperature:</source>
+        <translation>Lämpötila:</translation>
+    </message>
 </context>
 <context>
     <name>Settings</name>
@@ -287,6 +320,18 @@
     <message>
         <source>Please disconnect the charger.</source>
         <translation>Ole hyvä ja irrota laturi.</translation>
+    </message>
+    <message>
+        <source>Battery health %1</source>
+        <translation>Akun kunto: %1</translation>
+    </message>
+    <message>
+        <source>Battery health is not good</source>
+        <translation>Akun tila ei ole normaali</translation>
+    </message>
+    <message>
+        <source>Battery health is critical</source>
+        <translation>Akun tila on kriittinen</translation>
     </message>
 </context>
 <context>
@@ -363,6 +408,34 @@
     <message>
         <source>View log</source>
         <translation>Näytä loki</translation>
+    </message>
+    <message>
+        <source>Display visual and audible notifications when the battery status exceeds safe values.&lt;br /&gt;This usually means high (or low) temperature but can include other parameters depending on the hardware.</source>
+        <translation>Näytä ilmoitukset ja toista hälytysääni, kun akun kunto ylittää normaalit rahat.&lt;br /&gt;Yleensä tämä tarkoittaa liian korkeaa (tai matalaa) lämpötilaa, mutta syitä voi olla muitakin, laitteistosta riippuen.</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Varoitus</translation>
+    </message>
+    <message>
+        <source>Critical</source>
+        <translation>Kriittinen</translation>
+    </message>
+    <message>
+        <source>Health notification interval</source>
+        <translation>Akun kuntoilmoitusten aikaväli</translation>
+    </message>
+    <message>
+        <source>Battery health notification</source>
+        <translation>Akun kunnon ilmoitukset</translation>
+    </message>
+    <message>
+        <source>Health notification settings</source>
+        <translation>Akun tilan ilmoitusten aikaväli</translation>
+    </message>
+    <message>
+        <source>Notification treshold</source>
+        <translation>Ilmoitusten taso</translation>
     </message>
 </context>
 </TS>

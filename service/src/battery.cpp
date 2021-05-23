@@ -33,22 +33,37 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QObject *parent) : QObject
     updateTimer = new QTimer(this);
     highNotifyTimer = new QTimer(this);
     lowNotifyTimer = new QTimer(this);
-    notification = new MyNotification(this);
+    healthNotifyTimer = new QTimer(this);
+    chargeNotification = new MyNotification(this);
+    healthNotification = new MyNotification(this);
 
     // Number: charge percentage, e.g. 42
     chargeFile   = new QFile("/sys/class/power_supply/battery/capacity", this);
-    logE("Capacity file: " + chargeFile->fileName());
+    logE("Capacity file: " + chargeFile->fileName() + (chargeFile->exists() ? " OK" : " doesn't exist"));
 
     // String: charging, discharging, full, empty, unknown (others?)
     stateFile   = new QFile("/sys/class/power_supply/battery/status", this);
-    logE("Charge state file: " + stateFile->fileName());
+    logE("Charge state file: " + stateFile->fileName() + (stateFile->exists() ? " OK" : " doesn't exist"));
 
     // Number: 0 or 1
     chargerConnectedFile = new QFile("/sys/class/power_supply/usb/present", this);
-    logE("Charger status file: " + chargerConnectedFile->fileName());
+    logE("Charger status file: " + chargerConnectedFile->fileName() + (chargerConnectedFile->exists() ? " OK" : " doesn't exist"));
 
-    // ENABLE/DISABLE CHARGING
     QString filename;
+
+    // Number: temperature
+    filename = "/sys/class/power_supply/battery/temp";
+    if(!temperatureFile && QFile::exists(filename)) {
+        temperatureFile = new QFile(filename, this);
+    }
+    logE("Temperature file: " + filename + (QFile::exists(filename) ? " OK" : " doesn't exist"));
+
+    // String: health state
+    filename = "/sys/class/power_supply/battery/health";
+    if(!healthFile && QFile::exists(filename)) {
+        healthFile = new QFile(filename, this);
+    }
+    logE("Battery health file: " + filename + (QFile::exists(filename) ? " OK" : " doesn't exist"));
 
     // e.g. for Sony Xperia XA2
     filename = "/sys/class/power_supply/battery/input_suspend";
@@ -76,7 +91,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QObject *parent) : QObject
 
     // If we found a usable file, check that it is writable
     if(chargingEnabledFile) {
-        logE("Charger control file: " + chargingEnabledFile->fileName());
+        logE("Charger control file: " + chargingEnabledFile->fileName() + (chargingEnabledFile->exists() ? " OK" : " doesn't exist"));
         if(chargingEnabledFile->open(QIODevice::WriteOnly)) {
             chargingEnabledFile->close();
         }
@@ -97,6 +112,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QObject *parent) : QObject
     connect(settings, SIGNAL(resetTimers()), this, SLOT(resetTimers()));
     connect(highNotifyTimer, SIGNAL(timeout()), this, SLOT(showHighNotification()));
     connect(lowNotifyTimer, SIGNAL(timeout()), this, SLOT(showLowNotification()));
+    connect(healthNotifyTimer, SIGNAL(timeout()), this, SLOT(showHealthNotification()));
 
     updateData();
     updateTimer->start(5000);
@@ -105,7 +121,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QObject *parent) : QObject
     // aka. "charging" status didn't change
     // (or if both times are disabled, actually)
     //  manually trigger the timer startup.
-    if(!highNotifyTimer->isActive() && !lowNotifyTimer->isActive()) {
+    if(!highNotifyTimer->isActive() && !lowNotifyTimer->isActive() && !healthNotifyTimer->isActive()) {
         resetTimers();
     }
 }
@@ -145,6 +161,29 @@ void Battery::updateData()
         stateFile->close();
     }
 
+    if(temperatureFile && temperatureFile->open(QIODevice::ReadOnly)) {
+        nextTemperature = temperatureFile->readLine().trimmed().toInt();
+        if(nextTemperature != temperature) {
+            temperature = nextTemperature;
+            emit temperatureChanged(temperature);
+            logV(QString("Temperature: %1°C").arg(temperature / 10));
+        }
+        temperatureFile->close();
+    }
+
+    if(healthFile && healthFile->open(QIODevice::ReadOnly)) {
+        nextHealth = (QString(healthFile->readLine().trimmed().toLower()));
+        if(nextHealth != health) {
+            health = nextHealth;
+            emit healthChanged(health);
+            logV("Health: " + health);
+
+            // Hide/show notification right away
+            resetTimers();
+        }
+        healthFile->close();
+    }
+
     if(chargingEnabledFile && settings->getLimitEnabled()) {
         if(chargingEnabled && charge >= settings->getHighLimit()) {
             logD("Disabling charging...");
@@ -160,8 +199,10 @@ void Battery::updateData()
 void Battery::resetTimers() {
     highNotifyTimer->stop();
     lowNotifyTimer->stop();
+    healthNotifyTimer->stop();
     highNotifyTimer->setInterval(settings->getHighNotificationsInterval() * 1000);
     lowNotifyTimer->setInterval(settings->getLowNotificationsInterval() * 1000);
+    healthNotifyTimer->setInterval(settings->getHealthNotificationsInterval() * 1000);
 
     if(settings->getHighNotificationsInterval() < 610) {
         logD("Starting high battery timer");
@@ -180,13 +221,22 @@ void Battery::resetTimers() {
     else {
         logD("Low battery timer not started");
     }
+
+    if(settings->getHealthNotificationsInterval() < 610) {
+        logD("Start health timer");
+        healthNotifyTimer->start();
+        showHealthNotification();
+    }
+    else {
+        logD("Health timer not started");
+    }
 }
 
 void Battery::showHighNotification() {
     if(settings->getHighNotificationsInterval() < 610 && (charge >= settings->getHighAlert() && state != "discharging")
             && !(charge == 100 && state == "idle")) {
         logV(QString("Notification: %1").arg(settings->getNotificationTitle().arg(charge)));
-        notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationHighText(), settings->getHighAlertFile());
+        chargeNotification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationHighText(), settings->getHighAlertFile());
         if(settings->getHighNotificationsInterval() == 50) {
             logD("Stop high battery timer");
             highNotifyTimer->stop();
@@ -194,14 +244,14 @@ void Battery::showHighNotification() {
     }
     else if(charge > settings->getLowAlert()) {
         logD("Close high battery notification");
-        notification->close();
+        chargeNotification->close();
     }
 }
 
 void Battery::showLowNotification() {
     if(settings->getLowNotificationsInterval() < 610 && charge <= settings->getLowAlert() && state != "charging") {
         logV(QString("Notification: %1").arg(settings->getNotificationTitle().arg(charge)));
-        notification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationLowText(), settings->getLowAlertFile());
+        chargeNotification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationLowText(), settings->getLowAlertFile());
         if(settings->getLowNotificationsInterval() == 50) {
             logD("Stop low battery timer");
             lowNotifyTimer->stop();
@@ -209,13 +259,62 @@ void Battery::showLowNotification() {
     }
     else if(charge < settings->getHighAlert()) {
         logD("Close low battery notification");
-        notification->close();
+        chargeNotification->close();
+    }
+}
+
+void Battery::showHealthNotification() {
+    // set up alert categories
+    // TODO: manage this more globally, use better data types(?), align with QML/Settings part
+    static const QMap<QString, int> HealthThresh {
+        { "ok"   , 0},
+        { "warn" , 1},
+        { "crit" , 2},
+    };
+    // map string values from sysfs file to alert category
+    static const QMap<QString, int> HealthState {
+        { "unknown"  , HealthThresh["ok"] },
+        { "good"     , HealthThresh["ok"] },
+        { "warm"     , HealthThresh["warn"] },
+        { "cool"     , HealthThresh["warn"] },
+        { "overheat" , HealthThresh["crit"] },
+        { "cold"     , HealthThresh["crit"] }
+    };
+    if(settings->getHealthNotificationsInterval() < 610 && temperature != 0x7FFFFFFF && ( HealthState[health] != HealthThresh["ok"] && HealthState[health] >= settings->getHealthAlert() ) ) {
+        QString displayTemp = QString::number(temperature / 10.0);
+        if (QLocale().measurementSystem() == QLocale::ImperialUSSystem)
+            displayTemp = QString::number((temperature / 10) * 1.8 + 32) + " F";
+
+        QString titleArgs;
+        titleArgs = health + " (" + displayTemp + "), " + state; // might show other things in the future
+
+        // show different test depending on severity
+        QString notificationText = "";
+        if (HealthState[health] == HealthThresh["warn"]) {
+            notificationText =  settings->getNotificationHealthWarnText();
+        } else if (HealthState[health] == HealthThresh["crit"]) {
+            notificationText =  settings->getNotificationHealthCritText();
+        }
+        logD(QString("Notification: %1").arg(settings->getNotificationHealthTitle().arg(titleArgs)));
+        healthNotification->send(settings->getNotificationHealthTitle().arg(titleArgs), notificationText, settings->getHealthAlertFile());
+        if(settings->getHealthNotificationsInterval() == 50) {
+            logD("Stop health timer");
+            healthNotifyTimer->stop();
+        }
+    }
+    else if(HealthState[health] == HealthThresh["ok"] || HealthState[health] < settings->getHealthAlert()) {
+        logD("Close health notification");
+        healthNotification->close();
     }
 }
 
 int Battery::getCharge() { return charge; }
 
 QString Battery::getState() { return state; }
+
+int Battery::getTemperature() { return temperature; }
+
+QString Battery::getHealth() { return health; }
 
 bool Battery::getChargingEnabled() { return chargingEnabled; }
 
@@ -253,7 +352,7 @@ bool Battery::getChargerConnected() {
 
 void Battery::shutdown() {
     logV("Shutting down...");
-    notification->close();
+    chargeNotification->close();
     blockSignals(true);
     if(updateTimer) {
         updateTimer->stop();
@@ -266,6 +365,10 @@ void Battery::shutdown() {
     if(lowNotifyTimer) {
         lowNotifyTimer->stop();
         logD("Low battery notification stopped");
+    }
+    if(healthNotifyTimer) {
+        healthNotifyTimer->stop();
+        logD("Health notification stopped");
     }
     // ENABLE/DISABLE CHARGING
     if(!setChargingEnabled(true) && !QHostInfo::localHostName().contains("SailfishEmul")) {

@@ -31,6 +31,14 @@ Page {
         "empty": qsTr("empty", "Battery fully depleted"),
         "unknown": qsTr("unknown", "Battery not detected, or faulty, or something")
     }
+    property variant healthText: {
+        "good": qsTr("Good", "Battery is OK"),
+        "warm": qsTr("Warm", "Battery is warm"),
+        "overheat": qsTr("Overheated", "Battery is very hot"),
+        "cool": qsTr("Cool", "Battery is cool"),
+        "cold": qsTr("Cold", "Battery is very cold"),
+        "unknown": qsTr("unknown", "Battery not detected, or faulty, or something")
+    }
     property bool serviceRunning: true
 
     Timer {
@@ -165,6 +173,23 @@ Page {
                     MyDetailItem {
                         label: qsTr("State:")
                         value: statusText[battery.state]
+                    }
+                    MyDetailItem {
+                        label: qsTr("Health:")
+                        value: healthText[battery.health]
+                        visible: value !== "unknown"
+                    }
+                    MyDetailItem {
+                        label: qsTr("Temperature:")
+                        value: battery.temperature === 0x7FFFFFFF ? healthText["unknown"] : formatTemperature(battery.temperature)
+                        visible: battery.temperature !== 0x7FFFFFFF
+
+                        function formatTemperature(temp) {
+                            if(Qt.locale().measurementSystem === Locale.ImperialUSSystem) {
+                                return Math.floor((battery.temperature / 10) * 1.8 + 32) + " °F"
+                            }
+                            return Math.floor(battery.temperature / 10) + " °C"
+                        }
                     }
                 }
             }

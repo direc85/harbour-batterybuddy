@@ -156,34 +156,34 @@
     <name>LogPage</name>
     <message>
         <source>View log</source>
-        <translation type="unfinished"></translation>
+        <translation>Logdatei ansehen</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisieren</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopieren</translation>
     </message>
     <message>
         <source>Log level</source>
-        <translation type="unfinished"></translation>
+        <translation>Log Level</translation>
     </message>
     <message>
         <source>Quiet</source>
         <comment>Low log setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Still</translation>
     </message>
     <message>
         <source>Verbose</source>
         <comment>Medium log setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mittel</translation>
     </message>
     <message>
         <source>Debug</source>
         <comment>High log setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Debug</translation>
     </message>
 </context>
 <context>
@@ -275,6 +275,39 @@
         <source>Current:</source>
         <translation>Strom:</translation>
     </message>
+    <message>
+        <source>Good</source>
+        <comment>Battery is OK</comment>
+        <translation>die Batterie ist OK</translation>
+    </message>
+    <message>
+        <source>Warm</source>
+        <comment>Battery is warm</comment>
+        <translation>die Batterie ist warm</translation>
+    </message>
+    <message>
+        <source>Overheated</source>
+        <comment>Battery is very hot</comment>
+        <translation>die Batterie ist sehr heiss</translation>
+    </message>
+    <message>
+        <source>Health:</source>
+        <translation>Zustand:</translation>
+    </message>
+    <message>
+        <source>Temperature:</source>
+        <translation>Temperatur:</translation>
+    </message>
+    <message>
+        <source>Cool</source>
+        <comment>Battery is cool</comment>
+        <translation>der Batterie ist kalt</translation>
+    </message>
+    <message>
+        <source>Cold</source>
+        <comment>Battery is very cold</comment>
+        <translation>der Batterie ist sehr kalt</translation>
+    </message>
 </context>
 <context>
     <name>Settings</name>
@@ -289,6 +322,18 @@
     <message>
         <source>Please disconnect the charger.</source>
         <translation>Bitte Ladegerät trennen.</translation>
+    </message>
+    <message>
+        <source>Battery health %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery health is not good</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery health is critical</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -364,6 +409,34 @@
     </message>
     <message>
         <source>View log</source>
+        <translation>Logdatei ansehen</translation>
+    </message>
+    <message>
+        <source>Battery health notification</source>
+        <translation>Zustandsbenachrichtigung</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Warnung</translation>
+    </message>
+    <message>
+        <source>Critical</source>
+        <translation>Kritisch</translation>
+    </message>
+    <message>
+        <source>Health notification interval</source>
+        <translation>Zustandsbenachrichtigungsintervall</translation>
+    </message>
+    <message>
+        <source>Display visual and audible notifications when the battery status exceeds safe values.&lt;br /&gt;This usually means high (or low) temperature but can include other parameters depending on the hardware.</source>
+        <translation>Visuelle und akustische Benachrichtigungen anzeigen, wenn gewissen Schwellwerte erreicht werden. Meistens gilt das fuer die Temperatur, aber je nach Hardware koennen auch andere Faktoren zu einer Meldung fuehren.</translation>
+    </message>
+    <message>
+        <source>Health notification settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notification treshold</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
