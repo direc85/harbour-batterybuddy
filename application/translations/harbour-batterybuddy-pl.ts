@@ -8,10 +8,6 @@
         <translation>Battery Buddy to małe i proste narzędzie zaprojektowane w celu wydłużenia żywotności baterii.</translation>
     </message>
     <message>
-        <source>Version</source>
-        <translation>Wersja</translation>
-    </message>
-    <message>
         <source>View License</source>
         <translation>Pokaż licencję</translation>
     </message>
@@ -30,6 +26,10 @@
     <message>
         <source>Translations</source>
         <translation>Tłumaczenia</translation>
+    </message>
+    <message>
+        <source>Contributors</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

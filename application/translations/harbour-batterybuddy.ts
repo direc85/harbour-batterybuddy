@@ -8,10 +8,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>View License</source>
         <translation type="unfinished"></translation>
     </message>
@@ -29,6 +25,10 @@
     </message>
     <message>
         <source>Translations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contributors</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

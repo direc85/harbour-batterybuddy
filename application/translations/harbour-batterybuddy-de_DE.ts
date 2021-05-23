@@ -8,10 +8,6 @@
         <translation>Battery Buddy ist ein kleines und einfaches Dienstprogramm, das dazu gedacht ist, die Lebensdauer des Akkus zu verlängern.</translation>
     </message>
     <message>
-        <source>Version</source>
-        <translation>Version</translation>
-    </message>
-    <message>
         <source>View License</source>
         <translation>Lizenz anzeigen</translation>
     </message>
@@ -30,6 +26,10 @@
     <message>
         <source>Translations</source>
         <translation>Übersetzungen</translation>
+    </message>
+    <message>
+        <source>Contributors</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

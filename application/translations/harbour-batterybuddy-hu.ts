@@ -8,10 +8,6 @@
         <translation>A Battery Buddy egy apró és egyszerű segédprogram, amelyet az akkumulátor élethossza megnövelésének céljából alkottak.</translation>
     </message>
     <message>
-        <source>Version</source>
-        <translation>Verzió</translation>
-    </message>
-    <message>
         <source>View License</source>
         <translation>Licenc megtekintése</translation>
     </message>
@@ -30,6 +26,10 @@
     <message>
         <source>Translations</source>
         <translation>Fordítások</translation>
+    </message>
+    <message>
+        <source>Contributors</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -12,10 +12,6 @@
         <translation>Battery Buddy （电池搭档）是一个帮助你改善电池寿命的小巧玲珑的软件。</translation>
     </message>
     <message>
-        <source>Version</source>
-        <translation>版本</translation>
-    </message>
-    <message>
         <source>Battery Buddy is open source software licensed under the terms of the GNU General Public License.</source>
         <translation>Battery Buddy（电池搭档）是一个在 GNU 通用公共协议条款之下的开源软件。</translation>
     </message>
@@ -30,6 +26,10 @@
     <message>
         <source>Translations</source>
         <translation>翻译</translation>
+    </message>
+    <message>
+        <source>Contributors</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

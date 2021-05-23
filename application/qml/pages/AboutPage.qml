@@ -64,6 +64,12 @@ Page {
             }
 
             AboutLabel {
+                font.pixelSize: Theme.fontSizeLarge
+                color: Theme.highlightColor
+                text: app_version
+            }
+
+            AboutLabel {
                 font.pixelSize: Theme.fontSizeMedium
                 color: Theme.primaryColor
                 text: qsTr("Battery Buddy is a small and simple utility designed to improve the lifetime of the battery.")
@@ -72,13 +78,19 @@ Page {
             AboutLabel {
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.secondaryColor
-                text: qsTr("Version") + " " + app_version
+                text: "Copyright 2019-2021 Matti Viljanen (direc85)"
+            }
+
+            AboutLabel {
+                font.pixelSize: Theme.fontSizeMedium
+                color: Theme.primaryColor
+                text: qsTr("Contributors")
             }
 
             AboutLabel {
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.secondaryColor
-                text: "Copyright 2019-2020 Matti Viljanen"
+                text: "Peter Gantner (nephros)"
             }
 
             BackgroundItem {
@@ -113,11 +125,14 @@ Page {
             AboutLabel {
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.secondaryColor
-                text: "Suomi: Matti Viljanen\n"+
+                text: "English: direc85"+
+                      "Suomi: direc85\n"+
                       "Français: Quenty31\n"+
                       "简体中文: dashinfantry\n"+
                       "svensk: eson57\n"+
-                      "Deutsch: dryo, fllp"
+                      "Deutsch: dryo, fllp\n"+
+                      "Polski: atlochowski\n"+
+                      "Magyar: 1Zgp"
             }
 
             AboutLabel {

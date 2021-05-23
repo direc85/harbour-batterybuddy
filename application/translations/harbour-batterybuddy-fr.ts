@@ -12,10 +12,6 @@
         <translation>Battery Buddy est un utilitaire léger et simple créé pour améliorer la durée de vie de la batterie.</translation>
     </message>
     <message>
-        <source>Version</source>
-        <translation>Version</translation>
-    </message>
-    <message>
         <source>Battery Buddy is open source software licensed under the terms of the GNU General Public License.</source>
         <translation>Battery Buddy est un logiciel libre sous licence GNU General Public License</translation>
     </message>
@@ -30,6 +26,10 @@
     <message>
         <source>Translations</source>
         <translation>Traductions</translation>
+    </message>
+    <message>
+        <source>Contributors</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

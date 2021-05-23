@@ -8,10 +8,6 @@
         <translation>Battery Buddy on pieni ja yksinkertainen sovellus, jonka tarkoituksena on pidentää akun elinikää.</translation>
     </message>
     <message>
-        <source>Version</source>
-        <translation>Versio</translation>
-    </message>
-    <message>
         <source>View License</source>
         <translation>Näytä lisenssi</translation>
     </message>
@@ -30,6 +26,10 @@
     <message>
         <source>Translations</source>
         <translation>Käännökset</translation>
+    </message>
+    <message>
+        <source>Contributors</source>
+        <translation>Avustajat</translation>
     </message>
 </context>
 <context>
