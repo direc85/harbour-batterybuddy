@@ -38,15 +38,19 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     chargerConnectedFile = new QFile("/sys/class/power_supply/usb/present", this);
     logE("Reading charger status from" + chargerConnectedFile->fileName());
 
+    QString filename;
+
     // Number: temperature
-    temperatureFile   = new QFile("/sys/class/power_supply/battery/temp", this);
-    logE("Temperature file: " + temperatureFile->fileName());
+    filename = "/sys/class/power_supply/battery/temp";
+    if(!temperatureFile && QFile::exists(filename)) {
+        temperatureFile = new QFile(filename, this);
+    }
 
     // String: health state
-    healthFile   = new QFile("/sys/class/power_supply/battery/health", this);
-    logE("Health file: " + healthFile->fileName());
-
-    QString filename;
+    filename = "/sys/class/power_supply/battery/health";
+    if(!healthFile && QFile::exists(filename)) {
+        healthFile = new QFile(filename, this);
+    }
 
     // e.g. for Sony Xperia XA2
     filename = "/sys/class/power_supply/battery/input_suspend";

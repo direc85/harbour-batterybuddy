@@ -39,26 +39,31 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QObject *parent) : QObject
 
     // Number: charge percentage, e.g. 42
     chargeFile   = new QFile("/sys/class/power_supply/battery/capacity", this);
-    logE("Capacity file: " + chargeFile->fileName());
+    logE("Capacity file: " + chargeFile->fileName() + (chargeFile->exists() ? " OK" : " doesn't exist"));
 
     // String: charging, discharging, full, empty, unknown (others?)
     stateFile   = new QFile("/sys/class/power_supply/battery/status", this);
-    logE("Charge state file: " + stateFile->fileName());
+    logE("Charge state file: " + stateFile->fileName() + (stateFile->exists() ? " OK" : " doesn't exist"));
 
     // Number: 0 or 1
     chargerConnectedFile = new QFile("/sys/class/power_supply/usb/present", this);
-    logE("Charger status file: " + chargerConnectedFile->fileName());
+    logE("Charger status file: " + chargerConnectedFile->fileName() + (chargerConnectedFile->exists() ? " OK" : " doesn't exist"));
+
+    QString filename;
 
     // Number: temperature
-    temperatureFile   = new QFile("/sys/class/power_supply/battery/temp", this);
-    logE("Temperature file: " + temperatureFile->fileName());
+    filename = "/sys/class/power_supply/battery/temp";
+    if(!temperatureFile && QFile::exists(filename)) {
+        temperatureFile = new QFile(filename, this);
+    }
+    logE("Temperature file: " + filename + (QFile::exists(filename) ? " OK" : " doesn't exist"));
 
-    // String: Good, Warm, Overheat, (others?)
-    healthFile   = new QFile("/sys/class/power_supply/battery/health", this);
-    logE("Health state file: " + healthFile->fileName());
-
-    // ENABLE/DISABLE CHARGING
-    QString filename;
+    // String: health state
+    filename = "/sys/class/power_supply/battery/health";
+    if(!healthFile && QFile::exists(filename)) {
+        healthFile = new QFile(filename, this);
+    }
+    logE("Battery health file: " + filename + (QFile::exists(filename) ? " OK" : " doesn't exist"));
 
     // e.g. for Sony Xperia XA2
     filename = "/sys/class/power_supply/battery/input_suspend";
@@ -86,7 +91,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QObject *parent) : QObject
 
     // If we found a usable file, check that it is writable
     if(chargingEnabledFile) {
-        logE("Charger control file: " + chargingEnabledFile->fileName());
+        logE("Charger control file: " + chargingEnabledFile->fileName() + (chargingEnabledFile->exists() ? " OK" : " doesn't exist"));
         if(chargingEnabledFile->open(QIODevice::WriteOnly)) {
             chargingEnabledFile->close();
         }
@@ -156,7 +161,7 @@ void Battery::updateData()
         stateFile->close();
     }
 
-    if(temperatureFile->open(QIODevice::ReadOnly)) {
+    if(temperatureFile && temperatureFile->open(QIODevice::ReadOnly)) {
         nextTemperature = temperatureFile->readLine().trimmed().toInt();
         if(nextTemperature != temperature) {
             temperature = nextTemperature;
@@ -165,7 +170,8 @@ void Battery::updateData()
         }
         temperatureFile->close();
     }
-    if(healthFile->open(QIODevice::ReadOnly)) {
+
+    if(healthFile && healthFile->open(QIODevice::ReadOnly)) {
         nextHealth = (QString(healthFile->readLine().trimmed().toLower()));
         if(nextHealth != health) {
             health = nextHealth;
