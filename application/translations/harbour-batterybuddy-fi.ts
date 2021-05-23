@@ -415,7 +415,7 @@
     </message>
     <message>
         <source>Warning</source>
-        <translation>Varoitue</translation>
+        <translation>Varoitus</translation>
     </message>
     <message>
         <source>Critical</source>
