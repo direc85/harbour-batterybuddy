@@ -177,10 +177,12 @@ Page {
                     MyDetailItem {
                         label: qsTr("Health:")
                         value: healthText[battery.health]
+                        visible: value !== "unknown"
                     }
                     MyDetailItem {
                         label: qsTr("Temperature:")
                         value: battery.temperature === 0x7FFFFFFF ? healthText["unknown"] : formatTemperature(battery.temperature)
+                        visible: battery.temperature !== 0x7FFFFFFF
 
                         function formatTemperature(temp) {
                             if(Qt.locale().measurementSystem === Locale.ImperialUSSystem) {
