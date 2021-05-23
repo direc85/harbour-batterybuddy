@@ -1,18 +1,24 @@
+# 0 = Build for SFOS 3.4+ (use the latest Sailfish Application SDK)
+# 1 = Build for SFOS 2.2+ (use Sailfish Application SDK 1807)
+LEGACY_BUILD = 0
+
 TARGET = harbour-batterybuddy-daemon
 
 CONFIG += sailfishapp console
 
-QT = core dbus
+contains(LEGACY_BUILD, 0) { QT = core dbus }
+contains(LEGACY_BUILD, 1) { QT = core dbus multimedia }
 
 PKGCONFIG += nemonotifications-qt5
 
 # Keep this in sync with "application.pro"
-VER = 3.12
-REL = 3
+VER = 3.13
+REL = 1
 
 VERSION = $${VER}-$${REL}
 DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"
 DEFINES += APP_NAME=\"\\\"$$TARGET\\\"\"
+DEFINES += LEGACY_BUILD=$${LEGACY_BUILD}
 
 # Use "--verbose" and "--debug" at runtime.
 # See main() and logger.h for details.
@@ -20,16 +26,26 @@ DEFINES += QT_NO_DEBUG_OUTPUT
 
 HEADERS += \
     src/battery.h \
-    src/mynotification.h \
     src/logger.h \
     src/settings.h
 
 SOURCES += \
     src/battery.cpp \
-    src/mynotification.cpp \
     src/logger.cpp \
     src/settings.cpp \
     src/harbour-batterybuddy-daemon.cpp
+
+contains(LEGACY_BUILD, 1) {
+    HEADERS += src/profile.h \
+               src/mynotification_sfos2.h
+    SOURCES += src/profile.cpp \
+               src/mynotification_sfos2.cpp
+}
+
+contains(LEGACY_BUILD, 0) {
+    HEADERS += src/mynotification.h
+    SOURCES += src/mynotification.cpp
+}
 
 OTHER_FILES += harbour-batterybuddy-daemon.service
 
