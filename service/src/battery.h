@@ -26,7 +26,11 @@
 #include <QHostInfo>
 #include <QLocale>
 #include "settings.h"
+#if LEGACY_BUILD == 1
+#include "mynotification_sfos2.h"
+#else
 #include "mynotification.h"
+#endif
 #include "logger.h"
 
 class Battery : public QObject

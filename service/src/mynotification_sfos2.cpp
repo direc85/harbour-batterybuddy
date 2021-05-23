@@ -15,7 +15,7 @@
  *
  * Author: Matti Viljanen
  */
-#include "mynotification.h"
+#include "mynotification_sfos2.h"
 
 MyNotification::MyNotification(Logger *newLogger, QObject* parent) : QObject(parent)
 {
@@ -57,7 +57,6 @@ void MyNotification::send(QString title, QString body, QString soundFile)
     notification.setBody(body);
     notification.setPreviewSummary(title);
     notification.setPreviewBody(body);
-//    notification.setSound(soundFile);
     notification.setUrgency(Notification::Normal);
     notification.publish();
 
