@@ -81,9 +81,9 @@ private:
 
     int lowLimit = 65;
     int highLimit = 70;
-    QString lowAlertFile = "/usr/share/sounds/jolla-ambient/stereo/general_warning.wav";
+    QString lowAlertFile = "/usr/share/sounds/jolla-ambient/stereo/battery_low.wav";
     QString highAlertFile = "/usr/share/sounds/jolla-ambient/stereo/positive_confirmation.wav";
-    QString healthAlertFile = "/usr/share/sounds/jolla-ambient/stereo/battery_low.wav";
+    QString healthAlertFile = "/usr/share/sounds/jolla-ambient/stereo/general_warning.wav";
     QString notificationTitle;
     QString notificationLowText;
     QString notificationHighText;
