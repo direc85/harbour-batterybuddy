@@ -36,6 +36,9 @@ class Battery : public QObject
     Q_PROPERTY(QString state READ getState NOTIFY stateChanged)
     Q_PROPERTY(bool chargingEnabled READ getChargingEnabled NOTIFY chargingEnabledChanged)
 
+    Q_PROPERTY(QString health READ getHealth NOTIFY healthChanged)
+    Q_PROPERTY(int temperature READ getTemperature NOTIFY temperatureChanged)
+
 public:
     Battery(Settings* newSettings, Logger* newLogger, QObject* parent = nullptr);
     ~Battery();
@@ -45,6 +48,9 @@ public:
     bool getCharging();
     bool getChargerConnected();
     QString getState();
+
+    QString getHealth();
+    int getTemperature();
 
     bool getChargingEnabled();
 
@@ -59,6 +65,9 @@ private:
     QFile* chargingEnabledFile = nullptr;
     Settings* settings = nullptr;
     Logger* logger = nullptr;
+
+    QFile* temperatureFile = nullptr;
+    QFile* healthFile = nullptr;
 
     // Default values:
     int charge = 100; // 100% full
@@ -81,12 +90,17 @@ private:
     QString nextState = state;
     bool nextChargingEnabled = chargingEnabled;
 
+    QString  nextHealth = health;
+    int nextTemperature = temperature;
+
 signals:
     void chargeChanged(int);
     void currentChanged(int);
     void stateChanged(QString);
     void chargingEnabledChanged(bool);
     void chargerConnectedChanged(bool);
+    void healthChanged(QString);
+    void temperatureChanged(int);
 };
 
 #endif // BATTERY_H
