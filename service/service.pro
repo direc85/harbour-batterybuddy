@@ -1,6 +1,6 @@
-# 0 = Build for SFOS 3.4+ (use the latest Sailfish Application SDK)
-# 1 = Build for SFOS 2.2+ (use Sailfish Application SDK 1807)
-LEGACY_BUILD = 0
+# 0 = Compatible with SFOS 4.0+
+# 1 = Compatible SFOS 2.2+
+LEGACY_BUILD = 1
 
 TARGET = harbour-batterybuddy-daemon
 
