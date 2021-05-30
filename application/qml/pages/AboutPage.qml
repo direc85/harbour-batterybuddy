@@ -90,7 +90,7 @@ Page {
             AboutLabel {
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.secondaryColor
-                text: "Peter Gantner (nephros)"
+                text: "Copyright 2021 Peter Gantner (nephros)"
             }
 
             BackgroundItem {
@@ -130,7 +130,7 @@ Page {
                       "Français: Quenty31\n"+
                       "简体中文: dashinfantry\n"+
                       "svensk: eson57\n"+
-                      "Deutsch: dryo, fllp\n"+
+                      "Deutsch: dryo, fllp, nephros\n"+
                       "Polski: atlochowski\n"+
                       "Magyar: 1Zgp"
             }
