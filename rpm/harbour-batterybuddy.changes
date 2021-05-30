@@ -1,3 +1,9 @@
+* Sun May 23 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.14-1
+- Use keepalive-tool to mitigate deep sleep
+- Update translators and credits
+- Update Polish translation (thanks, atlochowski)
+- Update Deutch translation (thanks, nephros)
+
 * Sun May 23 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.13-1
 - Show battery temperature and condition (thanks, nephros)
 - Show notifications about abnormal temperature and condition (thanks, nephros)
