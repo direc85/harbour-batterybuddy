@@ -1,6 +1,6 @@
 # 0 = Compatible with SFOS 4.0+
 # 1 = Compatible SFOS 2.2+
-LEGACY_BUILD = 1
+LEGACY_BUILD = 0
 
 TARGET = harbour-batterybuddy-daemon
 
@@ -12,7 +12,7 @@ contains(LEGACY_BUILD, 1) { QT = core dbus multimedia }
 PKGCONFIG += nemonotifications-qt5
 
 # Keep this in sync with "application.pro"
-VER = 3.14
+VER = 3.15
 REL = 1
 
 VERSION = $${VER}-$${REL}

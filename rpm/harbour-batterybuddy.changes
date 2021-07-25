@@ -1,4 +1,7 @@
-* Sun May 23 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.14-1
+* Sun Jul 25 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.15-1
+- Implement BackgroundActivity timed events
+
+* Sun May 30 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.14-1
 - Use keepalive-tool to mitigate deep sleep
 - Update translators and credits
 - Update Polish translation (thanks, atlochowski)
