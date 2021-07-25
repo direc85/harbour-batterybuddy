@@ -308,6 +308,65 @@
     </message>
 </context>
 <context>
+    <name>QObject</name>
+    <message>
+        <source>Never</source>
+        <translation>Ei koskaan</translation>
+    </message>
+    <message>
+        <source>30 seconds</source>
+        <translation>30 sekuntia</translation>
+    </message>
+    <message>
+        <source>2.5 minutes</source>
+        <translation>2,5 minuuttia</translation>
+    </message>
+    <message>
+        <source>5 minutes</source>
+        <translation>5 minuuttia</translation>
+    </message>
+    <message>
+        <source>10 minutes</source>
+        <translation>10 minuuttia</translation>
+    </message>
+    <message>
+        <source>15 minutes</source>
+        <translation>15 minuuttia</translation>
+    </message>
+    <message>
+        <source>30 minutes</source>
+        <translation>30 minuuttia</translation>
+    </message>
+    <message>
+        <source>1 hour</source>
+        <translation>1 tunti</translation>
+    </message>
+    <message>
+        <source>2 hours</source>
+        <translation>2 tuntia</translation>
+    </message>
+    <message>
+        <source>4 hours</source>
+        <translation>4 tuntia</translation>
+    </message>
+    <message>
+        <source>8 hours</source>
+        <translation>8 tuntia</translation>
+    </message>
+    <message>
+        <source>10 hours</source>
+        <translation>10 tuntia</translation>
+    </message>
+    <message>
+        <source>12 hours</source>
+        <translation>12 tuntia</translation>
+    </message>
+    <message>
+        <source>24 hours</source>
+        <translation>24 tuntia</translation>
+    </message>
+</context>
+<context>
     <name>Settings</name>
     <message>
         <source>Battery charge %1%</source>
@@ -396,10 +455,6 @@
     <message>
         <source>Battery low notification interval</source>
         <translation>Matalan varauksen ilmoituksen aikaväli</translation>
-    </message>
-    <message>
-        <source>Once</source>
-        <translation>Kerran</translation>
     </message>
     <message>
         <source>Never</source>
