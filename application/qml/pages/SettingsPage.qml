@@ -45,9 +45,9 @@ Page {
             highAlertSlider.value = settings.highAlert
             healthSelector.currentIndex = settings.healthAlert
             lowAlertSlider.value = settings.lowAlert
-            highIntervalSlider.value = settings.highNotificationsInterval
-            lowIntervalSlider.value = settings.lowNotificationsInterval
-            healthIntervalSlider.value = settings.healthNotificationsInterval
+            highIntervalCombo.currentIndex = settings.highNotificationsInterval
+            lowIntervalCombo.currentIndex = settings.lowNotificationsInterval
+            healthIntervalCombo.currentIndex = settings.healthNotificationsInterval
             if(logger.debug) logger.log("SettingsPage values updated")
             daemonCheck.start()
         }
@@ -314,58 +314,50 @@ Page {
 
                 SectionHeader { text: qsTr("Battery high notification interval") }
 
-                MySlider {
-                    id: highIntervalSlider
-                    minimumValue: 50
-                    maximumValue: 610
-                    stepSize: 10
-                    valueText: updateValueText()
-                    onValueChanged: updateValueText()
-                    function updateValueText() {
-                        if(value == 50)
-                            return qsTr("Once")
-                        if(value == 610)
-                            return qsTr("Never")
-                        return Math.floor(value / 60) + (value % 60 < 10 ? ":0" + value % 60 : ":" + value % 60)
+                ComboBox {
+                    id: highIntervalCombo
+                    label: qsTr("Battery high notification interval")
+                    menu: ContextMenu {
+                        Repeater {
+                            model: frequencyNames
+                            MenuItem {
+                                enabled: index > 0
+                                visible: index > 0
+                                text: modelData
+                                onClicked: {
+                                    highIntervalCombo.currentIndex = index
+                                    highIntervalCombo.save()
+                                }
+                            }
+                        }
                     }
-                    onReleased: save()
                     function save() {
-                        settings.highNotificationsInterval = value
+                        settings.highNotificationsInterval = currentIndex
                     }
-                }
-
-                AdjustmentButtons {
-                    targetSlider: highIntervalSlider
-                    smallChange: 10
-                    largeChange: 60
                 }
 
                 SectionHeader { text: qsTr("Battery low notification interval") }
 
-                MySlider {
-                    id: lowIntervalSlider
-                    minimumValue: 50
-                    maximumValue: 610
-                    stepSize: 10
-                    valueText: updateValueText()
-                    onValueChanged: updateValueText()
-                    function updateValueText() {
-                        if(value == 50)
-                            return qsTr("Once")
-                        if(value == 610)
-                            return qsTr("Never")
-                        return Math.floor(value / 60) + (value % 60 < 10 ? ":0" + value % 60 : ":" + value % 60)
+                ComboBox {
+                    id: lowIntervalCombo
+                    label: qsTr("Battery low notification interval")
+                    menu: ContextMenu {
+                        Repeater {
+                            model: frequencyNames
+                            MenuItem {
+                                enabled: index > 0
+                                visible: index > 0
+                                text: modelData
+                                onClicked: {
+                                    lowIntervalCombo.currentIndex = index
+                                    lowIntervalCombo.save()
+                                }
+                            }
+                        }
                     }
-                    onReleased: save()
                     function save() {
-                        settings.lowNotificationsInterval = value
+                        settings.lowNotificationsInterval = currentIndex
                     }
-                }
-
-                AdjustmentButtons {
-                    targetSlider: lowIntervalSlider
-                    smallChange: 10
-                    largeChange: 60
                 }
 
                 Label {
@@ -406,30 +398,26 @@ Page {
 
                 SectionHeader { text: qsTr("Health notification interval") }
 
-                MySlider {
-                    id: healthIntervalSlider
-                    minimumValue: 50
-                    maximumValue: 610
-                    stepSize: 10
-                    valueText: updateValueText()
-                    onValueChanged: updateValueText()
-                    function updateValueText() {
-                        if(value == 50)
-                            return qsTr("Once")
-                        if(value == 610)
-                            return qsTr("Never")
-                        return Math.floor(value / 60) + (value % 60 < 10 ? ":0" + value % 60 : ":" + value % 60)
+                ComboBox {
+                    id: healthIntervalCombo
+                    label: qsTr("Health notification interval")
+                    menu: ContextMenu {
+                        Repeater {
+                            model: frequencyNames
+                            MenuItem {
+                                enabled: index > 0
+                                visible: index > 0
+                                text: modelData
+                                onClicked: {
+                                    healthIntervalCombo.currentIndex = index
+                                    healthIntervalCombo.save()
+                                }
+                            }
+                        }
                     }
-                    onReleased: save()
                     function save() {
-                        settings.healthNotificationsInterval = value
+                        settings.healthNotificationsInterval = currentIndex
                     }
-                }
-
-                AdjustmentButtons {
-                    targetSlider: healthIntervalSlider
-                    smallChange: 10
-                    largeChange: 60
                 }
             }
         }

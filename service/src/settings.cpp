@@ -53,8 +53,8 @@ Settings::Settings(Logger* newLogger, QObject *parent) : QObject(parent)
     key = "notificationsEnabled";
     if(mySettings->contains(key)) {
         if(mySettings->value(key).toInt() == 0) {
-            mySettings->setValue(sHighNotificationsInterval, 610);
-            mySettings->setValue(sLowNotificationsInterval, 610);
+            mySettings->setValue(sHighNotificationsInterval, 2);
+            mySettings->setValue(sLowNotificationsInterval, 2);
         }
         else {
             mySettings->setValue(sHighNotificationsInterval, highNotificationsInterval);
@@ -75,7 +75,7 @@ Settings::Settings(Logger* newLogger, QObject *parent) : QObject(parent)
     key = "highNotificationsEnabled";
     if(mySettings->contains(key)) {
         if(mySettings->value(key).toInt() == 0)
-            mySettings->setValue(sHighNotificationsInterval, 610);
+            mySettings->setValue(sHighNotificationsInterval, 2);
         mySettings->remove(key);
         logV(migrate.arg(key));
     }
@@ -83,7 +83,7 @@ Settings::Settings(Logger* newLogger, QObject *parent) : QObject(parent)
     key = "lowNotificationsEnabled";
     if(mySettings->contains(key)) {
         if(mySettings->value(key).toInt() == 0)
-            mySettings->setValue(sLowNotificationsInterval, 610);
+            mySettings->setValue(sLowNotificationsInterval, 2);
         mySettings->remove(key);
         logV(migrate.arg(key));
     }
@@ -133,9 +133,9 @@ void Settings::updateConfig(const QString path) {
     loadInteger(sLowAlert, lowAlert, 5, 99);
     loadInteger(sHighAlert, highAlert, 6, 100);
     loadInteger(sHealthAlert, healthAlert, 0, 2);
-    restartTimers |= loadInteger(sHighNotificationsInterval, highNotificationsInterval, 50, 610);
-    restartTimers |= loadInteger(sLowNotificationsInterval, lowNotificationsInterval, 50, 610);
-    restartTimers |= loadInteger(sHealthNotificationsInterval, healthNotificationsInterval, 50, 610);
+    restartTimers |= loadInteger(sHighNotificationsInterval, highNotificationsInterval, 0, 13);
+    restartTimers |= loadInteger(sLowNotificationsInterval, lowNotificationsInterval, 0, 13);
+    restartTimers |= loadInteger(sHealthNotificationsInterval, healthNotificationsInterval, 0, 13);
     loadInteger(sLimitEnabled, limitEnabled, 0, 1);
     loadInteger(sLowLimit, lowLimit, 5, 99);
     loadInteger(sHighLimit, highLimit, 6, 100);

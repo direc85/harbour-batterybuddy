@@ -25,6 +25,8 @@
 #include <QStandardPaths>
 #include <QHostInfo>
 #include <QLocale>
+#include <QCoreApplication>
+#include <keepalive/backgroundactivity.h>
 #include "settings.h"
 #if LEGACY_BUILD == 1
 #include "mynotification_sfos2.h"
@@ -38,7 +40,7 @@ class Battery : public QObject
     Q_OBJECT
 
 public:
-    Battery(Logger* newLogger, bool loglevelSet, QObject *parent = nullptr);
+    Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QObject *parent = nullptr);
     ~Battery();
 
     int getCharge();
@@ -57,6 +59,24 @@ public slots:
     void shutdown();
 
 private:
+
+    BackgroundActivity::Frequency frequencies[14] = {
+        BackgroundActivity::Range,
+        BackgroundActivity::ThirtySeconds,
+        BackgroundActivity::TwoAndHalfMinutes,
+        BackgroundActivity::FiveMinutes,
+        BackgroundActivity::TenMinutes,
+        BackgroundActivity::FifteenMinutes,
+        BackgroundActivity::ThirtyMinutes,
+        BackgroundActivity::OneHour,
+        BackgroundActivity::TwoHours,
+        BackgroundActivity::FourHours,
+        BackgroundActivity::EightHours,
+        BackgroundActivity::TenHours,
+        BackgroundActivity::TwelveHours,
+        BackgroundActivity::TwentyFourHours
+    };
+
     Logger *logger;
     QFile *chargeFile = nullptr;
     QFile *chargerConnectedFile = nullptr;
@@ -65,10 +85,10 @@ private:
     QFile *temperatureFile = nullptr;
     QFile *healthFile = nullptr;
     Settings *settings = nullptr;
-    QTimer *updateTimer = nullptr;
-    QTimer *highNotifyTimer = nullptr;
-    QTimer *lowNotifyTimer = nullptr;
-    QTimer *healthNotifyTimer = nullptr;
+    BackgroundActivity *updateTimer = nullptr;
+    BackgroundActivity *highNotifyTimer = nullptr;
+    BackgroundActivity *lowNotifyTimer = nullptr;
+    BackgroundActivity *healthNotifyTimer = nullptr;
     MyNotification *chargeNotification = nullptr;
     MyNotification *healthNotification = nullptr;
 

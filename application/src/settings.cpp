@@ -32,9 +32,9 @@ Settings::Settings(Logger *newLogger, QObject *parent) : QObject(parent)
     loadInteger(sLowAlert, lowAlert, 5, 99);
     loadInteger(sHighAlert, highAlert, 6, 100);
     loadInteger(sHealthAlert, healthAlert, 0, 2);
-    loadInteger(sHighNotificationsInterval, highNotificationsInterval, 50, 610);
-    loadInteger(sLowNotificationsInterval, lowNotificationsInterval, 50, 610);
-    loadInteger(sHealthNotificationsInterval, healthNotificationsInterval, 50, 610);
+    loadInteger(sHighNotificationsInterval, highNotificationsInterval, 0, 13);
+    loadInteger(sLowNotificationsInterval, lowNotificationsInterval, 0, 13);
+    loadInteger(sHealthNotificationsInterval, healthNotificationsInterval, 0, 13);
     loadInteger(sLimitEnabled, limitEnabled, 0, 1);
     loadInteger(sLowLimit, lowLimit, 5, 99);
     loadInteger(sHighLimit, highLimit, 6, 100);

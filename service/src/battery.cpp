@@ -17,7 +17,7 @@
  */
 #include "battery.h"
 
-Battery::Battery(Logger* newLogger, bool loglevelSet, QObject *parent) : QObject(parent)
+Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QObject *parent) : QObject(parent)
 {
     logger = newLogger;
     settings = new Settings(logger, this);
@@ -30,10 +30,6 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QObject *parent) : QObject
         logE(QString("Log level set to %1").arg((logLevel == 0 ? "low" : (logLevel == 1 ? "medium" : "high"))));
     }
 
-    updateTimer = new QTimer(this);
-    highNotifyTimer = new QTimer(this);
-    lowNotifyTimer = new QTimer(this);
-    healthNotifyTimer = new QTimer(this);
 #if LEGACY_BUILD == 1
     chargeNotification = new MyNotification(logger, this);
     healthNotification = new MyNotification(logger, this);
@@ -111,26 +107,48 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QObject *parent) : QObject
         logE("Please contact the developer with your device model!");
     }
 
-
-    connect(updateTimer, SIGNAL(timeout()), this, SLOT(updateData()));
     connect(settings, SIGNAL(resetTimers()), this, SLOT(resetTimers()));
-    connect(highNotifyTimer, SIGNAL(timeout()), this, SLOT(showHighNotification()));
-    connect(lowNotifyTimer, SIGNAL(timeout()), this, SLOT(showLowNotification()));
-    connect(healthNotifyTimer, SIGNAL(timeout()), this, SLOT(showHealthNotification()));
+
+    updateTimer = new BackgroundActivity(app);
+    highNotifyTimer = new BackgroundActivity(app);
+    lowNotifyTimer = new BackgroundActivity(app);
+    healthNotifyTimer = new BackgroundActivity(app);
+
+    connect(updateTimer, SIGNAL(running()), this, SLOT(updateData()));
+    connect(highNotifyTimer, SIGNAL(running()), this, SLOT(showHighNotification()));
+    connect(lowNotifyTimer, SIGNAL(running()), this, SLOT(showLowNotification()));
+    connect(healthNotifyTimer, SIGNAL(running()), this, SLOT(showHealthNotification()));
+
+    connect(updateTimer, SIGNAL(running()), updateTimer, SLOT(wait()));
+    connect(highNotifyTimer, SIGNAL(running()), highNotifyTimer, SLOT(wait()));
+    connect(lowNotifyTimer, SIGNAL(running()), lowNotifyTimer, SLOT(wait()));
+    connect(healthNotifyTimer, SIGNAL(running()), healthNotifyTimer, SLOT(wait()));
 
     updateData();
-    updateTimer->start(5000);
+
+    updateTimer->setWakeupFrequency(BackgroundActivity::ThirtySeconds);
+    updateTimer->wait();
 
     // If updateData() didn't start the timers
     // aka. "charging" status didn't change
     // (or if both times are disabled, actually)
     //  manually trigger the timer startup.
-    if(!highNotifyTimer->isActive() && !lowNotifyTimer->isActive() && !healthNotifyTimer->isActive()) {
+    if(!highNotifyTimer->isWaiting() && !lowNotifyTimer->isWaiting() && !healthNotifyTimer->isWaiting()) {
         resetTimers();
     }
 }
 
-Battery::~Battery() { }
+Battery::~Battery() {
+    updateTimer->stop();
+    highNotifyTimer->stop();
+    lowNotifyTimer->stop();
+    healthNotifyTimer->stop();
+
+    delete updateTimer;
+    delete highNotifyTimer;
+    delete lowNotifyTimer;
+    delete healthNotifyTimer;
+}
 
 void Battery::updateData()
 {
@@ -204,31 +222,41 @@ void Battery::resetTimers() {
     highNotifyTimer->stop();
     lowNotifyTimer->stop();
     healthNotifyTimer->stop();
-    highNotifyTimer->setInterval(settings->getHighNotificationsInterval() * 1000);
-    lowNotifyTimer->setInterval(settings->getLowNotificationsInterval() * 1000);
-    healthNotifyTimer->setInterval(settings->getHealthNotificationsInterval() * 1000);
 
-    if(settings->getHighNotificationsInterval() < 610) {
+
+    if(settings->getHighNotificationsInterval() > 0) {
+        highNotifyTimer->setWakeupFrequency(frequencies[settings->getHighNotificationsInterval()]);
+        logD(QString("High notifications frequency %1 => %2 seconds")
+             .arg(settings->getHighNotificationsInterval())
+             .arg(static_cast<int>(frequencies[settings->getHighNotificationsInterval()])));
         logD("Starting high battery timer");
-        highNotifyTimer->start();
+        highNotifyTimer->wait();
         showHighNotification();
     }
     else {
         logD("High battery timer not started");
     }
 
-    if(settings->getLowNotificationsInterval() < 610) {
+    if(settings->getLowNotificationsInterval() > 0) {
+        lowNotifyTimer->setWakeupFrequency(frequencies[settings->getLowNotificationsInterval()]);
+        logD(QString("Low notifications frequency %1 => %2 seconds")
+             .arg(settings->getLowNotificationsInterval())
+             .arg(static_cast<int>(frequencies[settings->getLowNotificationsInterval()])));
         logD("Start low battery timer");
-        lowNotifyTimer->start();
+        lowNotifyTimer->wait();
         showLowNotification();
     }
     else {
         logD("Low battery timer not started");
     }
 
-    if(settings->getHealthNotificationsInterval() < 610) {
+    if(settings->getHealthNotificationsInterval() > 0) {
+        healthNotifyTimer->setWakeupFrequency(frequencies[settings->getHealthNotificationsInterval()]);
+        logD(QString("Health notifications frequency %1 => %2 seconds")
+             .arg(settings->getHealthNotificationsInterval())
+             .arg(static_cast<int>(frequencies[settings->getHealthNotificationsInterval()])));
         logD("Start health timer");
-        healthNotifyTimer->start();
+        healthNotifyTimer->wait();
         showHealthNotification();
     }
     else {
@@ -237,7 +265,7 @@ void Battery::resetTimers() {
 }
 
 void Battery::showHighNotification() {
-    if(settings->getHighNotificationsInterval() < 610 && (charge >= settings->getHighAlert() && state != "discharging")
+    if(settings->getHighNotificationsInterval() > 0 && (charge >= settings->getHighAlert() && state != "discharging")
             && !(charge == 100 && state == "idle")) {
         logV(QString("Notification: %1").arg(settings->getNotificationTitle().arg(charge)));
         chargeNotification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationHighText(), settings->getHighAlertFile());
@@ -253,7 +281,7 @@ void Battery::showHighNotification() {
 }
 
 void Battery::showLowNotification() {
-    if(settings->getLowNotificationsInterval() < 610 && charge <= settings->getLowAlert() && state != "charging") {
+    if(settings->getLowNotificationsInterval() > 0 && charge <= settings->getLowAlert() && state != "charging") {
         logV(QString("Notification: %1").arg(settings->getNotificationTitle().arg(charge)));
         chargeNotification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationLowText(), settings->getLowAlertFile());
         if(settings->getLowNotificationsInterval() == 50) {
@@ -284,7 +312,7 @@ void Battery::showHealthNotification() {
         { "overheat" , HealthThresh["crit"] },
         { "cold"     , HealthThresh["crit"] }
     };
-    if(settings->getHealthNotificationsInterval() < 610 && temperature != 0x7FFFFFFF && ( HealthState[health] != HealthThresh["ok"] && HealthState[health] >= settings->getHealthAlert() ) ) {
+    if(settings->getHealthNotificationsInterval() > 0 && temperature != 0x7FFFFFFF && ( HealthState[health] != HealthThresh["ok"] && HealthState[health] >= settings->getHealthAlert() ) ) {
         QString displayTemp = QString::number(temperature / 10.0);
         if (QLocale().measurementSystem() == QLocale::ImperialUSSystem)
             displayTemp = QString::number((temperature / 10) * 1.8 + 32) + " F";

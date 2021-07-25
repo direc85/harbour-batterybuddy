@@ -26,6 +26,7 @@
 #include <QQuickView>
 #include <QQmlEngine>
 #include <QTimer>
+#include <QStringList>
 
 #include "logger.h"
 #include "battery.h"
@@ -87,10 +88,28 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<Process>("Process", 1, 0, "Process");
 
+    const QStringList frequencyNames = {
+        QObject::tr("Never"),
+        QObject::tr("30 seconds"),
+        QObject::tr("2.5 minutes"),
+        QObject::tr("5 minutes"),
+        QObject::tr("10 minutes"),
+        QObject::tr("15 minutes"),
+        QObject::tr("30 minutes"),
+        QObject::tr("1 hour"),
+        QObject::tr("2 hours"),
+        QObject::tr("4 hours"),
+        QObject::tr("8 hours"),
+        QObject::tr("10 hours"),
+        QObject::tr("12 hours"),
+        QObject::tr("24 hours"),
+    };
+
     view->rootContext()->setContextProperty("battery", battery);
     view->rootContext()->setContextProperty("settings", settings);
     view->rootContext()->setContextProperty("logger", logger);
     view->rootContext()->setContextProperty("app_version", APP_VERSION);
+    view->rootContext()->setContextProperty("frequencyNames", frequencyNames);
 
     view->setSource(SailfishApp::pathTo("qml/harbour-batterybuddy.qml"));
     view->showFullScreen();

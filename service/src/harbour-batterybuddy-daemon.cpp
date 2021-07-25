@@ -17,7 +17,6 @@
  */
 #include <QCoreApplication>
 #include <QObject>
-#include <QTimer>
 
 #include "logger.h"
 #include "battery.h"
@@ -71,7 +70,7 @@ int main(int argc, char** argv)
     Logger* logger = new Logger(verbose, debug, logfile);
     logE(QString("%1 %2").arg(APP_NAME, APP_VERSION));
 
-    Battery* battery = new Battery(logger, logLevelSet);
+    Battery* battery = new Battery(logger, logLevelSet, &app);
 
     // Exit gracefully on Ctrl-C and service stop
     QObject::connect(&app, SIGNAL(aboutToQuit()), battery, SLOT(shutdown()));

@@ -24,6 +24,8 @@ DEFINES += LEGACY_BUILD=$${LEGACY_BUILD}
 # See main() and logger.h for details.
 DEFINES += QT_NO_DEBUG_OUTPUT
 
+LIBS += -lkeepalive
+
 HEADERS += \
     src/battery.h \
     src/logger.h \
