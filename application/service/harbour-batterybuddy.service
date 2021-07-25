@@ -19,7 +19,7 @@ Description=Battery Buddy background daemon
 After=pre-user-session.target
 
 [Service]
-ExecStart=/usr/bin/keepalive-tool -- /usr/bin/harbour-batterybuddy-daemon --logfile
+ExecStart=/usr/bin/harbour-batterybuddy-daemon --logfile
 
 [Install]
 WantedBy=user-session.target

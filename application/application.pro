@@ -19,7 +19,7 @@ VER = 3.14
 REL = 1
 
 VERSION = $${VER}-$${REL}
-$$system(bash update-spec-version.sh $$TARGET $$VER $$REL)
+system(bash update-spec-version.sh $$TARGET $$VER $$REL)
 DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"
 DEFINES += APP_NAME=\"\\\"$$TARGET\\\"\"
 
