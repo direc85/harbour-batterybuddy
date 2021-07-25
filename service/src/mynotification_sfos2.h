@@ -19,7 +19,6 @@
 #define MYNOTIFICATION_H
 
 #include <QObject>
-#include <QTimer>
 #include <QMediaPlayer>
 #include <nemonotifications-qt5/notification.h>
 #include "profile.h"
