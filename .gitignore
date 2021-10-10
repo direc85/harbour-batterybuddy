@@ -6,3 +6,5 @@
 *.qm
 *.spec.*
 *.autosave
+shadow/
+RPMS/
