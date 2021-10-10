@@ -4,7 +4,7 @@
 # Configuration
 ##########
 
-export APP_NAME=grep "Name" $(find -name "*.spec" | head -1) | awk '{print $2}'
+export APP_NAME=$(grep "Name" $(find -name "*.spec" | head -1) | awk '{print $2}')
 export SFOS_VER=4.2.0.21
 
 ##########
@@ -24,6 +24,7 @@ export RPM_DEST_DIR=$PROJECT/RPMS
 function build() {
   export PATH="$HOME/SailfishOS/bin:$HOME/mersdk/targets/Sailfish-$SFOS_VER-$ARCH.default/usr/lib/qt5/bin:$HOME/.config/SailfishSDK/libsfdk/build-target-tools/Sailfish SDK Build Engine/SailfishOS-$SFOS_VER-$ARCH.default:$ORIG_PATH"
   export SFDK_OPTIONS="-c target=SailfishOS-$SFOS_VER-$ARCH"
+  sfdk config --global --push no-fix-version
   cd $PROJECT
   mkdir $SHADOW
   cd $SHADOW
@@ -35,7 +36,7 @@ function build() {
   fi
   sfdk make
   sfdk package
-  perl-rename -v 's/\+.{29}//g' RPMS/*.rpm
+#  perl-rename -v 's/\+.{29}//g' RPMS/*.rpm
   cp -f -v RPMS/*.rpm $RPM_DEST_DIR/
   cd $PROJECT
 }
