@@ -73,9 +73,6 @@ desktop-file-install --delete-original       \
 # << files
 
 %posttrans
-export SFOSUSER=$(id -un 100000)
-export DBUS_USER_ADDRESS=unix:path=/run/user/100000/dbus/user_bus_socket
-
 # Remove old service
 systemctl stop %{name}.service
 systemctl disable %{name}.service
@@ -89,23 +86,19 @@ systemctl start %{name}-oneshot.service
 
 # Install/update background daemon (default user)
 cp %{_datadir}/%{name}/service/%{name}.service %{_userunitdir}/%{name}.service
-su $SFOSUSER -c "DBUS_SESSION_BUS_ADDRESS=$DBUS_USER_ADDRESS systemctl --user daemon-reload"
-su $SFOSUSER -c "DBUS_SESSION_BUS_ADDRESS=$DBUS_USER_ADDRESS systemctl --user enable %{name}.service"
-su $SFOSUSER -c "DBUS_SESSION_BUS_ADDRESS=$DBUS_USER_ADDRESS systemctl --user stop %{name}.service"
-su $SFOSUSER -c "DBUS_SESSION_BUS_ADDRESS=$DBUS_USER_ADDRESS systemctl --user start %{name}.service"
+systemctl-user daemon-reload
+systemctl-user enable %{name}.service
+systemctl-user stop %{name}.service
+systemctl-user start %{name}.service
 exit 0
 
 %postun
 // Run on uninstall, not on upgrade
 if [ $1 -eq 0 ]; then
-  # Figure out the default user name
-  export SFOSUSER=$(id -un 100000)
-  export DBUS_USER_ADDRESS=unix:path=/run/user/100000/dbus/user_bus_socket
-
-  su $SFOSUSER -c "DBUS_SESSION_BUS_ADDRESS=$DBUS_USER_ADDRESS systemctl --user stop %{name}.service"
-  su $SFOSUSER -c "DBUS_SESSION_BUS_ADDRESS=$DBUS_USER_ADDRESS systemctl --user disable %{name}.service"
+  systemctl-user stop %{name}.service"
+  systemctl-user disable %{name}.service"
   rm %{_userunitdir}/%{name}.service
-  su $SFOSUSER -c "DBUS_SESSION_BUS_ADDRESS=$DBUS_USER_ADDRESS systemctl --user daemon-reload"
+  systemctl-user daemon-reload"
 
   systemctl stop %{name}-oneshot.service
   systemctl disable %{name}-oneshot.service
