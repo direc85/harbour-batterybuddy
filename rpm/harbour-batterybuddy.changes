@@ -1,3 +1,8 @@
+* Sun Oct 10 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.16.0-1
+- Built for SFOS 4.2.0.21 using SDK 3.6.6
+- Use semantic versioning
+- Use `systemctl-user` instead of `systemctl --user`
+
 * Sun Jul 25 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.15-1
 - Implement BackgroundActivity timed events
 
