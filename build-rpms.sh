@@ -1,11 +1,14 @@
 #!/bin/bash
 
+# For clean build, remove $SHADOW folder
+# To trigger qmake, remove $SHADOW/*/Makefile
+
 ##########
 # Configuration
 ##########
 
-export APP_NAME=$(grep "Name" $(find -name "*.spec" | head -1) | awk '{print $2}')
-export SFOS_VER=4.2.0.21
+export APP_NAME=$(grep "Name" $(find . -regextype egrep -regex "\.\/rpm\/[a-z0-9_-]*\.(yaml|spec)" -print | head -1) | awk '{print $2}')
+export SFOS_VER=4.3.0.12
 
 ##########
 # Paths
@@ -22,15 +25,27 @@ export RPM_DEST_DIR=$PROJECT/RPMS
 ##########
 
 function build() {
-  export PATH="$HOME/SailfishOS/bin:$HOME/mersdk/targets/Sailfish-$SFOS_VER-$ARCH.default/usr/lib/qt5/bin:$HOME/.config/SailfishSDK/libsfdk/build-target-tools/Sailfish SDK Build Engine/SailfishOS-$SFOS_VER-$ARCH.default:$ORIG_PATH"
+  if [ ! -d "$HOME/SailfishOS/mersdk/targets/SailfishOS-$SFOS_VER-$ARCH.default" ]
+  then
+    echo Invalid build target.
+    echo $HOME/SailfishOS/mersdk/targets/SailfishOS-$SFOS_VER-$ARCH.default
+    exit 1
+  fi
+  export PATH="$HOME/SailfishOS/bin:$HOME/SailfishOS/mersdk/targets/SailfishOS-$SFOS_VER-$ARCH.default/usr/lib/qt5/bin:$HOME/.config/SailfishSDK/libsfdk/build-target-tools/Sailfish SDK Build Engine/SailfishOS-$SFOS_VER-$ARCH.default:$ORIG_PATH"
   export SFDK_OPTIONS="-c target=SailfishOS-$SFOS_VER-$ARCH"
   sfdk config --global --push no-fix-version
   cd $PROJECT
-  mkdir $SHADOW
+  if [ ! -d "$SHADOW" ]
+  then
+    mkdir $SHADOW
+  fi
   cd $SHADOW
-  mkdir $ARCH
+  if [ ! -d "$ARCH" ]
+  then
+    mkdir $ARCH
+  fi
   cd $ARCH
-  if [ ! -f Makefile ]
+  if [ ! -f "Makefile" ]
   then
     sfdk qmake $PROJECT -recursive
   fi
@@ -45,14 +60,27 @@ function build() {
 # Build the packages
 ##########
 
-mkdir $RPM_DEST_DIR
+RPM_NOARCH=0
+if [ $(grep "^BuildArch:\W*noarch$" $(find . -regextype egrep -regex "\.\/rpm\/[a-z0-9_-]*\.(yaml|spec)" -print) | wc -l) -gt 0 ]
+then
+  RPM_NOARCH=1
+fi
 
-export ARCH=aarch64
-build
+if [ ! -d "$RPM_DEST_DIR" ]
+then
+  mkdir $RPM_DEST_DIR
+fi
 
-export ARCH=armv7hl
-build
+if [ $RPM_NOARCH -eq 0 ]
+then
+  export ARCH=aarch64
+  build
 
+  export ARCH=armv7hl
+  build
+fi
+
+# Use i486 for noarch build
 export ARCH=i486
 build
 
@@ -60,8 +88,18 @@ build
 # Run the validator only once
 ##########
 
-$HOME/SailfishOS/bin/sfdk engine exec rpmvalidation -t SailfishOS-$SFOS_VER-$ARCH.default $(ls RPMS/*$ARCH.rpm | head -1)
+if [ $RPM_NOARCH -gt 0 ]
+then
+  RPM_ARCH=noarch
+else
+  RPM_ARCH=$ARCH
+fi
 
-echo -e "\nDone!.\n"
-echo "For clean build, remove '$SHADOW' folder."
-echo "For qmake, remove '$SHADOW/*/Makefile'"
+export RPM_FILE=$(ls RPMS/*$RPM_ARCH.rpm | head -1)
+
+if [ -f "$RPM_FILE" ]
+then
+  $HOME/SailfishOS/bin/sfdk engine exec rpmvalidation -t SailfishOS-$SFOS_VER-$ARCH.default $(ls RPMS/*$RPM_ARCH.rpm | head -1)
+else
+  echo "RPM package not found, not validating."
+fi
