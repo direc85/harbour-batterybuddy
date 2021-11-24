@@ -11,7 +11,7 @@ Name:       harbour-batterybuddy
 # Change the version and release strings in .pro file only!
 
 Summary:    Battery Buddy
-Version:    3.16.1
+Version:    3.16.2
 Release:    1
 Group:      Qt/Qt
 License:    GPLv3
@@ -65,7 +65,7 @@ desktop-file-install --delete-original       \
 
 %files
 %defattr(-,root,root,-)
-%{_bindir}
+%{_bindir}/*
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png

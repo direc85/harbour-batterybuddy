@@ -1,3 +1,7 @@
+* Wed Nov 24 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.16.2-1
+- Fix .spec bin file path (thanks, leon and nephros)
+- Built with Sailfish OS SDK 3.7 for 4.3.0.12
+
 * Sun Oct 10 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.16.1-1
 - Fix bogus version number
 
