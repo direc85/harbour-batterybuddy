@@ -76,7 +76,7 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
         disableChargingValue = 1;
     }
 
-    if(!chargingEnabledFile && !QHostInfo::localHostName().contains("SailfishEmul")) {
+    if(!chargingEnabledFile && !QSysInfo::machineHostName().contains("SailfishEmul")) {
         logE("Charger control file not found!");
         logE("Please contact the developer with your device model!");
     }

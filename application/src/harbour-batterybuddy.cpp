@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     bool verbose = false;
     bool debug = false;
 
-    if(QHostInfo::localHostName().contains("SailfishEmul")) {
+    if(QSysInfo::machineHostName().contains("SailfishEmul")) {
         verbose = true;
         debug = true;
     }

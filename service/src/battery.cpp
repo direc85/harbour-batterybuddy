@@ -102,7 +102,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
             chargingEnabledFile = Q_NULLPTR;
         }
     }
-    else if(!QHostInfo::localHostName().contains("SailfishEmul")) {
+    else if(!QSysInfo::machineHostName().contains("SailfishEmul")) {
         logE("Charger control file not found!");
         logE("Please contact the developer with your device model!");
     }
@@ -403,7 +403,7 @@ void Battery::shutdown() {
         logD("Health notification stopped");
     }
     // ENABLE/DISABLE CHARGING
-    if(!setChargingEnabled(true) && !QHostInfo::localHostName().contains("SailfishEmul")) {
+    if(!setChargingEnabled(true) && !QSysInfo::machineHostName().contains("SailfishEmul")) {
         logE("ERROR! Could not restore charger status! Your device "
              "may not charge until reboot! If that doesn't help, "
              "uninstall Battery Buddy and reboot your device.");

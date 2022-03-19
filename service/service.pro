@@ -4,7 +4,7 @@ LEGACY_BUILD = 0
 
 TARGET = harbour-batterybuddy-daemon
 
-CONFIG += sailfishapp console
+CONFIG += console
 
 contains(LEGACY_BUILD, 0) { QT = core dbus }
 contains(LEGACY_BUILD, 1) { QT = core dbus multimedia }
@@ -22,7 +22,7 @@ DEFINES += LEGACY_BUILD=$${LEGACY_BUILD}
 # See main() and logger.h for details.
 DEFINES += QT_NO_DEBUG_OUTPUT
 
-LIBS += -lkeepalive
+LIBS += -lkeepalive -lnemonotifications-qt5
 
 HEADERS += \
     src/battery.h \

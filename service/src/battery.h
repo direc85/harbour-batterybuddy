@@ -23,7 +23,7 @@
 #include <QString>
 #include <QFile>
 #include <QStandardPaths>
-#include <QHostInfo>
+#include <QSysInfo>
 #include <QLocale>
 #include <QCoreApplication>
 #include <keepalive/backgroundactivity.h>

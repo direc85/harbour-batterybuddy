@@ -22,7 +22,7 @@
 #include <QString>
 #include <QFile>
 #include <QStandardPaths>
-#include <QHostInfo>
+#include <QSysInfo>
 #include "settings.h"
 #include "process.h"
 #include "logger.h"
