@@ -491,7 +491,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Notification treshold</source>
+        <source>Notification threshold</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

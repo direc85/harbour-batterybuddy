@@ -477,10 +477,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Notification treshold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -490,6 +486,10 @@
     </message>
     <message>
         <source>Health notification interval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notification threshold</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

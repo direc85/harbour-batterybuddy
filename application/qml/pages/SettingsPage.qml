@@ -383,7 +383,7 @@ Page {
                 ComboBox {
                     id: healthSelector
                     width: parent.width
-                    label: qsTr("Notification treshold")
+                    label: qsTr("Notification threshold")
                     currentIndex: settings.healthAlert
                     menu: ContextMenu {
                         MenuItem { text: qsTr("Never") }

@@ -489,7 +489,7 @@
         <translation>Akun tilan ilmoitusten aikaväli</translation>
     </message>
     <message>
-        <source>Notification treshold</source>
+        <source>Notification threshold</source>
         <translation>Ilmoitusten taso</translation>
     </message>
 </context>

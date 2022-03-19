@@ -477,10 +477,6 @@
         <translation>Powiadomienia o stanie baterii</translation>
     </message>
     <message>
-        <source>Notification treshold</source>
-        <translation>Próg powiadomienia</translation>
-    </message>
-    <message>
         <source>Warning</source>
         <translation>Ostrzeżenie</translation>
     </message>
@@ -491,6 +487,10 @@
     <message>
         <source>Health notification interval</source>
         <translation>Interwał powiadomień o stanie</translation>
+    </message>
+    <message>
+        <source>Notification threshold</source>
+        <translation>Próg powiadomienia</translation>
     </message>
 </context>
 </TS>
