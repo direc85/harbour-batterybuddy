@@ -74,10 +74,10 @@ desktop-file-install --delete-original       \
 # << files
 
 %posttrans
-# Remove old service
-systemctl stop %{name}.service
-systemctl disable %{name}.service
-rm %{_unitdir}/%{name}.service
+# Remove old service (quietly)
+systemctl stop %{name}.service &>/dev/null
+systemctl disable %{name}.service &>/dev/null
+rm -f %{_unitdir}/%{name}.service
 
 # Install/update permission daemon (root)
 cp %{_datadir}/%{name}/service/%{name}-oneshot.service %{_unitdir}/%{name}-oneshot.service
@@ -94,16 +94,16 @@ systemctl-user start %{name}.service
 exit 0
 
 %postun
-// Run on uninstall, not on upgrade
+# Run on uninstall, not on upgrade
 if [ $1 -eq 0 ]; then
-  systemctl-user stop %{name}.service"
-  systemctl-user disable %{name}.service"
-  rm %{_userunitdir}/%{name}.service
-  systemctl-user daemon-reload"
+  systemctl-user stop %{name}.service
+  systemctl-user disable %{name}.service
+  rm -f %{_userunitdir}/%{name}.service
+  systemctl-user daemon-reload
 
   systemctl stop %{name}-oneshot.service
   systemctl disable %{name}-oneshot.service
-  rm %{_unitdir}/%{name}-oneshot.service
+  rm -f %{_unitdir}/%{name}-oneshot.service
   systemctl daemon-reload
 fi
 exit 0
