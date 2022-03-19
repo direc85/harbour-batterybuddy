@@ -11,11 +11,9 @@ contains(LEGACY_BUILD, 1) { QT = core dbus multimedia }
 
 PKGCONFIG += nemonotifications-qt5
 
-# Keep this in sync with "application.pro"
-VER = 3.16.2
-REL = 1
+# Keep this in sync with application.pro and .spec
+VERSION = 3.16.2-1
 
-VERSION = $${VER}-$${REL}
 DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"
 DEFINES += APP_NAME=\"\\\"$$TARGET\\\"\"
 DEFINES += LEGACY_BUILD=$${LEGACY_BUILD}

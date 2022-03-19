@@ -14,12 +14,9 @@ TARGET = harbour-batterybuddy
 
 CONFIG += console sailfishapp sailfishapp_i18n
 
-# Keep this in sync with "service.pro"
-VER = 3.16.2
-REL = 1
+# Keep this in sync with service.pro and .spec
+VERSION = 3.16.2-1
 
-VERSION = $${VER}-$${REL}
-system(bash update-spec-version.sh $$TARGET $$VER $$REL)
 DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"
 DEFINES += APP_NAME=\"\\\"$$TARGET\\\"\"
 
