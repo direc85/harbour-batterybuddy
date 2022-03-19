@@ -37,7 +37,7 @@ bool Logger::getDebug() { return debug; }
 bool Logger::getVerbose() { return verbose; }
 
 void Logger::enableLogFile() {
-    QString logDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+    QString logDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation).replace("-daemon","");
     filename = QString(logDir + "/" + APP_NAME + ".log");
 
     std::cout << "Logging to " << filename.toStdString() << std::endl;
