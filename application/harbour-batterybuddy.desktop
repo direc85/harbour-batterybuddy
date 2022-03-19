@@ -8,3 +8,6 @@ Name[fi]=Battery Buddy
 
 [X-HarbourBackup]
 BackupPathList=.config/harbour-batterybuddy/
+
+[X-Sailjail]
+Sandboxing=Disabled
