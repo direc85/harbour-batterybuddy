@@ -59,9 +59,15 @@ rm -rf %{buildroot}
 # >> install post
 # << install post
 
-desktop-file-install --delete-original       \
-  --dir %{buildroot}%{_datadir}/applications             \
+desktop-file-install --delete-original \
+  --dir %{buildroot}%{_datadir}/applications \
    %{buildroot}%{_datadir}/applications/*.desktop
+
+mkdir -p %{buildroot}%{_unitdir}
+mkdir -p %{buildroot}%{_userunitdir}
+mv %{buildroot}%{_datadir}/%{name}/service/%{name}-oneshot.service %{buildroot}%{_unitdir}/
+mv %{buildroot}%{_datadir}/%{name}/service/%{name}.service %{buildroot}%{_userunitdir}/
+
 
 %files
 %defattr(-,root,root,-)
@@ -70,6 +76,9 @@ desktop-file-install --delete-original       \
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
+%{_userunitdir}/%{name}.service
+%{_unitdir}/%{name}-oneshot.service
+
 # >> files
 # << files
 
@@ -80,13 +89,11 @@ systemctl disable %{name}.service &>/dev/null
 rm -f %{_unitdir}/%{name}.service
 
 # Install/update permission daemon (root)
-cp %{_datadir}/%{name}/service/%{name}-oneshot.service %{_unitdir}/%{name}-oneshot.service
 systemctl daemon-reload
 systemctl enable %{name}-oneshot.service
 systemctl start %{name}-oneshot.service
 
 # Install/update background daemon (default user)
-cp %{_datadir}/%{name}/service/%{name}.service %{_userunitdir}/%{name}.service
 systemctl-user daemon-reload
 systemctl-user enable %{name}.service
 systemctl-user stop %{name}.service
@@ -98,12 +105,13 @@ exit 0
 if [ $1 -eq 0 ]; then
   systemctl-user stop %{name}.service
   systemctl-user disable %{name}.service
-  rm -f %{_userunitdir}/%{name}.service
   systemctl-user daemon-reload
 
   systemctl stop %{name}-oneshot.service
   systemctl disable %{name}-oneshot.service
-  rm -f %{_unitdir}/%{name}-oneshot.service
   systemctl daemon-reload
+
+  systemctl-user reset-failed
+  systemctl reset-failed
 fi
 exit 0
