@@ -1,3 +1,16 @@
+* Sun Mar 20 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.0.0-1
+- Enable sandboxing with appropriate permissions (GUI only)
+- Use QML DBusInterface for user service manipulation
+- Drop support for SFOS 4.2 and older
+- Clean up systemd service handling during install/update/uninstall
+- Built with Sailfish OS SDK 3.8 for 4.3.0.12
+
+* Sun Mar 20 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.17.0-1
+- Disable sandboxing
+- Fix install/upgrade/uninstall scriptlets
+- Service binary consumes less resources
+- Don't try to close notifications if they are not open
+
 * Wed Nov 24 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.16.2-1
 - Fix .spec bin file path (thanks, leon and nephros)
 - Built with Sailfish OS SDK 3.7 for 4.3.0.12
