@@ -269,14 +269,16 @@ void Battery::showHighNotification() {
             && !(charge == 100 && state == "idle")) {
         logV(QString("Notification: %1").arg(settings->getNotificationTitle().arg(charge)));
         chargeNotification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationHighText(), settings->getHighAlertFile());
+        unclosedChargeNotification = true;
         if(settings->getHighNotificationsInterval() == 50) {
             logD("Stop high battery timer");
             highNotifyTimer->stop();
         }
     }
-    else if(charge > settings->getLowAlert()) {
+    else if(unclosedChargeNotification && charge > settings->getLowAlert()) {
         logD("Close high battery notification");
         chargeNotification->close();
+        unclosedChargeNotification = true;
     }
 }
 
@@ -284,14 +286,16 @@ void Battery::showLowNotification() {
     if(settings->getLowNotificationsInterval() > 0 && charge <= settings->getLowAlert() && state != "charging") {
         logV(QString("Notification: %1").arg(settings->getNotificationTitle().arg(charge)));
         chargeNotification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationLowText(), settings->getLowAlertFile());
+        unclosedChargeNotification = true;
         if(settings->getLowNotificationsInterval() == 50) {
             logD("Stop low battery timer");
             lowNotifyTimer->stop();
         }
     }
-    else if(charge < settings->getHighAlert()) {
+    else if(unclosedChargeNotification && charge < settings->getHighAlert()) {
         logD("Close low battery notification");
         chargeNotification->close();
+        unclosedChargeNotification = true;
     }
 }
 
@@ -329,12 +333,13 @@ void Battery::showHealthNotification() {
         }
         logD(QString("Notification: %1").arg(settings->getNotificationHealthTitle().arg(titleArgs)));
         healthNotification->send(settings->getNotificationHealthTitle().arg(titleArgs), notificationText, settings->getHealthAlertFile());
+        unclosedHealthNotification = true;
         if(settings->getHealthNotificationsInterval() == 50) {
             logD("Stop health timer");
             healthNotifyTimer->stop();
         }
     }
-    else if(HealthState[health] == HealthThresh["ok"] || HealthState[health] < settings->getHealthAlert()) {
+    else if(unclosedHealthNotification && (HealthState[health] == HealthThresh["ok"] || HealthState[health] < settings->getHealthAlert())) {
         logD("Close health notification");
         healthNotification->close();
     }

@@ -59,6 +59,8 @@ public slots:
     void shutdown();
 
 private:
+    bool unclosedChargeNotification = false;
+    bool unclosedHealthNotification = false;
 
     BackgroundActivity::Frequency frequencies[14] = {
         BackgroundActivity::Range,
