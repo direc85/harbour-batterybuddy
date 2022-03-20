@@ -76,6 +76,9 @@ int main(int argc, char *argv[])
     }
 
     QGuiApplication* app = SailfishApp::application(argc, argv);
+    app->setApplicationName(APP_NAME);
+    app->setOrganizationName(APP_NAME);
+
     QQuickView* view = SailfishApp::createView();
 
     Logger *logger = new Logger(verbose, debug, false);

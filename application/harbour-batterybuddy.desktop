@@ -10,4 +10,6 @@ Name[fi]=Battery Buddy
 BackupPathList=.config/harbour-batterybuddy/
 
 [X-Sailjail]
-Sandboxing=Disabled
+Permissions=AppLaunch
+OrganizationName=harbour-batterybuddy
+ApplicationName=harbour-batterybuddy
