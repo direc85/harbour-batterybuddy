@@ -30,13 +30,9 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
         logE(QString("Log level set to %1").arg((logLevel == 0 ? "low" : (logLevel == 1 ? "medium" : "high"))));
     }
 
-#if LEGACY_BUILD == 1
-    chargeNotification = new MyNotification(logger, this);
-    healthNotification = new MyNotification(logger, this);
-#else
     chargeNotification = new MyNotification(this);
     healthNotification = new MyNotification(this);
-#endif
+
     // Number: charge percentage, e.g. 42
     chargeFile   = new QFile("/sys/class/power_supply/battery/capacity", this);
     logE("Capacity file: " + chargeFile->fileName() + (chargeFile->exists() ? " OK" : " doesn't exist"));
