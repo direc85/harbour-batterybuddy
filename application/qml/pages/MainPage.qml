@@ -17,7 +17,6 @@
  */
 import QtQuick 2.2
 import Sailfish.Silica 1.0
-import Process 1.0
 import "../components"
 
 Page {
@@ -41,6 +40,11 @@ Page {
     }
     property bool serviceRunning: true
 
+    SystemdUserService {
+        id: batteryService
+        serviceName: 'harbour-batterybuddy.service'
+    }
+
     Timer {
         id: startupTimer
         interval: 1
@@ -48,55 +52,7 @@ Page {
         running: true
         onTriggered: {
             if(logger.debug) logger.log("Startup timer started")
-            daemonStatus.start()
             pageStack.pushAttached(Qt.resolvedUrl("SettingsPage.qml"))
-        }
-    }
-
-    Timer {
-        id: daemonControl
-        interval: 1
-        running: false
-        repeat: false
-        onTriggered: {
-            var action = serviceRunning ? "stop" : "start"
-            if(logger.debug) logger.log("Action: " + action)
-            _controlProcess.start("systemctl", ["--user", action, "harbour-batterybuddy.service"])
-        }
-    }
-
-    Process {
-        // Only used by daemonControl timer
-        id: _controlProcess
-        onFinished: {
-            daemonStatus.start()
-            if(logger.debug) logger.log("Service control return code " + errorCode())
-        }
-    }
-
-    Timer {
-        id: daemonStatus
-        interval: 1
-        running: false
-        repeat: false
-        onTriggered: {
-            _statusProcess.start("systemctl", ["--user", "status", "harbour-batterybuddy.service"])
-        }
-    }
-
-    Process {
-        // Only used by daemonStatus timer
-        id: _statusProcess
-        onFinished: {
-            if(errorCode() === 0) {
-                serviceRunning = true
-                daemonStopButton.enabled = true
-            }
-            else {
-                serviceRunning = false
-                daemonStartButton.enabled = true
-            }
-            if(logger.debug) logger.log("Service status return code " + errorCode())
         }
     }
 
@@ -223,11 +179,8 @@ Page {
                             id: daemonStartButton
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: qsTr("Start")
-                            onClicked: {
-                                daemonControl.start()
-                                enabled = false
-                            }
-                            enabled: false
+                            onClicked: batteryService.startService()
+                            enabled: batteryService.serviceState !== "active"
                         }
                     }
                     Column {
@@ -236,11 +189,8 @@ Page {
                             id: daemonStopButton
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: qsTr("Stop")
-                            onClicked: {
-                                daemonControl.start()
-                                enabled = false
-                            }
-                            enabled: false
+                            onClicked: batteryService.stopService()
+                            enabled: batteryService.serviceState === "active"
                         }
                     }
                 }

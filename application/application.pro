@@ -12,7 +12,7 @@
 # The name of your application
 TARGET = harbour-batterybuddy
 
-CONFIG += console sailfishapp sailfishapp_i18n
+CONFIG += console sailfishapp sailfishapp_i18n dbus
 
 # Keep this in sync with service.pro and .spec
 VERSION = 3.16.2-1
@@ -27,8 +27,7 @@ DEFINES += QT_NO_DEBUG_OUTPUT
 HEADERS += \
     src/battery.h \
     src/logger.h \
-    src/settings.h \
-    src/process.h
+    src/settings.h
 
 SOURCES += src/harbour-batterybuddy.cpp \
     src/battery.cpp \
@@ -55,7 +54,8 @@ DISTFILES += qml/harbour-batterybuddy.qml \
     qml/pages/SettingsPage.qml \
     qml/components/MyDetailItem.qml \
     qml/components/AdjustmentButtons.qml \
-    qml/components/MySlider.qml
+    qml/components/MySlider.qml \
+    qml/components/SystemdUserService.qml
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 

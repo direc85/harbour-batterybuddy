@@ -86,8 +86,6 @@ int main(int argc, char *argv[])
     QObject::connect(updater, SIGNAL(timeout()), battery, SLOT(updateData()));
     updater->start(3000);
 
-    qmlRegisterType<Process>("Process", 1, 0, "Process");
-
     const QStringList frequencyNames = {
         QObject::tr("Never"),
         QObject::tr("30 seconds"),

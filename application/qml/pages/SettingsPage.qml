@@ -17,14 +17,18 @@
  */
 import QtQuick 2.2
 import Sailfish.Silica 1.0
-import Process 1.0
 import "../components"
 
 Page {
     id: settingsPage
     allowedOrientations: Orientation.Portrait | Orientation.Landscape | Orientation.LandscapeInverted
 
-    Component.onCompleted: {
+    SystemdUserService {
+        id: batteryService
+        serviceName: 'harbour-batterybuddy.service'
+        onServiceMaskedChanged: {
+            daemonEnabledSwitch.busy = false
+        }
     }
 
     //////////////////////////////////////////////////
@@ -49,53 +53,7 @@ Page {
             lowIntervalCombo.currentIndex = settings.lowNotificationsInterval
             healthIntervalCombo.currentIndex = settings.healthNotificationsInterval
             if(logger.debug) logger.log("SettingsPage values updated")
-            daemonCheck.start()
-        }
-    }
-
-    Timer {
-        id: daemonToggle
-        interval: 100
-        running: false
-        repeat: false
-        onTriggered: {
-            var action = daemonEnabledSwitch.checked ? "disable" : "enable"
-            if(logger.verbose) logger.log("Action: " + action)
-            _toggleProcess.start("systemctl", ["--user", action, "harbour-batterybuddy.service"])
-        }
-    }
-
-    Process {
-        // Only used by daemonToggle timer
-        id: _toggleProcess
-        onFinished: {
-            daemonCheck.start()
-            if(logger.debug) logger.log("Service toggle " + (errorCode() === 0 ? "succeeded" : "failed"))
-        }
-    }
-
-    Timer {
-        id: daemonCheck
-        interval: 0
-        running: false
-        repeat: false
-        onTriggered: {
-            _checkProcess.start("systemctl", ["--user", "is-enabled", "harbour-batterybuddy.service"])
-        }
-    }
-
-    Process {
-        // Only used by daemonCheck timer
-        id: _checkProcess
-        onFinished: {
-            if(errorCode() === 0) {
-                daemonEnabledSwitch.checked = true
-            }
-            else {
-                daemonEnabledSwitch.checked = false
-            }
-            daemonEnabledSwitch.busy = false
-            if(logger.verbose) logger.log("Service is " + (errorCode() === 0 ? "enabled" : "disabled"))
+            batteryService.queryEnabled()
         }
     }
 
@@ -153,11 +111,13 @@ Page {
                 TextSwitch {
                     id: daemonEnabledSwitch
                     text: qsTr("Start background service at startup")
-                    checked: true
+                    checked: batteryService.serviceMasked === "loaded"
                     onClicked: {
+                        if(checked)
+                            batteryService.enableService()
+                        else
+                            batteryService.disableService()
                         busy = true
-                        checked = !checked
-                        daemonToggle.start()
                     }
                 }
                 Label {

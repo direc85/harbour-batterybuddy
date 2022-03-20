@@ -24,7 +24,6 @@
 #include <QStandardPaths>
 #include <QSysInfo>
 #include "settings.h"
-#include "process.h"
 #include "logger.h"
 
 class Battery : public QObject
