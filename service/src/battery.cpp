@@ -152,7 +152,6 @@ void Battery::updateData()
         nextCharge = chargeFile->readLine().trimmed().toInt();
         if(nextCharge != charge) {
             charge = nextCharge;
-            emit chargeChanged(charge);
             logV(QString("Battery: %1%").arg(charge));
         }
         chargeFile->close();
@@ -161,7 +160,6 @@ void Battery::updateData()
         nextChargerConnected = chargerConnectedFile->readLine().trimmed().toInt();
         if(nextChargerConnected != chargerConnected) {
             chargerConnected = nextChargerConnected;
-            emit chargerConnectedChanged(chargerConnected);
             logV(QString("Charger: %1").arg(chargerConnected ? "connected" : "disconnected"));
         }
         chargerConnectedFile->close();
@@ -170,7 +168,6 @@ void Battery::updateData()
         nextState = (QString(stateFile->readLine().trimmed().toLower()));
         if(nextState != state) {
             state = nextState;
-            emit stateChanged(state);
             logV("State: " + state);
 
             // Hide/show notification right away
@@ -186,7 +183,6 @@ void Battery::updateData()
                 logV(QString("Temperature: %1°C").arg(nextTemperature / 10));
             }
             temperature = nextTemperature;
-            emit temperatureChanged(temperature);
         }
         temperatureFile->close();
     }
@@ -195,7 +191,6 @@ void Battery::updateData()
         nextHealth = (QString(healthFile->readLine().trimmed().toLower()));
         if(nextHealth != health) {
             health = nextHealth;
-            emit healthChanged(health);
             logV("Health: " + health);
 
             // Hide/show notification right away
@@ -359,7 +354,6 @@ bool Battery::setChargingEnabled(const bool isEnabled) {
         if(chargingEnabledFile->open(QIODevice::WriteOnly)) {
             if(chargingEnabledFile->write(QString("%1").arg(isEnabled ? enableChargingValue : disableChargingValue).toLatin1())) {
                 chargingEnabled = isEnabled;
-                emit chargingEnabledChanged(chargingEnabled);
                 success = true;
 
                 if(isEnabled) {

@@ -114,14 +114,6 @@ private:
     QFileDevice::Permissions originalPerms; // Updated in constructor
     QFileDevice::Permissions customPerms = static_cast<QFileDevice::Permissions>(0x0666);
 
-signals:
-    void chargeChanged(int);
-    void stateChanged(QString);
-    void chargingEnabledChanged(bool);
-    void chargerConnectedChanged(bool);
-    void temperatureChanged(int);
-    void healthChanged(QString);
-
 public slots:
     void resetTimers();
     void showHighNotification();
