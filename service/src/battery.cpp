@@ -48,6 +48,21 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
     if(chargeFile) logE("Battery charge file: " + chargeFile->fileName());
     else           logE("Battery charge file: not found!");
 
+    // Charging/discharging current in microamps, e.g. -1450000 (-145mA)
+    filenames.clear();
+    filenames << "/sys/class/power_supply/battery/current_now"
+              << "/sys/class/power_supply/dollar_cove_battery/current_now";
+
+    foreach(const QString& file, filenames) {
+        if(!currentFile && QFile::exists(file)) {
+            currentFile = new QFile(file, this);
+            break;
+        }
+    }
+
+    if(currentFile) logE("Charging/discharging current file: " + currentFile->fileName());
+    else            logE("Charging/discharging current file: not found!");
+
     // Battery/charging status: charging, discharging, full, empty, unknown (others?)
     filenames.clear();
     filenames << "/sys/class/power_supply/battery/status"
@@ -206,6 +221,16 @@ void Battery::updateData()
         }
         chargerConnectedFile->close();
     }
+
+    if(currentFile->open(QIODevice::ReadOnly)) {
+        nextCurrent = currentFile->readLine().trimmed().toInt();
+        if(nextCurrent != current) {
+            current = nextCurrent;
+            logV(QString("Current: %1mA").arg(current / 1000));
+        }
+        currentFile->close();
+    }
+
     if(stateFile->open(QIODevice::ReadOnly)) {
         nextState = (QString(stateFile->readLine().trimmed().toLower()));
         if(nextState != state) {

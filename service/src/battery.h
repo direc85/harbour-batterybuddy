@@ -78,6 +78,7 @@ private:
     Logger *logger;
     QFile *chargeFile = nullptr;
     QFile *chargerConnectedFile = nullptr;
+    QFile *currentFile = nullptr;
     QFile *stateFile = nullptr;
     QFile *chargingEnabledFile = nullptr;
     QFile *temperatureFile = nullptr;
@@ -93,6 +94,7 @@ private:
 
     // Default values:
     int charge = 100; // 100% full
+    int current = 0; // Charging/discharging current in microamps
     bool chargerConnected = false; // Charger plugged in
     QString state = "idle"; // dis/charging, idle, unknown
     bool chargingEnabled = true; // Only ever disabled manually
@@ -105,6 +107,7 @@ private:
     bool chargerIsEnabled = true;
 
     int nextCharge = charge;
+    int nextCurrent = current;
     bool nextChargerConnected = chargerConnected;
     QString nextState = state;
     bool nextChargingEnabled = chargingEnabled;
