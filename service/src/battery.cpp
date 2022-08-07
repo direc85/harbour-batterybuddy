@@ -33,67 +33,108 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
     chargeNotification = new MyNotification(this);
     healthNotification = new MyNotification(this);
 
-    // Number: charge percentage, e.g. 42
-    chargeFile   = new QFile("/sys/class/power_supply/battery/capacity", this);
-    logE("Capacity file: " + chargeFile->fileName() + (chargeFile->exists() ? " OK" : " doesn't exist"));
+    QStringList filenames;
 
-    // String: charging, discharging, full, empty, unknown (others?)
-    stateFile   = new QFile("/sys/class/power_supply/battery/status", this);
-    logE("Charge state file: " + stateFile->fileName() + (stateFile->exists() ? " OK" : " doesn't exist"));
+    // Battery charge percentage, number, e.g. 42
+    filenames << "/sys/class/power_supply/battery/capacity"
+              << "/sys/class/power_supply/dollar_cove_battery/capacity";
+    foreach(const QString& file, filenames) {
+        if(!chargeFile && QFile::exists(file)) {
+            chargeFile = new QFile(file, this);
+            break;
+        }
+    }
 
-    // Number: 0 or 1
-    chargerConnectedFile = new QFile("/sys/class/power_supply/usb/present", this);
-    logE("Charger status file: " + chargerConnectedFile->fileName() + (chargerConnectedFile->exists() ? " OK" : " doesn't exist"));
+    if(chargeFile) logE("Battery charge file: " + chargeFile->fileName());
+    else           logE("Battery charge file: not found!");
 
-    QString filename;
+    // Battery/charging status: charging, discharging, full, empty, unknown (others?)
+    filenames.clear();
+    filenames << "/sys/class/power_supply/battery/status"
+              << "/sys/class/power_supply/dollar_cove_battery/status";
+
+    foreach(const QString& file, filenames) {
+        if(!stateFile && QFile::exists(file)) {
+            stateFile = new QFile(file, this);
+            break;
+        }
+    }
+
+    if(stateFile) logE("Status file: " + stateFile->fileName());
+    else          logE("Status file: not found!");
+
+    // Charger connected, bool (number): 0 or 1
+    filenames.clear();
+    filenames << "/sys/class/power_supply/usb/present"
+              << "/sys/class/power_supply/dollar_cove_charger/present";
+
+    foreach(const QString& file, filenames) {
+        if(!chargerConnectedFile && QFile::exists(file)) {
+            chargerConnectedFile = new QFile(file, this);
+            break;
+        }
+    }
+
+    if(chargerConnectedFile) logE("Charger status file: " + chargerConnectedFile->fileName());
+    else                     logE("Charger status file: not found!");
 
     // Number: temperature
-    filename = "/sys/class/power_supply/battery/temp";
-    if(!temperatureFile && QFile::exists(filename)) {
-        temperatureFile = new QFile(filename, this);
+    filenames.clear();
+    filenames << "/sys/class/power_supply/battery/temp"
+              << "/sys/class/power_supply/dollar_cove_battery/temp";
+
+    foreach(const QString& file, filenames) {
+        if(!temperatureFile && QFile::exists(file)) {
+            temperatureFile = new QFile(file, this);
+            break;
+        }
     }
-    logE("Temperature file: " + filename + (QFile::exists(filename) ? " OK" : " doesn't exist"));
+
+    if(temperatureFile) logE("Battery temperature file: " + temperatureFile->fileName());
+    else                logE("Battery temperature file: not found!");
 
     // String: health state
-    filename = "/sys/class/power_supply/battery/health";
-    if(!healthFile && QFile::exists(filename)) {
-        healthFile = new QFile(filename, this);
-    }
-    logE("Battery health file: " + filename + (QFile::exists(filename) ? " OK" : " doesn't exist"));
-
-    // e.g. for Sony Xperia XA2
-    filename = "/sys/class/power_supply/battery/input_suspend";
-    if(!chargingEnabledFile && QFile::exists(filename)) {
-        chargingEnabledFile = new QFile(filename, this);
-        enableChargingValue = 0;
-        disableChargingValue = 1;
+    filenames.clear();
+    filenames << "/sys/class/power_supply/battery/health"
+              << "/sys/class/power_supply/dollar_cove_battery/health";
+    foreach(const QString& file, filenames) {
+        if(!healthFile && QFile::exists(file)) {
+            healthFile = new QFile(file, this);
+            break;
+        }
     }
 
-    // e.g. for Sony Xperia Z3 Compact Tablet
-    filename = "/sys/class/power_supply/battery/charging_enabled";
-    if(!chargingEnabledFile && QFile::exists(filename)) {
-        chargingEnabledFile = new QFile(filename, this);
+    if(healthFile) logE("Battery health file: " + healthFile->fileName());
+    else           logE("Battery health file: not found!");
+
+    // Charger control file
+    filenames.clear();
+    filenames << "/sys/class/power_supply/battery/input_suspend"                // e.g. Sony Xperia XA2
+              << "/sys/class/power_supply/battery/charging_enabled"             // e.g. for Sony Xperia Z3 Compact Tablet
+              << "/sys/class/power_supply/usb/charger_disable"                  // e.g. for Jolla Phone
+              << "/sys/class/power_supply/dollar_cove_battery/enable_charging"; // e.g. for Jolla Tablet
+
+    foreach(const QString& file, filenames) {
+        if(!chargingEnabledFile && QFile::exists(file)) {
+            chargingEnabledFile = new QFile(file, this);
+            break;
+        }
+    }
+
+    // Flip the charging control bits if necessary
+    if(chargingEnabledFile && chargingEnabledFile->fileName().contains("enable")) {
         enableChargingValue = 1;
         disableChargingValue = 0;
     }
 
-    // e.g. for Jolla Phone
-    filename = "/sys/class/power_supply/usb/charger_disable";
-    if(!chargingEnabledFile && QFile::exists(filename)) {
-        chargingEnabledFile = new QFile(filename, this);
-        enableChargingValue = 0;
-        disableChargingValue = 1;
-    }
-
     // If we found a usable file, check that it is writable
     if(chargingEnabledFile) {
-        logE("Charger control file: " + chargingEnabledFile->fileName() + (chargingEnabledFile->exists() ? " OK" : " doesn't exist"));
+        logE("Charger control file: " + chargingEnabledFile->fileName());
         if(chargingEnabledFile->open(QIODevice::WriteOnly)) {
             chargingEnabledFile->close();
         }
         else {
-            logE("Charger control file" + chargingEnabledFile->fileName() + "is not writable");
-            logE("Charger control feature disabled");
+            logE("Charger control file is not writable - feature disabled");
             delete chargingEnabledFile;
             chargingEnabledFile = Q_NULLPTR;
         }
@@ -102,6 +143,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
         logE("Charger control file not found!");
         logE("Please contact the developer with your device model!");
     }
+    else logE("Charger control file: not found!");
 
     connect(settings, SIGNAL(resetTimers()), this, SLOT(resetTimers()));
 

@@ -100,8 +100,8 @@ private:
     QString health = "unknown"; // Good, warm, overheat. Might have Cold or Overvoltage depending on driver
     int temperature = 0x7FFFFFFF; // This value means "unknown" (32-bit INT_MAX)
 
-    int enableChargingValue = 1;
-    int disableChargingValue = 0;
+    int enableChargingValue = 0;
+    int disableChargingValue = 1;
     bool chargerIsEnabled = true;
 
     int nextCharge = charge;
