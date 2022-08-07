@@ -58,7 +58,7 @@ int main(int argc, char** argv)
             printf("  --debug       Enable informational and debugging messages\n");
             printf("  --help        Print version string and exit\n");
             printf("  --logfile     Write log to a file. Implies --verbose\n\n");
-            printf("Log file: ~/.cache/harbour-batterybuddy-daemon/harbour-batterybuddy-daemon.log\n");
+            printf("Log file: ~/.cache/harbour-batterybuddy/harbour-batterybuddy-daemon.log\n");
             return 0;
         }
     }
