@@ -12,7 +12,7 @@ Name:       harbour-batterybuddy
 
 Summary:    Battery Buddy
 Version:    4.1.0
-Release:    beta1
+Release:    beta2
 Group:      Qt/Qt
 License:    GPLv3
 URL:        http://example.org/

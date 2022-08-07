@@ -1,3 +1,6 @@
+* Sun Aug 7 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.1.0-beta2
+- Add Jolla Tablet charger control file to permission service
+
 * Sun Aug 7 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.1.0-beta1
 - Initial Jolla Tablet support (beta)
 - Log charging/discharging current
