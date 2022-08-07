@@ -1,3 +1,13 @@
+* Sun Aug 7 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.1.0-beta1
+- Initial Jolla Tablet support (beta)
+- Log charging/discharging current
+- Log temperature changes with resolution of one degree Celsius
+- Search for control files using loops
+- Don't try to use non-existent files
+- Print correct log file name
+- Remove unused signals from service
+- Built with Sailfish OS SDK 3.9 for 4.4.0.68
+
 * Sun Mar 20 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.0.0-1
 - Enable sandboxing with appropriate permissions (GUI only)
 - Use QML DBusInterface for user service manipulation

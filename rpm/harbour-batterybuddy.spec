@@ -11,8 +11,8 @@ Name:       harbour-batterybuddy
 # Change the version and release strings in .pro file only!
 
 Summary:    Battery Buddy
-Version:    4.0.0
-Release:    1
+Version:    4.1.0
+Release:    beta1
 Group:      Qt/Qt
 License:    GPLv3
 URL:        http://example.org/
