@@ -205,7 +205,7 @@ Battery::~Battery() {
 
 void Battery::updateData()
 {
-    if(chargeFile->open(QIODevice::ReadOnly)) {
+    if(chargeFile && chargeFile->open(QIODevice::ReadOnly)) {
         nextCharge = chargeFile->readLine().trimmed().toInt();
         if(nextCharge != charge) {
             charge = nextCharge;
@@ -213,7 +213,8 @@ void Battery::updateData()
         }
         chargeFile->close();
     }
-    if(chargerConnectedFile->open(QIODevice::ReadOnly)) {
+
+    if(chargerConnectedFile && chargerConnectedFile->open(QIODevice::ReadOnly)) {
         nextChargerConnected = chargerConnectedFile->readLine().trimmed().toInt();
         if(nextChargerConnected != chargerConnected) {
             chargerConnected = nextChargerConnected;
@@ -222,7 +223,7 @@ void Battery::updateData()
         chargerConnectedFile->close();
     }
 
-    if(currentFile->open(QIODevice::ReadOnly)) {
+    if(currentFile && currentFile->open(QIODevice::ReadOnly)) {
         nextCurrent = currentFile->readLine().trimmed().toInt();
         if(nextCurrent != current) {
             current = nextCurrent;
@@ -231,7 +232,7 @@ void Battery::updateData()
         currentFile->close();
     }
 
-    if(stateFile->open(QIODevice::ReadOnly)) {
+    if(stateFile && stateFile->open(QIODevice::ReadOnly)) {
         nextState = (QString(stateFile->readLine().trimmed().toLower()));
         if(nextState != state) {
             state = nextState;
