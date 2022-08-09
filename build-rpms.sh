@@ -8,7 +8,7 @@
 ##########
 
 export APP_NAME=$(grep "Name" $(find . -regextype egrep -regex "\.\/rpm\/[a-z0-9_-]*\.(yaml|spec)" -print | head -1) | awk '{print $2}')
-export SFOS_VER=4.3.0.12
+export SFOS_VER=4.4.0.58
 
 ##########
 # Paths
