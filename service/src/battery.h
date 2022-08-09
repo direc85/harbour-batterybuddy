@@ -107,7 +107,9 @@ private:
     bool chargerIsEnabled = true;
 
     int nextCharge = charge;
-    int nextCurrent = current;
+    bool invertCurrent = false;
+    bool invertDecided = false;
+
     bool nextChargerConnected = chargerConnected;
     QString nextState = state;
     bool nextChargingEnabled = chargingEnabled;

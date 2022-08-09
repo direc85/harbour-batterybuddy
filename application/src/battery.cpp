@@ -187,12 +187,16 @@ void Battery::updateData()
     }
 
     if(currentFile && currentFile->open(QIODevice::ReadOnly)) {
-        nextCurrent = currentFile->readLine().trimmed().toInt();
-        if(nextCurrent != current) {
-            current = nextCurrent;
-            emit currentChanged(current);
-            logD(QString("Current: %1mA").arg(current / 1000));
+        current = currentFile->readLine().trimmed().toInt();
+        if(!invertDecided) {
+            invertCurrent = (!chargerConnected && current > 10);
+            if(invertCurrent) logL("Battery current inverted");
+            else              logL("Battery current not inverted");
+            invertDecided = true;
         }
+        current = current * (invertCurrent ? -1 : 1);
+        emit currentChanged(current);
+        logH(QString("Current: %1mA").arg(current / 1000));
         currentFile->close();
     }
 
