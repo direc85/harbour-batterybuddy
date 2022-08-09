@@ -68,8 +68,8 @@ int main(int argc, char *argv[])
         else if(!strcmp(argv[i],"--help")) {
             printf("%s %s\n", APP_NAME, APP_VERSION);
             printf("Usage:\n");
-            printf("  --verbose     Enable informational messages\n");
-            printf("  --debug       Enable informational and debugging messages\n");
+            printf("  --verbose     Set log level to medium)\n");
+            printf("  --debug       Set log level to high\n");
             printf("  --help        Print version string and exit\n");
             return 0;
         }

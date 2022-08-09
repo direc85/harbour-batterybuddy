@@ -54,8 +54,8 @@ int main(int argc, char** argv)
         else if(!strcmp(argv[i],"--help")) {
             printf("%s %s\n", APP_NAME, APP_VERSION);
             printf("Usage:\n");
-            printf("  --verbose     Enable informational messages\n");
-            printf("  --debug       Enable informational and debugging messages\n");
+            printf("  --verbose     Set log level to medium)\n");
+            printf("  --debug       Set log level to high\n");
             printf("  --help        Print version string and exit\n");
             printf("  --logfile     Write log to a file. Implies --verbose\n\n");
             printf("Log file: ~/.cache/harbour-batterybuddy/harbour-batterybuddy-daemon.log\n");
@@ -68,7 +68,7 @@ int main(int argc, char** argv)
     app.setApplicationVersion(APP_VERSION);
 
     Logger* logger = new Logger(verbose, debug, logfile);
-    logE(QString("%1 %2").arg(APP_NAME, APP_VERSION));
+    logL(QString("%1 %2").arg(APP_NAME, APP_VERSION));
 
     Battery* battery = new Battery(logger, logLevelSet, &app);
 

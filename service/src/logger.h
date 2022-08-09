@@ -10,16 +10,16 @@
 #include <fstream>
 
 // Use like this:
-// logV("Settings loaded");
+// logM("Settings loaded");
 
-// Errors (always written - for general messages, too!)
-#define logE logger->log
+// Low setting - always logged
+#define logL logger->log
 
-// Verbose (log, if enabled)
-#define logV if(logger->verbose) logger->log
+// Medium setting - log more values
+#define logM if(logger->verbose) logger->log
 
-// Debug (log, if enabled)
-#define logD if(logger->debug) logger->log
+// High setting - log everything
+#define logH if(logger->debug) logger->log
 
 class Logger : public QObject
 {

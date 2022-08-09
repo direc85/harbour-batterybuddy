@@ -26,7 +26,7 @@ Settings::Settings(Logger *newLogger, QObject *parent) : QObject(parent)
 
     logger = newLogger;
 
-    logV("Using " + mySettings->fileName());
+    logM("Using " + mySettings->fileName());
 
     // Read in the values
     loadInteger(sLowAlert, lowAlert, 5, 99);
@@ -60,7 +60,7 @@ Settings::Settings(Logger *newLogger, QObject *parent) : QObject(parent)
 Settings::~Settings()
 {
     mySettings->sync();
-    logV(QString("Settings saved: %1").arg(mySettings->status() == QSettings::NoError));
+    logM(QString("Settings saved: %1").arg(mySettings->status() == QSettings::NoError));
 }
 
 // Getters condensed.
@@ -176,33 +176,33 @@ bool Settings::loadInteger(const char *key, int &currValue, const int min, const
     int newValue = mySettings->value(key, currValue).toInt();
     newValue = (newValue <= min ? min : (newValue >= max ? max : newValue));
     if(currValue == newValue) {
-        logD(QString("Load: %1 %2 (unchanged)").arg(key).arg(currValue));
+        logH(QString("Load: %1 %2 (unchanged)").arg(key).arg(currValue));
         return false;
     }
     currValue = newValue;
-    logV(QString("Load: %1 %2").arg(key).arg(currValue));
+    logM(QString("Load: %1 %2").arg(key).arg(currValue));
     return true;
 }
 
 bool Settings::loadString(const char *key, QString & currValue) {
     QString newValue = mySettings->value(key, currValue).toString();
     if(currValue == newValue) {
-        logD(QString("Load: %1 %2 (unchanged)").arg(key).arg(currValue));
+        logH(QString("Load: %1 %2 (unchanged)").arg(key).arg(currValue));
         return false;
     }
     currValue = newValue;
-    logV(QString("Load: %1 %2").arg(key).arg(currValue));
+    logM(QString("Load: %1 %2").arg(key).arg(currValue));
     return true;
 }
 
 bool Settings::saveInteger(const char* key, const int &newValue, int &currValue) {
     if(currValue == newValue) {
-        logD(QString("Save: %1 %2 (unchanged)").arg(key).arg(currValue));
+        logH(QString("Save: %1 %2 (unchanged)").arg(key).arg(currValue));
         return false;
     }
     currValue = newValue;
     mySettings->setValue(key, QByteArray::number(newValue));
-    logV(QString("Save: %1 %2").arg(key).arg(newValue));
+    logM(QString("Save: %1 %2").arg(key).arg(newValue));
     return true;
 }
 
@@ -212,6 +212,6 @@ bool Settings::saveString(const char* key, const QString &newValue, QString &cur
     }
     currValue = newValue;
     mySettings->setValue(key, QString(newValue).replace("\"", "\\\"").toUtf8());
-    logV(QString("Save: %1 %2").arg(key).arg(newValue));
+    logM(QString("Save: %1 %2").arg(key).arg(newValue));
     return true;
 }

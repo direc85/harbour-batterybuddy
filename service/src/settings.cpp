@@ -25,7 +25,7 @@ Settings::Settings(Logger* newLogger, QObject *parent) : QObject(parent)
         mySettings = new QSettings(appName, appName, this);
     }
 
-    logV("Using " + mySettings->fileName());
+    logM("Using " + mySettings->fileName());
 
     QString logFilename = logger->getLogFilename();
     if(mySettings->value(sLogFilename,QString()).toString() != logFilename) {
@@ -40,14 +40,14 @@ Settings::Settings(Logger* newLogger, QObject *parent) : QObject(parent)
     if(mySettings->contains(key)) {
         mySettings->setValue(sLowAlert, mySettings->value(key));
         mySettings->remove(key);
-        logV(migrate.arg(key));
+        logM(migrate.arg(key));
     }
 
     key = "upperLimit";
     if(mySettings->contains(key)) {
         mySettings->setValue(sHighAlert, mySettings->value(key));
         mySettings->remove(key);
-        logV(migrate.arg(key));
+        logM(migrate.arg(key));
     }
 
     key = "notificationsEnabled";
@@ -61,7 +61,7 @@ Settings::Settings(Logger* newLogger, QObject *parent) : QObject(parent)
             mySettings->setValue(sLowNotificationsInterval, lowNotificationsInterval);
         }
         mySettings->remove(key);
-        logV(migrate.arg(key));
+        logM(migrate.arg(key));
     }
 
     key = "interval";
@@ -69,7 +69,7 @@ Settings::Settings(Logger* newLogger, QObject *parent) : QObject(parent)
         mySettings->setValue(sHighNotificationsInterval, mySettings->value(key));
         mySettings->setValue(sLowNotificationsInterval, mySettings->value(key));
         mySettings->remove(key);
-        logV(migrate.arg(key));
+        logM(migrate.arg(key));
     }
 
     key = "highNotificationsEnabled";
@@ -77,7 +77,7 @@ Settings::Settings(Logger* newLogger, QObject *parent) : QObject(parent)
         if(mySettings->value(key).toInt() == 0)
             mySettings->setValue(sHighNotificationsInterval, 2);
         mySettings->remove(key);
-        logV(migrate.arg(key));
+        logM(migrate.arg(key));
     }
 
     key = "lowNotificationsEnabled";
@@ -85,7 +85,7 @@ Settings::Settings(Logger* newLogger, QObject *parent) : QObject(parent)
         if(mySettings->value(key).toInt() == 0)
             mySettings->setValue(sLowNotificationsInterval, 2);
         mySettings->remove(key);
-        logV(migrate.arg(key));
+        logM(migrate.arg(key));
     }
 
     // These are updated and localized from the config file
@@ -110,11 +110,11 @@ bool Settings::loadInteger(const char *key, int &currValue, const int min, const
     int newValue = mySettings->value(key, currValue).toInt();
     newValue = (newValue <= min ? min : (newValue >= max ? max : newValue));
     if(currValue == newValue) {
-        logD(QString("Load: %1 %2 (unchanged)").arg(key).arg(currValue));
+        logH(QString("Load: %1 %2 (unchanged)").arg(key).arg(currValue));
         return false;
     }
     currValue = newValue;
-    logV(QString("Load: %1 %2").arg(key).arg(currValue));
+    logM(QString("Load: %1 %2").arg(key).arg(currValue));
     return true;
 }
 
@@ -125,7 +125,7 @@ void Settings::updateConfig(const QString path) {
         mySettings = new QSettings(appName, appName, this);
     }
 
-    logD("Updating configuration...");
+    logH("Updating configuration...");
 
     // Read in the values
     bool restartTimers = false;
@@ -155,7 +155,7 @@ void Settings::updateConfig(const QString path) {
     if(oldLogLevel != logLevel) {
         logger->debug = (logLevel == 2);
         logger->verbose = (logLevel > 1);
-        logE(QString("Log level set to %1").arg((logLevel == 0 ? "low" : (logLevel == 1 ? "medium" : "high"))));
+        logL(QString("Log level set to %1").arg((logLevel == 0 ? "low" : (logLevel == 1 ? "medium" : "high"))));
     }
 
     delete mySettings;
@@ -165,11 +165,11 @@ void Settings::updateConfig(const QString path) {
     QThread::msleep(100);
 
     if(watcher->files().contains(path)) {
-        logD("Config file already on watchlist");
+        logH("Config file already on watchlist");
     }
     else {
         watcher->addPath(path);
-        logD("Config file added to watchlist");
+        logH("Config file added to watchlist");
     }
 
     if(restartTimers) {

@@ -34,8 +34,8 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
         }
     }
 
-    if(chargeFile) logE("Battery charge file: " + chargeFile->fileName());
-    else           logE("Battery charge file: not found!");
+    if(chargeFile) logL("Battery charge file: " + chargeFile->fileName());
+    else           logL("Battery charge file: not found!");
 
     // Number: battery/charging current, e.g. -1450000 (-145mA)
     filenames.clear();
@@ -49,8 +49,8 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
         }
     }
 
-    if(currentFile) logE("Charging/discharging current file: " + currentFile->fileName());
-    else            logE("Charging/discharging current file: not found!");
+    if(currentFile) logL("Charging/discharging current file: " + currentFile->fileName());
+    else            logL("Charging/discharging current file: not found!");
 
     // String: charging, discharging, full, empty, unknown (others?)
     filenames.clear();
@@ -64,8 +64,8 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
         }
     }
 
-    if(stateFile) logE("Status file: " + stateFile->fileName());
-    else          logE("Status file: not found!");
+    if(stateFile) logL("Status file: " + stateFile->fileName());
+    else          logL("Status file: not found!");
 
     // Number: 0 or 1
     filenames.clear();
@@ -79,8 +79,8 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
         }
     }
 
-    if(chargerConnectedFile) logE("Charger status file: " + chargerConnectedFile->fileName());
-    else                     logE("Charger status file: not found!");
+    if(chargerConnectedFile) logL("Charger status file: " + chargerConnectedFile->fileName());
+    else                     logL("Charger status file: not found!");
 
     // Number: temperature
     filenames.clear();
@@ -94,8 +94,8 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
         }
     }
 
-    if(temperatureFile) logE("Battery temperature file: " + temperatureFile->fileName());
-    else                logE("Battery temperature file: not found!");
+    if(temperatureFile) logL("Battery temperature file: " + temperatureFile->fileName());
+    else                logL("Battery temperature file: not found!");
 
     // String: health state
     filenames.clear();
@@ -108,8 +108,8 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
         }
     }
 
-    if(healthFile) logE("Battery health file: " + healthFile->fileName());
-    else           logE("Battery health file: not found!");
+    if(healthFile) logL("Battery health file: " + healthFile->fileName());
+    else           logL("Battery health file: not found!");
 
     // Charger control file
     filenames.clear();
@@ -133,21 +133,21 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
 
     // If we found a usable file, check that it is writable
     if(chargingEnabledFile) {
-        logE("Charger control file: " + chargingEnabledFile->fileName());
+        logL("Charger control file: " + chargingEnabledFile->fileName());
         if(chargingEnabledFile->open(QIODevice::WriteOnly)) {
             chargingEnabledFile->close();
         }
         else {
-            logE("Charger control file is not writable - feature disabled");
+            logL("Charger control file is not writable - feature disabled");
             delete chargingEnabledFile;
             chargingEnabledFile = Q_NULLPTR;
         }
     }
     else if(!QSysInfo::machineHostName().contains("SailfishEmul")) {
-        logE("Charger control file not found!");
-        logE("Please contact the developer with your device model!");
+        logL("Charger control file not found!");
+        logL("Please contact the developer with your device model!");
     }
-    else logE("Charger control file: not found!");
+    else logL("Charger control file: not found!");
 
     updateData();
 }
@@ -161,28 +161,31 @@ void Battery::updateData()
         if(nextCharge != charge) {
             charge = nextCharge;
             emit chargeChanged(charge);
-            logV(QString("Battery: %1%").arg(charge));
+            logM(QString("Battery: %1%").arg(charge));
         }
         chargeFile->close();
     }
+
     if(chargerConnectedFile && chargerConnectedFile->open(QIODevice::ReadOnly)) {
         nextChargerConnected = chargerConnectedFile->readLine().trimmed().toInt();
         if(nextChargerConnected != chargerConnected) {
             chargerConnected = nextChargerConnected;
             emit chargerConnectedChanged(chargerConnected);
-            logV(QString("Charger: %1").arg(chargerConnected ? "connected" : "disconnected"));
+            logM(QString("Charger: %1").arg(chargerConnected ? "connected" : "disconnected"));
         }
         chargerConnectedFile->close();
     }
+
     if(stateFile && stateFile->open(QIODevice::ReadOnly)) {
         nextState = (QString(stateFile->readLine().trimmed().toLower()));
         if(nextState != state) {
             state = nextState;
             emit stateChanged(state);
-            logV("State: " + state);
+            logM("State: " + state);
         }
         stateFile->close();
     }
+
     if(currentFile && currentFile->open(QIODevice::ReadOnly)) {
         nextCurrent = currentFile->readLine().trimmed().toInt();
         if(nextCurrent != current) {
@@ -192,23 +195,23 @@ void Battery::updateData()
         }
         currentFile->close();
     }
+
     if(healthFile && healthFile->open(QIODevice::ReadOnly)) {
         nextHealth = (QString(healthFile->readLine().trimmed().toLower()));
         if(nextHealth != health) {
             health = nextHealth;
             emit healthChanged(health);
-            logV("Health: " + health);
+            logM("Health: " + health);
         }
         healthFile->close();
     }
+
     if(temperatureFile && temperatureFile->open(QIODevice::ReadOnly)) {
         nextTemperature = temperatureFile->readLine().trimmed().toInt();
         if(nextTemperature != temperature) {
             temperature = nextTemperature;
             emit temperatureChanged(temperature);
-            // TODO: factor might be different depending on device
-            // X10 has degrees * 10
-            logD(QString("Temperature: %1°C").arg(temperature / 10));
+            logH(QString("Temperature: %1°C").arg(temperature / 10));
         }
         temperatureFile->close();
     }
