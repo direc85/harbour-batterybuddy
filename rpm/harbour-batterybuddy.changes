@@ -1,3 +1,11 @@
+* Wed Aug 10 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.1.0-beta3
+- Rename internal logging functions for clarity
+- Invert the charge current sign if necessary
+- Assume the charge current value always changes
+- Remove unused files
+- Print changelog at the end of the build script
+- Built with Sailfish OS SDK 3.9 for 4.4.0.68
+
 * Sun Aug 7 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.1.0-beta2
 - Add Jolla Tablet charger control file to permission service
 
@@ -9,7 +17,6 @@
 - Don't try to use non-existent files
 - Print correct log file name
 - Remove unused signals from service
-- Built with Sailfish OS SDK 3.9 for 4.4.0.68
 
 * Sun Mar 20 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.0.0-1
 - Enable sandboxing with appropriate permissions (GUI only)
