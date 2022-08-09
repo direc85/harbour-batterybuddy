@@ -11,7 +11,7 @@ export APP_NAME=$(grep "Name" $(find . -regextype egrep -regex "\.\/rpm\/[a-z0-9
 export SFOS_VER=4.4.0.58
 
 ##########
-# Paths
+# Paths and versions
 ##########
 
 export ORIG_PATH=$PATH
@@ -19,6 +19,9 @@ export PROJECT=$PWD
 export PRO_FILE=$PROJECT/$APP_NAME.pro
 export SHADOW=$PROJECT/shadow
 export RPM_DEST_DIR=$PROJECT/RPMS
+
+export APP_VER=$(grep "Version" $(find . -regextype egrep -regex "\.\/rpm\/[a-z0-9_-]*\.(yaml|spec)" -print | head -1) | awk '{print $2}')
+export APP_REL=$(grep "Release" $(find . -regextype egrep -regex "\.\/rpm\/[a-z0-9_-]*\.(yaml|spec)" -print | head -1) | awk '{print $2}')
 
 ##########
 # Build function. Ran once per architecture
@@ -100,6 +103,12 @@ export RPM_FILE=$(ls RPMS/*$RPM_ARCH.rpm | head -1)
 if [ -f "$RPM_FILE" ]
 then
   $HOME/SailfishOS/bin/sfdk engine exec rpmvalidation -t SailfishOS-$SFOS_VER-$ARCH.default $(ls RPMS/*$RPM_ARCH.rpm | head -1)
+  echo
+  echo "Changelog:"
+  echo
+  echo ${APP_VER}-${APP_REL}
+  sed '/^$/Q' rpm/${APP_NAME}.changes | tail +2 | cut -c3-
+  echo
 else
   echo "RPM package not found, not validating."
 fi
