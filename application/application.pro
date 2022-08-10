@@ -15,7 +15,7 @@ TARGET = harbour-batterybuddy
 CONFIG += console sailfishapp sailfishapp_i18n dbus
 
 # Keep this in sync with service.pro and .spec
-VERSION = 4.1.0-beta3
+VERSION = 4.1.0-beta4
 
 DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"
 DEFINES += APP_NAME=\"\\\"$$TARGET\\\"\"

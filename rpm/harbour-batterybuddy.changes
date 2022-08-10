@@ -1,3 +1,6 @@
+* Wed Aug 10 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.1.0-beta4
+- Use ColumnView to show the log contents with formatting (thanks, nephros!)
+
 * Wed Aug 10 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.1.0-beta3
 - Rename internal logging functions for clarity
 - Invert the charge current sign if necessary
