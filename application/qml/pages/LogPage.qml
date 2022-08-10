@@ -20,30 +20,45 @@ import Sailfish.Silica 1.0
 import "../components"
 
 Page {
-    id: logPage
-
     allowedOrientations: Orientation.Portrait | Orientation.Landscape | Orientation.LandscapeInverted
 
+    // Invisible; used to determine
+    // the ColumnView delegate size.
+    Label {
+        id: metrics
+        text: "X"
+        font.pixelSize: Theme.fontSizeTiny
+        opacity: 0
+        enabled: false
+    }
+
     SilicaFlickable {
-        id: logFlickable
+        id: flickable
         anchors.fill: parent
-        contentHeight: header.height + column.height
+        contentHeight: header.height
+                       + flow.height
+                       + Theme.paddingLarge
+                       + logView.height
+
+        ScrollDecorator {
+            flickable: flickable
+        }
 
         PageHeader {
             id: header
             title: qsTr("View log")
         }
 
-        Column {
-            id: column
-            anchors {
-                top: header.bottom
-                horizontalCenter: parent.horizontalCenter
-            }
-            width: parent.width - 2*Theme.horizontalPageMargin
-            spacing: Theme.paddingLarge
+        // Layout the ComboBox and the buttons either
+        // on top each other (portait) or
+        // next to each other (landscape)
+        Flow {
+            id: flow
+            anchors.top: header.bottom
+            width: parent.width
 
             ComboBox {
+                width: page.isPortrait ? page.width : page.width / 2
                 label: qsTr("Log level")
                 currentIndex: 0
                 menu: ContextMenu {
@@ -56,10 +71,7 @@ Page {
             }
 
             Row {
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
+                width: page.isPortrait ? page.width : page.width / 2
                 height: updateButton.height
 
                 Column {
@@ -68,7 +80,7 @@ Page {
                         id: updateButton
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: qsTr("Update")
-                        onClicked: logLabel.updateText()
+                        onClicked: logView.updateText()
                     }
                 }
                 Column {
@@ -77,18 +89,63 @@ Page {
                         id: daemonStopButton
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: qsTr("Copy")
-                        onClicked: Clipboard.text = logLabel.text
+                        onClicked: Clipboard.text = logView.text
                     }
                 }
             }
+        }
 
-            MyLabel {
-                id: logLabel
-                text: logger.readLogfile(settings.logFilename)
-                font.pixelSize: Theme.fontSizeTiny
-                function updateText() {
-                    logLabel.text = logger.readLogfile(settings.logFilename)
+        ColumnView {
+            id: logView
+            anchors {
+                top: flow.bottom
+                topMargin: Theme.paddingLarge
+                left: parent.left
+                right: parent.right
+                leftMargin: Theme.horizontalPageMargin
+            }
+            itemHeight: metrics.height
+            clip: true
+            model: ListModel {}
+            delegate: Component {
+                Label {
+                    clip: true
+                    text: line
+                    width: logView.width
+                    wrapMode: TextEdit.NoWrap
+                    truncationMode: TruncationMode.Fade
+                    font.bold: true
+                    font.pixelSize: Theme.fontSizeTiny
+                    color: {
+                        switch (text.split(" ")[1]) {
+                        case "Charger:":
+                            return Theme.highlightFromColor("yellow", Theme.colorScheme)
+                        case "State:":
+                            return Theme.highlightFromColor("red", Theme.colorScheme)
+                        case "Temperature:":
+                            return Theme.highlightFromColor("orange", Theme.colorScheme)
+                        case "Health:":
+                            return Theme.highlightFromColor("blue", Theme.colorScheme)
+                        case "Battery:":
+                            return Theme.highlightFromColor("green", Theme.colorScheme)
+                        }
+                        font.bold = false
+                        return Theme.secondaryColor
+                    }
                 }
+            }
+            // ColumnView only instantiates and renders delegates
+            // as they are about to be shown, so we can
+            // simply dump the full log at it.
+            Component.onCompleted: updateText()
+            property string text: ""
+            function updateText() {
+                logView.text = logger.readLogfile(settings.logFilename)
+                logView.text.split("\n").forEach(
+                    function(str) {
+                        model.append({ "line": str })
+                    }
+                );
             }
         }
     }
