@@ -140,6 +140,7 @@ Page {
             Component.onCompleted: updateText()
             property string text: ""
             function updateText() {
+                model.clear()
                 logView.text = logger.readLogfile(settings.logFilename)
                 logView.text.split("\n").forEach(
                     function(str) {
