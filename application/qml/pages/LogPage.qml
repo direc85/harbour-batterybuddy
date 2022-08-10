@@ -82,6 +82,7 @@ Page {
                 }
             }
 
+            /*
             MyLabel {
                 id: logLabel
                 text: logger.readLogfile(settings.logFilename)
@@ -90,6 +91,58 @@ Page {
                     logLabel.text = logger.readLogfile(settings.logFilename)
                 }
             }
+            */
+        ColumnView { id: logLabel
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width - Theme.horizontalPageMargin
+            itemHeight: Math.floor(Theme.itemSizeExtraSmall / 3) // determined by debug output
+            clip: true
+            model: ListModel {}
+            delegate: Component { Label {
+                // print height to adjust logLabel.itemHeight
+                // on my test system, height is 41, itemSizeExtraSmall is 122 ( 122/3=40, good enough )
+                // Component.onCompleted: console.debug("real height:", height, "item height:", logLabel.itemHeight, "theme height:", Theme.itemSizeExtraSmall, "font height:", font.pixelSize)
+                clip: true
+                text: line
+                width: ListView.view.width
+                wrapMode: TextEdit.NoWrap
+                truncationMode: TruncationMode.Fade
+                font.bold:(/%$/.test(text)) // bold if it's a percentage
+                font.pixelSize: Theme.fontSizeTiny
+                color: {
+                    if (/%$/.test(text)) return Theme.primaryColor
+                    // TODO: use a more sophisticated matching method:
+                    // [HH:MM:HH] Word: value value
+                    const token = text.split(" ")[1]
+                    switch (token) {
+                        case "Charger:":
+                            return Theme.highlightFromColor("green", Theme.colorScheme)
+                            break;
+                        case "State:":
+                            return Theme.highlightFromColor("yellow", Theme.colorScheme)
+                            break;
+                        case "Temperature:":
+                            return Theme.highlightFromColor("orange", Theme.colorScheme)
+                            break;
+                        case "Health:":
+                            return Theme.highlightFromColor("lightblue", Theme.colorScheme)
+                            break;
+                    default:
+                        return Theme.secondaryColor
+                    }
+                    return Theme.secondaryColor
+                }
+            }
+            }
+            property string text: ""
+            function updateText() {
+                logLabel.text = logger.readLogfile(settings.logFilename)
+                logLabel.text.split("\n").forEach(
+                    function(l) { model.append({ "line": l }); }
+                );
+            }
+
+        }
         }
     }
 }
