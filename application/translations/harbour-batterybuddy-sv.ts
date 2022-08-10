@@ -29,7 +29,7 @@
     </message>
     <message>
         <source>Contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>Medverkande</translation>
     </message>
 </context>
 <context>
@@ -276,94 +276,94 @@
     <message>
         <source>Good</source>
         <comment>Battery is OK</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bra</translation>
     </message>
     <message>
         <source>Warm</source>
         <comment>Battery is warm</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varm</translation>
     </message>
     <message>
         <source>Overheated</source>
         <comment>Battery is very hot</comment>
-        <translation type="unfinished"></translation>
+        <translation>Överhettad</translation>
     </message>
     <message>
         <source>Cool</source>
         <comment>Battery is cool</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kall</translation>
     </message>
     <message>
         <source>Cold</source>
         <comment>Battery is very cold</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mycket kall</translation>
     </message>
     <message>
         <source>Health:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hälsa:</translation>
     </message>
     <message>
         <source>Temperature:</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperatur:</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Never</source>
-        <translation type="unfinished">Aldrig</translation>
+        <translation>Aldrig</translation>
     </message>
     <message>
         <source>30 seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>30 sekunder</translation>
     </message>
     <message>
         <source>2.5 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>2,5 minuter</translation>
     </message>
     <message>
         <source>5 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>5 minuter</translation>
     </message>
     <message>
         <source>10 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>10 minuter</translation>
     </message>
     <message>
         <source>15 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>15 minuter</translation>
     </message>
     <message>
         <source>30 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>30 minuter</translation>
     </message>
     <message>
         <source>1 hour</source>
-        <translation type="unfinished"></translation>
+        <translation>1 timma</translation>
     </message>
     <message>
         <source>2 hours</source>
-        <translation type="unfinished"></translation>
+        <translation>2 timmar</translation>
     </message>
     <message>
         <source>4 hours</source>
-        <translation type="unfinished"></translation>
+        <translation>4 timmar</translation>
     </message>
     <message>
         <source>8 hours</source>
-        <translation type="unfinished"></translation>
+        <translation>8 timmar</translation>
     </message>
     <message>
         <source>10 hours</source>
-        <translation type="unfinished"></translation>
+        <translation>10 timmar</translation>
     </message>
     <message>
         <source>12 hours</source>
-        <translation type="unfinished"></translation>
+        <translation>12 timmar</translation>
     </message>
     <message>
         <source>24 hours</source>
-        <translation type="unfinished"></translation>
+        <translation>24 timmar</translation>
     </message>
 </context>
 <context>
@@ -382,15 +382,15 @@
     </message>
     <message>
         <source>Battery health %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Batterihälsa %1</translation>
     </message>
     <message>
         <source>Battery health is not good</source>
-        <translation type="unfinished"></translation>
+        <translation>Batterihälsan är inte bra</translation>
     </message>
     <message>
         <source>Battery health is critical</source>
-        <translation type="unfinished"></translation>
+        <translation>Batterihälsan är kritisk</translation>
     </message>
 </context>
 <context>
@@ -466,31 +466,31 @@
     </message>
     <message>
         <source>Health notification settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Hälsoaviseringsinställning</translation>
     </message>
     <message>
         <source>Display visual and audible notifications when the battery status exceeds safe values.&lt;br /&gt;This usually means high (or low) temperature but can include other parameters depending on the hardware.</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa visuella och hörbara meddelanden när batteristatus överstiger säkra värden.&lt;br /&gt;Detta betyder vanligtvis hög (eller låg) temperatur men kan innehålla andra parametrar beroende på hårdvaran.</translation>
     </message>
     <message>
         <source>Battery health notification</source>
-        <translation type="unfinished"></translation>
+        <translation>Avisering för batterihälsa</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Varning</translation>
     </message>
     <message>
         <source>Critical</source>
-        <translation type="unfinished"></translation>
+        <translation>Kritisk</translation>
     </message>
     <message>
         <source>Health notification interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Aviseringsintervall för batterihälsa</translation>
     </message>
     <message>
         <source>Notification threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Tröskelvärde för avisering</translation>
     </message>
 </context>
 </TS>
