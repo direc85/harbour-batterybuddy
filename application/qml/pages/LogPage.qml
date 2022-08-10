@@ -20,12 +20,12 @@ import Sailfish.Silica 1.0
 import "../components"
 
 Page {
-    id: logPage
-
     allowedOrientations: Orientation.Portrait | Orientation.Landscape | Orientation.LandscapeInverted
 
+    // Invisible; used to determine
+    // the ColumnView delegate size.
     Label {
-        id: labelMetrics
+        id: metrics
         text: "X"
         font.pixelSize: Theme.fontSizeTiny
         opacity: 0
@@ -33,7 +33,7 @@ Page {
     }
 
     SilicaFlickable {
-        id: logFlickable
+        id: flickable
         anchors.fill: parent
         contentHeight: header.height
                        + flow.height
@@ -41,7 +41,7 @@ Page {
                        + logView.height
 
         ScrollDecorator {
-            flickable: logFlickable
+            flickable: flickable
         }
 
         PageHeader {
@@ -49,6 +49,9 @@ Page {
             title: qsTr("View log")
         }
 
+        // Layout the ComboBox and the buttons either
+        // on top each other (portait) or
+        // next to each other (landscape)
         Flow {
             id: flow
             anchors.top: header.bottom
@@ -101,7 +104,7 @@ Page {
                 right: parent.right
                 leftMargin: Theme.horizontalPageMargin
             }
-            itemHeight: labelMetrics.height
+            itemHeight: metrics.height
             clip: true
             model: ListModel {}
             delegate: Component {
@@ -131,6 +134,9 @@ Page {
                     }
                 }
             }
+            // ColumnView only instantiates and renders delegates
+            // as they are about to be shown, so we can
+            // simply dump the full log at it.
             Component.onCompleted: updateText()
             property string text: ""
             function updateText() {
