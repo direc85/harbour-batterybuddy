@@ -1,18 +1,15 @@
-* Wed Aug 10 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.1.0-beta4
+* Sun Aug 28 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.1.0-1
+- Redesign the logo and battery graphic
+- Use custom ImageButton in About page
 - Use ColumnView to show the log contents with formatting (thanks, nephros!)
-
-* Wed Aug 10 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.1.0-beta3
+- Update Swedigh translation (thanks, eson57)
 - Rename internal logging functions for clarity
 - Invert the charge current sign if necessary
 - Assume the charge current value always changes
 - Remove unused files
 - Print changelog at the end of the build script
 - Built with Sailfish OS SDK 3.9 for 4.4.0.68
-
-* Sun Aug 7 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.1.0-beta2
 - Add Jolla Tablet charger control file to permission service
-
-* Sun Aug 7 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.1.0-beta1
 - Initial Jolla Tablet support (beta)
 - Log charging/discharging current
 - Log temperature changes with resolution of one degree Celsius
