@@ -31,28 +31,9 @@
         <source>Contributors</source>
         <translation>Avustajat</translation>
     </message>
-</context>
-<context>
-    <name>CoverPage</name>
     <message>
-        <source>Charging</source>
-        <translation>Akku latautuu</translation>
-    </message>
-    <message>
-        <source>Not charging</source>
-        <translation>Akku ei latauksessa</translation>
-    </message>
-    <message>
-        <source>Connect charger</source>
-        <translation>Kytke laturi</translation>
-    </message>
-    <message>
-        <source>Disconnect charger</source>
-        <translation>Irrota laturi</translation>
-    </message>
-    <message>
-        <source>Battery Buddy</source>
-        <translation>Battery Buddy</translation>
+        <source>A modified version of %1 by %2 in the emoji pack %3 is used in the logo. License: %4</source>
+        <translation>Logossa käytetään muokattua versiota tekijän %2 kuvasta %1, joka kuuluu emojipakettiin %3. Lisenssi: %4</translation>
     </message>
 </context>
 <context>

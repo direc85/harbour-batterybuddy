@@ -31,28 +31,9 @@
         <source>Contributors</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>CoverPage</name>
     <message>
-        <source>Charging</source>
-        <translation>Tölt</translation>
-    </message>
-    <message>
-        <source>Not charging</source>
-        <translation>Nem tölt</translation>
-    </message>
-    <message>
-        <source>Connect charger</source>
-        <translation>Csatlakoztasd a töltőt</translation>
-    </message>
-    <message>
-        <source>Disconnect charger</source>
-        <translation>Húzd ki a töltőt</translation>
-    </message>
-    <message>
-        <source>Battery Buddy</source>
-        <translation>Battery Buddy</translation>
+        <source>A modified version of %1 by %2 in the emoji pack %3 is used in the logo. License: %4</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

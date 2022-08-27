@@ -31,27 +31,8 @@
         <source>Contributors</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>CoverPage</name>
     <message>
-        <source>Charging</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Not charging</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Connect charger</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disconnect charger</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Battery Buddy</source>
+        <source>A modified version of %1 by %2 in the emoji pack %3 is used in the logo. License: %4</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
