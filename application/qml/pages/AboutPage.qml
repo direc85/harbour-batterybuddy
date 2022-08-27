@@ -135,9 +135,12 @@ Page {
                 text: qsTr("Contributions and translations are always appreciated!")
             }
 
-            Button {
-                text: "GitHub"
-                anchors.horizontalCenter: parent.horizontalCenter
+            ImageButton {
+                source: Qt.resolvedUrl(
+                            Theme.colorScheme === Theme.LightOnDark
+                            ? "/usr/share/harbour-batterybuddy/images/GitHub-Mark-Light-120px-plus.png"
+                            : "/usr/share/harbour-batterybuddy/images/GitHub-Mark-120px-plus.png"
+                        )
                 onClicked: Qt.openUrlExternally("https://github.com/direc85/harbour-batterybuddy")
             }
 
