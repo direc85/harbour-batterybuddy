@@ -93,21 +93,9 @@ Page {
                 text: "Copyright 2021 Peter Gantner (nephros)"
             }
 
-            BackgroundItem {
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: Theme.iconSizeExtraLarge * 1.2
-                height: Theme.iconSizeExtraLarge * 1.2
+            ImageButton {
+                source: Qt.resolvedUrl("/usr/share/harbour-batterybuddy/images/ko-fi.png")
                 onClicked: Qt.openUrlExternally("https://ko-fi.com/direc85")
-                contentItem.radius: Theme.paddingSmall
-
-                Image {
-                    anchors.centerIn: parent
-                    source: Qt.resolvedUrl("/usr/share/harbour-batterybuddy/images/ko-fi.png")
-                    width: Theme.iconSizeExtraLarge
-                    height: Theme.iconSizeExtraLarge
-                    smooth: true
-                    asynchronous: true
-                }
             }
 
             AboutLabel {
