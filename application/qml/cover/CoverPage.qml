@@ -33,6 +33,7 @@ CoverBackground {
             x: coverPage.width * 0.3
             y: coverPage.width * 0.25
             width: 0.35 * coverPage.width
+            enableLowBatteryAnimation: coverPage.status === Cover.Active
         }
         CoverLabel {
             id: chargeLabel

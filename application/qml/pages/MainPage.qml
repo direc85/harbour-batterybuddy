@@ -106,6 +106,7 @@ Page {
                         rotation: 90
                         width: parent.width * 0.2
                         anchors.centerIn: parent
+                        enableLowBatteryAnimation: Qt.application.active
                     }
                 }
                 // Detail column

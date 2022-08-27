@@ -20,39 +20,94 @@ import Sailfish.Silica 1.0
 
 Item {
     id: batteryGraph
-    property real borderSize: width * 0.15
-    property real charge: battery.charge
-    property bool chargerConnected: battery.chargerConnected
+    property real borderSize: width * 0.1
+    property bool enableLowBatteryAnimation
+    property int _charge: battery.charge
+
     height: 1.75 * width
+
+//    Timer {
+//        id: debugChargeAnimation
+//        property int newCharge: -20
+//        repeat: true
+//        running: true
+//        interval: 300
+//        onTriggered: {
+//            newCharge = newCharge + 5
+//            if(newCharge > 120)
+//                newCharge = -20
+//            _charge = newCharge < 0 ? 0 : newCharge > 100 ? 100 : newCharge
+//        }
+//    }
+
+    Timer {
+        id: lowChargeBlink
+        property int counter: 0
+        running: (false && enableLowBatteryAnimation
+                  && !battery.chargerConnected
+                  && _charge <= settings.lowAlert)
+        repeat: true
+        interval: 400
+        onTriggered: {
+            counter = (counter + 1) % 5
+            if(counter === 0) {
+                batteryLevel.opacity = 0.0
+                restoreOpacity.start()
+            }
+        }
+    }
+
+    Timer {
+        id: restoreOpacity
+        running: false
+        repeat: false
+        interval: opacityAnimation.duration
+        onTriggered: batteryLevel.opacity = 1.0
+    }
 
     Rectangle {
         id: battTip
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         width: 2 * borderSize
-        height: borderSize
-        color: "white"
-        radius: 0.25 * borderSize
+        height: 1.5 * borderSize
+        color: Theme.highlightBackgroundColor
+        radius: borderSize / 2
     }
     Rectangle {
         id: battBody
-        anchors.top: battTip.verticalCenter
-        anchors.bottom: parent.bottom
-        width: parent.width
-        color: "black"
-        border.color: "white"
+        anchors {
+            top: battTip.verticalCenter
+            bottom: parent.bottom
+            horizontalCenter: parent.horizontalCenter
+        }
+        width: parent.width * 0.75
+        color: "transparent"
+        border.color: Theme.highlightBackgroundColor
         border.width: borderSize
-        radius: 0.25 * borderSize
+        radius: borderSize
 
         Rectangle {
             id: batteryLevel
-            border.color: "black"
-            border.width: 0.4 * borderSize
-            x: borderSize
-            y: parent.height - x - height
-            width: parent.width - 2.0 * x
-            height: (parent.height - 2.0 * x) * charge / 100.0
-            color: charge >= 80 ? "white" : charge >= 50 ? "green" : charge >= 20 ? "orange" : "red"
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: borderSize * 1.5
+            width: parent.width - 3 * borderSize
+            height: (borderSize) + ((parent.height - 4 * borderSize) * _charge / 100.0)
+            radius: borderSize / 2
+            opacity: 1.0
+            color: _charge >= 80 ? Theme.highlightBackgroundColor
+                 : _charge >= 50 ? Theme.highlightFromColor("green", Theme.colorScheme)
+                 : _charge >= 20 ? Theme.highlightFromColor("yellow", Theme.colorScheme)
+                 :                 Theme.highlightFromColor("red", Theme.colorScheme)
+            Behavior on color {
+                ColorAnimation {}
+            }
+            Behavior on opacity {
+                NumberAnimation {
+                    id: opacityAnimation
+                }
+            }
         }
     }
 }
