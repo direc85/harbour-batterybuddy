@@ -22,46 +22,28 @@ import "../components"
 CoverBackground {
     id: coverPage
 
-    onStatusChanged: batteryGraph.updateView()
-
-    BatteryGraph {
-        id: batteryGraph
-        x: coverPage.width * 0.3
-        y: coverPage.width * 0.25
-        width: 0.4 * coverPage.width
-
-        Component.onCompleted: updateView()
-        onStateChanged: updateView()
-        onChargerConnectedChanged: updateView()
-        onChargeChanged: updateView()
-        function updateView() {
-            if(charge <= settings.lowerLimit && battery.state === "discharging") {
-                coverText.text = qsTr("Connect charger")
-            }
-            else if(battery.charge >= settings.upperLimit &&
-                    (battery.state === "charging" || battery.state === "idle")) {
-                coverText.text = qsTr("Disconnect charger")
-            }
-            else if(battery.chargerConnected && battery.state === "charging") {
-                coverText.text = qsTr("Charging")
-            }
-            else if(battery.chargerConnected && battery.state === "discharging") {
-                coverText.text = qsTr("Not charging")
-            }
-            else { // Discharging
-                coverText.text = qsTr("Battery Buddy")
-            }
+    Column {
+        spacing: coverPage.width / 20
+        anchors {
+            left: coverPage.left
+            right: coverPage.right
+            verticalCenter: parent.verticalCenter
         }
-    }
-    Label {
-        id: coverText
-        anchors.top: batteryGraph.bottom
-        anchors.bottom: coverPage.bottom
-        anchors.horizontalCenter: coverPage.horizontalCenter
-        width: coverPage.width * 0.9
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        wrapMode: Text.Wrap
-        maximumLineCount: 2
+        BatteryGraph {
+            x: coverPage.width * 0.3
+            y: coverPage.width * 0.25
+            width: 0.35 * coverPage.width
+        }
+        CoverLabel {
+            id: chargeLabel
+            text: "🔋 " + battery.charge + "%"
+        }
+        CoverLabel {
+            text: "🔌 " + Math.floor(battery.current / 1000) + " mA"
+        }
+        CoverLabel {
+            height: text === '🌡️ ' ? 0 : chargeLabel.height
+            text: "🌡️ " + (battery.temperature === 0x7FFFFFFF ? '? °C' : formatTemperature(battery.temperature))
+        }
     }
 }

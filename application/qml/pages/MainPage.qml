@@ -139,13 +139,6 @@ Page {
                         label: qsTr("Temperature:")
                         value: battery.temperature === 0x7FFFFFFF ? healthText["unknown"] : formatTemperature(battery.temperature)
                         visible: battery.temperature !== 0x7FFFFFFF
-
-                        function formatTemperature(temp) {
-                            if(Qt.locale().measurementSystem === Locale.ImperialUSSystem) {
-                                return Math.floor((battery.temperature / 10) * 1.8 + 32) + " °F"
-                            }
-                            return Math.floor(battery.temperature / 10) + " °C"
-                        }
                     }
                 }
             }
