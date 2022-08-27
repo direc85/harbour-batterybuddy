@@ -2,7 +2,7 @@
 - Redesign the logo and battery graphic
 - Use custom ImageButton in About page
 - Use ColumnView to show the log contents with formatting (thanks, nephros!)
-- Update Swedigh translation (thanks, eson57)
+- Update Swedish translation (thanks, eson57)
 - Rename internal logging functions for clarity
 - Invert the charge current sign if necessary
 - Assume the charge current value always changes
