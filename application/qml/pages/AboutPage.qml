@@ -144,6 +144,21 @@ Page {
                 onClicked: Qt.openUrlExternally("https://github.com/direc85/harbour-batterybuddy")
             }
 
+            AboutLabel {
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.secondaryColor
+                text: qsTr("A modified version of %1 by %2 in the emoji pack %3 is used in the logo. License: %4")
+                    .arg("Battery emoji")
+                    .arg("Vincent Le Moign")
+                    .arg("Streamline")
+                    .arg("Creative Commons Attribution 4.0")
+            }
+
+            ImageButton {
+                source: Qt.resolvedUrl("/usr/share/harbour-batterybuddy/images/battery-emoji-clipart-original.png")
+                onClicked: Qt.openUrlExternally("https://creazilla.com/nodes/49604-battery-emoji-clipart")
+            }
+
             Item {
                 width: parent.width
                 height: Theme.paddingMedium
