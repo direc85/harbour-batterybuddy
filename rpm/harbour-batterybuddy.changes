@@ -1,4 +1,12 @@
 * Sun Aug 28 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.1.0-1
+- Fixup! Use correct colors in battery graphic
+- Fixup! Enable low battery animation
+- Move all subpages to MainPage pull down menu
+- Update Swedish translation (thanks, eson57)
+- Update Polish translation (thanks, wetab73)
+- Update copyrights
+
+* Sun Aug 28 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.1.0-1
 - Redesign the logo and battery graphic
 - Use custom ImageButton in About page
 - Use ColumnView to show the log contents with formatting (thanks, nephros!)
