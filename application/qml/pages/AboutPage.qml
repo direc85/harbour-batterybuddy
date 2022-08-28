@@ -1,7 +1,7 @@
 /**
  * Battery Buddy, a Sailfish application to prolong battery lifetime
  *
- * Copyright (C) 2019-2020 Matti Viljanen
+ * Copyright (C) 2019-2022 Matti Viljanen
  *
  * Battery Buddy is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
@@ -78,7 +78,7 @@ Page {
             AboutLabel {
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.secondaryColor
-                text: "Copyright 2019-2021 Matti Viljanen (direc85)"
+                text: "Copyright 2019-2022 Matti Viljanen (direc85)"
             }
 
             AboutLabel {
