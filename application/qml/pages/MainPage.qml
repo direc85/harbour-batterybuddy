@@ -69,6 +69,14 @@ Page {
                 text: qsTr("Background", "More to read, background information...")
                 onClicked: pageStack.push(Qt.resolvedUrl("InfoPage.qml"))
             }
+            MenuItem {
+                text: qsTr("About", "About this application")
+                onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
+            }
+            MenuItem {
+                text: qsTr("View log")
+                onClicked: pageStack.push(Qt.resolvedUrl("LogPage.qml"))
+            }
         }
 
         // Place our content in a Column.  The PageHeader is always placed at the top
