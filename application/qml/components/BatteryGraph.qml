@@ -43,7 +43,7 @@ Item {
     Timer {
         id: lowChargeBlink
         property int counter: 0
-        running: (false && enableLowBatteryAnimation
+        running: (enableLowBatteryAnimation
                   && !battery.chargerConnected
                   && _charge <= settings.lowAlert)
         repeat: true
