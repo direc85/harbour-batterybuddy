@@ -71,7 +71,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         width: 2 * borderSize
         height: 1.5 * borderSize
-        color: Theme.highlightBackgroundColor
+        color: Theme.secondaryColor
         radius: borderSize / 2
     }
     Rectangle {
@@ -83,7 +83,7 @@ Item {
         }
         width: parent.width * 0.75
         color: "transparent"
-        border.color: Theme.highlightBackgroundColor
+        border.color: Theme.secondaryColor
         border.width: borderSize
         radius: borderSize
 
@@ -96,7 +96,7 @@ Item {
             height: (borderSize) + ((parent.height - 4 * borderSize) * _charge / 100.0)
             radius: borderSize / 2
             opacity: 1.0
-            color: _charge >= 80 ? Theme.highlightBackgroundColor
+            color: _charge >= 80 ? Theme.secondaryColor
                  : _charge >= 50 ? Theme.highlightFromColor("green", Theme.colorScheme)
                  : _charge >= 20 ? Theme.highlightFromColor("yellow", Theme.colorScheme)
                  :                 Theme.highlightFromColor("red", Theme.colorScheme)
