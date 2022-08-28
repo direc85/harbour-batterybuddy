@@ -287,6 +287,15 @@
         <comment>Battery is very cold</comment>
         <translation>der Batterie ist sehr kalt</translation>
     </message>
+    <message>
+        <source>About</source>
+        <comment>About this application</comment>
+        <translation>Über</translation>
+    </message>
+    <message>
+        <source>View log</source>
+        <translation>Logdatei ansehen</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -393,11 +402,6 @@
         <translation>Benachrichtigungen</translation>
     </message>
     <message>
-        <source>About</source>
-        <comment>About this application</comment>
-        <translation>Über</translation>
-    </message>
-    <message>
         <source>Pause charging limit</source>
         <translation>Aufladegrenze</translation>
     </message>
@@ -440,10 +444,6 @@
     <message>
         <source>Never</source>
         <translation>Nie</translation>
-    </message>
-    <message>
-        <source>View log</source>
-        <translation>Logdatei ansehen</translation>
     </message>
     <message>
         <source>Battery health notification</source>

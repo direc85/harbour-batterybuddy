@@ -287,6 +287,15 @@
         <source>Temperature:</source>
         <translation>Temperatura:</translation>
     </message>
+    <message>
+        <source>About</source>
+        <comment>About this application</comment>
+        <translation>O Battery Buddy</translation>
+    </message>
+    <message>
+        <source>View log</source>
+        <translation>Pokaż logi</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -393,11 +402,6 @@
         <translation>Ustawienia powiadomień</translation>
     </message>
     <message>
-        <source>About</source>
-        <comment>About this application</comment>
-        <translation>O Battery Buddy</translation>
-    </message>
-    <message>
         <source>Pause charging limit</source>
         <translation>Wstrzymaj limit ładowania</translation>
     </message>
@@ -440,10 +444,6 @@
     <message>
         <source>Never</source>
         <translation>Nigdy</translation>
-    </message>
-    <message>
-        <source>View log</source>
-        <translation>Pokaż logi</translation>
     </message>
     <message>
         <source>Health notification settings</source>

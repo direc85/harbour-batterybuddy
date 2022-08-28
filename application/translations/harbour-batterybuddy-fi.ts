@@ -287,6 +287,15 @@
         <source>Temperature:</source>
         <translation>Lämpötila:</translation>
     </message>
+    <message>
+        <source>About</source>
+        <comment>About this application</comment>
+        <translation>Tietoja</translation>
+    </message>
+    <message>
+        <source>View log</source>
+        <translation>Näytä loki</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -393,11 +402,6 @@
         <translation>Ilmoitusasetukset</translation>
     </message>
     <message>
-        <source>About</source>
-        <comment>About this application</comment>
-        <translation>Tietoja</translation>
-    </message>
-    <message>
         <source>Pause charging limit</source>
         <translation>Latauksen keskeytysraja</translation>
     </message>
@@ -440,10 +444,6 @@
     <message>
         <source>Never</source>
         <translation>Ei koskaan</translation>
-    </message>
-    <message>
-        <source>View log</source>
-        <translation>Näytä loki</translation>
     </message>
     <message>
         <source>Display visual and audible notifications when the battery status exceeds safe values.&lt;br /&gt;This usually means high (or low) temperature but can include other parameters depending on the hardware.</source>

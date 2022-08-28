@@ -287,6 +287,15 @@
         <source>Temperature:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>About</source>
+        <comment>About this application</comment>
+        <translation>À propos</translation>
+    </message>
+    <message>
+        <source>View log</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -381,11 +390,6 @@
         <translation>Paramètres</translation>
     </message>
     <message>
-        <source>About</source>
-        <comment>About this application</comment>
-        <translation>À propos</translation>
-    </message>
-    <message>
         <source>Charging settings</source>
         <translation>Paramètres de charge</translation>
     </message>
@@ -439,10 +443,6 @@
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>View log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

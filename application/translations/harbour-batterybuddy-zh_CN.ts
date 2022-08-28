@@ -288,6 +288,15 @@
         <source>Temperature:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>About</source>
+        <comment>About this application</comment>
+        <translation>关于软件</translation>
+    </message>
+    <message>
+        <source>View log</source>
+        <translation>查看日志</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -382,11 +391,6 @@
         <translation>设置</translation>
     </message>
     <message>
-        <source>About</source>
-        <comment>About this application</comment>
-        <translation>关于软件</translation>
-    </message>
-    <message>
         <source>Charging settings</source>
         <translation>充电设置</translation>
     </message>
@@ -441,10 +445,6 @@
     <message>
         <source>Never</source>
         <translation>绝不</translation>
-    </message>
-    <message>
-        <source>View log</source>
-        <translation>查看日志</translation>
     </message>
     <message>
         <source>Health notification settings</source>

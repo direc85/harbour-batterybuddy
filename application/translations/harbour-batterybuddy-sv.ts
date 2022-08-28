@@ -287,6 +287,15 @@
         <source>Temperature:</source>
         <translation>Temperatur:</translation>
     </message>
+    <message>
+        <source>About</source>
+        <comment>About this application</comment>
+        <translation>Om</translation>
+    </message>
+    <message>
+        <source>View log</source>
+        <translation>Visa logg</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -393,11 +402,6 @@
         <translation>Aviseringsinställningar</translation>
     </message>
     <message>
-        <source>About</source>
-        <comment>About this application</comment>
-        <translation>Om</translation>
-    </message>
-    <message>
         <source>Pause charging limit</source>
         <translation>Pausa laddning</translation>
     </message>
@@ -440,10 +444,6 @@
     <message>
         <source>Never</source>
         <translation>Aldrig</translation>
-    </message>
-    <message>
-        <source>View log</source>
-        <translation>Visa logg</translation>
     </message>
     <message>
         <source>Health notification settings</source>

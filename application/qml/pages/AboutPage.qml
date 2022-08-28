@@ -119,7 +119,7 @@ Page {
                       "简体中文: dashinfantry\n"+
                       "svensk: eson57\n"+
                       "Deutsch: dryo, fllp, nephros\n"+
-                      "Polski: atlochowski\n"+
+                      "Polski: atlochowski, wetab73\n"+
                       "Magyar: 1Zgp"
             }
 

@@ -287,6 +287,15 @@
         <source>Temperature:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>About</source>
+        <comment>About this application</comment>
+        <translation>Névjegy</translation>
+    </message>
+    <message>
+        <source>View log</source>
+        <translation>Naplózás megtekintése</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -393,11 +402,6 @@
         <translation>Értesítés beállításai</translation>
     </message>
     <message>
-        <source>About</source>
-        <comment>About this application</comment>
-        <translation>Névjegy</translation>
-    </message>
-    <message>
         <source>Pause charging limit</source>
         <translation>Töltés-szüneteltetési limit</translation>
     </message>
@@ -440,10 +444,6 @@
     <message>
         <source>Never</source>
         <translation>Soha</translation>
-    </message>
-    <message>
-        <source>View log</source>
-        <translation>Napló megtekintése</translation>
     </message>
     <message>
         <source>Health notification settings</source>

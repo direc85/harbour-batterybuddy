@@ -287,6 +287,15 @@
         <source>Temperature:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>About</source>
+        <comment>About this application</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View log</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -393,11 +402,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>About</source>
-        <comment>About this application</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pause charging limit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -439,10 +443,6 @@
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>View log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
