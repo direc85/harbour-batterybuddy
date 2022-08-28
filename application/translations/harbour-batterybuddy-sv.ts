@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>A modified version of %1 by %2 in the emoji pack %3 is used in the logo. License: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>En modifierad version av %1, av %2 i emojipaket %3, använd i logotypen. Licens: %4</translation>
     </message>
 </context>
 <context>
