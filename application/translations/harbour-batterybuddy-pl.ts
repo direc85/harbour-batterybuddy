@@ -190,7 +190,7 @@
     </message>
     <message>
         <source>Charge:</source>
-        <translation>Ładowanie:</translation>
+        <translation>Poziom naładowania:</translation>
     </message>
     <message>
         <source>State:</source>
