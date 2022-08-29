@@ -5,7 +5,7 @@
     <name>AboutPage</name>
     <message>
         <source>Battery Buddy is a small and simple utility designed to improve the lifetime of the battery.</source>
-        <translation>A Battery Buddy egy apró és egyszerű segédprogram, amelyet az akkumulátor élethossza megnövelésének céljából alkottak.</translation>
+        <translation>A Battery Buddy egy apró és egyszerű segédprogram, amelyet az akkumulátor élettartamának növelése céljából alkottak.</translation>
     </message>
     <message>
         <source>View License</source>
@@ -29,11 +29,11 @@
     </message>
     <message>
         <source>Contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>Közreműködők</translation>
     </message>
     <message>
         <source>A modified version of %1 by %2 in the emoji pack %3 is used in the logo. License: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>A logóban a(z) %3 emoji csomagban lévő %2 által alkotott %1 módosított változata került felhasználásra. Licenc: %4</translation>
     </message>
 </context>
 <context>
@@ -44,7 +44,7 @@
     </message>
     <message>
         <source>Battery Buddy is a small and simple utility designed to improve the lifetime of the battery.</source>
-        <translation>A Battery Buddy egy apró és egyszerű segédprogram, amelyet az akkumulátor élethossza megnövelésének céljából alkottak.</translation>
+        <translation>A Battery Buddy egy apró és egyszerű segédprogram, amelyet az akkumulátor élettartamának növelése céljából alkottak.</translation>
     </message>
     <message>
         <source>It simply monitors the battery level and if it has been charged above the limit, it plays a sound and displays a notification.</source>
@@ -257,35 +257,35 @@
     <message>
         <source>Good</source>
         <comment>Battery is OK</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jó</translation>
     </message>
     <message>
         <source>Warm</source>
         <comment>Battery is warm</comment>
-        <translation type="unfinished"></translation>
+        <translation>Meleg</translation>
     </message>
     <message>
         <source>Overheated</source>
         <comment>Battery is very hot</comment>
-        <translation type="unfinished"></translation>
+        <translation>Túlmelegedett</translation>
     </message>
     <message>
         <source>Cool</source>
         <comment>Battery is cool</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hűvös</translation>
     </message>
     <message>
         <source>Cold</source>
         <comment>Battery is very cold</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hideg</translation>
     </message>
     <message>
         <source>Health:</source>
-        <translation type="unfinished"></translation>
+        <translation>Egészség:</translation>
     </message>
     <message>
         <source>Temperature:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hőmérséklet:</translation>
     </message>
     <message>
         <source>About</source>
@@ -301,59 +301,59 @@
     <name>QObject</name>
     <message>
         <source>Never</source>
-        <translation type="unfinished">Soha</translation>
+        <translation>Soha</translation>
     </message>
     <message>
         <source>30 seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>30 másodperc</translation>
     </message>
     <message>
         <source>2.5 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>2,5 perc</translation>
     </message>
     <message>
         <source>5 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>5 perc</translation>
     </message>
     <message>
         <source>10 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>10 perc</translation>
     </message>
     <message>
         <source>15 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>15 perc</translation>
     </message>
     <message>
         <source>30 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>30 perc</translation>
     </message>
     <message>
         <source>1 hour</source>
-        <translation type="unfinished"></translation>
+        <translation>1 óra</translation>
     </message>
     <message>
         <source>2 hours</source>
-        <translation type="unfinished"></translation>
+        <translation>2 óra</translation>
     </message>
     <message>
         <source>4 hours</source>
-        <translation type="unfinished"></translation>
+        <translation>4 óra</translation>
     </message>
     <message>
         <source>8 hours</source>
-        <translation type="unfinished"></translation>
+        <translation>8 óra</translation>
     </message>
     <message>
         <source>10 hours</source>
-        <translation type="unfinished"></translation>
+        <translation>10 óra</translation>
     </message>
     <message>
         <source>12 hours</source>
-        <translation type="unfinished"></translation>
+        <translation>12 óra</translation>
     </message>
     <message>
         <source>24 hours</source>
-        <translation type="unfinished"></translation>
+        <translation>24 óra</translation>
     </message>
 </context>
 <context>
@@ -372,15 +372,15 @@
     </message>
     <message>
         <source>Battery health %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Az akku egészségi állapota %1</translation>
     </message>
     <message>
         <source>Battery health is not good</source>
-        <translation type="unfinished"></translation>
+        <translation>Az akku egészségi állapota nem jó</translation>
     </message>
     <message>
         <source>Battery health is critical</source>
-        <translation type="unfinished"></translation>
+        <translation>Az akku egészségi állapota kritikus</translation>
     </message>
 </context>
 <context>
@@ -447,31 +447,31 @@
     </message>
     <message>
         <source>Health notification settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Egészségiállapot-értesítések beállításai</translation>
     </message>
     <message>
         <source>Display visual and audible notifications when the battery status exceeds safe values.&lt;br /&gt;This usually means high (or low) temperature but can include other parameters depending on the hardware.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vizuális- és hangjelzések megjelenítése, ha az akkumulátor állapota túllépi a biztonságos értékeket.&lt;br /&gt;Ez általában magas (vagy alacsony) hőmérsékletet jelent, de a hardvertől függően egyéb paramétereket is tartalmazhat.</translation>
     </message>
     <message>
         <source>Battery health notification</source>
-        <translation type="unfinished"></translation>
+        <translation>Akku egészségiállapot-értesítés</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <source>Critical</source>
-        <translation type="unfinished"></translation>
+        <translation>Kritikus</translation>
     </message>
     <message>
         <source>Health notification interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Egészségiállapot-értesítés intervalluma</translation>
     </message>
     <message>
         <source>Notification threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Értesítés küszöbértéke</translation>
     </message>
 </context>
 </TS>
