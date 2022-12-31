@@ -1,4 +1,7 @@
-* Sun Aug 28 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.1.0-1
+* Sat Dec 31 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.2.0-1
+- Add setting maximum charge current
+
+* Sun Aug 28 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.1.1-1
 - Fixup! Use correct colors in battery graphic
 - Fixup! Enable low battery animation
 - Move all subpages to MainPage pull down menu
