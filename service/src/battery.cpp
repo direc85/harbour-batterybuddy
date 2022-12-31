@@ -78,9 +78,18 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
         if(maxChargeCurrentFile->open(QIODevice::WriteOnly)) {
             maxChargeCurrentFile->close();
             if(maxChargeCurrentFile->open(QIODevice::ReadOnly)) {
+
+                // Read and store the default max current
                 maxSupportedChargeCurrent = maxChargeCurrentFile->readLine().trimmed().toInt();
                 logL(QString("Maximum supported charge current: %1mA").arg(maxSupportedChargeCurrent / 1000));
                 maxChargeCurrentFile->close();
+                settings->setMaxSupportedChargeCurrent(maxSupportedChargeCurrent);
+
+                // Read and maybe set the user-set max current
+                maxChargeCurrent = settings->getMaxChargeCurrent();
+                if(maxChargeCurrent != maxSupportedChargeCurrent) {
+                    setMaxChargeCurrent(maxChargeCurrent);
+                }
             }
         }
         else {
@@ -92,7 +101,6 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
     else {
         logL("Max charge current file: " + notFound);
     }
-    settings->setMaxSupportedChargeCurrent(maxSupportedChargeCurrent);
 
     // Battery/charging status: charging, discharging, full, empty, unknown (others?)
     filenames.clear();
@@ -219,7 +227,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
 }
 
 Battery::~Battery() {
-    this->setMaxChargeCurrent(maxSupportedChargeCurrent);
+    setMaxChargeCurrent(maxSupportedChargeCurrent);
 
     updateTimer->stop();
     highNotifyTimer->stop();

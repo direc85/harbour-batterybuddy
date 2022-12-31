@@ -204,4 +204,7 @@ int     Settings::getLogLevel()                    { return logLevel; }
 
 void Settings::setMaxSupportedChargeCurrent(int newCurrent) {
     mySettings->setValue(sMaxSupportedChargeCurrent, QByteArray::number(newCurrent));
+    if(mySettings->value(sMaxChargeCurrent, QVariant::fromValue(0)).toInt() == 0) {
+        mySettings->setValue(sMaxChargeCurrent, QByteArray::number(newCurrent));
+    }
 }
