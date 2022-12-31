@@ -486,7 +486,7 @@ bool Battery::setChargingEnabled(const bool isEnabled) {
 
 void Battery::setMaxChargeCurrent(int newCurrent) {
     if(maxChargeCurrentFile) {
-        logM(QString("Setting max charging current to %1...").arg(newCurrent / 1000));
+        logM(QString("Max charging current: %1mA").arg(newCurrent / 1000));
         if(newCurrent > maxSupportedChargeCurrent) {
             newCurrent = maxSupportedChargeCurrent;
         }
