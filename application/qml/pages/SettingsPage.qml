@@ -44,6 +44,7 @@ Page {
         running: true
         onTriggered: {
             autoStopCharging.checked = settings.limitEnabled
+            maxChargeCurrentSlider.value = settings.maxChargeCurrent
             highLimitSlider.value = settings.highLimit
             lowLimitSlider.value = settings.lowLimit
             highAlertSlider.value = settings.highAlert
@@ -180,6 +181,24 @@ Page {
                     targetSlider: lowLimitSlider
                     smallChange: 1
                     largeChange: 5
+                }
+
+                SectionHeader {
+                    text: qsTr("Maximum Charge Current")
+                    visible: settings.maxSupportedChargeCurrent > 0
+                }
+
+                MySlider {
+                    id: maxChargeCurrentSlider
+                    visible: settings.maxSupportedChargeCurrent > 0
+                    minimumValue:  500000
+                    maximumValue: settings.maxSupportedChargeCurrent
+                    stepSize: 100000
+                    valueText: (value / 1000) + "mA"
+                    onReleased: save()
+                    function save() {
+                        settings.maxChargeCurrent = value
+                    }
                 }
             }
 

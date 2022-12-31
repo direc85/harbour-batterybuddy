@@ -96,11 +96,12 @@ Settings::Settings(Logger* newLogger, QObject *parent) : QObject(parent)
     notificationHealthWarnText = "Battery health is not good";
     notificationHealthCritText = "Battery health is critical";
 
-    // Do this here, because...
     watcher = new QFileSystemWatcher(QStringList(mySettings->fileName()), this);
     connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(updateConfig(QString)));
 
-    // ...calling this deletes mySettings!
+    // To trigger setting the initial config value
+    maxChargeCurrent = 0;
+
     updateConfig(mySettings->fileName());
 }
 
@@ -123,6 +124,8 @@ void Settings::updateConfig(const QString path) {
     // Use the same file location as GUI for data exchange
     if(!mySettings) {
         mySettings = new QSettings(appName, appName, this);
+    } else {
+        mySettings->sync();
     }
 
     logH("Updating configuration...");
@@ -139,6 +142,9 @@ void Settings::updateConfig(const QString path) {
     loadInteger(sLimitEnabled, limitEnabled, 0, 1);
     loadInteger(sLowLimit, lowLimit, 5, 99);
     loadInteger(sHighLimit, highLimit, 6, 100);
+    if(loadInteger(sMaxChargeCurrent, maxChargeCurrent, 0, 5000000)) {
+        emit setMaxChargeCurrent(maxChargeCurrent);
+    }
 
     notificationTitle = mySettings->value(sNotificationTitle, notificationTitle).toString();
     notificationLowText = mySettings->value(sNotificationLowText, notificationLowText).toString();
@@ -157,9 +163,6 @@ void Settings::updateConfig(const QString path) {
         logger->verbose = (logLevel > 1);
         logL(QString("Log level set to %1").arg((logLevel == 0 ? "low" : (logLevel == 1 ? "medium" : "high"))));
     }
-
-    delete mySettings;
-    mySettings = nullptr;
 
     // Let the file system settle...
     QThread::msleep(100);
@@ -180,6 +183,7 @@ void Settings::updateConfig(const QString path) {
 // Getters condensed
 int     Settings::getLowAlert()                    { return lowAlert; }
 int     Settings::getHighAlert()                   { return highAlert; }
+int     Settings::getMaxChargeCurrent()            { return maxChargeCurrent; }
 int     Settings::getHealthAlert()                 { return healthAlert; }
 int     Settings::getHighNotificationsInterval()   { return highNotificationsInterval; }
 int     Settings::getLowNotificationsInterval()    { return lowNotificationsInterval; }
@@ -197,3 +201,7 @@ QString Settings::getNotificationHealthTitle()     { return notificationHealthTi
 QString Settings::getNotificationHealthWarnText()  { return notificationHealthWarnText; }
 QString Settings::getNotificationHealthCritText()  { return notificationHealthCritText; }
 int     Settings::getLogLevel()                    { return logLevel; }
+
+void Settings::setMaxSupportedChargeCurrent(int newCurrent) {
+    mySettings->setValue(sMaxSupportedChargeCurrent, QByteArray::number(newCurrent));
+}

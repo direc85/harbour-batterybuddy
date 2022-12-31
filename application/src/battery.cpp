@@ -225,6 +225,8 @@ int Battery::getCharge(){ return charge; }
 
 int Battery::getCurrent(){ return current; }
 
+int Battery::getMaxChargeCurrent() { return maxChargeCurrent; }
+
 QString Battery::getState() { return state; }
 
 QString Battery::getHealth() { return health; }

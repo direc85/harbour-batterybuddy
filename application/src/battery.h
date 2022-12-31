@@ -31,6 +31,7 @@ class Battery : public QObject
     Q_OBJECT
     Q_PROPERTY(int charge READ getCharge NOTIFY chargeChanged)
     Q_PROPERTY(int current READ getCurrent NOTIFY currentChanged)
+    Q_PROPERTY(int maxChargeCurrent READ getMaxChargeCurrent)
     Q_PROPERTY(bool chargerConnected READ getChargerConnected NOTIFY chargerConnectedChanged)
     Q_PROPERTY(QString state READ getState NOTIFY stateChanged)
     Q_PROPERTY(bool chargingEnabled READ getChargingEnabled NOTIFY chargingEnabledChanged)
@@ -44,6 +45,7 @@ public:
 
     int getCharge();
     int getCurrent();
+    int getMaxChargeCurrent();
     bool getCharging();
     bool getChargerConnected();
     QString getState();
@@ -62,6 +64,7 @@ private:
     QFile* chargerConnectedFile = nullptr;
     QFile* stateFile = nullptr;
     QFile* chargingEnabledFile = nullptr;
+    QFile* maxChargeCurrentFile = nullptr;
     Settings* settings = nullptr;
     Logger* logger = nullptr;
 
@@ -74,6 +77,7 @@ private:
     bool chargerConnected = false; // Charger plugged in
     QString state = "idle"; // dis/charging, idle, unknown
     bool chargingEnabled = true; // Only ever disabled manually
+    int maxChargeCurrent = 0; // Charge current limit in micro amps
 
     QString health = "unknown"; // Good, warm, overheat. Might have Cold or Overvoltage depending on driver
     int temperature = 0x7FFFFFFF; // This value means "unknown" (32-bit INT_MAX)

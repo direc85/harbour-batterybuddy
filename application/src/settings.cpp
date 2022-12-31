@@ -38,6 +38,8 @@ Settings::Settings(Logger *newLogger, QObject *parent) : QObject(parent)
     loadInteger(sLimitEnabled, limitEnabled, 0, 1);
     loadInteger(sLowLimit, lowLimit, 5, 99);
     loadInteger(sHighLimit, highLimit, 6, 100);
+    loadInteger(sMaxSupportedChargeCurrent, maxSupportedChargeCurrent, 0, 5000000);
+    loadInteger(sMaxChargeCurrent, maxChargeCurrent, 0, maxSupportedChargeCurrent);
     loadInteger(sLogLevel, logLevel, 0, 2);
 
     loadString(sLogFilename, logFilename);
@@ -72,6 +74,8 @@ int     Settings::getLowNotificationsInterval()    { return lowNotificationsInte
 int     Settings::getHealthNotificationsInterval() { return healthNotificationsInterval; }
 int     Settings::getLowLimit()                    { return lowLimit; }
 int     Settings::getHighLimit()                   { return highLimit; }
+int     Settings::getMaxChargeCurrent()            { return maxChargeCurrent; }
+int     Settings::getMaxSupportedChargeCurrent()   { return maxSupportedChargeCurrent; }
 bool    Settings::getLimitEnabled()                { return limitEnabled == 1; }
 QString Settings::getLowAlertFile()                { return lowAlertFile; }
 QString Settings::getHighAlertFile()               { return highAlertFile; }
@@ -130,6 +134,11 @@ void Settings::setLowLimit(const int newLimit) {
 void Settings::setHighLimit(const int newLimit) {
     if(saveInteger(sHighLimit, newLimit, highLimit))
         emit highLimitChanged(highLimit);
+}
+
+void Settings::setMaxChargeCurrent(const int newCurrent) {
+    if(saveInteger(sMaxChargeCurrent, newCurrent, maxChargeCurrent))
+        emit maxChargeCurrentChanged(maxChargeCurrent);
 }
 
 void Settings::setLimitEnabled(const bool newEnabled) {

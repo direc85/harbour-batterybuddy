@@ -33,6 +33,8 @@ class Settings : public QObject
     Q_PROPERTY(int healthNotificationsInterval READ getHealthNotificationsInterval WRITE setHealthNotificationsInterval NOTIFY healthNotificationsIntervalChanged)
     Q_PROPERTY(int highLimit READ getHighLimit WRITE setHighLimit NOTIFY highLimitChanged)
     Q_PROPERTY(int lowLimit READ getLowLimit WRITE setLowLimit NOTIFY lowLimitChanged)
+    Q_PROPERTY(int maxChargeCurrent READ getMaxChargeCurrent WRITE setMaxChargeCurrent NOTIFY maxChargeCurrentChanged)
+    Q_PROPERTY(int maxSupportedChargeCurrent READ getMaxSupportedChargeCurrent NOTIFY maxSupportedChargeCurrentChanged)
     Q_PROPERTY(bool limitEnabled READ getLimitEnabled WRITE setLimitEnabled NOTIFY limitEnabledChanged)
     Q_PROPERTY(QString highAlertFile READ getHighAlertFile NOTIFY highAlertFileChanged)
     Q_PROPERTY(QString lowAlertFile READ getLowAlertFile NOTIFY lowAlertFileChanged)
@@ -58,6 +60,8 @@ public:
     int  getHealthNotificationsInterval();
     int  getLowLimit();
     int  getHighLimit();
+    int  getMaxChargeCurrent();
+    int  getMaxSupportedChargeCurrent();
     bool getLimitEnabled();
     QString getLowAlertFile();
     QString getHighAlertFile();
@@ -79,6 +83,7 @@ public:
     void setHealthNotificationsInterval(const int newInterval);
     void setLowLimit(const int newLimit);
     void setHighLimit(const int newLimit);
+    void setMaxChargeCurrent(const int newCurrent);
     void setLimitEnabled(const bool newEnabled);
     void setNotificationTitle(const QString newText);
     void setNotificationLowText(const QString newText);
@@ -103,6 +108,8 @@ private:
     int limitEnabled = 1; // Converted to boolean for QML
     int lowLimit = 65;
     int highLimit = 70;
+    int maxChargeCurrent = 0; // micro amps
+    int maxSupportedChargeCurrent = 0; // micro amps
     QString lowAlertFile = "/usr/share/sounds/jolla-ambient/stereo/general_warning.wav";
     QString highAlertFile = "/usr/share/sounds/jolla-ambient/stereo/positive_confirmation.wav";
     QString healthAlertFile = lowAlertFile;
@@ -125,6 +132,8 @@ private:
     const char* sLimitEnabled = "limitEnabled";
     const char* sLowLimit = "lowLimit";
     const char* sHighLimit = "highLimit";
+    const char* sMaxSupportedChargeCurrent = "maxSupportedChargeCurrent";
+    const char* sMaxChargeCurrent = "maxChargeCurrent";
     const char* sLowAlertFile = "lowAlertFile";
     const char* sHighAlertFile = "highAlertFile";
     const char* sHealthAlertFile = "healthAlertFile";
@@ -153,6 +162,8 @@ signals:
     void limitEnabledChanged(bool);
     void lowLimitChanged(int);
     void highLimitChanged(int);
+    void maxChargeCurrentChanged(int);
+    void maxSupportedChargeCurrentChanged(int);
     void lowAlertFileChanged(QString);
     void highAlertFileChanged(QString);
     void healthAlertFileChanged(QString);

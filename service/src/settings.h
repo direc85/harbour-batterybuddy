@@ -34,6 +34,7 @@ public:
 
     int  getLowAlert();
     int  getHighAlert();
+    int  getMaxChargeCurrent();
     int  getHighNotificationsInterval();
     int  getLowNotificationsInterval();
     int  getHealthAlert();
@@ -55,6 +56,8 @@ public:
     QString getNotificationHealthWarnText();
     QString getNotificationHealthCritText();
 
+    void setMaxSupportedChargeCurrent(int newCurrent);
+
 private:
     Logger* logger;
     QSettings* mySettings = nullptr;
@@ -70,6 +73,7 @@ private:
     // Default values
     int lowAlert = 25;
     int highAlert = 75;
+    int maxChargeCurrent = 0;
     int healthAlert = 1; // 0=off, 1=warn, 2=crit
     int highNotificationsInterval = 60;
     int lowNotificationsInterval = 60;
@@ -101,6 +105,8 @@ private:
     const char* sLimitEnabled = "limitEnabled";
     const char* sLowLimit = "lowLimit";
     const char* sHighLimit = "highLimit";
+    const char* sMaxChargeCurrent = "maxChargeCurrent";
+    const char* sMaxSupportedChargeCurrent = "maxSupportedChargeCurrent";
     const char* sLowAlertFile = "lowAlertFile";
     const char* sHighAlertFile = "highAlertFile";
     const char* sHealthAlertFile = "healthAlertFile";
@@ -120,6 +126,7 @@ private slots:
 
 signals:
     void resetTimers();
+    void setMaxChargeCurrent(int newCurrent);
 };
 
 #endif // SETTINGS_H

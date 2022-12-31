@@ -81,6 +81,7 @@ private:
     QFile *currentFile = nullptr;
     QFile *stateFile = nullptr;
     QFile *chargingEnabledFile = nullptr;
+    QFile *maxChargeCurrentFile = nullptr;
     QFile *temperatureFile = nullptr;
     QFile *healthFile = nullptr;
     Settings *settings = nullptr;
@@ -98,6 +99,8 @@ private:
     bool chargerConnected = false; // Charger plugged in
     QString state = "idle"; // dis/charging, idle, unknown
     bool chargingEnabled = true; // Only ever disabled manually
+    int maxChargeCurrent = 0;
+    int maxSupportedChargeCurrent = 0;
 
     QString health = "unknown"; // Good, warm, overheat. Might have Cold or Overvoltage depending on driver
     int temperature = 0x7FFFFFFF; // This value means "unknown" (32-bit INT_MAX)
@@ -124,6 +127,7 @@ public slots:
     void showHighNotification();
     void showLowNotification();
     void showHealthNotification();
+    void setMaxChargeCurrent(int newCurrent);
 };
 
 #endif // BATTERY_H
