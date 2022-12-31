@@ -473,5 +473,9 @@
         <source>Notification threshold</source>
         <translation>Tröskelvärde för avisering</translation>
     </message>
+    <message>
+        <source>Maximum Charge Current</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

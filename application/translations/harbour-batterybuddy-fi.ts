@@ -473,5 +473,9 @@
         <source>Notification threshold</source>
         <translation>Ilmoitusten taso</translation>
     </message>
+    <message>
+        <source>Maximum Charge Current</source>
+        <translation>Suurin latausvirta</translation>
+    </message>
 </context>
 </TS>
