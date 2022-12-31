@@ -92,6 +92,7 @@ rm -f %{_unitdir}/%{name}.service
 # Install/update permission daemon (root)
 systemctl daemon-reload
 systemctl enable %{name}-oneshot.service
+systemctl stop %{name}-oneshot.service
 systemctl start %{name}-oneshot.service
 
 # Install/update background daemon (default user)
