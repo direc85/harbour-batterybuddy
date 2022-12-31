@@ -1,3 +1,6 @@
+* Sun Jan 1 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.2.2-1
+- Restart the permission service on update
+
 * Sun Jan 1 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.2.1-1
 - Properly read and set values on first startup
 
