@@ -21,6 +21,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
 {
     logger = newLogger;
     settings = new Settings(logger, this);
+    const QString notFound = "not found";
 
     // Read log level from config - if not already set
     if(!loglevelSet) {
@@ -45,8 +46,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
         }
     }
 
-    if(chargeFile) logL("Battery charge file: " + chargeFile->fileName());
-    else           logL("Battery charge file: not found!");
+    logL("Battery charge file: " + (chargeFile ? chargeFile->fileName() : notFound));
 
     // Charging/discharging current in microamps, e.g. -1450000 (-145mA)
     filenames.clear();
@@ -60,8 +60,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
         }
     }
 
-    if(currentFile) logL("Charging/discharging current file: " + currentFile->fileName());
-    else            logL("Charging/discharging current file: not found!");
+    logL("Charging/discharging current file: " + (currentFile ? currentFile->fileName() : notFound));
 
     // Maximum charge current in microamps, e.g. 3500000 (3500mA)
     filenames.clear();
@@ -91,7 +90,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
         }
     }
     else {
-        logL("Max charge current file: not found!");
+        logL("Max charge current file: " + notFound);
     }
     settings->setMaxSupportedChargeCurrent(maxSupportedChargeCurrent);
 
@@ -107,8 +106,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
         }
     }
 
-    if(stateFile) logL("Status file: " + stateFile->fileName());
-    else          logL("Status file: not found!");
+    logL("Status file: " + (stateFile ? stateFile->fileName() : notFound));
 
     // Charger connected, bool (number): 0 or 1
     filenames.clear();
@@ -122,8 +120,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
         }
     }
 
-    if(chargerConnectedFile) logL("Charger status file: " + chargerConnectedFile->fileName());
-    else                     logL("Charger status file: not found!");
+    logL("Charger status file: " + (chargerConnectedFile ? chargerConnectedFile->fileName() : notFound));
 
     // Number: temperature
     filenames.clear();
@@ -137,8 +134,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
         }
     }
 
-    if(temperatureFile) logL("Battery temperature file: " + temperatureFile->fileName());
-    else                logL("Battery temperature file: not found!");
+    logL("Battery temperature file: " + (temperatureFile ? temperatureFile->fileName() : notFound));
 
     // String: health state
     filenames.clear();
@@ -151,8 +147,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
         }
     }
 
-    if(healthFile) logL("Battery health file: " + healthFile->fileName());
-    else           logL("Battery health file: not found!");
+    logL("Battery health file: " + (healthFile ? healthFile->fileName() : notFound));
 
     // Charger control file
     filenames.clear();
@@ -186,11 +181,10 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
             chargingEnabledFile = Q_NULLPTR;
         }
     }
-    else if(!QSysInfo::machineHostName().contains("SailfishEmul")) {
+    else {
         logL("Charger control file not found!");
         logL("Please contact the developer with your device model!");
     }
-    else logL("Charger control file: not found!");
 
     connect(settings, SIGNAL(resetTimers()), this, SLOT(resetTimers()));
     connect(settings, SIGNAL(setMaxChargeCurrent(int)), this, SLOT(setMaxChargeCurrent(int)));

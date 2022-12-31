@@ -21,6 +21,7 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
 {
     settings = newSettings;
     logger = newLogger;
+    const QString notFound = "not found";
 
     QStringList filenames;
 
@@ -34,8 +35,7 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
         }
     }
 
-    if(chargeFile) logL("Battery charge file: " + chargeFile->fileName());
-    else           logL("Battery charge file: not found!");
+    logL("Battery charge file: " + (chargeFile ? chargeFile->fileName() : notFound));
 
     // Number: battery/charging current, e.g. -1450000 (-145mA)
     filenames.clear();
@@ -49,8 +49,7 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
         }
     }
 
-    if(currentFile) logL("Charging/discharging current file: " + currentFile->fileName());
-    else            logL("Charging/discharging current file: not found!");
+    logL("Charging/discharging current file: " + (currentFile ? currentFile->fileName() : notFound));
 
     // String: charging, discharging, full, empty, unknown (others?)
     filenames.clear();
@@ -64,8 +63,7 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
         }
     }
 
-    if(stateFile) logL("Status file: " + stateFile->fileName());
-    else          logL("Status file: not found!");
+    logL("Status file: " + (stateFile ? stateFile->fileName() : notFound));
 
     // Number: 0 or 1
     filenames.clear();
@@ -79,8 +77,7 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
         }
     }
 
-    if(chargerConnectedFile) logL("Charger status file: " + chargerConnectedFile->fileName());
-    else                     logL("Charger status file: not found!");
+    logL("Charger status file: " + (chargerConnectedFile ? chargerConnectedFile->fileName() : notFound));
 
     // Number: temperature
     filenames.clear();
@@ -94,8 +91,7 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
         }
     }
 
-    if(temperatureFile) logL("Battery temperature file: " + temperatureFile->fileName());
-    else                logL("Battery temperature file: not found!");
+    logL("Battery temperature file: " + (temperatureFile ? temperatureFile->fileName() : notFound));
 
     // String: health state
     filenames.clear();
@@ -108,8 +104,7 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
         }
     }
 
-    if(healthFile) logL("Battery health file: " + healthFile->fileName());
-    else           logL("Battery health file: not found!");
+    logL("Battery health file: " + (healthFile ? healthFile->fileName() : notFound));
 
     // Charger control file
     filenames.clear();
@@ -143,11 +138,10 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
             chargingEnabledFile = Q_NULLPTR;
         }
     }
-    else if(!QSysInfo::machineHostName().contains("SailfishEmul")) {
-        logL("Charger control file not found!");
+    else {
+        logL("Charger control file: " + notFound);
         logL("Please contact the developer with your device model!");
     }
-    else logL("Charger control file: not found!");
 
     updateData();
 }
@@ -221,9 +215,9 @@ void Battery::updateData()
     }
 }
 
-int Battery::getCharge(){ return charge; }
+int Battery::getCharge() { return charge; }
 
-int Battery::getCurrent(){ return current; }
+int Battery::getCurrent() { return current; }
 
 int Battery::getMaxChargeCurrent() { return maxChargeCurrent; }
 

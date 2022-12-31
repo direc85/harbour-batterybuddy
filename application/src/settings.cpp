@@ -84,9 +84,9 @@ QString Settings::getLogFilename()                 { return logFilename; }
 QString Settings::getNotificationTitle()           { return notificationTitle; }
 QString Settings::getNotificationLowText()         { return notificationLowText; }
 QString Settings::getNotificationHighText()        { return notificationHighText; }
-QString Settings::getNotificationHealthTitle()         { return notificationHealthTitle; }
-QString Settings::getNotificationHealthWarnText()      { return notificationHealthWarnText; }
-QString Settings::getNotificationHealthCritText()      { return notificationHealthCritText; }
+QString Settings::getNotificationHealthTitle()     { return notificationHealthTitle; }
+QString Settings::getNotificationHealthWarnText()  { return notificationHealthWarnText; }
+QString Settings::getNotificationHealthCritText()  { return notificationHealthCritText; }
 int     Settings::getLogLevel()                    { return logLevel; }
 
 void Settings::setLowAlert(const int newLimit) {
