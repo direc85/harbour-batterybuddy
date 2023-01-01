@@ -475,7 +475,7 @@
     </message>
     <message>
         <source>Maximum Charge Current</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximal laddningsström</translation>
     </message>
 </context>
 </TS>
