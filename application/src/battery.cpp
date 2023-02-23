@@ -87,7 +87,8 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     // Number: temperature
     filenames.clear();
     filenames << "/sys/class/power_supply/battery/temp"
-              << "/sys/class/power_supply/dollar_cove_battery/temp";
+              << "/sys/class/power_supply/dollar_cove_battery/temp"
+              << "/sys/class/power_supply/axp20x-battery/hwmon0/in0_input";
 
     foreach(const QString& file, filenames) {
         if(!temperatureFile && QFile::exists(file)) {
