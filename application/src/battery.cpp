@@ -72,7 +72,8 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     filenames.clear();
     filenames << "/sys/class/power_supply/usb/present"
               << "/sys/class/power_supply/dollar_cove_charger/present"
-              << "/sys/class/power_supply/axp20x-usb/present";
+              << "/sys/class/power_supply/axp20x-usb/present"
+              << "/sys/class/power_supply/axp20x-ac/present";
 
     foreach(const QString& file, filenames) {
         if(!chargerConnectedFile && QFile::exists(file)) {
