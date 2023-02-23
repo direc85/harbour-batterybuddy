@@ -38,7 +38,8 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
 
     // Battery charge percentage, number, e.g. 42
     filenames << "/sys/class/power_supply/battery/capacity"
-              << "/sys/class/power_supply/dollar_cove_battery/capacity";
+              << "/sys/class/power_supply/dollar_cove_battery/capacity"
+              << "/sys/class/power_supply/axp20x-battery/capacity";
     foreach(const QString& file, filenames) {
         if(!chargeFile && QFile::exists(file)) {
             chargeFile = new QFile(file, this);
@@ -51,7 +52,8 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
     // Charging/discharging current in microamps, e.g. -1450000 (-145mA)
     filenames.clear();
     filenames << "/sys/class/power_supply/battery/current_now"
-              << "/sys/class/power_supply/dollar_cove_battery/current_now";
+              << "/sys/class/power_supply/dollar_cove_battery/current_now"
+              << "/sys/class/power_supply/axp20x-battery/current_now";
 
     foreach(const QString& file, filenames) {
         if(!currentFile && QFile::exists(file)) {
@@ -105,7 +107,8 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
     // Battery/charging status: charging, discharging, full, empty, unknown (others?)
     filenames.clear();
     filenames << "/sys/class/power_supply/battery/status"
-              << "/sys/class/power_supply/dollar_cove_battery/status";
+              << "/sys/class/power_supply/dollar_cove_battery/status"
+              << "/sys/class/power_supply/axp20x-battery/status";
 
     foreach(const QString& file, filenames) {
         if(!stateFile && QFile::exists(file)) {
@@ -119,7 +122,9 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
     // Charger connected, bool (number): 0 or 1
     filenames.clear();
     filenames << "/sys/class/power_supply/usb/present"
-              << "/sys/class/power_supply/dollar_cove_charger/present";
+              << "/sys/class/power_supply/dollar_cove_charger/present"
+              << "/sys/class/power_supply/axp20x-usb/present"
+              << "/sys/class/power_supply/axp20x-ac/present";
 
     foreach(const QString& file, filenames) {
         if(!chargerConnectedFile && QFile::exists(file)) {
@@ -133,7 +138,8 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
     // Number: temperature
     filenames.clear();
     filenames << "/sys/class/power_supply/battery/temp"
-              << "/sys/class/power_supply/dollar_cove_battery/temp";
+              << "/sys/class/power_supply/dollar_cove_battery/temp"
+              << "/sys/class/power_supply/axp20x-battery/hwmon0/in0_input";
 
     foreach(const QString& file, filenames) {
         if(!temperatureFile && QFile::exists(file)) {
@@ -147,7 +153,8 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
     // String: health state
     filenames.clear();
     filenames << "/sys/class/power_supply/battery/health"
-              << "/sys/class/power_supply/dollar_cove_battery/health";
+              << "/sys/class/power_supply/dollar_cove_battery/health"
+              << "/sys/class/power_supply/axp20x-battery/health";
     foreach(const QString& file, filenames) {
         if(!healthFile && QFile::exists(file)) {
             healthFile = new QFile(file, this);
@@ -285,11 +292,16 @@ void Battery::updateData()
         stateFile->close();
     }
 
+    // e.g. PineTab outputs an integer in centi-centigrade
+    float tempCorrectionFactor = 10 ;
+    if(temperatureFile.fileName().contains(QStringLiteral("xp20x-battery"))) {
+        float tempCorrectionFactor = 100 ;
+    }
     if(temperatureFile && temperatureFile->open(QIODevice::ReadOnly)) {
         nextTemperature = temperatureFile->readLine().trimmed().toInt();
         if(nextTemperature != temperature) {
-            if((nextTemperature / 10) != (temperature / 10)) {
-                logM(QString("Temperature: %1°C").arg(nextTemperature / 10));
+            if((nextTemperature / tempCorrectionFactor ) != (temperature / tempCorrectionFactor )) {
+                logM(QString("Temperature: %1°C").arg(nextTemperature / tempCorrectionFactor ));
             }
             temperature = nextTemperature;
         }
