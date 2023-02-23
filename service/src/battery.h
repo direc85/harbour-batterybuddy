@@ -42,6 +42,7 @@ public:
     int getCharge();
     bool getCharging();
     bool getChargerConnected();
+    bool getAcConnected();
     QString getState();
 
     bool getChargingEnabled();
@@ -78,6 +79,7 @@ private:
     Logger *logger;
     QFile *chargeFile = nullptr;
     QFile *chargerConnectedFile = nullptr;
+    QFile *acConnectedFile = nullptr;
     QFile *currentFile = nullptr;
     QFile *stateFile = nullptr;
     QFile *chargingEnabledFile = nullptr;
@@ -97,6 +99,7 @@ private:
     int charge = 100; // 100% full
     int current = 0; // Charging/discharging current in microamps
     bool chargerConnected = false; // Charger plugged in
+    bool acConnected = false; // AC plugged in
     QString state = "idle"; // dis/charging, idle, unknown
     bool chargingEnabled = true; // Only ever disabled manually
     int maxChargeCurrent = 0;
@@ -114,6 +117,7 @@ private:
     bool invertDecided = false;
 
     bool nextChargerConnected = chargerConnected;
+    bool nextAcConnected = acConnected;
     QString nextState = state;
     bool nextChargingEnabled = chargingEnabled;
     int nextTemperature = temperature;
