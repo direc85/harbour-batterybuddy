@@ -132,8 +132,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
 
     // Charger connected, bool (number): 0 or 1
     filenames.clear();
-    filenames << "/sys/class/power_supply/ac/present"
-              << "/sys/class/power_supply/axp813-ac/present";
+    filenames << "/sys/class/power_supply/ac/present";
 
     foreach(const QString& file, filenames) {
         if(!acConnectedFile && QFile::exists(file)) {

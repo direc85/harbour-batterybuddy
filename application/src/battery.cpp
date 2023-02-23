@@ -81,8 +81,7 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
 
     // Number: 0 or 1
     filenames.clear();
-    filenames << "/sys/class/power_supply/ac/present"
-              << "/sys/class/power_supply/axp813-ac/present";
+    filenames << "/sys/class/power_supply/ac/present";
 
     foreach(const QString& file, filenames) {
         if(!acConnectedFile && QFile::exists(file)) {
