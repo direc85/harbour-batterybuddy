@@ -27,7 +27,8 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
 
     // Battery charge percentage, number, e.g. 42
     filenames << "/sys/class/power_supply/battery/capacity"
-              << "/sys/class/power_supply/dollar_cove_battery/capacity";
+              << "/sys/class/power_supply/dollar_cove_battery/capacity"
+              << "/sys/class/power_supply/axp20x-battery/capacity";
     foreach(const QString& file, filenames) {
         if(!chargeFile && QFile::exists(file)) {
             chargeFile = new QFile(file, this);
@@ -40,7 +41,8 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     // Number: battery/charging current, e.g. -1450000 (-145mA)
     filenames.clear();
     filenames << "/sys/class/power_supply/battery/current_now"
-              << "/sys/class/power_supply/dollar_cove_battery/current_now";
+              << "/sys/class/power_supply/dollar_cove_battery/current_now"
+              << "/sys/class/power_supply/axp20x-battery/current_now";
 
     foreach(const QString& file, filenames) {
         if(!currentFile && QFile::exists(file)) {
@@ -54,7 +56,8 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     // String: charging, discharging, full, empty, unknown (others?)
     filenames.clear();
     filenames << "/sys/class/power_supply/battery/status"
-              << "/sys/class/power_supply/dollar_cove_battery/status";
+              << "/sys/class/power_supply/dollar_cove_battery/status"
+              << "/sys/class/power_supply/axp20x-battery/status";
 
     foreach(const QString& file, filenames) {
         if(!stateFile && QFile::exists(file)) {
@@ -68,7 +71,8 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     // Number: 0 or 1
     filenames.clear();
     filenames << "/sys/class/power_supply/usb/present"
-              << "/sys/class/power_supply/dollar_cove_charger/present";
+              << "/sys/class/power_supply/dollar_cove_charger/present"
+              << "/sys/class/power_supply/axp20x-usb/present";
 
     foreach(const QString& file, filenames) {
         if(!chargerConnectedFile && QFile::exists(file)) {
@@ -96,7 +100,8 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     // String: health state
     filenames.clear();
     filenames << "/sys/class/power_supply/battery/health"
-              << "/sys/class/power_supply/dollar_cove_battery/health";
+              << "/sys/class/power_supply/dollar_cove_battery/health"
+              << "/sys/class/power_supply/axp20x-battery/health";
     foreach(const QString& file, filenames) {
         if(!healthFile && QFile::exists(file)) {
             healthFile = new QFile(file, this);
