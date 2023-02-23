@@ -293,15 +293,16 @@ void Battery::updateData()
     }
 
     // e.g. PineTab outputs an integer in centi-centigrade
-    float tempCorrectionFactor = 10 ;
-    if(temperatureFile.fileName().contains(QStringLiteral("xp20x-battery"))) {
-        float tempCorrectionFactor = 100 ;
+    // Note that the formatter in the QML page, and the logger divide by 10 again!
+    float tempCorrectionFactor = 1.0 ;
+    if(temperatureFile->fileName().contains(QStringLiteral("xp20x-battery"))) {
+        tempCorrectionFactor = 10.0 ;
     }
     if(temperatureFile && temperatureFile->open(QIODevice::ReadOnly)) {
-        nextTemperature = temperatureFile->readLine().trimmed().toInt();
+        nextTemperature = temperatureFile->readLine().trimmed().toInt() / tempCorrectionFactor;
         if(nextTemperature != temperature) {
-            if((nextTemperature / tempCorrectionFactor ) != (temperature / tempCorrectionFactor )) {
-                logM(QString("Temperature: %1°C").arg(nextTemperature / tempCorrectionFactor ));
+            if((nextTemperature / 10 ) != (temperature / 10 )) {
+                logM(QString("Temperature: %1°C").arg(nextTemperature / 10 ));
             }
             temperature = nextTemperature;
         }
