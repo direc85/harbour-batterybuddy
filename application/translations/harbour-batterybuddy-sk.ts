@@ -48,11 +48,11 @@
     </message>
     <message>
         <source>It simply monitors the battery level and if it has been charged above the limit, it plays a sound and displays a notification.</source>
-        <translation>Jednoducho sleduje úroveň nabitia akumulátora a ak bol nabitý nad nastavenú hodotu, oznámi to zvukovým a obrazovým upozornením.</translation>
+        <translation>Jednoducho sleduje úroveň nabitia akumulátora a ak bol nabitý nad nastavenú hodotu, oznámi to zvukom a zobrazí oznam.</translation>
     </message>
     <message>
         <source>A different sound is played and notification send when the battery has been discharged under the limit.</source>
-        <translation>Keď je akumulátor vybitý pod nastavenú hodnotu zaznie odlišné zvukové a obrazové upozornenie.</translation>
+        <translation>Keď je akumulátor vybitý pod nastavenú hodnotu zaznie odlišný zvukový a obrazový oznam.</translation>
     </message>
     <message>
         <source>Why does it matter?</source>
@@ -232,7 +232,7 @@
     </message>
     <message>
         <source>You can close Battery Buddy when you are done, notifications and charger control will continue working in the background.</source>
-        <translation>Ak chcete, môžete Battery Buddy ukončiť ak ste skončili, upozornenie a riadenie nabíjania bude pokračovať na pozadí.</translation>
+        <translation>Ak chcete, môžete Battery Buddy ukončiť ak ste skončili, oznamy a riadenie nabíjania bude pokračovať na pozadí.</translation>
     </message>
     <message>
         <source>Background service</source>
@@ -240,7 +240,7 @@
     </message>
     <message>
         <source>If notifications misbehave or there are problems with charger control, restarting the background service should help.</source>
-        <translation>Ak sú upozornenia nesprávne alebo sú problémy s ovládaním nabíjačky, mal by pomôcť reštart služby na pozadí.</translation>
+        <translation>Ak sú oznamy zmätočné alebo sú problémy s ovládaním nabíjačky, mal by pomôcť reštart služby na pozadí.</translation>
     </message>
     <message>
         <source>Start</source>
@@ -399,7 +399,7 @@
     </message>
     <message>
         <source>Notification settings</source>
-        <translation>Nastavenie upozornení</translation>
+        <translation>Nastavenie oznámení</translation>
     </message>
     <message>
         <source>Pause charging limit</source>
@@ -407,15 +407,15 @@
     </message>
     <message>
         <source>Display visual and audible notifications about reached battery charge levels, when the battery charge is below or above desired percentage.</source>
-        <translation>Zobraziť vizuálne a zvukové upozornenia o dosiahnutej úrovni nabitia akumulátora, ak je úroveň nabitia akumulátora nižšia alebo vyššia ako požadované percentá.</translation>
+        <translation>Zobraziť vizuálne a zvukové oznamy o dosiahnutej úrovni nabitia akumulátora, ak je úroveň nabitia akumulátora nižšia alebo vyššia ako požadované percentá.</translation>
     </message>
     <message>
         <source>Battery low notification</source>
-        <translation>Upozornenia dolnej úrovne</translation>
+        <translation>Oznámenie dolnej úrovne</translation>
     </message>
     <message>
         <source>Battery full notification</source>
-        <translation>Upozornenia úplného nabitia</translation>
+        <translation>Oznámenie úplného nabitia</translation>
     </message>
     <message>
         <source>Automatic charging control</source>
@@ -435,11 +435,11 @@
     </message>
     <message>
         <source>Battery high notification interval</source>
-        <translation>Interval dosiahnutia hornej úrovne</translation>
+        <translation>Oznámenie hornej úrovne intervalu</translation>
     </message>
     <message>
         <source>Battery low notification interval</source>
-        <translation>Interval dosiahnutia dolnej úrovne</translation>
+        <translation>Oznámenie dolnej úrovne intervalu</translation>
     </message>
     <message>
         <source>Never</source>
@@ -447,15 +447,15 @@
     </message>
     <message>
         <source>Health notification settings</source>
-        <translation>Nastavenie upozornení o kondícii</translation>
+        <translation>Nastavenie oznámení o kondícii</translation>
     </message>
     <message>
         <source>Display visual and audible notifications when the battery status exceeds safe values.&lt;br /&gt;This usually means high (or low) temperature but can include other parameters depending on the hardware.</source>
-        <translation>Zobraziť vizuálne a zvukové upozornenia, keď stav batérie prekročí bezpečné hodnoty.&lt;br /&gt;To zvyčajne znamená vysokú alebo nízku teplotu, ale môže zahŕňať ďalšie parametre v závislosti od hardvéru.</translation>
+        <translation>Zobraziť vizuálne a zvukové oznamy, keď stav batérie prekročí bezpečné hodnoty.&lt;br /&gt;To zvyčajne znamená vysokú alebo nízku teplotu, ale môže zahŕňať ďalšie parametre v závislosti od hardvéru.</translation>
     </message>
     <message>
         <source>Battery health notification</source>
-        <translation>Upozornenie o kondícii akumulátora</translation>
+        <translation>Oznámenie o kondícii akumulátora</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -467,7 +467,7 @@
     </message>
     <message>
         <source>Health notification interval</source>
-        <translation>Interval upozornení o kondícii</translation>
+        <translation>Interval oznámení o kondícii</translation>
     </message>
     <message>
         <source>Notification threshold</source>
