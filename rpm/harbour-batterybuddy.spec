@@ -8,10 +8,10 @@ Name:       harbour-batterybuddy
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 
-# Change the version and release strings in .pro file only!
+# Keep this in sync with .pro files
 
 Summary:    Battery Buddy
-Version:    4.2.2
+Version:    4.2.3
 Release:    1
 Group:      Qt/Qt
 License:    GPLv3
@@ -43,7 +43,7 @@ Prolong your battery life.
 # >> build pre
 # << build pre
 
-%qtc_qmake5 
+%qtc_qmake5
 
 %qtc_make %{?_smp_mflags}
 
