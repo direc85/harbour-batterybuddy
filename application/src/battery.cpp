@@ -26,9 +26,12 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     QStringList filenames;
 
     // Battery charge percentage, number, e.g. 42
-    filenames << "/sys/class/power_supply/battery/capacity"
-              << "/sys/class/power_supply/dollar_cove_battery/capacity";
-    foreach(const QString& file, filenames) {
+    const QStringList batteryFiles = {
+        "/sys/class/power_supply/battery/capacity",
+        "/sys/class/power_supply/dollar_cove_battery/capacity"
+    };
+
+    foreach(const QString& file, batteryFiles) {
         if(!chargeFile && QFile::exists(file)) {
             chargeFile = new QFile(file, this);
             break;
@@ -38,11 +41,12 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     logL("Battery charge file: " + (chargeFile ? chargeFile->fileName() : notFound));
 
     // Number: battery/charging current, e.g. -1450000 (-145mA)
-    filenames.clear();
-    filenames << "/sys/class/power_supply/battery/current_now"
-              << "/sys/class/power_supply/dollar_cove_battery/current_now";
+    const QStringList currentFiles = {
+        "/sys/class/power_supply/battery/current_now",
+        "/sys/class/power_supply/dollar_cove_battery/current_now"
+    };
 
-    foreach(const QString& file, filenames) {
+    foreach(const QString& file, currentFiles) {
         if(!currentFile && QFile::exists(file)) {
             currentFile = new QFile(file, this);
             break;
@@ -52,11 +56,12 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     logL("Charging/discharging current file: " + (currentFile ? currentFile->fileName() : notFound));
 
     // String: charging, discharging, full, empty, unknown (others?)
-    filenames.clear();
-    filenames << "/sys/class/power_supply/battery/status"
-              << "/sys/class/power_supply/dollar_cove_battery/status";
+    const QStringList stateFiles = {
+        "/sys/class/power_supply/battery/status",
+        "/sys/class/power_supply/dollar_cove_battery/status"
+    };
 
-    foreach(const QString& file, filenames) {
+    foreach(const QString& file, stateFiles) {
         if(!stateFile && QFile::exists(file)) {
             stateFile = new QFile(file, this);
             break;
@@ -66,11 +71,12 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     logL("Status file: " + (stateFile ? stateFile->fileName() : notFound));
 
     // Number: 0 or 1
-    filenames.clear();
-    filenames << "/sys/class/power_supply/usb/present"
-              << "/sys/class/power_supply/dollar_cove_charger/present";
+    const QStringList usbPresentFiles = {
+        "/sys/class/power_supply/usb/present",
+        "/sys/class/power_supply/dollar_cove_charger/present"
+    };
 
-    foreach(const QString& file, filenames) {
+    foreach(const QString& file, usbPresentFiles) {
         if(!chargerConnectedFile && QFile::exists(file)) {
             chargerConnectedFile = new QFile(file, this);
             break;
@@ -80,10 +86,11 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     logL("Charger status file: " + (chargerConnectedFile ? chargerConnectedFile->fileName() : notFound));
 
     // Number: 0 or 1
-    filenames.clear();
-    filenames << "/sys/class/power_supply/ac/present";
+    const QStringList acPresentFiles = {
+        "/sys/class/power_supply/ac/present"
+    };
 
-    foreach(const QString& file, filenames) {
+    foreach(const QString& file, acPresentFiles) {
         if(!acConnectedFile && QFile::exists(file)) {
             acConnectedFile = new QFile(file, this);
             break;
@@ -93,11 +100,12 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     logL("AC status file: " + (acConnectedFile ? acConnectedFile->fileName() : notFound));
 
     // Number: temperature
-    filenames.clear();
-    filenames << "/sys/class/power_supply/battery/temp"
-              << "/sys/class/power_supply/dollar_cove_battery/temp";
+    const QStringList tempFiles = {
+        "/sys/class/power_supply/battery/temp",
+        "/sys/class/power_supply/dollar_cove_battery/temp"
+    };
 
-    foreach(const QString& file, filenames) {
+    foreach(const QString& file, tempFiles) {
         if(!temperatureFile && QFile::exists(file)) {
             temperatureFile = new QFile(file, this);
             break;
@@ -107,9 +115,10 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     logL("Battery temperature file: " + (temperatureFile ? temperatureFile->fileName() : notFound));
 
     // String: health state
-    filenames.clear();
-    filenames << "/sys/class/power_supply/battery/health"
-              << "/sys/class/power_supply/dollar_cove_battery/health";
+    const QStringList healthFiles = {
+        "/sys/class/power_supply/battery/health",
+        "/sys/class/power_supply/dollar_cove_battery/health"
+    };
     foreach(const QString& file, filenames) {
         if(!healthFile && QFile::exists(file)) {
             healthFile = new QFile(file, this);
@@ -120,13 +129,14 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     logL("Battery health file: " + (healthFile ? healthFile->fileName() : notFound));
 
     // Charger control file
-    filenames.clear();
-    filenames << "/sys/class/power_supply/battery/input_suspend"                // e.g. Sony Xperia XA2
-              << "/sys/class/power_supply/battery/charging_enabled"             // e.g. for Sony Xperia Z3 Compact Tablet
-              << "/sys/class/power_supply/usb/charger_disable"                  // e.g. for Jolla Phone
-              << "/sys/class/power_supply/dollar_cove_battery/enable_charging"; // e.g. for Jolla Tablet
+    const QStringList controlFiles = {
+        "/sys/class/power_supply/battery/input_suspend",              // e.g. Sony Xperia XA2
+        "/sys/class/power_supply/battery/charging_enabled",           // e.g. for Sony Xperia Z3 Compact Tablet
+        "/sys/class/power_supply/usb/charger_disable",                // e.g. for Jolla Phone
+        "/sys/class/power_supply/dollar_cove_battery/enable_charging" // e.g. for Jolla Tablet
+    };
 
-    foreach(const QString& file, filenames) {
+    foreach(const QString& file, controlFiles) {
         if(!chargingEnabledFile && QFile::exists(file)) {
             chargingEnabledFile = new QFile(file, this);
             break;
