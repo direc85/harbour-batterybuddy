@@ -296,6 +296,14 @@
         <source>View log</source>
         <translation>Visa logg</translation>
     </message>
+    <message>
+        <source>USB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AC</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>

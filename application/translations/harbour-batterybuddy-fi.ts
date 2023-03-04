@@ -296,6 +296,14 @@
         <source>View log</source>
         <translation>Näytä loki</translation>
     </message>
+    <message>
+        <source>USB</source>
+        <translation>USB</translation>
+    </message>
+    <message>
+        <source>AC</source>
+        <translation>AC</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
