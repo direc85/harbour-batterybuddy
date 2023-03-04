@@ -33,6 +33,7 @@ class Battery : public QObject
     Q_PROPERTY(int current READ getCurrent NOTIFY currentChanged)
     Q_PROPERTY(int maxChargeCurrent READ getMaxChargeCurrent)
     Q_PROPERTY(bool chargerConnected READ getChargerConnected NOTIFY chargerConnectedChanged)
+    Q_PROPERTY(bool acConnected READ getAcConnected NOTIFY acConnectedChanged)
     Q_PROPERTY(QString state READ getState NOTIFY stateChanged)
     Q_PROPERTY(bool chargingEnabled READ getChargingEnabled NOTIFY chargingEnabledChanged)
 
@@ -48,6 +49,7 @@ public:
     int getMaxChargeCurrent();
     bool getCharging();
     bool getChargerConnected();
+    bool getAcConnected();
     QString getState();
 
     QString getHealth();
@@ -62,6 +64,7 @@ private:
     QFile* chargeFile = nullptr;
     QFile* currentFile = nullptr;
     QFile* chargerConnectedFile = nullptr;
+    QFile* acConnectedFile = nullptr;
     QFile* stateFile = nullptr;
     QFile* chargingEnabledFile = nullptr;
     QFile* maxChargeCurrentFile = nullptr;
@@ -75,6 +78,7 @@ private:
     int charge = 100; // 100% full
     int current = 0; // Not charging/discharging
     bool chargerConnected = false; // Charger plugged in
+    bool acConnected = false; // AC plugged in
     QString state = "idle"; // dis/charging, idle, unknown
     bool chargingEnabled = true; // Only ever disabled manually
     int maxChargeCurrent = 0; // Charge current limit in micro amps
@@ -91,8 +95,10 @@ private:
     bool invertDecided = false;
 
     bool nextChargerConnected = chargerConnected;
+    bool nextAcConnected = acConnected;
     QString nextState = state;
     bool nextChargingEnabled = chargingEnabled;
+
 
     QString  nextHealth = health;
     int nextTemperature = temperature;
@@ -103,6 +109,7 @@ signals:
     void stateChanged(QString);
     void chargingEnabledChanged(bool);
     void chargerConnectedChanged(bool);
+    void acConnectedChanged(bool);
     void healthChanged(QString);
     void temperatureChanged(int);
 };

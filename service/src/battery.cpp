@@ -130,6 +130,19 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
 
     logL("Charger status file: " + (chargerConnectedFile ? chargerConnectedFile->fileName() : notFound));
 
+    // Charger connected, bool (number): 0 or 1
+    filenames.clear();
+    filenames << "/sys/class/power_supply/ac/present";
+
+    foreach(const QString& file, filenames) {
+        if(!acConnectedFile && QFile::exists(file)) {
+            acConnectedFile = new QFile(file, this);
+            break;
+        }
+    }
+
+    logL("AC status file: " + (acConnectedFile ? acConnectedFile->fileName() : notFound));
+
     // Number: temperature
     filenames.clear();
     filenames << "/sys/class/power_supply/battery/temp"
@@ -260,10 +273,19 @@ void Battery::updateData()
         chargerConnectedFile->close();
     }
 
+    if(acConnectedFile && acConnectedFile->open(QIODevice::ReadOnly)) {
+        nextAcConnected = acConnectedFile->readLine().trimmed().toInt();
+        if(nextAcConnected != acConnected) {
+            acConnected = nextAcConnected;
+            logM(QString("AC: %1").arg(acConnected ? "connected" : "disconnected"));
+        }
+        acConnectedFile->close();
+    }
+
     if(currentFile && currentFile->open(QIODevice::ReadOnly)) {
         current = currentFile->readLine().trimmed().toInt();
         if(!invertDecided) {
-            invertCurrent = (!chargerConnected && current > 10);
+            invertCurrent = (!chargerConnected && !acConnected && current > 10);
             if(invertCurrent) logL("Battery current inverted");
             else              logL("Battery current not inverted");
             invertDecided = true;
@@ -505,6 +527,10 @@ void Battery::setMaxChargeCurrent(int newCurrent) {
 
 bool Battery::getChargerConnected() {
     return chargerConnected;
+}
+
+bool Battery::getAcConnected() {
+    return acConnected;
 }
 
 void Battery::shutdown() {

@@ -132,8 +132,15 @@ Page {
                     }
 
                     MyDetailItem {
+                        property bool connected: (battery.chargerConnected || battery.acConnected)
+                        property string chargerType: {
+                            if      ( battery.chargerConnected && !battery.acConnected) { return qsTr("USB") }
+                            else if (!battery.chargerConnected &&  battery.acConnected) { return qsTr("AC") }
+                            else if ( battery.chargerConnected &&  battery.acConnected) { return qsTr("USB") + "/" + qsTr("AC") }
+                            return "unknown power source"
+                        }
                         label: qsTr("Charger connected:")
-                        value: battery.chargerConnected ? qsTr("yes") : qsTr("no")
+                        value: connected ? (qsTr("yes") + " (" + chargerType + ")") : qsTr("no")
                     }
                     MyDetailItem {
                         label: qsTr("State:")
