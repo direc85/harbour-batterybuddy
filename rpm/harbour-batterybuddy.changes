@@ -1,5 +1,8 @@
+* Sun Mar 5 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.2.5-1
+- Fixup! Include all translation files
+
 * Sun Mar 5 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.2.4-1
-- Fix broken battery health
+- Fixup! Fix broken battery health
 
 * Sat Mar 4 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.2.3-1
 - Add Slovak translation (thanks, okruhliak)
