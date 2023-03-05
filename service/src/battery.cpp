@@ -34,8 +34,6 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
     chargeNotification = new MyNotification(this);
     healthNotification = new MyNotification(this);
 
-    QStringList filenames;
-
     // Battery charge percentage, number, e.g. 42
     const QStringList capacityFiles = {
         "/sys/class/power_supply/battery/capacity",
@@ -171,7 +169,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
         "/sys/class/power_supply/battery/health",
         "/sys/class/power_supply/dollar_cove_battery/health"
     };
-    foreach(const QString& file, filenames) {
+    foreach(const QString& file, healthFiles) {
         if(!healthFile && QFile::exists(file)) {
             healthFile = new QFile(file, this);
             break;
