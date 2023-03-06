@@ -8,19 +8,18 @@ Name:       harbour-batterybuddy
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 
-# Change the version and release strings in .pro file only!
+# Keep this in sync with .pro files
 
 Summary:    Battery Buddy
-Version:    4.2.2
+Version:    4.2.5
 Release:    1
 Group:      Qt/Qt
 License:    GPLv3
 URL:        http://example.org/
 Source0:    %{name}-%{version}.tar.bz2
 Requires:   sailfishsilica-qt5 >= 0.10.9
-Requires:   nemo-qml-plugin-configuration-qt5
-Requires:   nemo-qml-plugin-notifications-qt5
 Requires:   libkeepalive
+Requires:   pkgconfig(nemonotifications-qt5)
 Requires:   sailfish-version >= 4.3
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(nemonotifications-qt5)
@@ -44,7 +43,7 @@ Prolong your battery life.
 # >> build pre
 # << build pre
 
-%qtc_qmake5 
+%qtc_qmake5
 
 %qtc_make %{?_smp_mflags}
 

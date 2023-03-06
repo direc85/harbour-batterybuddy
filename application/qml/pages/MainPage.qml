@@ -1,7 +1,7 @@
 /**
  * Battery Buddy, a Sailfish application to prolong battery lifetime
  *
- * Copyright (C) 2019-2022 Matti Viljanen
+ * Copyright (C) 2019-2023 Matti Viljanen
  *
  * Battery Buddy is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
@@ -132,8 +132,15 @@ Page {
                     }
 
                     MyDetailItem {
+                        property bool connected: (battery.chargerConnected || battery.acConnected)
+                        property string chargerType: {
+                            if      ( battery.chargerConnected && !battery.acConnected) { return qsTr("USB") }
+                            else if (!battery.chargerConnected &&  battery.acConnected) { return qsTr("AC") }
+                            else if ( battery.chargerConnected &&  battery.acConnected) { return qsTr("USB") + "/" + qsTr("AC") }
+                            return "unknown power source"
+                        }
                         label: qsTr("Charger connected:")
-                        value: battery.chargerConnected ? qsTr("yes") : qsTr("no")
+                        value: connected ? (qsTr("yes") + " (" + chargerType + ")") : qsTr("no")
                     }
                     MyDetailItem {
                         label: qsTr("State:")

@@ -1,3 +1,16 @@
+* Sun Mar 5 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.2.5-1
+- Fixup! Include all translation files
+
+* Sun Mar 5 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.2.4-1
+- Fixup! Fix broken battery health
+
+* Sat Mar 4 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.2.3-1
+- Add Slovak translation (thanks, okruhliak)
+- Update Swedish translation (thanks, eson57)
+- Add Support for AC Charger detection (thanks, nephros)
+- Be more efficient with handling file paths in constructors
+- Fix package dependencies
+
 * Sun Jan 1 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.2.2-1
 - Restart the permission service on update
 

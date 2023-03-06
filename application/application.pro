@@ -15,7 +15,7 @@ TARGET = harbour-batterybuddy
 CONFIG += console sailfishapp sailfishapp_i18n dbus
 
 # Keep this in sync with service.pro and .spec
-VERSION = 4.2.2-1
+VERSION = 4.2.5-1
 
 DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"
 DEFINES += APP_NAME=\"\\\"$$TARGET\\\"\"
@@ -60,13 +60,7 @@ DISTFILES += qml/harbour-batterybuddy.qml \
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 
 TRANSLATIONS += translations/harbour-batterybuddy.ts \
-   translations/harbour-batterybuddy-de_DE.ts \
-   translations/harbour-batterybuddy-fi.ts \
-   translations/harbour-batterybuddy-fr.ts \
-   translations/harbour-batterybuddy-hu.ts \
-   translations/harbour-batterybuddy-pl.ts \
-   translations/harbour-batterybuddy-sv.ts \
-   translations/harbour-batterybuddy-zh_CN.ts
+   translations/harbour-batterybuddy-*.ts
 
 # Executable provided by "service.pro"
 # Two services, actually
