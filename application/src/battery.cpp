@@ -75,8 +75,7 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     const QStringList usbPresentFiles = {
         "/sys/class/power_supply/usb/present",
         "/sys/class/power_supply/dollar_cove_charger/present",
-        "/sys/class/power_supply/axp20x-usb/present",
-        "/sys/class/power_supply/axp20x-ac/present"
+        "/sys/class/power_supply/axp20x-usb/present"
     };
 
     foreach(const QString& file, usbPresentFiles) {
@@ -90,7 +89,8 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
 
     // Number: 0 or 1
     const QStringList acPresentFiles = {
-        "/sys/class/power_supply/ac/present"
+        "/sys/class/power_supply/ac/present",
+        "/sys/class/power_supply/axp20x-ac/present"
     };
 
     foreach(const QString& file, acPresentFiles) {
