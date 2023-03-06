@@ -121,6 +121,7 @@ private:
     QString nextState = state;
     bool nextChargingEnabled = chargingEnabled;
     int nextTemperature = temperature;
+    float tempCorrectionFactor = 1.0;
     QString nextHealth = health;
 
     QFileDevice::Permissions originalPerms; // Updated in constructor

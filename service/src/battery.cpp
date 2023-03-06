@@ -168,6 +168,12 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
         }
     }
 
+    // e.g. PineTab outputs an integer in centi-centigrade
+    // Note that the formatter in the QML page, and the logger divide by 10 again!
+    if(temperatureFile->fileName().contains(QStringLiteral("xp20x-battery"))) {
+        tempCorrectionFactor = 10.0;
+    }
+
     logL("Battery temperature file: " + (temperatureFile ? temperatureFile->fileName() : notFound));
 
     // String: health state
@@ -323,12 +329,6 @@ void Battery::updateData()
         stateFile->close();
     }
 
-    // e.g. PineTab outputs an integer in centi-centigrade
-    // Note that the formatter in the QML page, and the logger divide by 10 again!
-    float tempCorrectionFactor = 1.0 ;
-    if(temperatureFile->fileName().contains(QStringLiteral("xp20x-battery"))) {
-        tempCorrectionFactor = 10.0 ;
-    }
     if(temperatureFile && temperatureFile->open(QIODevice::ReadOnly)) {
         nextTemperature = temperatureFile->readLine().trimmed().toInt() / tempCorrectionFactor;
         if(nextTemperature != temperature) {

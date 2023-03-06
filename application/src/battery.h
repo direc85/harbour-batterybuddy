@@ -85,6 +85,7 @@ private:
 
     QString health = "unknown"; // Good, warm, overheat. Might have Cold or Overvoltage depending on driver
     int temperature = 0x7FFFFFFF; // This value means "unknown" (32-bit INT_MAX)
+    float tempCorrectionFactor = 1.0; // PineTab outputs an integer in centi-centigrade
 
     int enableChargingValue = 1;
     int disableChargingValue = 0;
@@ -98,7 +99,6 @@ private:
     bool nextAcConnected = acConnected;
     QString nextState = state;
     bool nextChargingEnabled = chargingEnabled;
-
 
     QString  nextHealth = health;
     int nextTemperature = temperature;
