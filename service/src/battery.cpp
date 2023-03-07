@@ -332,8 +332,8 @@ void Battery::updateData()
     if(temperatureFile && temperatureFile->open(QIODevice::ReadOnly)) {
         nextTemperature = temperatureFile->readLine().trimmed().toInt() / tempCorrectionFactor;
         if(nextTemperature != temperature) {
-            if((nextTemperature / 10 ) != (temperature / 10 )) {
-                logM(QString("Temperature: %1°C").arg(nextTemperature / 10 ));
+            if((nextTemperature / 10) != (temperature / 10)) {
+                logM(QString("Temperature: %1°C").arg(nextTemperature / 10));
             }
             temperature = nextTemperature;
         }
