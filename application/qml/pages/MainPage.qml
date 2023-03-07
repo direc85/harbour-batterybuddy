@@ -137,7 +137,7 @@ Page {
                             if      ( battery.chargerConnected && !battery.acConnected) { return qsTr("USB") }
                             else if (!battery.chargerConnected &&  battery.acConnected) { return qsTr("AC") }
                             else if ( battery.chargerConnected &&  battery.acConnected) { return qsTr("USB") + "/" + qsTr("AC") }
-                            return "unknown power source"
+                            return qsTr("unknown", "Charger not detected, or faulty, or something")
                         }
                         label: qsTr("Charger connected:")
                         value: connected ? (qsTr("yes") + " (" + chargerType + ")") : qsTr("no")
