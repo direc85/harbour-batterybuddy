@@ -189,8 +189,8 @@
         <translation>нет</translation>
     </message>
     <message>
-        <source>Заряд:</source>
-        <translation>Varaus:</translation>
+        <source>Charge:</source>
+        <translation>Заряд:</translation>
     </message>
     <message>
         <source>State:</source>
