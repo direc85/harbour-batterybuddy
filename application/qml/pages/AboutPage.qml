@@ -121,7 +121,7 @@ Page {
                       "Deutsch: dryo, fllp, nephros\n"+
                       "Polski: atlochowski, wetab73\n"+
                       "Magyar: 1Zgp\n"+
-                      "Русский": sprainbrains"
+                      "Русский: sprainbrains"
             }
 
             AboutLabel {
