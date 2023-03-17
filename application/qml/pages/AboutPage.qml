@@ -120,7 +120,8 @@ Page {
                       "svensk: eson57\n"+
                       "Deutsch: dryo, fllp, nephros\n"+
                       "Polski: atlochowski, wetab73\n"+
-                      "Magyar: 1Zgp"
+                      "Magyar: 1Zgp\n"+
+                      "Русский": sprainbrains"
             }
 
             AboutLabel {
