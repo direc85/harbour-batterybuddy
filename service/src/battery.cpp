@@ -69,6 +69,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
     // Maximum charge current in microamps, e.g. 3500000 (3500mA)
     const QStringList maxCurrentFiles = {
         "/sys/class/power_supply/battery/constant_charge_current_max"
+        "/sys/class/power_supply/axp20x-battery/constant_charge_current_max"
     };
 
     foreach(const QString& file, maxCurrentFiles) {
