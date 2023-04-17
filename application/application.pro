@@ -29,33 +29,37 @@ HEADERS += \
     src/logger.h \
     src/settings.h
 
-SOURCES += src/harbour-batterybuddy.cpp \
+SOURCES += \
     src/battery.cpp \
+    src/harbour-batterybuddy.cpp \
     src/logger.cpp \
     src/settings.cpp
 
-DISTFILES += qml/harbour-batterybuddy.qml \
-    qml/components/AboutLabel.qml \
-    qml/components/MyLabel.qml \
-    qml/pages\LicensePage.qml \
-    qml/cover/CoverPage.qml \
-    rpm/harbour-batterybuddy.spec \
-    service/harbour-batterybuddy.service \
-    service/harbour-batterybuddy-oneshot.service \
-    service/restore-write-permissions.sh \
-    service/set-write-permissions.sh \
-    translations/*.ts \
+DISTFILES += \
     harbour-batterybuddy.desktop \
-    qml/pages/MainPage.qml \
+    qml/components/AboutLabel.qml \
+    qml/components/AdjustmentButtons.qml \
+    qml/components/CoverLabel.qml \
+    qml/components/BatteryGraph.qml \
+    qml/components/ImageButton.qml \
+    qml/components/MyDetailItem.qml \
+    qml/components/MyLabel.qml \
+    qml/components/MySlider.qml \
+    qml/components/SystemdUserService.qml \
+    qml/cover/CoverPage.qml \
+    qml/harbour-batterybuddy.qml \
     qml/pages/AboutPage.qml \
     qml/pages/InfoPage.qml \
-    rpm/harbour-batterybuddy.changes \
-    qml/components/BatteryGraph.qml \
+    qml/pages/MainPage.qml \
     qml/pages/SettingsPage.qml \
-    qml/components/MyDetailItem.qml \
-    qml/components/AdjustmentButtons.qml \
-    qml/components/MySlider.qml \
-    qml/components/SystemdUserService.qml
+    qml/pages/LicensePage.qml \
+    rpm/harbour-batterybuddy.changes \
+    rpm/harbour-batterybuddy.spec \
+    service/harbour-batterybuddy-oneshot.service \
+    service/harbour-batterybuddy.service \
+    service/restore-write-permissions.sh \
+    service/set-write-permissions.sh \
+    translations/*.ts
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 
