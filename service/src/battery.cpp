@@ -37,7 +37,8 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
     // Battery charge percentage, number, e.g. 42
     const QStringList capacityFiles = {
         "/sys/class/power_supply/battery/capacity",
-        "/sys/class/power_supply/dollar_cove_battery/capacity"
+        "/sys/class/power_supply/dollar_cove_battery/capacity",
+        "/sys/class/power_supply/axp20x-battery/capacity"
     };
 
     foreach(const QString& file, capacityFiles) {
@@ -52,7 +53,8 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
     // Charging/discharging current in microamps, e.g. -1450000 (-145mA)
     const QStringList currentFiles = {
         "/sys/class/power_supply/battery/current_now",
-        "/sys/class/power_supply/dollar_cove_battery/current_now"
+        "/sys/class/power_supply/dollar_cove_battery/current_now",
+        "/sys/class/power_supply/axp20x-battery/current_now"
     };
 
     foreach(const QString& file, currentFiles) {
@@ -67,6 +69,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
     // Maximum charge current in microamps, e.g. 3500000 (3500mA)
     const QStringList maxCurrentFiles = {
         "/sys/class/power_supply/battery/constant_charge_current_max"
+        "/sys/class/power_supply/axp20x-battery/constant_charge_current_max"
     };
 
     foreach(const QString& file, maxCurrentFiles) {
@@ -108,7 +111,8 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
     // Battery/charging status: charging, discharging, full, empty, unknown (others?)
     const QStringList statusFiles = {
         "/sys/class/power_supply/battery/status",
-        "/sys/class/power_supply/dollar_cove_battery/status"
+        "/sys/class/power_supply/dollar_cove_battery/status",
+        "/sys/class/power_supply/axp20x-battery/status"
     };
 
     foreach(const QString& file, statusFiles) {
@@ -123,7 +127,8 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
     // Charger connected, bool (number): 0 or 1
     const QStringList chargerFiles = {
         "/sys/class/power_supply/usb/present",
-        "/sys/class/power_supply/dollar_cove_charger/present"
+        "/sys/class/power_supply/dollar_cove_charger/present",
+        "/sys/class/power_supply/axp20x-usb/present"
     };
 
     foreach(const QString& file, chargerFiles) {
@@ -137,7 +142,8 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
 
     // Charger connected, bool (number): 0 or 1
     const QStringList acFiles = {
-        "/sys/class/power_supply/ac/present"
+        "/sys/class/power_supply/ac/present",
+        "/sys/class/power_supply/axp813-ac/present"
     };
 
     foreach(const QString& file, acFiles) {
@@ -152,7 +158,8 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
     // Number: temperature
     const QStringList tempFiles = {
         "/sys/class/power_supply/battery/temp",
-        "/sys/class/power_supply/dollar_cove_battery/temp"
+        "/sys/class/power_supply/dollar_cove_battery/temp",
+        "/sys/class/power_supply/axp20x-battery/hwmon0/in0_input"
     };
 
     foreach(const QString& file, tempFiles) {
@@ -162,12 +169,19 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
         }
     }
 
+    // e.g. PineTab outputs an integer in centi-centigrade
+    // Note that the formatter in the QML page, and the logger divide by 10 again!
+    if(temperatureFile->fileName().contains(QStringLiteral("xp20x-battery"))) {
+        tempCorrectionFactor = 10.0;
+    }
+
     logL("Battery temperature file: " + (temperatureFile ? temperatureFile->fileName() : notFound));
 
     // String: health state
     const QStringList healthFiles = {
         "/sys/class/power_supply/battery/health",
-        "/sys/class/power_supply/dollar_cove_battery/health"
+        "/sys/class/power_supply/dollar_cove_battery/health",
+        "/sys/class/power_supply/axp20x-battery/health"
     };
     foreach(const QString& file, healthFiles) {
         if(!healthFile && QFile::exists(file)) {
@@ -317,7 +331,7 @@ void Battery::updateData()
     }
 
     if(temperatureFile && temperatureFile->open(QIODevice::ReadOnly)) {
-        nextTemperature = temperatureFile->readLine().trimmed().toInt();
+        nextTemperature = temperatureFile->readLine().trimmed().toInt() / tempCorrectionFactor;
         if(nextTemperature != temperature) {
             if((nextTemperature / 10) != (temperature / 10)) {
                 logM(QString("Temperature: %1°C").arg(nextTemperature / 10));
