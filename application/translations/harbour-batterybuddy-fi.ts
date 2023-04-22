@@ -304,6 +304,11 @@
         <source>AC</source>
         <translation>AC</translation>
     </message>
+    <message>
+        <source>unknown</source>
+        <comment>Charger not detected, or faulty, or something</comment>
+        <translation>tuntematon</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>

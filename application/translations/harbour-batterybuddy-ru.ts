@@ -8,10 +8,6 @@
         <translation>Battery Buddy - это небольшая и простая утилита, предназначенная для увеличения срока службы аккумулятора.</translation>
     </message>
     <message>
-        <source>Просмотр лицензии</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Battery Buddy is open source software licensed under the terms of the GNU General Public License.</source>
         <translation>Battery Buddy - это программное обеспечение с открытым исходным кодом, лицензированное на условиях GNU General Public License.</translation>
     </message>
@@ -34,6 +30,10 @@
     <message>
         <source>A modified version of %1 by %2 in the emoji pack %3 is used in the logo. License: %4</source>
         <translation>В логотипе используется модифицированная версия %1 от %2 в пакете эмодзи %3. Лицензия: %4</translation>
+    </message>
+    <message>
+        <source>View License</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -116,7 +116,7 @@
     </message>
     <message>
         <source>Use flight mode overnight whenever possible in order to cut power usage down. Powering the device off and on again may use a lot more battery than you think!</source>
-        <translation>Используйте "режим полета" ночью, если это возможно, чтобы сократить потребление энергии устройством. Выключение и повторное включение устройства может тратить гораздо больше заряда аккумулятора, чем вы думаете!</translation>
+        <translation>Используйте &quot;режим полета&quot; ночью, если это возможно, чтобы сократить потребление энергии устройством. Выключение и повторное включение устройства может тратить гораздо больше заряда аккумулятора, чем вы думаете!</translation>
     </message>
     <message>
         <source>Don&apos;t use your phone in hot or cold environments. In the winter keep the phone in your pocket near your body (but take note of the moisture) and use a handsfree device. Extreme temperatures are bad for the battery.</source>
@@ -303,6 +303,11 @@
     <message>
         <source>AC</source>
         <translation>AC</translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <comment>Charger not detected, or faulty, or something</comment>
+        <translation type="unfinished">неизвестно</translation>
     </message>
 </context>
 <context>

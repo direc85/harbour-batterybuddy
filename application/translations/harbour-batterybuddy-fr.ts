@@ -304,6 +304,11 @@
         <source>AC</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>unknown</source>
+        <comment>Charger not detected, or faulty, or something</comment>
+        <translation type="unfinished">Batterie non détectée ou défectueuse</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
