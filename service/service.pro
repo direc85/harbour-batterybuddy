@@ -5,7 +5,7 @@ QT = core dbus
 PKGCONFIG += nemonotifications-qt5
 
 # Keep this in sync with application.pro and .spec
-VERSION = 4.3.0-1
+VERSION = 4.3.1-1
 
 DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"
 DEFINES += APP_NAME=\"\\\"$$TARGET\\\"\"
