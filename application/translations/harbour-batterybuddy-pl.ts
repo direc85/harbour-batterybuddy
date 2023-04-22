@@ -281,7 +281,7 @@
     </message>
     <message>
         <source>Health:</source>
-        <translation>Stan:</translation>
+        <translation>Stan baterii:</translation>
     </message>
     <message>
         <source>Temperature:</source>
@@ -444,7 +444,7 @@
     </message>
     <message>
         <source>Start background service at startup</source>
-        <translation>Uruchom proces w tle podczas uruchomienia</translation>
+        <translation>Uruchom proces w tle podczas startu urządzenia</translation>
     </message>
     <message>
         <source>Battery high notification interval</source>
@@ -488,7 +488,7 @@
     </message>
     <message>
         <source>Maximum Charge Current</source>
-        <translation type="unfinished"></translation>
+        <translation>Maksymalny prąd ładowania</translation>
     </message>
 </context>
 </TS>
