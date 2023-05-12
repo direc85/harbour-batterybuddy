@@ -218,7 +218,7 @@
     </message>
     <message>
         <source>Charger connected:</source>
-        <translation>Nabíjačka je pripojená:</translation>
+        <translation>Pripojená nabíjačka:</translation>
     </message>
     <message>
         <source>full</source>
@@ -298,16 +298,16 @@
     </message>
     <message>
         <source>USB</source>
-        <translation type="unfinished"></translation>
+        <translation>USB</translation>
     </message>
     <message>
         <source>AC</source>
-        <translation type="unfinished"></translation>
+        <translation>Adaptér</translation>
     </message>
     <message>
         <source>unknown</source>
         <comment>Charger not detected, or faulty, or something</comment>
-        <translation type="unfinished">neznáme</translation>
+        <translation>neznáme</translation>
     </message>
 </context>
 <context>
