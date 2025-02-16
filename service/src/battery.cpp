@@ -34,14 +34,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
     chargeNotification = new MyNotification(this);
     healthNotification = new MyNotification(this);
 
-    // Battery charge percentage, number, e.g. 42
-    const QStringList capacityFiles = {
-        "/sys/class/power_supply/battery/capacity",
-        "/sys/class/power_supply/dollar_cove_battery/capacity",
-        "/sys/class/power_supply/axp20x-battery/capacity"
-    };
-
-    foreach(const QString& file, capacityFiles) {
+    foreach(const QString& file, this->capacityFiles) {
         if(!chargeFile && QFile::exists(file)) {
             chargeFile = new QFile(file, this);
             break;
@@ -50,14 +43,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
 
     logL("Battery charge file: " + (chargeFile ? chargeFile->fileName() : notFound));
 
-    // Charging/discharging current in microamps, e.g. -1450000 (-145mA)
-    const QStringList currentFiles = {
-        "/sys/class/power_supply/battery/current_now",
-        "/sys/class/power_supply/dollar_cove_battery/current_now",
-        "/sys/class/power_supply/axp20x-battery/current_now"
-    };
-
-    foreach(const QString& file, currentFiles) {
+    foreach(const QString& file, this->currentFiles) {
         if(!currentFile && QFile::exists(file)) {
             currentFile = new QFile(file, this);
             break;
@@ -66,13 +52,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
 
     logL("Charging/discharging current file: " + (currentFile ? currentFile->fileName() : notFound));
 
-    // Maximum charge current in microamps, e.g. 3500000 (3500mA)
-    const QStringList maxCurrentFiles = {
-        "/sys/class/power_supply/battery/constant_charge_current_max",
-        "/sys/class/power_supply/axp20x-battery/constant_charge_current_max"
-    };
-
-    foreach(const QString& file, maxCurrentFiles) {
+    foreach(const QString& file, this->maxCurrentFiles) {
         if(!maxChargeCurrentFile && QFile::exists(file)) {
             maxChargeCurrentFile = new QFile(file, this);
             break;
@@ -108,14 +88,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
         logL("Max charge current file: " + notFound);
     }
 
-    // Battery/charging status: charging, discharging, full, empty, unknown (others?)
-    const QStringList statusFiles = {
-        "/sys/class/power_supply/battery/status",
-        "/sys/class/power_supply/dollar_cove_battery/status",
-        "/sys/class/power_supply/axp20x-battery/status"
-    };
-
-    foreach(const QString& file, statusFiles) {
+    foreach(const QString& file, this->statusFiles) {
         if(!stateFile && QFile::exists(file)) {
             stateFile = new QFile(file, this);
             break;
@@ -124,14 +97,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
 
     logL("Status file: " + (stateFile ? stateFile->fileName() : notFound));
 
-    // Charger connected, bool (number): 0 or 1
-    const QStringList chargerFiles = {
-        "/sys/class/power_supply/usb/present",
-        "/sys/class/power_supply/dollar_cove_charger/present",
-        "/sys/class/power_supply/axp20x-usb/present"
-    };
-
-    foreach(const QString& file, chargerFiles) {
+    foreach(const QString& file, this->chargerFiles) {
         if(!chargerConnectedFile && QFile::exists(file)) {
             chargerConnectedFile = new QFile(file, this);
             break;
@@ -140,13 +106,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
 
     logL("Charger status file: " + (chargerConnectedFile ? chargerConnectedFile->fileName() : notFound));
 
-    // Charger connected, bool (number): 0 or 1
-    const QStringList acFiles = {
-        "/sys/class/power_supply/ac/present",
-        "/sys/class/power_supply/axp813-ac/present"
-    };
-
-    foreach(const QString& file, acFiles) {
+    foreach(const QString& file, this->acFiles) {
         if(!acConnectedFile && QFile::exists(file)) {
             acConnectedFile = new QFile(file, this);
             break;
@@ -155,14 +115,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
 
     logL("AC status file: " + (acConnectedFile ? acConnectedFile->fileName() : notFound));
 
-    // Number: temperature
-    const QStringList tempFiles = {
-        "/sys/class/power_supply/battery/temp",
-        "/sys/class/power_supply/dollar_cove_battery/temp",
-        "/sys/class/power_supply/axp20x-battery/hwmon0/in0_input"
-    };
-
-    foreach(const QString& file, tempFiles) {
+    foreach(const QString& file, this->tempFiles) {
         if(!temperatureFile && QFile::exists(file)) {
             temperatureFile = new QFile(file, this);
             break;
@@ -177,13 +130,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
 
     logL("Battery temperature file: " + (temperatureFile ? temperatureFile->fileName() : notFound));
 
-    // String: health state
-    const QStringList healthFiles = {
-        "/sys/class/power_supply/battery/health",
-        "/sys/class/power_supply/dollar_cove_battery/health",
-        "/sys/class/power_supply/axp20x-battery/health"
-    };
-    foreach(const QString& file, healthFiles) {
+    foreach(const QString& file, this->healthFiles) {
         if(!healthFile && QFile::exists(file)) {
             healthFile = new QFile(file, this);
             break;
@@ -192,15 +139,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
 
     logL("Battery health file: " + (healthFile ? healthFile->fileName() : notFound));
 
-    // Charger control file
-    const QStringList controlFiles = {
-        "/sys/class/power_supply/battery/input_suspend",              // e.g. Sony Xperia XA2
-        "/sys/class/power_supply/battery/charging_enabled",           // e.g. for Sony Xperia Z3 Compact Tablet
-        "/sys/class/power_supply/usb/charger_disable",                // e.g. for Jolla Phone
-        "/sys/class/power_supply/dollar_cove_battery/enable_charging" // e.g. for Jolla Tablet
-    };
-
-    foreach(const QString& file, controlFiles) {
+    foreach(const QString& file, this->controlFiles) {
         if(!chargingEnabledFile && QFile::exists(file)) {
             chargingEnabledFile = new QFile(file, this);
             break;
