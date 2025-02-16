@@ -16,6 +16,8 @@ DEFINES += QT_NO_DEBUG_OUTPUT
 
 LIBS += -lkeepalive -lnemonotifications-qt5
 
+INCLUDEPATH += "/usr/include/nemonotifications-qt5"
+
 HEADERS += \
     src/battery.h \
     src/logger.h \
