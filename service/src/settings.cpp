@@ -202,7 +202,7 @@ QString Settings::getNotificationHealthWarnText()  { return notificationHealthWa
 QString Settings::getNotificationHealthCritText()  { return notificationHealthCritText; }
 int     Settings::getLogLevel()                    { return logLevel; }
 
-void Settings::setMaxSupportedChargeCurrent(int newCurrent) {
+void Settings::setMaxSupportedCurrent(int newCurrent) {
     mySettings->setValue(sMaxSupportedChargeCurrent, QByteArray::number(newCurrent));
     if(mySettings->value(sMaxChargeCurrent, QVariant::fromValue(0)).toInt() == 0) {
         mySettings->setValue(sMaxChargeCurrent, QByteArray::number(newCurrent));

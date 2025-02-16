@@ -24,16 +24,20 @@ DEFINES += APP_NAME=\"\\\"$$TARGET\\\"\"
 # See main() and logger.h for details.
 DEFINES += QT_NO_DEBUG_OUTPUT
 
+INCLUDEPATH += "../common"
+
 HEADERS += \
+    ../common/batterybase.h \
+    ../common/logger.h \
     src/battery.h \
-    src/logger.h \
     src/settings.h
 
 SOURCES += \
+    ../common/batterybase.cpp \
+    ../common/logger.cpp \
     src/battery.cpp \
+    src/settings.cpp \
     src/harbour-batterybuddy.cpp \
-    src/logger.cpp \
-    src/settings.cpp
 
 DISTFILES += \
     harbour-batterybuddy.desktop \

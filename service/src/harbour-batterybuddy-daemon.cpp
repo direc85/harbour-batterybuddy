@@ -19,6 +19,7 @@
 #include <QObject>
 
 #include "logger.h"
+#include "settings.h"
 #include "battery.h"
 
 #include <signal.h>
@@ -68,9 +69,18 @@ int main(int argc, char** argv)
     app.setApplicationVersion(APP_VERSION);
 
     Logger* logger = new Logger(verbose, debug, logfile);
+    Settings* settings = new Settings(logger);
     logL(QString("%1 %2").arg(APP_NAME, APP_VERSION));
 
-    Battery* battery = new Battery(logger, logLevelSet, &app);
+    // Read log level from config - if not already set
+    if(!logLevelSet) {
+        int logLevel = settings->getLogLevel();
+        logger->debug = (logLevel == 2);
+        logger->verbose = (logLevel > 1);
+        logL(QString("Log level set to %1").arg((logLevel == 0 ? "low" : (logLevel == 1 ? "medium" : "high"))));
+    }
+
+    Battery* battery = new Battery(settings, logger, &app);
 
     // Exit gracefully on Ctrl-C and service stop
     QObject::connect(&app, SIGNAL(aboutToQuit()), battery, SLOT(shutdown()));
@@ -81,6 +91,7 @@ int main(int argc, char** argv)
 
     delete battery;
     delete logger;
+    delete settings;
 
     return retval;
 }

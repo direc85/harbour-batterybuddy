@@ -17,16 +17,19 @@ DEFINES += QT_NO_DEBUG_OUTPUT
 LIBS += -lkeepalive -lnemonotifications-qt5
 
 INCLUDEPATH += "/usr/include/nemonotifications-qt5"
+INCLUDEPATH += "../common"
 
 HEADERS += \
+    ../common/batterybase.h \
+    ../common/logger.h \
     src/battery.h \
-    src/logger.h \
     src/settings.h \
     src/mynotification.h
 
 SOURCES += \
+    ../common/batterybase.cpp \
+    ../common/logger.cpp \
     src/battery.cpp \
-    src/logger.cpp \
     src/settings.cpp \
     src/harbour-batterybuddy-daemon.cpp \
     src/mynotification.cpp

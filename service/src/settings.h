@@ -56,7 +56,7 @@ public:
     QString getNotificationHealthWarnText();
     QString getNotificationHealthCritText();
 
-    void setMaxSupportedChargeCurrent(int newCurrent);
+    void setMaxSupportedCurrent(int newCurrent);
 
 private:
     Logger* logger;

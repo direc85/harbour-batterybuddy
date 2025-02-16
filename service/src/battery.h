@@ -15,8 +15,8 @@
  *
  * Author: Matti Viljanen
  */
-#ifndef BATTERY_H
-#define BATTERY_H
+#ifndef SVC_BATTERY_H
+#define SVC_BATTERY_H
 
 #include <QObject>
 #include <QTimer>
@@ -27,21 +27,22 @@
 #include <QLocale>
 #include <QCoreApplication>
 #include <keepalive/backgroundactivity.h>
+#include "batterybase.h"
 #include "settings.h"
 #include "mynotification.h"
 #include "logger.h"
 
-class Battery : public QObject
+class Battery : public BatteryBase
 {
     Q_OBJECT
 
 public:
-    Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QObject *parent = nullptr);
+    Battery(Settings* newSettings, Logger* newLogger, QCoreApplication *app, QObject *parent = nullptr);
     ~Battery();
 
     int getCharge();
     bool getCharging();
-    bool getChargerConnected();
+    bool getUsbConnected();
     bool getAcConnected();
     QString getState();
 
@@ -76,117 +77,28 @@ private:
         BackgroundActivity::TwentyFourHours
     };
 
-    Logger *logger;
-    QFile *chargeFile = nullptr;
-    QFile *chargerConnectedFile = nullptr;
-    QFile *acConnectedFile = nullptr;
-    QFile *currentFile = nullptr;
-    QFile *stateFile = nullptr;
-    QFile *chargingEnabledFile = nullptr;
-    QFile *maxChargeCurrentFile = nullptr;
-    QFile *temperatureFile = nullptr;
-    QFile *healthFile = nullptr;
     Settings *settings = nullptr;
+
     BackgroundActivity *updateTimer = nullptr;
     BackgroundActivity *highNotifyTimer = nullptr;
     BackgroundActivity *lowNotifyTimer = nullptr;
     BackgroundActivity *healthNotifyTimer = nullptr;
+
     MyNotification *chargeNotification = nullptr;
     MyNotification *healthNotification = nullptr;
 
-    // Battery charge percentage, number, e.g. 42
-    const QStringList capacityFiles = {
-        "/sys/class/power_supply/battery/capacity",
-        "/sys/class/power_supply/dollar_cove_battery/capacity",
-        "/sys/class/power_supply/axp20x-battery/capacity"
-    };
-
-    // Charging/discharging current in microamps, e.g. -1450000 (-145mA)
-    const QStringList currentFiles = {
-        "/sys/class/power_supply/battery/current_now",
-        "/sys/class/power_supply/dollar_cove_battery/current_now",
-        "/sys/class/power_supply/axp20x-battery/current_now"
-    };
-
-    // Maximum charge current in microamps, e.g. 3500000 (3500mA)
-    const QStringList maxCurrentFiles = {
-        "/sys/class/power_supply/battery/constant_charge_current_max",
-        "/sys/class/power_supply/axp20x-battery/constant_charge_current_max"
-    };
-
-    // Battery/charging status: charging, discharging, full, empty, unknown (others?)
-    const QStringList statusFiles = {
-        "/sys/class/power_supply/battery/status",
-        "/sys/class/power_supply/dollar_cove_battery/status",
-        "/sys/class/power_supply/axp20x-battery/status"
-    };
-
-    // Charger connected, bool (number): 0 or 1
-    const QStringList chargerFiles = {
-        "/sys/class/power_supply/usb/present",
-        "/sys/class/power_supply/dollar_cove_charger/present",
-        "/sys/class/power_supply/axp20x-usb/present"
-    };
-
-    // AC input connected, bool (number): 0 or 1
-    const QStringList acFiles = {
-        "/sys/class/power_supply/ac/present",
-        "/sys/class/power_supply/axp813-ac/present"
-    };
-
-    // Number: temperature
-    const QStringList tempFiles = {
-        "/sys/class/power_supply/battery/temp",
-        "/sys/class/power_supply/dollar_cove_battery/temp",
-        "/sys/class/power_supply/axp20x-battery/hwmon0/in0_input"
-    };
-
-    // String: health state
-    const QStringList healthFiles = {
-        "/sys/class/power_supply/battery/health",
-        "/sys/class/power_supply/dollar_cove_battery/health",
-        "/sys/class/power_supply/axp20x-battery/health"
-    };
-
-    // Charger control file
-    const QStringList controlFiles = {
-        "/sys/class/power_supply/battery/input_suspend",              // e.g. Sony Xperia XA2
-        "/sys/class/power_supply/battery/charging_enabled",           // e.g. for Sony Xperia Z3 Compact Tablet
-        "/sys/class/power_supply/usb/charger_disable",                // e.g. for Jolla Phone
-        "/sys/class/power_supply/dollar_cove_battery/enable_charging" // e.g. for Jolla Tablet
-    };
-
-    // Default values:
-    int charge = 100; // 100% full
-    int current = 0; // Charging/discharging current in microamps
-    bool chargerConnected = false; // Charger plugged in
-    bool acConnected = false; // AC plugged in
-    QString state = "idle"; // dis/charging, idle, unknown
-    bool chargingEnabled = true; // Only ever disabled manually
-    int maxChargeCurrent = 0;
-    int maxSupportedChargeCurrent = 0;
-
-    QString health = "unknown"; // Good, warm, overheat. Might have Cold or Overvoltage depending on driver
-    int temperature = 0x7FFFFFFF; // This value means "unknown" (32-bit INT_MAX)
-
-    int enableChargingValue = 0;
-    int disableChargingValue = 1;
-    bool chargerIsEnabled = true;
-
-    int nextCharge = charge;
-    bool invertCurrent = false;
-    bool invertDecided = false;
-
-    bool nextChargerConnected = chargerConnected;
-    bool nextAcConnected = acConnected;
-    QString nextState = state;
-    bool nextChargingEnabled = chargingEnabled;
-    int nextTemperature = temperature;
-    float tempCorrectionFactor = 1.0;
-    QString nextHealth = health;
-
     QFileDevice::Permissions originalPerms; // Updated in constructor
     QFileDevice::Permissions customPerms = static_cast<QFileDevice::Permissions>(0x0666);
+
+signals:
+    void chargeChanged(int);
+    void currentChanged(int);
+    void stateChanged(QString);
+    void chargingEnabledChanged(bool);
+    void chargerConnectedChanged(bool);
+    void acConnectedChanged(bool);
+    void healthChanged(QString);
+    void temperatureChanged(int);
 
 public slots:
     void resetTimers();
@@ -194,6 +106,10 @@ public slots:
     void showLowNotification();
     void showHealthNotification();
     void setMaxChargeCurrent(int newCurrent);
+
+private slots:
+    void healthHandler(QString);
+    void stateHandler(QString);
 };
 
-#endif // BATTERY_H
+#endif // SVC_BATTERY_H
