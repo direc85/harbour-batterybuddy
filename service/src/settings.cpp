@@ -17,19 +17,14 @@
  */
 #include "settings.h"
 
-Settings::Settings(Logger* newLogger, QObject *parent) : QObject(parent)
+Settings::Settings(Logger* newLogger, QObject *parent)
+    : SettingsBase(newLogger, parent)
 {
-    logger = newLogger;
-    // Use the same file location as GUI for data exchange
-    if(!mySettings) {
-        mySettings = new QSettings(appName, appName, this);
-    }
-
-    logM("Using " + mySettings->fileName());
+    logM("Using " + settings->fileName());
 
     QString logFilename = logger->getLogFilename();
-    if(mySettings->value(sLogFilename,QString()).toString() != logFilename) {
-        mySettings->setValue(sLogFilename, logFilename);
+    if(settings->value(sLogFilename,QString()).toString() != logFilename) {
+        settings->setValue(sLogFilename, logFilename);
     }
 
     QString migrate = "Migrated value %1";
@@ -37,95 +32,81 @@ Settings::Settings(Logger* newLogger, QObject *parent) : QObject(parent)
 
     // Migrate old settings
     key = "lowerLimit";
-    if(mySettings->contains(key)) {
-        mySettings->setValue(sLowAlert, mySettings->value(key));
-        mySettings->remove(key);
+    if(settings->contains(key)) {
+        settings->setValue(sLowAlert, settings->value(key));
+        settings->remove(key);
         logM(migrate.arg(key));
     }
 
     key = "upperLimit";
-    if(mySettings->contains(key)) {
-        mySettings->setValue(sHighAlert, mySettings->value(key));
-        mySettings->remove(key);
+    if(settings->contains(key)) {
+        settings->setValue(sHighAlert, settings->value(key));
+        settings->remove(key);
         logM(migrate.arg(key));
     }
 
     key = "notificationsEnabled";
-    if(mySettings->contains(key)) {
-        if(mySettings->value(key).toInt() == 0) {
-            mySettings->setValue(sHighNotificationsInterval, 2);
-            mySettings->setValue(sLowNotificationsInterval, 2);
+    if(settings->contains(key)) {
+        if(settings->value(key).toInt() == 0) {
+            settings->setValue(sHighNotificationsInterval, 2);
+            settings->setValue(sLowNotificationsInterval, 2);
         }
         else {
-            mySettings->setValue(sHighNotificationsInterval, highNotificationsInterval);
-            mySettings->setValue(sLowNotificationsInterval, lowNotificationsInterval);
+            settings->setValue(sHighNotificationsInterval, highNotificationsInterval);
+            settings->setValue(sLowNotificationsInterval, lowNotificationsInterval);
         }
-        mySettings->remove(key);
+        settings->remove(key);
         logM(migrate.arg(key));
     }
 
     key = "interval";
-    if(mySettings->contains(key)) {
-        mySettings->setValue(sHighNotificationsInterval, mySettings->value(key));
-        mySettings->setValue(sLowNotificationsInterval, mySettings->value(key));
-        mySettings->remove(key);
+    if(settings->contains(key)) {
+        settings->setValue(sHighNotificationsInterval, settings->value(key));
+        settings->setValue(sLowNotificationsInterval, settings->value(key));
+        settings->remove(key);
         logM(migrate.arg(key));
     }
 
     key = "highNotificationsEnabled";
-    if(mySettings->contains(key)) {
-        if(mySettings->value(key).toInt() == 0)
-            mySettings->setValue(sHighNotificationsInterval, 2);
-        mySettings->remove(key);
+    if(settings->contains(key)) {
+        if(settings->value(key).toInt() == 0)
+            settings->setValue(sHighNotificationsInterval, 2);
+        settings->remove(key);
         logM(migrate.arg(key));
     }
 
     key = "lowNotificationsEnabled";
-    if(mySettings->contains(key)) {
-        if(mySettings->value(key).toInt() == 0)
-            mySettings->setValue(sLowNotificationsInterval, 2);
-        mySettings->remove(key);
+    if(settings->contains(key)) {
+        if(settings->value(key).toInt() == 0)
+            settings->setValue(sLowNotificationsInterval, 2);
+        settings->remove(key);
         logM(migrate.arg(key));
     }
 
     // These are updated and localized from the config file
-    notificationTitle = "Battery charge %1%";
-    notificationLowText = "Please connect the charger.";
-    notificationHighText = "Please disconnect the charger.";
-    notificationHealthTitle = "Battery health %1";
-    notificationHealthWarnText = "Battery health is not good";
-    notificationHealthCritText = "Battery health is critical";
+    notificationTitle = QStringLiteral("Battery charge %1%");
+    notificationLowText = QStringLiteral("Please connect the charger.");
+    notificationHighText = QStringLiteral("Please disconnect the charger.");
+    notificationHealthTitle = QStringLiteral("Battery health %1");
+    notificationHealthWarnText = QStringLiteral("Battery health is not good");
+    notificationHealthCritText = QStringLiteral("Battery health is critical");
 
-    watcher = new QFileSystemWatcher(QStringList(mySettings->fileName()), this);
+    watcher = new QFileSystemWatcher(QStringList(settings->fileName()), this);
     connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(updateConfig(QString)));
 
     // To trigger setting the initial config value
     maxChargeCurrent = 0;
 
-    updateConfig(mySettings->fileName());
-}
-
-Settings::~Settings() { }
-
-bool Settings::loadInteger(const char *key, int &currValue, const int min, const int max) {
-    int newValue = mySettings->value(key, currValue).toInt();
-    newValue = (newValue <= min ? min : (newValue >= max ? max : newValue));
-    if(currValue == newValue) {
-        logH(QString("Load: %1 %2 (unchanged)").arg(key).arg(currValue));
-        return false;
-    }
-    currValue = newValue;
-    logM(QString("Load: %1 %2").arg(key).arg(currValue));
-    return true;
+    updateConfig(settings->fileName());
 }
 
 void Settings::updateConfig(const QString path) {
 
     // Use the same file location as GUI for data exchange
-    if(!mySettings) {
-        mySettings = new QSettings(appName, appName, this);
+    if(!settings) {
+        settings = new QSettings(appName, appName, this);
     } else {
-        mySettings->sync();
+        settings->sync();
     }
 
     logH("Updating configuration...");
@@ -146,13 +127,13 @@ void Settings::updateConfig(const QString path) {
         emit setMaxChargeCurrent(maxChargeCurrent);
     }
 
-    notificationTitle = mySettings->value(sNotificationTitle, notificationTitle).toString();
-    notificationLowText = mySettings->value(sNotificationLowText, notificationLowText).toString();
-    notificationHighText = mySettings->value(sNotificationHighText, notificationHighText).toString();
+    notificationTitle = settings->value(sNotificationTitle, notificationTitle).toString();
+    notificationLowText = settings->value(sNotificationLowText, notificationLowText).toString();
+    notificationHighText = settings->value(sNotificationHighText, notificationHighText).toString();
 
-    notificationHealthTitle    = mySettings->value(sNotificationHealthTitle, notificationHealthTitle).toString();
-    notificationHealthWarnText = mySettings->value(sNotificationHealthWarnText, notificationHealthWarnText).toString();
-    notificationHealthCritText = mySettings->value(sNotificationHealthCritText, notificationHealthCritText).toString();
+    notificationHealthTitle    = settings->value(sNotificationHealthTitle, notificationHealthTitle).toString();
+    notificationHealthWarnText = settings->value(sNotificationHealthWarnText, notificationHealthWarnText).toString();
+    notificationHealthCritText = settings->value(sNotificationHealthCritText, notificationHealthCritText).toString();
 
 
     // Update log level
@@ -180,31 +161,9 @@ void Settings::updateConfig(const QString path) {
     }
 }
 
-// Getters condensed
-int     Settings::getLowAlert()                    { return lowAlert; }
-int     Settings::getHighAlert()                   { return highAlert; }
-int     Settings::getMaxChargeCurrent()            { return maxChargeCurrent; }
-int     Settings::getHealthAlert()                 { return healthAlert; }
-int     Settings::getHighNotificationsInterval()   { return highNotificationsInterval; }
-int     Settings::getLowNotificationsInterval()    { return lowNotificationsInterval; }
-int     Settings::getHealthNotificationsInterval() { return healthNotificationsInterval; }
-int     Settings::getLowLimit()                    { return lowLimit; }
-int     Settings::getHighLimit()                   { return highLimit; }
-bool    Settings::getLimitEnabled()                { return limitEnabled == 1; }
-QString Settings::getLowAlertFile()                { return lowAlertFile; }
-QString Settings::getHighAlertFile()               { return highAlertFile; }
-QString Settings::getHealthAlertFile()             { return healthAlertFile; }
-QString Settings::getNotificationTitle()           { return notificationTitle; }
-QString Settings::getNotificationLowText()         { return notificationLowText; }
-QString Settings::getNotificationHighText()        { return notificationHighText; }
-QString Settings::getNotificationHealthTitle()     { return notificationHealthTitle; }
-QString Settings::getNotificationHealthWarnText()  { return notificationHealthWarnText; }
-QString Settings::getNotificationHealthCritText()  { return notificationHealthCritText; }
-int     Settings::getLogLevel()                    { return logLevel; }
-
 void Settings::setMaxSupportedCurrent(int newCurrent) {
-    mySettings->setValue(sMaxSupportedChargeCurrent, QByteArray::number(newCurrent));
-    if(mySettings->value(sMaxChargeCurrent, QVariant::fromValue(0)).toInt() == 0) {
-        mySettings->setValue(sMaxChargeCurrent, QByteArray::number(newCurrent));
+    settings->setValue(sMaxSupportedChargeCurrent, QByteArray::number(newCurrent));
+    if(settings->value(sMaxChargeCurrent, QVariant::fromValue(0)).toInt() == 0) {
+        settings->setValue(sMaxChargeCurrent, QByteArray::number(newCurrent));
     }
 }

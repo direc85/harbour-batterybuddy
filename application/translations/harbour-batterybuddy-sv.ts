@@ -309,6 +309,11 @@
         <comment>Charger not detected, or faulty, or something</comment>
         <translation type="unfinished">Okänt</translation>
     </message>
+    <message>
+        <source>not charging</source>
+        <comment>Charger plugged in, not using nor charging battery</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>

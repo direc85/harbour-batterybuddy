@@ -17,16 +17,14 @@
  */
 #include "settings.h"
 
-Settings::Settings(Logger *newLogger, QObject *parent) : QObject(parent)
+Settings::Settings(Logger *newLogger, QObject *parent) : SettingsBase(newLogger, parent)
 {
     // Use the same file location as GUI for data exchange
-    if(!mySettings) {
-        mySettings = new QSettings(appName, appName, this);
+    if(!settings) {
+        settings = new QSettings(appName, appName, this);
     }
 
-    logger = newLogger;
-
-    logM("Using " + mySettings->fileName());
+    logM("Using " + settings->fileName());
 
     // Read in the values
     loadInteger(sLowAlert, lowAlert, 5, 99);
@@ -57,170 +55,33 @@ Settings::Settings(Logger *newLogger, QObject *parent) : QObject(parent)
     saveString(sNotificationHealthTitle, tr("Battery health %1"), notificationHealthTitle);
     saveString(sNotificationHealthWarnText, tr("Battery health is not good"), notificationHealthWarnText);
     saveString(sNotificationHealthCritText, tr("Battery health is critical"), notificationHealthCritText);
+
+    connect(this, &SettingsBase::logLevelChanged, this, &Settings::logLevelChanged);
+    connect(this, &SettingsBase::lowAlertChanged, this, &Settings::lowAlertChanged);
+    connect(this, &SettingsBase::highAlertChanged, this, &Settings::highAlertChanged);
+    connect(this, &SettingsBase::healthAlertChanged, this, &Settings::healthAlertChanged);
+    connect(this, &SettingsBase::highNotificationsIntervalChanged, this, &Settings::highNotificationsIntervalChanged);
+    connect(this, &SettingsBase::lowNotificationsIntervalChanged, this, &Settings::lowNotificationsIntervalChanged);
+    connect(this, &SettingsBase::healthNotificationsIntervalChanged, this, &Settings::healthNotificationsIntervalChanged);
+    connect(this, &SettingsBase::limitEnabledChanged, this, &Settings::limitEnabledChanged);
+    connect(this, &SettingsBase::lowLimitChanged, this, &Settings::lowLimitChanged);
+    connect(this, &SettingsBase::highLimitChanged, this, &Settings::highLimitChanged);
+    connect(this, &SettingsBase::maxChargeCurrentChanged, this, &Settings::maxChargeCurrentChanged);
+    connect(this, &SettingsBase::maxSupportedChargeCurrentChanged, this, &Settings::maxSupportedChargeCurrentChanged);
+    connect(this, &SettingsBase::lowAlertFileChanged, this, &Settings::lowAlertFileChanged);
+    connect(this, &SettingsBase::highAlertFileChanged, this, &Settings::highAlertFileChanged);
+    connect(this, &SettingsBase::healthAlertFileChanged, this, &Settings::healthAlertFileChanged);
+    connect(this, &SettingsBase::notificationTitleChanged, this, &Settings::notificationTitleChanged);
+    connect(this, &SettingsBase::notificationLowTextChanged, this, &Settings::notificationLowTextChanged);
+    connect(this, &SettingsBase::notificationHighTextChanged, this, &Settings::notificationHighTextChanged);
+    connect(this, &SettingsBase::notificationHealthTitleChanged, this, &Settings::notificationHealthTitleChanged);
+    connect(this, &SettingsBase::notificationHealthWarnTextChanged, this, &Settings::notificationHealthWarnTextChanged);
+    connect(this, &SettingsBase::notificationHealthCritTextChanged, this, &Settings::notificationHealthCritTextChanged);
+    connect(this, &SettingsBase::logFilenameChanged, this, &Settings::logFilenameChanged);
 }
 
 Settings::~Settings()
 {
-    mySettings->sync();
-    logM(QString("Settings saved: %1").arg(mySettings->status() == QSettings::NoError));
-}
-
-// Getters condensed.
-int     Settings::getLowAlert()                    { return lowAlert; }
-int     Settings::getHighAlert()                   { return highAlert; }
-int     Settings::getHealthAlert()                 { return healthAlert; }
-int     Settings::getHighNotificationsInterval()   { return highNotificationsInterval; }
-int     Settings::getLowNotificationsInterval()    { return lowNotificationsInterval; }
-int     Settings::getHealthNotificationsInterval() { return healthNotificationsInterval; }
-int     Settings::getLowLimit()                    { return lowLimit; }
-int     Settings::getHighLimit()                   { return highLimit; }
-int     Settings::getMaxChargeCurrent()            { return maxChargeCurrent; }
-int     Settings::getMaxSupportedChargeCurrent()   { return maxSupportedChargeCurrent; }
-bool    Settings::getLimitEnabled()                { return limitEnabled == 1; }
-QString Settings::getLowAlertFile()                { return lowAlertFile; }
-QString Settings::getHighAlertFile()               { return highAlertFile; }
-QString Settings::getHealthAlertFile()             { return healthAlertFile; }
-QString Settings::getLogFilename()                 { return logFilename; }
-QString Settings::getNotificationTitle()           { return notificationTitle; }
-QString Settings::getNotificationLowText()         { return notificationLowText; }
-QString Settings::getNotificationHighText()        { return notificationHighText; }
-QString Settings::getNotificationHealthTitle()     { return notificationHealthTitle; }
-QString Settings::getNotificationHealthWarnText()  { return notificationHealthWarnText; }
-QString Settings::getNotificationHealthCritText()  { return notificationHealthCritText; }
-int     Settings::getLogLevel()                    { return logLevel; }
-
-void Settings::setLowAlert(const int newLimit) {
-    if(saveInteger(sLowAlert, newLimit, lowAlert)) {
-        emit lowAlertChanged(lowAlert);
-    }
-}
-
-void Settings::setHighAlert(const int newLimit) {
-    if(saveInteger(sHighAlert, newLimit, highAlert)) {
-        emit highAlertChanged(highAlert);
-    }
-}
-
-void Settings::setHealthAlert(const int newLimit) {
-    if(saveInteger(sHealthAlert, newLimit, healthAlert)) {
-        emit healthAlertChanged(healthAlert);
-    }
-}
-
-void Settings::setHighNotificationsInterval(const int newInterval) {
-    if(saveInteger(sHighNotificationsInterval, newInterval, highNotificationsInterval)) {
-        emit highNotificationsIntervalChanged(highNotificationsInterval);
-    }
-}
-
-void Settings::setLowNotificationsInterval(const int newInterval) {
-    if(saveInteger(sLowNotificationsInterval, newInterval, lowNotificationsInterval)) {
-        emit lowNotificationsIntervalChanged(lowNotificationsInterval);
-    }
-}
-
-void Settings::setHealthNotificationsInterval(const int newInterval) {
-    if(saveInteger(sHealthNotificationsInterval, newInterval, healthNotificationsInterval)) {
-        emit healthNotificationsIntervalChanged(healthNotificationsInterval);
-    }
-}
-
-void Settings::setLowLimit(const int newLimit) {
-    if(saveInteger(sLowLimit, newLimit, lowLimit)) {
-        emit lowLimitChanged(lowLimit);
-    }
-}
-
-void Settings::setHighLimit(const int newLimit) {
-    if(saveInteger(sHighLimit, newLimit, highLimit))
-        emit highLimitChanged(highLimit);
-}
-
-void Settings::setMaxChargeCurrent(const int newCurrent) {
-    if(saveInteger(sMaxChargeCurrent, newCurrent, maxChargeCurrent))
-        emit maxChargeCurrentChanged(maxChargeCurrent);
-}
-
-void Settings::setLimitEnabled(const bool newEnabled) {
-    if(saveInteger(sLimitEnabled, (newEnabled ? 1 : 0), limitEnabled))
-        emit limitEnabledChanged(limitEnabled);
-}
-
-void Settings::setNotificationTitle(const QString newText) {
-    if(saveString(sNotificationTitle, newText, notificationTitle))
-        emit notificationTitleChanged(notificationTitle);
-}
-
-void Settings::setNotificationLowText(const QString newText) {
-    if(saveString(sNotificationLowText, newText, notificationLowText))
-        emit notificationLowTextChanged(notificationLowText);
-}
-
-void Settings::setNotificationHighText(const QString newText) {
-    if(saveString(sNotificationHighText, newText, notificationHighText))
-        emit notificationHighTextChanged(notificationHighText);
-}
-
-void Settings::setNotificationHealthTitle(const QString newText) {
-    if(saveString(sNotificationHealthTitle, newText, notificationTitle))
-        emit notificationHealthTitleChanged(notificationTitle);
-}
-
-void Settings::setNotificationHealthWarnText(const QString newText) {
-    if(saveString(sNotificationHealthWarnText, newText, notificationHealthWarnText))
-        emit notificationHealthWarnTextChanged(notificationHealthWarnText);
-}
-
-void Settings::setNotificationHealthCritText(const QString newText) {
-    if(saveString(sNotificationHealthCritText, newText, notificationHealthCritText))
-        emit notificationHealthCritTextChanged(notificationHealthCritText);
-}
-
-void Settings::setLogLevel(const int newLogLevel) {
-    if(saveInteger(sLogLevel, newLogLevel, logLevel))
-        emit logLevelChanged(logLevel);
-}
-
-bool Settings::loadInteger(const char *key, int &currValue, const int min, const int max) {
-    int newValue = mySettings->value(key, currValue).toInt();
-    newValue = (newValue <= min ? min : (newValue >= max ? max : newValue));
-    if(currValue == newValue) {
-        logH(QString("Load: %1 %2 (unchanged)").arg(key).arg(currValue));
-        return false;
-    }
-    currValue = newValue;
-    logM(QString("Load: %1 %2").arg(key).arg(currValue));
-    return true;
-}
-
-bool Settings::loadString(const char *key, QString & currValue) {
-    QString newValue = mySettings->value(key, currValue).toString();
-    if(currValue == newValue) {
-        logH(QString("Load: %1 %2 (unchanged)").arg(key).arg(currValue));
-        return false;
-    }
-    currValue = newValue;
-    logM(QString("Load: %1 %2").arg(key).arg(currValue));
-    return true;
-}
-
-bool Settings::saveInteger(const char* key, const int &newValue, int &currValue) {
-    if(currValue == newValue) {
-        logH(QString("Save: %1 %2 (unchanged)").arg(key).arg(currValue));
-        return false;
-    }
-    currValue = newValue;
-    mySettings->setValue(key, QByteArray::number(newValue));
-    logM(QString("Save: %1 %2").arg(key).arg(newValue));
-    return true;
-}
-
-bool Settings::saveString(const char* key, const QString &newValue, QString &currValue) {
-    if(currValue == newValue) {
-        return false;
-    }
-    currValue = newValue;
-    mySettings->setValue(key, QString(newValue).replace("\"", "\\\"").toUtf8());
-    logM(QString("Save: %1 %2").arg(key).arg(newValue));
-    return true;
+    settings->sync();
+    logM(QString("Settings saved: %1").arg(settings->status() == QSettings::NoError));
 }

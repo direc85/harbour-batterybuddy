@@ -22,6 +22,7 @@ INCLUDEPATH += "../common"
 HEADERS += \
     ../common/batterybase.h \
     ../common/logger.h \
+    ../common/settingsbase.h \
     src/battery.h \
     src/settings.h \
     src/mynotification.h
@@ -29,6 +30,7 @@ HEADERS += \
 SOURCES += \
     ../common/batterybase.cpp \
     ../common/logger.cpp \
+    ../common/settingsbase.cpp \
     src/battery.cpp \
     src/settings.cpp \
     src/harbour-batterybuddy-daemon.cpp \
