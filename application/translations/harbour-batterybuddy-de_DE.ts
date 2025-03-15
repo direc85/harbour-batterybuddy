@@ -29,11 +29,11 @@
     </message>
     <message>
         <source>Contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>Mitarbeit</translation>
     </message>
     <message>
         <source>A modified version of %1 by %2 in the emoji pack %3 is used in the logo. License: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine modifizierte Variante des %1 von %2 im Emoji-Paket %3 wurde für das Logo verwendet. Lizenz: %4</translation>
     </message>
 </context>
 <context>
@@ -104,7 +104,7 @@
     </message>
     <message>
         <source>Even better; in some devices the battery is very difficult to replace without braking the device, which means you don&apos;t have to pay for the service, either.</source>
-        <translation>Noch besser: Bei einigen Geräten ist es sehr schwierig, den Akku zu tauschen, ohne das Gerät zu beschädigen. Du  kannst dirt also die Kosten eines Austausches möglicherweise sparen.</translation>
+        <translation>Noch besser: Bei einigen Geräten ist es sehr schwierig, den Akku zu tauschen, ohne das Gerät zu beschädigen. Du kannst dir also die Kosten eines Austausches möglicherweise sparen.</translation>
     </message>
     <message>
         <source>What else can I do?</source>
@@ -204,12 +204,12 @@
     <message>
         <source>discharging</source>
         <comment>Charger not plugged in, battery discharging</comment>
-        <translation>entlade</translation>
+        <translation>entlädt</translation>
     </message>
     <message>
         <source>charging</source>
         <comment>Charger plugged in and battery charging</comment>
-        <translation>lade</translation>
+        <translation>lädt</translation>
     </message>
     <message>
         <source>unknown</source>
@@ -223,7 +223,7 @@
     <message>
         <source>full</source>
         <comment>Battery fully charged</comment>
-        <translation>voll</translation>
+        <translation>voll geladen</translation>
     </message>
     <message>
         <source>empty</source>
@@ -257,17 +257,17 @@
     <message>
         <source>Good</source>
         <comment>Battery is OK</comment>
-        <translation>die Batterie ist OK</translation>
+        <translation>der Akku ist OK</translation>
     </message>
     <message>
         <source>Warm</source>
         <comment>Battery is warm</comment>
-        <translation>die Batterie ist warm</translation>
+        <translation>dem Akku ist warm</translation>
     </message>
     <message>
         <source>Overheated</source>
         <comment>Battery is very hot</comment>
-        <translation>die Batterie ist sehr heiss</translation>
+        <translation>dem Akku ist sehr heiß</translation>
     </message>
     <message>
         <source>Health:</source>
@@ -280,12 +280,12 @@
     <message>
         <source>Cool</source>
         <comment>Battery is cool</comment>
-        <translation>der Batterie ist kalt</translation>
+        <translation>dem Akku ist kalt</translation>
     </message>
     <message>
         <source>Cold</source>
         <comment>Battery is very cold</comment>
-        <translation>der Batterie ist sehr kalt</translation>
+        <translation>dem Akku ist sehr kalt</translation>
     </message>
     <message>
         <source>About</source>
@@ -298,80 +298,80 @@
     </message>
     <message>
         <source>USB</source>
-        <translation type="unfinished"></translation>
+        <translation>USB</translation>
     </message>
     <message>
         <source>AC</source>
-        <translation type="unfinished"></translation>
+        <translation>Netzteil</translation>
     </message>
     <message>
         <source>unknown</source>
         <comment>Charger not detected, or faulty, or something</comment>
-        <translation type="unfinished">unbekannt</translation>
+        <translation>unbekannt</translation>
     </message>
     <message>
         <source>not charging</source>
         <comment>Charger plugged in, not using nor charging battery</comment>
-        <translation type="unfinished"></translation>
+        <translation>wird nicht geladen</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Never</source>
-        <translation type="unfinished">Nie</translation>
+        <translation>Nie</translation>
     </message>
     <message>
         <source>30 seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>30 Sekunden</translation>
     </message>
     <message>
         <source>2.5 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>2,5 Minuten</translation>
     </message>
     <message>
         <source>5 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>5 Minuten</translation>
     </message>
     <message>
         <source>10 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>10 Minuten</translation>
     </message>
     <message>
         <source>15 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>15 Minuten</translation>
     </message>
     <message>
         <source>30 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>30 Minuten</translation>
     </message>
     <message>
         <source>1 hour</source>
-        <translation type="unfinished"></translation>
+        <translation>1 Stunde</translation>
     </message>
     <message>
         <source>2 hours</source>
-        <translation type="unfinished"></translation>
+        <translation>2 Stunden</translation>
     </message>
     <message>
         <source>4 hours</source>
-        <translation type="unfinished"></translation>
+        <translation>4 Stunden</translation>
     </message>
     <message>
         <source>8 hours</source>
-        <translation type="unfinished"></translation>
+        <translation>8 Stunden</translation>
     </message>
     <message>
         <source>10 hours</source>
-        <translation type="unfinished"></translation>
+        <translation>10 Stunden</translation>
     </message>
     <message>
         <source>12 hours</source>
-        <translation type="unfinished"></translation>
+        <translation>12 Stunden</translation>
     </message>
     <message>
         <source>24 hours</source>
-        <translation type="unfinished"></translation>
+        <translation>24 Stunden</translation>
     </message>
 </context>
 <context>
@@ -390,15 +390,15 @@
     </message>
     <message>
         <source>Battery health %1</source>
-        <translation>Batteriezustand</translation>
+        <translation>Akkuzustand</translation>
     </message>
     <message>
         <source>Battery health is not good</source>
-        <translation>Batteriezustand ist nicht gut</translation>
+        <translation>Akkuzustand ist nicht gut</translation>
     </message>
     <message>
         <source>Battery health is critical</source>
-        <translation>Batteriezustand ist kritisch</translation>
+        <translation>Akkuzustand ist kritisch</translation>
     </message>
 </context>
 <context>
@@ -485,15 +485,15 @@
     </message>
     <message>
         <source>Health notification settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Zustandsbenachrichtigungseinstellungen</translation>
     </message>
     <message>
         <source>Notification threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Benachrichtigunsschwellwert</translation>
     </message>
     <message>
         <source>Maximum Charge Current</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximaler Ladestrom</translation>
     </message>
 </context>
 </TS>
