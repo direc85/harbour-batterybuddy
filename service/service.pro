@@ -17,7 +17,11 @@ DEFINES += QT_NO_DEBUG_OUTPUT
 
 LIBS += -lkeepalive -lnemonotifications-qt5
 
+INCLUDEPATH += $$_PRO_FILE_PWD_/../common \
+               $$_PRO_FILE_PWD_/..
+
 HEADERS += \
+    ../common/devices.h \
     src/battery.h \
     src/logger.h \
     src/settings.h \

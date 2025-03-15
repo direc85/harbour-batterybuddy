@@ -15,6 +15,8 @@
  *
  * Author: Matti Viljanen
  */
+
+#include "common/devices.h"
 #include "battery.h"
 
 Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QObject *parent) : QObject(parent)
