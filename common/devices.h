@@ -51,6 +51,7 @@ const QStringList statusFiles = {
 // Charger connected, bool (number): 0 or 1
 const QStringList usbPresentFiles = {
     "/sys/class/power_supply/usb/present",
+    "/sys/class/power_supply/usb/online",
     "/sys/class/power_supply/dollar_cove_charger/present",
     "/sys/class/power_supply/axp20x-usb/present"
 };
@@ -80,6 +81,7 @@ const QStringList controlFiles = {
     "/sys/class/power_supply/battery/input_suspend",              // e.g. Sony Xperia XA2
     "/sys/class/power_supply/battery/charging_enabled",           // e.g. for Sony Xperia Z3 Compact Tablet
     "/sys/class/power_supply/usb/charger_disable",                // e.g. for Jolla Phone
+    "/sys/class/power_supply/battery/charger.0/stop_charge",       // e.g. Jolla C2
     "/sys/class/power_supply/dollar_cove_battery/enable_charging" // e.g. for Jolla Tablet
 };
 
