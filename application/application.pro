@@ -29,14 +29,14 @@ INCLUDEPATH += $$_PRO_FILE_PWD_/../common \
 
 HEADERS += \
     ../common/devices.h \
+    ../common/logger.h \
     src/battery.h \
-    src/logger.h \
     src/settings.h
 
 SOURCES += \
+    ../common/logger.cpp \
     src/battery.cpp \
     src/harbour-batterybuddy.cpp \
-    src/logger.cpp \
     src/settings.cpp
 
 DISTFILES += \

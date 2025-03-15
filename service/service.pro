@@ -22,14 +22,14 @@ INCLUDEPATH += $$_PRO_FILE_PWD_/../common \
 
 HEADERS += \
     ../common/devices.h \
+    ../common/logger.h \
     src/battery.h \
-    src/logger.h \
     src/settings.h \
     src/mynotification.h
 
 SOURCES += \
+    ../common/logger.cpp \
     src/battery.cpp \
-    src/logger.cpp \
     src/settings.cpp \
     src/harbour-batterybuddy-daemon.cpp \
     src/mynotification.cpp
