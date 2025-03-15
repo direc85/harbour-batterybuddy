@@ -18,6 +18,8 @@
 #ifndef BATTERY_H
 #define BATTERY_H
 
+#include <chrono>
+
 #include <QObject>
 #include <QString>
 #include <QFile>
@@ -25,6 +27,7 @@
 #include <QSysInfo>
 #include "settings.h"
 #include "logger.h"
+
 
 class Battery : public QObject
 {
@@ -40,6 +43,8 @@ class Battery : public QObject
     Q_PROPERTY(QString health READ getHealth NOTIFY healthChanged)
     Q_PROPERTY(int temperature READ getTemperature NOTIFY temperatureChanged)
 
+    // time_t? QDateTime? QString?
+    Q_PROPERTY(int timeToFull READ getTimeToFull NOTIFY timeToFullChanged)
 public:
     Battery(Settings* newSettings, Logger* newLogger, QObject* parent = nullptr);
     ~Battery();
@@ -54,6 +59,16 @@ public:
 
     QString getHealth();
     int getTemperature();
+
+    int getTimeToFull();
+
+    Q_INVOKABLE static QString timeRemaining(int seconds)
+    {
+        const auto secs    = std::chrono::seconds(seconds);
+        const auto hours   = std::chrono::duration_cast<std::chrono::hours>(secs);
+        const auto minutes = std::chrono::duration_cast<std::chrono::minutes>(secs-hours);
+        return QString("%1:%2").arg(hours.count()).arg(minutes.count());
+    };
 
     bool getChargingEnabled();
 
@@ -74,6 +89,8 @@ private:
     QFile* temperatureFile = nullptr;
     QFile* healthFile = nullptr;
 
+    QFile* timeToFullFile = nullptr;
+
     // Default values:
     int charge = 100; // 100% full
     int current = 0; // Not charging/discharging
@@ -86,6 +103,8 @@ private:
     QString health = "unknown"; // Good, warm, overheat. Might have Cold or Overvoltage depending on driver
     int temperature = 0x7FFFFFFF; // This value means "unknown" (32-bit INT_MAX)
     float tempCorrectionFactor = 1.0; // PineTab outputs an integer in centi-centigrade
+
+    int timeToFull = 0x7FFFFFFF; // This value means "unknown" (32-bit INT_MAX)
 
     int enableChargingValue = 1;
     int disableChargingValue = 0;
@@ -112,6 +131,7 @@ signals:
     void acConnectedChanged(bool);
     void healthChanged(QString);
     void temperatureChanged(int);
+    void timeToFullChanged(int);
 };
 
 #endif // BATTERY_H

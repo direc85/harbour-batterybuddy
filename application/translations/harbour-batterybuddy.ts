@@ -309,6 +309,28 @@
         <comment>Charger not detected, or faulty, or something</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>n/a</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <comment>part one of a hours-minutes range</comment>
+        <translation>
+            <numerusform>one hour</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>and %n minute(s)</source>
+        <comment>part two of a hours-minutes range</comment>
+        <translation>
+            <numerusform>and one minute</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Time remaining:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>

@@ -17,6 +17,7 @@
  */
 #include "devices.h"
 #include "battery.h"
+#include <QDateTime>
 
 Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QObject(parent)
 {
@@ -82,6 +83,15 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     }
 
     logL("Battery temperature file: " + (temperatureFile ? temperatureFile->fileName() : notFound));
+
+    foreach(const QString& file, timeToFullFiles) {
+        if(!timeToFullFile && QFile::exists(file)) {
+            timeToFullFile = new QFile(file, this);
+            break;
+        }
+    }
+
+    logL("Battery time-to-full file: " + (timeToFullFile ? timeToFullFile->fileName() : notFound));
 
     foreach(const QString& file, healthFiles) {
         if(!healthFile && QFile::exists(file)) {
@@ -202,6 +212,19 @@ void Battery::updateData()
         }
         temperatureFile->close();
     }
+
+    if(timeToFullFile && timeToFullFile->open(QIODevice::ReadOnly)) {
+        int nextTimeToFull = timeToFullFile->readLine().trimmed().toInt();
+        if(nextTimeToFull != timeToFull) {
+            // C2 reports 1 when not connected, report it as 'unknown'
+            if(nextTimeToFull == 1) nextTimeToFull = 0x7FFFFFFF;
+            timeToFull = nextTimeToFull;
+            emit timeToFullChanged(timeToFull);
+            logH(QString("Time to full: %1").arg(QDateTime::fromTime_t(timeToFull).toString("HH mm")));
+        }
+        timeToFullFile->close();
+    }
+
 }
 
 int Battery::getCharge() { return charge; }
@@ -215,6 +238,8 @@ QString Battery::getState() { return state; }
 QString Battery::getHealth() { return health; }
 
 int Battery::getTemperature(){ return temperature; }
+
+int Battery::getTimeToFull(){ return timeToFull; }
 
 bool Battery::getChargingEnabled() { return chargingEnabled; }
 

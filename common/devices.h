@@ -76,6 +76,11 @@ const QStringList healthFiles = {
     "/sys/class/power_supply/axp20x-battery/health"
 };
 
+// int: Time to full charge, in seconds
+const QStringList timeToFullFiles = {
+    "/sys/class/power_supply/battery/time_to_full_now" // Jolla C2
+};
+
 // Charger control file
 const QStringList controlFiles = {
     "/sys/class/power_supply/battery/input_suspend",              // e.g. Sony Xperia XA2

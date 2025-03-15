@@ -147,6 +147,16 @@ Page {
                         value: statusText[battery.state]
                     }
                     MyDetailItem {
+                        enabled: battery.state == "charging"
+                        label: qsTr("Time remaining:")
+                        property string raw: battery.timeRemaining(battery.timeToFull)
+                        value: enabled
+                            ? qsTr("%n hour(s)", "part one of a hours-minutes range" , Number(raw.split(":")[0]))
+                            + " " + qsTr("and %n minute(s)", "part two of a hours-minutes range" , Number(raw.split(":")[1]))
+                            : qsTr("n/a")
+                        visible: battery.timeToFull !== 0x7FFFFFFF
+                    }
+                    MyDetailItem {
                         label: qsTr("Health:")
                         value: healthText[battery.health]
                         visible: value !== "unknown"
