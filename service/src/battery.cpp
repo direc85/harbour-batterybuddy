@@ -99,7 +99,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
 
     logL("Status file: " + (stateFile ? stateFile->fileName() : notFound));
 
-    foreach(const QString& file, chargerFiles) {
+    foreach(const QString& file, usbPresentFiles) {
         if(!chargerConnectedFile && QFile::exists(file)) {
             chargerConnectedFile = new QFile(file, this);
             break;
@@ -108,7 +108,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
 
     logL("Charger status file: " + (chargerConnectedFile ? chargerConnectedFile->fileName() : notFound));
 
-    foreach(const QString& file, acFiles) {
+    foreach(const QString& file, acPresentFiles) {
         if(!acConnectedFile && QFile::exists(file)) {
             acConnectedFile = new QFile(file, this);
             break;
