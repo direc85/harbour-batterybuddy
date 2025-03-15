@@ -3,6 +3,7 @@ TARGET = harbour-batterybuddy-daemon
 QT = core dbus
 
 PKGCONFIG += nemonotifications-qt5
+CONFIG += link_pkgconfig
 
 # Keep this in sync with application.pro and .spec
 VERSION = 4.3.2-1
