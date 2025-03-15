@@ -60,12 +60,6 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
 
     logL("Charger status file: " + (chargerConnectedFile ? chargerConnectedFile->fileName() : notFound));
 
-    // Number: 0 or 1
-    const QStringList acPresentFiles = {
-        "/sys/class/power_supply/ac/present",
-        "/sys/class/power_supply/axp813-ac/present"
-    };
-
     foreach(const QString& file, acPresentFiles) {
         if(!acConnectedFile && QFile::exists(file)) {
             acConnectedFile = new QFile(file, this);
