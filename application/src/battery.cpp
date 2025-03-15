@@ -15,7 +15,7 @@
  *
  * Author: Matti Viljanen
  */
-#include "common/devices.h"
+#include "devices.h"
 #include "battery.h"
 
 Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QObject(parent)
