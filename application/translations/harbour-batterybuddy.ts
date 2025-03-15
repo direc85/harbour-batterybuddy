@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="en">
 <context>
     <name>AboutPage</name>
     <message>
@@ -318,6 +318,7 @@
         <comment>part one of a hours-minutes range</comment>
         <translation>
             <numerusform>one hour</numerusform>
+            <numerusform>%n hours</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -325,6 +326,7 @@
         <comment>part two of a hours-minutes range</comment>
         <translation>
             <numerusform>and one minute</numerusform>
+            <numerusform>and %n minutes</numerusform>
         </translation>
     </message>
     <message>
