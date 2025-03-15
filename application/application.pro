@@ -59,12 +59,12 @@ DISTFILES += \
     service/harbour-batterybuddy.service \
     service/restore-write-permissions.sh \
     service/set-write-permissions.sh \
-    $$FILES(translations/*.ts)
+    $$files(translations/*.ts)
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 
 TRANSLATIONS += translations/harbour-batterybuddy.ts \
-   $$FILES(translations/harbour-batterybuddy-*.ts)
+   $$files(translations/harbour-batterybuddy-*.ts)
 
 # Executable provided by "service.pro"
 # Two services, actually
