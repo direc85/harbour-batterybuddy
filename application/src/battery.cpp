@@ -24,14 +24,7 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent) : QO
     logger = newLogger;
     const QString notFound = "not found";
 
-    // Battery charge percentage, number, e.g. 42
-    const QStringList batteryFiles = {
-        "/sys/class/power_supply/battery/capacity",
-        "/sys/class/power_supply/dollar_cove_battery/capacity",
-        "/sys/class/power_supply/axp20x-battery/capacity"
-    };
-
-    foreach(const QString& file, batteryFiles) {
+    foreach(const QString& file, capacityFiles) {
         if(!chargeFile && QFile::exists(file)) {
             chargeFile = new QFile(file, this);
             break;
