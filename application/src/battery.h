@@ -40,6 +40,7 @@ class Battery : public BatteryBase
 
     Q_PROPERTY(QString health READ getHealth NOTIFY healthChanged)
     Q_PROPERTY(int temperature READ getTemperature NOTIFY temperatureChanged)
+    Q_PROPERTY(int timeToFull READ getTimeToFull NOTIFY timeToFullChanged)
 
 public:
     Battery(Settings* newSettings, Logger* newLogger, QObject* parent = nullptr);
@@ -59,6 +60,7 @@ signals:
     void acConnectedChanged(bool);
     void healthChanged(QString);
     void temperatureChanged(int);
+    void timeToFullChanged(int);
 };
 
 #endif // BATTERY_H
