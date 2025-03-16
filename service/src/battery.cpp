@@ -55,6 +55,7 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QCoreApplication *app
                 disableChargingValue = 1 - disableChargingValue;
             }
             controlFile->close();
+            logL(QString("Charger control is available"));
         }
         else {
             logL("Charger control file is not writable - feature disabled");
@@ -127,11 +128,7 @@ Battery::~Battery() {
 void Battery::updateData()
 {
     updateBaseData();
-    logL(QString("Control file OK: %1").arg(controlFile != nullptr ? "yes" : "no"));
-    logL(QString("Charging %1").arg(chargingEnabled ? "enabled" : "disabled"));
-    logL(QString("Control %1").arg(settings->getLimitEnabled() ? "enabled" : "disabled"));
-    logL(QString("Charge: %1").arg(charge));
-    logL(QString("High limit: %1").arg(settings->getHighLimit()));
+
     if(controlFile && settings->getLimitEnabled()) {
         if(chargingEnabled && charge >= settings->getHighLimit()) {
             logM("Disabling charging...");
