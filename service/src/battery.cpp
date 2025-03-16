@@ -17,218 +17,55 @@
  */
 #include "battery.h"
 
-Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QObject *parent) : QObject(parent)
+Battery::Battery(Settings* newSettings, Logger* newLogger, QCoreApplication *app, QObject *parent)
+    : BatteryBase(newLogger, parent)
 {
-    logger = newLogger;
-    settings = new Settings(logger, this);
-    const QString notFound = "not found";
+    settings = newSettings;
 
-    // Read log level from config - if not already set
-    if(!loglevelSet) {
-        int logLevel = settings->getLogLevel();
-        logger->debug = (logLevel == 2);
-        logger->verbose = (logLevel > 1);
-        logL(QString("Log level set to %1").arg((logLevel == 0 ? "low" : (logLevel == 1 ? "medium" : "high"))));
-    }
-
-    chargeNotification = new MyNotification(this);
-    healthNotification = new MyNotification(this);
-
-    // Battery charge percentage, number, e.g. 42
-    const QStringList capacityFiles = {
-        "/sys/class/power_supply/battery/capacity",
-        "/sys/class/power_supply/dollar_cove_battery/capacity",
-        "/sys/class/power_supply/axp20x-battery/capacity"
-    };
-
-    foreach(const QString& file, capacityFiles) {
-        if(!chargeFile && QFile::exists(file)) {
-            chargeFile = new QFile(file, this);
-            break;
-        }
-    }
-
-    logL("Battery charge file: " + (chargeFile ? chargeFile->fileName() : notFound));
-
-    // Charging/discharging current in microamps, e.g. -1450000 (-145mA)
-    const QStringList currentFiles = {
-        "/sys/class/power_supply/battery/current_now",
-        "/sys/class/power_supply/dollar_cove_battery/current_now",
-        "/sys/class/power_supply/axp20x-battery/current_now"
-    };
-
-    foreach(const QString& file, currentFiles) {
-        if(!currentFile && QFile::exists(file)) {
-            currentFile = new QFile(file, this);
-            break;
-        }
-    }
-
-    logL("Charging/discharging current file: " + (currentFile ? currentFile->fileName() : notFound));
-
-    // Maximum charge current in microamps, e.g. 3500000 (3500mA)
-    const QStringList maxCurrentFiles = {
-        "/sys/class/power_supply/battery/constant_charge_current_max",
-        "/sys/class/power_supply/axp20x-battery/constant_charge_current_max"
-    };
-
-    foreach(const QString& file, maxCurrentFiles) {
-        if(!maxChargeCurrentFile && QFile::exists(file)) {
-            maxChargeCurrentFile = new QFile(file, this);
-            break;
-        }
-    }
-
-    if(maxChargeCurrentFile) {
-        logL("Max charge current file: " + maxChargeCurrentFile->fileName());
-        if(maxChargeCurrentFile->open(QIODevice::WriteOnly)) {
-            maxChargeCurrentFile->close();
-            if(maxChargeCurrentFile->open(QIODevice::ReadOnly)) {
+    if(maxCurrentFile) {
+        if(maxCurrentFile->open(QIODevice::WriteOnly)) {
+            maxCurrentFile->close();
+            if(maxCurrentFile->open(QIODevice::ReadOnly)) {
 
                 // Read and store the default max current
-                maxSupportedChargeCurrent = maxChargeCurrentFile->readLine().trimmed().toInt();
-                logL(QString("Maximum supported charge current: %1mA").arg(maxSupportedChargeCurrent / 1000));
-                maxChargeCurrentFile->close();
-                settings->setMaxSupportedChargeCurrent(maxSupportedChargeCurrent);
+                maxSupportedCurrent = maxCurrentFile->readLine().trimmed().toInt();
+                logL(QString("Maximum supported charge current: %1mA").arg(maxSupportedCurrent / 1000));
+                maxCurrentFile->close();
+                settings->setMaxSupportedCurrent(maxSupportedCurrent);
 
                 // Read and maybe set the user-set max current
                 maxChargeCurrent = settings->getMaxChargeCurrent();
-                if(maxChargeCurrent != maxSupportedChargeCurrent) {
+                if(maxChargeCurrent != maxSupportedCurrent) {
                     setMaxChargeCurrent(maxChargeCurrent);
                 }
             }
         }
         else {
             logL("Max charge current file is not writable - feature disabled");
-            delete maxChargeCurrentFile;
-            maxChargeCurrentFile = Q_NULLPTR;
-        }
-    }
-    else {
-        logL("Max charge current file: " + notFound);
-    }
-
-    // Battery/charging status: charging, discharging, full, empty, unknown (others?)
-    const QStringList statusFiles = {
-        "/sys/class/power_supply/battery/status",
-        "/sys/class/power_supply/dollar_cove_battery/status",
-        "/sys/class/power_supply/axp20x-battery/status"
-    };
-
-    foreach(const QString& file, statusFiles) {
-        if(!stateFile && QFile::exists(file)) {
-            stateFile = new QFile(file, this);
-            break;
+            delete maxCurrentFile;
+            maxCurrentFile = nullptr;
         }
     }
 
-    logL("Status file: " + (stateFile ? stateFile->fileName() : notFound));
-
-    // Charger connected, bool (number): 0 or 1
-    const QStringList chargerFiles = {
-        "/sys/class/power_supply/usb/present",
-        "/sys/class/power_supply/dollar_cove_charger/present",
-        "/sys/class/power_supply/axp20x-usb/present"
-    };
-
-    foreach(const QString& file, chargerFiles) {
-        if(!chargerConnectedFile && QFile::exists(file)) {
-            chargerConnectedFile = new QFile(file, this);
-            break;
-        }
-    }
-
-    logL("Charger status file: " + (chargerConnectedFile ? chargerConnectedFile->fileName() : notFound));
-
-    // Charger connected, bool (number): 0 or 1
-    const QStringList acFiles = {
-        "/sys/class/power_supply/ac/present",
-        "/sys/class/power_supply/axp813-ac/present"
-    };
-
-    foreach(const QString& file, acFiles) {
-        if(!acConnectedFile && QFile::exists(file)) {
-            acConnectedFile = new QFile(file, this);
-            break;
-        }
-    }
-
-    logL("AC status file: " + (acConnectedFile ? acConnectedFile->fileName() : notFound));
-
-    // Number: temperature
-    const QStringList tempFiles = {
-        "/sys/class/power_supply/battery/temp",
-        "/sys/class/power_supply/dollar_cove_battery/temp",
-        "/sys/class/power_supply/axp20x-battery/hwmon0/in0_input"
-    };
-
-    foreach(const QString& file, tempFiles) {
-        if(!temperatureFile && QFile::exists(file)) {
-            temperatureFile = new QFile(file, this);
-            break;
-        }
-    }
-
-    // e.g. PineTab outputs an integer in centi-centigrade
-    // Note that the formatter in the QML page, and the logger divide by 10 again!
-    if(temperatureFile->fileName().contains(QStringLiteral("xp20x-battery"))) {
-        tempCorrectionFactor = 10.0;
-    }
-
-    logL("Battery temperature file: " + (temperatureFile ? temperatureFile->fileName() : notFound));
-
-    // String: health state
-    const QStringList healthFiles = {
-        "/sys/class/power_supply/battery/health",
-        "/sys/class/power_supply/dollar_cove_battery/health",
-        "/sys/class/power_supply/axp20x-battery/health"
-    };
-    foreach(const QString& file, healthFiles) {
-        if(!healthFile && QFile::exists(file)) {
-            healthFile = new QFile(file, this);
-            break;
-        }
-    }
-
-    logL("Battery health file: " + (healthFile ? healthFile->fileName() : notFound));
-
-    // Charger control file
-    const QStringList controlFiles = {
-        "/sys/class/power_supply/battery/input_suspend",              // e.g. Sony Xperia XA2
-        "/sys/class/power_supply/battery/charging_enabled",           // e.g. for Sony Xperia Z3 Compact Tablet
-        "/sys/class/power_supply/usb/charger_disable",                // e.g. for Jolla Phone
-        "/sys/class/power_supply/dollar_cove_battery/enable_charging" // e.g. for Jolla Tablet
-    };
-
-    foreach(const QString& file, controlFiles) {
-        if(!chargingEnabledFile && QFile::exists(file)) {
-            chargingEnabledFile = new QFile(file, this);
-            break;
-        }
-    }
-
-    // Flip the charging control bits if necessary
-    if(chargingEnabledFile && chargingEnabledFile->fileName().contains("enable")) {
-        enableChargingValue = 1;
-        disableChargingValue = 0;
-    }
-
-    // If we found a usable file, check that it is writable
-    if(chargingEnabledFile) {
-        logL("Charger control file: " + chargingEnabledFile->fileName());
-        if(chargingEnabledFile->open(QIODevice::WriteOnly)) {
-            chargingEnabledFile->close();
+    if(controlFile) {
+        if(controlFile->open(QIODevice::WriteOnly)) {
+            // Flip the charging control bits if necessary
+            if(controlFile->fileName().contains("enable")) {
+                enableChargingValue = 1 - enableChargingValue;
+                disableChargingValue = 1 - disableChargingValue;
+            }
+            controlFile->close();
+            logL(QString("Charger control is available"));
         }
         else {
             logL("Charger control file is not writable - feature disabled");
-            delete chargingEnabledFile;
-            chargingEnabledFile = Q_NULLPTR;
+            delete controlFile;
+            controlFile = nullptr;
         }
     }
-    else {
-        logL("Charger control file not found!");
-        logL("Please contact the developer with your device model!");
-    }
+
+    chargeNotification = new MyNotification(this);
+    healthNotification = new MyNotification(this);
 
     connect(settings, SIGNAL(resetTimers()), this, SLOT(resetTimers()));
     connect(settings, SIGNAL(setMaxChargeCurrent(int)), this, SLOT(setMaxChargeCurrent(int)));
@@ -248,6 +85,18 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
     connect(lowNotifyTimer, SIGNAL(running()), lowNotifyTimer, SLOT(wait()));
     connect(healthNotifyTimer, SIGNAL(running()), healthNotifyTimer, SLOT(wait()));
 
+    connect(this, SIGNAL(_chargeChanged(int)), this, SIGNAL(chargeChanged(int)));
+    connect(this, SIGNAL(_currentChanged(int)), this, SIGNAL(currentChanged(int)));
+    connect(this, SIGNAL(_stateChanged(QString)), this, SIGNAL(stateChanged(QString)));
+    connect(this, SIGNAL(_chargingEnabledChanged(bool)), this, SIGNAL(chargingEnabledChanged(bool)));
+    connect(this, SIGNAL(_chargerConnectedChanged(bool)), this, SIGNAL(chargerConnectedChanged(bool)));
+    connect(this, SIGNAL(_acConnectedChanged(bool)), this, SIGNAL(acConnectedChanged(bool)));
+    connect(this, SIGNAL(_healthChanged(QString)), this, SIGNAL(healthChanged(QString)));
+    connect(this, SIGNAL(_temperatureChanged(int)), this, SIGNAL(temperatureChanged(int)));
+
+    connect(this, SIGNAL(healthChanged(QString)), this, SLOT(healthHandler(QString)));
+    connect(this, SIGNAL(stateChanged(QString)), this, SLOT(stateHandler(QString)));
+
     updateData();
 
     updateTimer->setWakeupFrequency(BackgroundActivity::ThirtySeconds);
@@ -263,7 +112,7 @@ Battery::Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QOb
 }
 
 Battery::~Battery() {
-    setMaxChargeCurrent(maxSupportedChargeCurrent);
+    setMaxChargeCurrent(maxChargeCurrent);
 
     updateTimer->stop();
     highNotifyTimer->stop();
@@ -278,82 +127,9 @@ Battery::~Battery() {
 
 void Battery::updateData()
 {
-    if(chargeFile && chargeFile->open(QIODevice::ReadOnly)) {
-        nextCharge = chargeFile->readLine().trimmed().toInt();
-        if(nextCharge != charge) {
-            charge = nextCharge;
-            logM(QString("Battery: %1%").arg(charge));
-        }
-        chargeFile->close();
-    }
+    updateBaseData();
 
-    if(chargerConnectedFile && chargerConnectedFile->open(QIODevice::ReadOnly)) {
-        nextChargerConnected = chargerConnectedFile->readLine().trimmed().toInt();
-        if(nextChargerConnected != chargerConnected) {
-            chargerConnected = nextChargerConnected;
-            logM(QString("Charger: %1").arg(chargerConnected ? "connected" : "disconnected"));
-        }
-        chargerConnectedFile->close();
-    }
-
-    if(acConnectedFile && acConnectedFile->open(QIODevice::ReadOnly)) {
-        nextAcConnected = acConnectedFile->readLine().trimmed().toInt();
-        if(nextAcConnected != acConnected) {
-            acConnected = nextAcConnected;
-            logM(QString("AC: %1").arg(acConnected ? "connected" : "disconnected"));
-        }
-        acConnectedFile->close();
-    }
-
-    if(currentFile && currentFile->open(QIODevice::ReadOnly)) {
-        current = currentFile->readLine().trimmed().toInt();
-        if(!invertDecided) {
-            invertCurrent = (!chargerConnected && !acConnected && current > 10);
-            if(invertCurrent) logL("Battery current inverted");
-            else              logL("Battery current not inverted");
-            invertDecided = true;
-        }
-        current = current * (invertCurrent ? -1 : 1);
-        logH(QString("Current: %1mA").arg(current / 1000));
-        currentFile->close();
-    }
-
-    if(stateFile && stateFile->open(QIODevice::ReadOnly)) {
-        nextState = (QString(stateFile->readLine().trimmed().toLower()));
-        if(nextState != state) {
-            state = nextState;
-            logM("State: " + state);
-
-            // Hide/show notification right away
-            resetTimers();
-        }
-        stateFile->close();
-    }
-
-    if(temperatureFile && temperatureFile->open(QIODevice::ReadOnly)) {
-        nextTemperature = temperatureFile->readLine().trimmed().toInt() / tempCorrectionFactor;
-        if(nextTemperature != temperature) {
-            if((nextTemperature / 10) != (temperature / 10)) {
-                logM(QString("Temperature: %1°C").arg(nextTemperature / 10));
-            }
-            temperature = nextTemperature;
-        }
-        temperatureFile->close();
-    }
-
-    if(healthFile && healthFile->open(QIODevice::ReadOnly)) {
-        nextHealth = (QString(healthFile->readLine().trimmed().toLower()));
-        if(nextHealth != health) {
-            health = nextHealth;
-            logM("Health: " + health);
-
-            // Hide/show notification right away
-            resetTimers();
-        }
-        healthFile->close();
-    }
-
-    if(chargingEnabledFile && settings->getLimitEnabled()) {
+    if(controlFile && settings->getLimitEnabled()) {
         if(chargingEnabled && charge >= settings->getHighLimit()) {
             logM("Disabling charging...");
             setChargingEnabled(false);
@@ -363,6 +139,16 @@ void Battery::updateData()
             setChargingEnabled(true);
         }
     }
+}
+
+void Battery::healthHandler(QString newHealth) {
+    Q_UNUSED(newHealth);
+    resetTimers();
+}
+
+void Battery::stateHandler(QString newState) {
+    Q_UNUSED(newState);
+    resetTimers();
 }
 
 void Battery::resetTimers() {
@@ -492,21 +278,11 @@ void Battery::showHealthNotification() {
     }
 }
 
-int Battery::getCharge() { return charge; }
-
-QString Battery::getState() { return state; }
-
-int Battery::getTemperature() { return temperature; }
-
-QString Battery::getHealth() { return health; }
-
-bool Battery::getChargingEnabled() { return chargingEnabled; }
-
 bool Battery::setChargingEnabled(const bool isEnabled) {
     bool success = false;
-    if(chargingEnabledFile) {
-        if(chargingEnabledFile->open(QIODevice::WriteOnly)) {
-            if(chargingEnabledFile->write(QString("%1").arg(isEnabled ? enableChargingValue : disableChargingValue).toLatin1())) {
+    if(controlFile) {
+        if(controlFile->open(QIODevice::WriteOnly)) {
+            if(controlFile->write(QString("%1").arg(isEnabled ? enableChargingValue : disableChargingValue).toLatin1())) {
                 chargingEnabled = isEnabled;
                 success = true;
 
@@ -520,7 +296,7 @@ bool Battery::setChargingEnabled(const bool isEnabled) {
             else {
                 logL("Could not write new charger state");
             }
-            chargingEnabledFile->close();
+            controlFile->close();
         }
         else {
             logL("Could not open charger control file");
@@ -530,30 +306,22 @@ bool Battery::setChargingEnabled(const bool isEnabled) {
 }
 
 void Battery::setMaxChargeCurrent(int newCurrent) {
-    if(maxChargeCurrentFile) {
+    if(maxCurrentFile) {
         logM(QString("Max charging current: %1mA").arg(newCurrent / 1000));
-        if(newCurrent > maxSupportedChargeCurrent) {
-            newCurrent = maxSupportedChargeCurrent;
+        if(newCurrent > maxChargeCurrent) {
+            newCurrent = maxChargeCurrent;
         }
-        if(maxChargeCurrentFile->open(QIODevice::WriteOnly)) {
+        if(maxCurrentFile->open(QIODevice::WriteOnly)) {
             QString data = QString("%1").arg(newCurrent);
-            if(!maxChargeCurrentFile->write(data.toLocal8Bit())) {
+            if(!maxCurrentFile->write(data.toLocal8Bit())) {
                 logM("Could not write to max charging current file");
             }
         }
         else {
             logM("Could not open max charging current file");
         }
-        maxChargeCurrentFile->close();
+        maxCurrentFile->close();
     }
-}
-
-bool Battery::getChargerConnected() {
-    return chargerConnected;
-}
-
-bool Battery::getAcConnected() {
-    return acConnected;
 }
 
 void Battery::shutdown() {

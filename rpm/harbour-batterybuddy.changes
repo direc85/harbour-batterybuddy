@@ -1,13 +1,13 @@
 * Tue Apr 25 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.3.2-1
-* Fix charge current control
+- Fix charge current control
 
 * Sat Apr 22 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.3.1-1
-* Update Polish translation (thanks, wetab73)
-* Update translation files in the repository
+- Update Polish translation (thanks, wetab73)
+- Update translation files in the repository
 
 * Mon Apr 17 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.3.0-1
-* Add PineTab support (thanks, nephros)
-* Add Russian translation (thanks, sprainbrains)
+- Add PineTab support (thanks, nephros)
+- Add Russian translation (thanks, sprainbrains)
 
 * Sun Mar 5 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.2.5-1
 - Fixup! Include all translation files

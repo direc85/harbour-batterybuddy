@@ -16,16 +16,16 @@
  * Author: Matti Viljanen
  */
 #include <QCoreApplication>
-#include <QObject>
-
-#include "logger.h"
-#include "battery.h"
 
 #include <signal.h>
 
+#include "logger.h"
+#include "settings.h"
+#include "battery.h"
+#include "version.h"
+
 int main(int argc, char** argv)
 {
-    bool logLevelSet = false;
     bool verbose = false;
     bool debug = false;
     bool logfile = false;
@@ -38,18 +38,15 @@ int main(int argc, char** argv)
         else if(!strcmp(argv[i],"--verbose")) {
             verbose = true;
             debug = false;
-            logLevelSet = true;
         }
         else if(!strcmp(argv[i],"--debug")) {
             verbose = true;
             debug = true;
-            logLevelSet = true;
         }
         else if(!strcmp(argv[i],"--logfile")) {
             logfile = true;
             verbose = true;
             debug = false;
-            logLevelSet = true;
         }
         else if(!strcmp(argv[i],"--help")) {
             printf("%s %s\n", APP_NAME, APP_VERSION);
@@ -65,12 +62,14 @@ int main(int argc, char** argv)
 
     QCoreApplication app(argc, argv);
     app.setApplicationName(APP_NAME);
+    app.setOrganizationName(APP_NAME);
     app.setApplicationVersion(APP_VERSION);
 
     Logger* logger = new Logger(verbose, debug, logfile);
+    Settings* settings = new Settings(logger);
     logL(QString("%1 %2").arg(APP_NAME, APP_VERSION));
 
-    Battery* battery = new Battery(logger, logLevelSet, &app);
+    Battery* battery = new Battery(settings, logger, &app);
 
     // Exit gracefully on Ctrl-C and service stop
     QObject::connect(&app, SIGNAL(aboutToQuit()), battery, SLOT(shutdown()));
@@ -81,6 +80,7 @@ int main(int argc, char** argv)
 
     delete battery;
     delete logger;
+    delete settings;
 
     return retval;
 }

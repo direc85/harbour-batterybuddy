@@ -31,6 +31,7 @@
 #include "logger.h"
 #include "battery.h"
 #include "settings.h"
+#include "version.h"
 
 int main(int argc, char *argv[])
 {
@@ -78,6 +79,7 @@ int main(int argc, char *argv[])
     QGuiApplication* app = SailfishApp::application(argc, argv);
     app->setApplicationName(APP_NAME);
     app->setOrganizationName(APP_NAME);
+    app->setApplicationVersion(APP_VERSION);
 
     QQuickView* view = SailfishApp::createView();
 

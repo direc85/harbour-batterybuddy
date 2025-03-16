@@ -9,3 +9,7 @@
 *.autosave
 shadow/
 RPMS/
+*.o
+*.so
+Makefile
+moc_*

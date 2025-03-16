@@ -15,8 +15,8 @@
  *
  * Author: Matti Viljanen
  */
-#ifndef BATTERY_H
-#define BATTERY_H
+#ifndef SVC_BATTERY_H
+#define SVC_BATTERY_H
 
 #include <QObject>
 #include <QTimer>
@@ -27,29 +27,20 @@
 #include <QLocale>
 #include <QCoreApplication>
 #include <keepalive/backgroundactivity.h>
+#include "batterybase.h"
 #include "settings.h"
 #include "mynotification.h"
 #include "logger.h"
 
-class Battery : public QObject
+class Battery : public BatteryBase
 {
     Q_OBJECT
 
 public:
-    Battery(Logger* newLogger, bool loglevelSet, QCoreApplication *app, QObject *parent = nullptr);
+    Battery(Settings* newSettings, Logger* newLogger, QCoreApplication *app, QObject *parent = nullptr);
     ~Battery();
 
-    int getCharge();
-    bool getCharging();
-    bool getChargerConnected();
-    bool getAcConnected();
-    QString getState();
-
-    bool getChargingEnabled();
     bool setChargingEnabled(const bool isEnabled);
-
-    int getTemperature();
-    QString getHealth();
 
 public slots:
     void updateData();
@@ -76,56 +67,28 @@ private:
         BackgroundActivity::TwentyFourHours
     };
 
-    Logger *logger;
-    QFile *chargeFile = nullptr;
-    QFile *chargerConnectedFile = nullptr;
-    QFile *acConnectedFile = nullptr;
-    QFile *currentFile = nullptr;
-    QFile *stateFile = nullptr;
-    QFile *chargingEnabledFile = nullptr;
-    QFile *maxChargeCurrentFile = nullptr;
-    QFile *temperatureFile = nullptr;
-    QFile *healthFile = nullptr;
     Settings *settings = nullptr;
+
     BackgroundActivity *updateTimer = nullptr;
     BackgroundActivity *highNotifyTimer = nullptr;
     BackgroundActivity *lowNotifyTimer = nullptr;
     BackgroundActivity *healthNotifyTimer = nullptr;
+
     MyNotification *chargeNotification = nullptr;
     MyNotification *healthNotification = nullptr;
 
-
-    // Default values:
-    int charge = 100; // 100% full
-    int current = 0; // Charging/discharging current in microamps
-    bool chargerConnected = false; // Charger plugged in
-    bool acConnected = false; // AC plugged in
-    QString state = "idle"; // dis/charging, idle, unknown
-    bool chargingEnabled = true; // Only ever disabled manually
-    int maxChargeCurrent = 0;
-    int maxSupportedChargeCurrent = 0;
-
-    QString health = "unknown"; // Good, warm, overheat. Might have Cold or Overvoltage depending on driver
-    int temperature = 0x7FFFFFFF; // This value means "unknown" (32-bit INT_MAX)
-
-    int enableChargingValue = 0;
-    int disableChargingValue = 1;
-    bool chargerIsEnabled = true;
-
-    int nextCharge = charge;
-    bool invertCurrent = false;
-    bool invertDecided = false;
-
-    bool nextChargerConnected = chargerConnected;
-    bool nextAcConnected = acConnected;
-    QString nextState = state;
-    bool nextChargingEnabled = chargingEnabled;
-    int nextTemperature = temperature;
-    float tempCorrectionFactor = 1.0;
-    QString nextHealth = health;
-
     QFileDevice::Permissions originalPerms; // Updated in constructor
     QFileDevice::Permissions customPerms = static_cast<QFileDevice::Permissions>(0x0666);
+
+signals:
+    void chargeChanged(int);
+    void currentChanged(int);
+    void stateChanged(QString);
+    void chargingEnabledChanged(bool);
+    void chargerConnectedChanged(bool);
+    void acConnectedChanged(bool);
+    void healthChanged(QString);
+    void temperatureChanged(int);
 
 public slots:
     void resetTimers();
@@ -133,6 +96,10 @@ public slots:
     void showLowNotification();
     void showHealthNotification();
     void setMaxChargeCurrent(int newCurrent);
+
+private slots:
+    void healthHandler(QString);
+    void stateHandler(QString);
 };
 
-#endif // BATTERY_H
+#endif // SVC_BATTERY_H
