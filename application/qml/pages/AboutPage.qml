@@ -113,7 +113,7 @@ Page {
             AboutLabel {
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.secondaryColor
-                text: "English: direc85"+
+                text: "English: direc85\n"+
                       "Suomi: direc85\n"+
                       "Français: Quenty31\n"+
                       "简体中文: dashinfantry\n"+
