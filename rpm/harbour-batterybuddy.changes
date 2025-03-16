@@ -1,3 +1,13 @@
+* Sun Mar 16 2025 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.4.0-0+beta1
+- Major refactor of the project to lessen duplicated code
+- Set internal application version and name consistently
+- Initial Jolla C2 support: detect charger pause/continue charging
+- Cleanup and modernise project files, scripts
+- Add translations update script
+- Update Slovak translation (thanks, okruhliak)
+- Fix typo in About page (thanks, tuplasuhveli)
+- Properly generate translations (thanks, nephros)
+
 * Tue Apr 25 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.3.2-1
 - Fix charge current control
 
