@@ -19,10 +19,7 @@
 
 Settings::Settings(Logger *newLogger, QObject *parent) : SettingsBase(newLogger, parent)
 {
-    // Use the same file location as GUI for data exchange
-    if(!settings) {
-        settings = new QSettings(appName, appName, this);
-    }
+    settings = new QSettings(appName, appName, this);
 
     logM("Using " + settings->fileName());
 

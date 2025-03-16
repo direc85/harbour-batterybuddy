@@ -25,9 +25,6 @@ public:
     int  getLogLevel();
     int  getMaxSupportedChargeCurrent();
     bool getLimitEnabled();
-    bool getHighNotificationsEnabled();
-    bool getLowNotificationsEnabled();
-    bool getHealthNotificationsEnabled();
     QString getLowAlertFile();
     QString getHighAlertFile();
     QString getHealthAlertFile();
@@ -77,15 +74,18 @@ protected:
     int maxSupportedChargeCurrent = 0; // micro amps
     const QString lowAlertFile = QStringLiteral("/usr/share/sounds/jolla-ambient/stereo/general_warning.wav");
     const QString highAlertFile = QStringLiteral("/usr/share/sounds/jolla-ambient/stereo/positive_confirmation.wav");
-    QString healthAlertFile = lowAlertFile;
-    QString notificationTitle;
-    QString notificationLowText;
-    QString notificationHighText;
-    QString notificationHealthTitle;
-    QString notificationHealthWarnText;
-    QString notificationHealthCritText;
+    const QString healthAlertFile = lowAlertFile;
+
+    // These are updated and localized from the config file
+    QString notificationTitle = "Battery charge %1%";
+    QString notificationLowText = "Please connect the charger.";
+    QString notificationHighText = "Please disconnect the charger.";
+    QString notificationHealthTitle = "Battery health %1";
+    QString notificationHealthWarnText = "Battery health is not good";
+    QString notificationHealthCritText = "Battery health is critical";
+
     QString logFilename;
-    int logLevel;
+    int logLevel = 1;
 
     // To avoid repeating the same string over and over and over...
     const QString sLowAlert = QStringLiteral("lowAlert");

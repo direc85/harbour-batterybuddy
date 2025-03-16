@@ -20,12 +20,22 @@
 Settings::Settings(Logger* newLogger, QObject *parent)
     : SettingsBase(newLogger, parent)
 {
-    logM("Using " + settings->fileName());
+    // Use the same file location as GUI for data exchange
+    settings = new QSettings(appName, appName, this);
+
+    logL("Using " + settings->fileName());
 
     QString logFilename = logger->getLogFilename();
     if(settings->value(sLogFilename,QString()).toString() != logFilename) {
         settings->setValue(sLogFilename, logFilename);
     }
+
+    loadString(sNotificationTitle, notificationTitle);
+    loadString(sNotificationLowText, notificationLowText);
+    loadString(sNotificationHighText, notificationHighText);
+    loadString(sNotificationHealthTitle, notificationHealthTitle);
+    loadString(sNotificationHealthWarnText, notificationHealthWarnText);
+    loadString(sNotificationHealthCritText, notificationHealthCritText);
 
     QString migrate = "Migrated value %1";
     QString key = "";
@@ -83,14 +93,6 @@ Settings::Settings(Logger* newLogger, QObject *parent)
         logM(migrate.arg(key));
     }
 
-    // These are updated and localized from the config file
-    notificationTitle = QStringLiteral("Battery charge %1%");
-    notificationLowText = QStringLiteral("Please connect the charger.");
-    notificationHighText = QStringLiteral("Please disconnect the charger.");
-    notificationHealthTitle = QStringLiteral("Battery health %1");
-    notificationHealthWarnText = QStringLiteral("Battery health is not good");
-    notificationHealthCritText = QStringLiteral("Battery health is critical");
-
     watcher = new QFileSystemWatcher(QStringList(settings->fileName()), this);
     connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(updateConfig(QString)));
 
@@ -102,12 +104,7 @@ Settings::Settings(Logger* newLogger, QObject *parent)
 
 void Settings::updateConfig(const QString path) {
 
-    // Use the same file location as GUI for data exchange
-    if(!settings) {
-        settings = new QSettings(appName, appName, this);
-    } else {
-        settings->sync();
-    }
+    settings->sync();
 
     logH("Updating configuration...");
 

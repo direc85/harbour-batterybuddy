@@ -22,41 +22,45 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QCoreApplication *app
 {
     settings = newSettings;
 
-    if(maxCurrentFile->open(QIODevice::WriteOnly)) {
-        maxCurrentFile->close();
-        if(maxCurrentFile->open(QIODevice::ReadOnly)) {
-
-            // Read and store the default max current
-            maxSupportedCurrent = maxCurrentFile->readLine().trimmed().toInt();
-            logL(QString("Maximum supported charge current: %1mA").arg(maxSupportedCurrent / 1000));
+    if(maxCurrentFile) {
+        if(maxCurrentFile->open(QIODevice::WriteOnly)) {
             maxCurrentFile->close();
-            settings->setMaxSupportedCurrent(maxSupportedCurrent);
+            if(maxCurrentFile->open(QIODevice::ReadOnly)) {
 
-            // Read and maybe set the user-set max current
-            maxChargeCurrent = settings->getMaxChargeCurrent();
-            if(maxChargeCurrent != maxSupportedCurrent) {
-                setMaxChargeCurrent(maxChargeCurrent);
+                // Read and store the default max current
+                maxSupportedCurrent = maxCurrentFile->readLine().trimmed().toInt();
+                logL(QString("Maximum supported charge current: %1mA").arg(maxSupportedCurrent / 1000));
+                maxCurrentFile->close();
+                settings->setMaxSupportedCurrent(maxSupportedCurrent);
+
+                // Read and maybe set the user-set max current
+                maxChargeCurrent = settings->getMaxChargeCurrent();
+                if(maxChargeCurrent != maxSupportedCurrent) {
+                    setMaxChargeCurrent(maxChargeCurrent);
+                }
             }
         }
-    }
-    else {
-        logL("Max charge current file is not writable - feature disabled");
-        delete maxCurrentFile;
-        maxCurrentFile = Q_NULLPTR;
+        else {
+            logL("Max charge current file is not writable - feature disabled");
+            delete maxCurrentFile;
+            maxCurrentFile = nullptr;
+        }
     }
 
-    if(controlFile->open(QIODevice::WriteOnly)) {
-        // Flip the charging control bits if necessary
-        if(controlFile->fileName().contains("enable")) {
-            enableChargingValue = 1;
-            disableChargingValue = 0;
+    if(controlFile) {
+        if(controlFile->open(QIODevice::WriteOnly)) {
+            // Flip the charging control bits if necessary
+            if(controlFile->fileName().contains("enable")) {
+                enableChargingValue = 1 - enableChargingValue;
+                disableChargingValue = 1 - disableChargingValue;
+            }
+            controlFile->close();
         }
-        controlFile->close();
-    }
-    else {
-        logL("Charger control file is not writable - feature disabled");
-        delete controlFile;
-        controlFile = Q_NULLPTR;
+        else {
+            logL("Charger control file is not writable - feature disabled");
+            delete controlFile;
+            controlFile = nullptr;
+        }
     }
 
     chargeNotification = new MyNotification(this);
@@ -80,18 +84,17 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QCoreApplication *app
     connect(lowNotifyTimer, SIGNAL(running()), lowNotifyTimer, SLOT(wait()));
     connect(healthNotifyTimer, SIGNAL(running()), healthNotifyTimer, SLOT(wait()));
 
-    BatteryBase* base = (BatteryBase *)parent;
-    connect(base, &BatteryBase::chargeChanged, this, &Battery::chargeChanged);
-    connect(base, &BatteryBase::currentChanged, this, &Battery::currentChanged);
-    connect(base, &BatteryBase::stateChanged, this, &Battery::stateChanged);
-    connect(base, &BatteryBase::chargingEnabledChanged, this, &Battery::chargingEnabledChanged);
-    connect(base, &BatteryBase::chargerConnectedChanged, this, &Battery::chargerConnectedChanged);
-    connect(base, &BatteryBase::acConnectedChanged, this, &Battery::acConnectedChanged);
-    connect(base, &BatteryBase::healthChanged, this, &Battery::healthChanged);
-    connect(base, &BatteryBase::temperatureChanged, this, &Battery::temperatureChanged);
+    connect(this, SIGNAL(_chargeChanged(int)), this, SIGNAL(chargeChanged(int)));
+    connect(this, SIGNAL(_currentChanged(int)), this, SIGNAL(currentChanged(int)));
+    connect(this, SIGNAL(_stateChanged(QString)), this, SIGNAL(stateChanged(QString)));
+    connect(this, SIGNAL(_chargingEnabledChanged(bool)), this, SIGNAL(chargingEnabledChanged(bool)));
+    connect(this, SIGNAL(_chargerConnectedChanged(bool)), this, SIGNAL(chargerConnectedChanged(bool)));
+    connect(this, SIGNAL(_acConnectedChanged(bool)), this, SIGNAL(acConnectedChanged(bool)));
+    connect(this, SIGNAL(_healthChanged(QString)), this, SIGNAL(healthChanged(QString)));
+    connect(this, SIGNAL(_temperatureChanged(int)), this, SIGNAL(temperatureChanged(int)));
 
-    connect(base, &BatteryBase::healthChanged, this, &Battery::healthHandler);
-    connect(base, &BatteryBase::stateChanged, this, &Battery::stateHandler);
+    connect(this, SIGNAL(healthChanged(QString)), this, SLOT(healthHandler(QString)));
+    connect(this, SIGNAL(stateChanged(QString)), this, SLOT(stateHandler(QString)));
 
     updateData();
 
@@ -124,6 +127,11 @@ Battery::~Battery() {
 void Battery::updateData()
 {
     updateBaseData();
+    logL(QString("Control file OK: %1").arg(controlFile != nullptr ? "yes" : "no"));
+    logL(QString("Charging %1").arg(chargingEnabled ? "enabled" : "disabled"));
+    logL(QString("Control %1").arg(settings->getLimitEnabled() ? "enabled" : "disabled"));
+    logL(QString("Charge: %1").arg(charge));
+    logL(QString("High limit: %1").arg(settings->getHighLimit()));
     if(controlFile && settings->getLimitEnabled()) {
         if(chargingEnabled && charge >= settings->getHighLimit()) {
             logM("Disabling charging...");

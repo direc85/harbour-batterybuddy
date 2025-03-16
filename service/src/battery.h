@@ -40,17 +40,7 @@ public:
     Battery(Settings* newSettings, Logger* newLogger, QCoreApplication *app, QObject *parent = nullptr);
     ~Battery();
 
-    int getCharge();
-    bool getCharging();
-    bool getUsbConnected();
-    bool getAcConnected();
-    QString getState();
-
-    bool getChargingEnabled();
     bool setChargingEnabled(const bool isEnabled);
-
-    int getTemperature();
-    QString getHealth();
 
 public slots:
     void updateData();

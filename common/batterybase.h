@@ -69,6 +69,7 @@ protected:
         QStringLiteral("/sys/class/power_supply/dollar_cove_battery/enable_charging")
     };
 
+    // Charging/discharging current in microamps, e.g. -1450000 (-145mA)
     const QStringList currentFiles = {
         QStringLiteral("/sys/class/power_supply/battery/current_now"),
         QStringLiteral("/sys/class/power_supply/dollar_cove_battery/current_now"),
@@ -98,30 +99,30 @@ protected:
         QStringLiteral("/sys/class/power_supply/axp20x-battery/hwmon0/in0_input")};
 
     // Number: 0 or 1
-    const QStringList usbPresentFiles = {
+    const QStringList usbConnectedFiles = {
         QStringLiteral("/sys/class/power_supply/usb/present"),
         QStringLiteral("/sys/class/power_supply/dollar_cove_charger/present"),
         QStringLiteral("/sys/class/power_supply/axp20x-usb/present")};
 
     // Default values:
-    int charge = 100;              // 100% full
-    int current = 0;               // Not charging/discharging
-    bool usbConnected = false;     // Charger plugged in
+    int charge = 100;              // Charge percentage, 0..100
+    int current = 0;               // Charging/discharging current in microamps
+    bool usbConnected = false;     // USB charger plugged in
     bool acConnected = false;      // AC plugged in
-    QString state = "idle";        // charging, disaharging, idle, unknown
-    bool chargingEnabled = true;   // Only ever disabled manually
-    int maxChargeCurrent = 0;      // Charge current limit in micro amps
+    QString state = "idle";        // Charger/battery status string: charging, disaharging, not charging, idle, unknown
+    bool chargingEnabled = true;   // Is charging currently enabled or disabled by the service
+    int maxChargeCurrent = 0;      // Charge current limit in microamps
 
-    QString health = "unknown";       // Good, warm, overheat. Might have Cold or Overvoltage depending on driver
-    int temperature = 0x7FFFFFFF;     // This value means "unknown" (32-bit INT_MAX)
+    QString health = "unknown";       // Battery health string: hot, warm, good, cool, cold, overheat, overvoltage
+    int temperature = 0x7FFFFFFF;     // Temperature in centi-celcius. INT32_MAX means "unknown"
     float tempCorrectionFactor = 1.0; // PineTab outputs an integer in centi-centigrade
 
-    int enableChargingValue = 1;
-    int disableChargingValue = 0;
+    int enableChargingValue = 0;
+    int disableChargingValue = 1;
     bool chargerIsEnabled = true;
 
     int nextCharge = charge;
-    bool invertCurrent = false;
+    int invertSign = 1;
     bool invertDecided = false;
 
     bool nextUsbConnected = false;
@@ -150,14 +151,14 @@ protected:
     void updateBaseData();
 
 signals:
-    void chargeChanged(int);
-    void currentChanged(int);
-    void stateChanged(QString);
-    void chargingEnabledChanged(bool);
-    void chargerConnectedChanged(bool);
-    void acConnectedChanged(bool);
-    void healthChanged(QString);
-    void temperatureChanged(int);
+    void _chargeChanged(int);
+    void _currentChanged(int);
+    void _stateChanged(QString);
+    void _chargingEnabledChanged(bool);
+    void _chargerConnectedChanged(bool);
+    void _acConnectedChanged(bool);
+    void _healthChanged(QString);
+    void _temperatureChanged(int);
 };
 
 #endif // BATTERYBASE_H

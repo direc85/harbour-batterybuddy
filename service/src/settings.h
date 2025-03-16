@@ -36,27 +36,8 @@ public:
 private:
     QFileSystemWatcher *watcher = nullptr;
 
-    // Set this manually, because we want to use
-    // the same config file as the GUI application
-    const char* appName = "harbour-batterybuddy";
-
-    int oldValue;
-    int logLevel = 1;
-
     // Converted to boolean for QML
     int daemonEnabled = 1;
-
-    int lowLimit = 65;
-    int highLimit = 70;
-    QString lowAlertFile = QStringLiteral("/usr/share/sounds/jolla-ambient/stereo/battery_low.wav");
-    QString highAlertFile = QStringLiteral("/usr/share/sounds/jolla-ambient/stereo/positive_confirmation.wav");
-    QString healthAlertFile = QStringLiteral("/usr/share/sounds/jolla-ambient/stereo/general_warning.wav");
-    QString notificationTitle;
-    QString notificationLowText;
-    QString notificationHighText;
-    QString notificationHealthTitle;
-    QString notificationHealthWarnText;
-    QString notificationHealthCritText;
 
 private slots:
     void updateConfig(const QString path);

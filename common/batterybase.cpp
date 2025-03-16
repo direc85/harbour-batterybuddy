@@ -79,7 +79,7 @@ BatteryBase::BatteryBase(Logger* newLogger, QObject* parent) : QObject(parent)
     }
     logL("Status file: " + (statusFile ? statusFile->fileName() : notFound));
 
-    foreach(const QString& file, usbPresentFiles) {
+    foreach(const QString& file, usbConnectedFiles) {
         if(QFile::exists(file)) {
             usbConnectedFile = new QFile(file, this);
             break;
@@ -120,7 +120,7 @@ void BatteryBase::updateBaseData()
         nextCharge = chargeFile->readLine().trimmed().toInt();
         if(nextCharge != charge) {
             charge = nextCharge;
-            emit chargeChanged(charge);
+            emit _chargeChanged(charge);
             logM(QString("Battery: %1%").arg(charge));
         }
         chargeFile->close();
@@ -130,7 +130,7 @@ void BatteryBase::updateBaseData()
         nextUsbConnected = usbConnectedFile->readLine().trimmed().toInt();
         if(nextUsbConnected != usbConnected) {
             usbConnected = nextUsbConnected;
-            emit chargerConnectedChanged(usbConnected);
+            emit _chargerConnectedChanged(usbConnected);
             logM(QString("Charger: %1").arg(usbConnected ? "connected" : "disconnected"));
         }
         usbConnectedFile->close();
@@ -140,7 +140,7 @@ void BatteryBase::updateBaseData()
         nextAcConnected = acConnectedFile->readLine().trimmed().toInt();
         if(nextAcConnected != acConnected) {
             acConnected = nextAcConnected;
-            emit acConnectedChanged(acConnected);
+            emit _acConnectedChanged(acConnected);
             logM(QString("AC: %1").arg(acConnected ? "connected" : "disconnected"));
         }
         acConnectedFile->close();
@@ -150,7 +150,7 @@ void BatteryBase::updateBaseData()
         nextState = (QString(statusFile->readLine().trimmed().toLower()));
         if(nextState != state) {
             state = nextState;
-            emit stateChanged(state);
+            emit _stateChanged(state);
             logM("State: " + state);
         }
         statusFile->close();
@@ -159,13 +159,20 @@ void BatteryBase::updateBaseData()
     if(currentFile && currentFile->open(QIODevice::ReadOnly)) {
         current = currentFile->readLine().trimmed().toInt();
         if(!invertDecided) {
-            invertCurrent = (!usbConnected && !acConnected && current > 10);
-            if(invertCurrent) logL("Battery current inverted");
-            else              logL("Battery current not inverted");
-            invertDecided = true;
+            bool connected = usbConnected || acConnected;
+            if(connected && current <= -200) {
+                logL("Battery current inverted");
+                invertSign = -1;
+                invertDecided = true;
+            }
+            else if(connected && current >= 200) {
+                logL("Battery current not inverted");
+                invertSign = 1;
+                invertDecided = true;
+            }
         }
-        current = current * (invertCurrent ? -1 : 1);
-        emit currentChanged(current);
+        current = invertSign * current;
+        emit _currentChanged(current);
         logH(QString("Current: %1mA").arg(current / 1000));
         currentFile->close();
     }
@@ -174,7 +181,7 @@ void BatteryBase::updateBaseData()
         nextHealth = (QString(healthFile->readLine().trimmed().toLower()));
         if(nextHealth != health) {
             health = nextHealth;
-            emit healthChanged(health);
+            emit _healthChanged(health);
             logM("Health: " + health);
         }
         healthFile->close();
@@ -184,7 +191,7 @@ void BatteryBase::updateBaseData()
         nextTemperature = temperatureFile->readLine().trimmed().toInt() / tempCorrectionFactor;
         if(nextTemperature != temperature) {
             temperature = nextTemperature;
-            emit temperatureChanged(temperature);
+            emit _temperatureChanged(temperature);
             logH(QString("Temperature: %1°C").arg(temperature / 10));
         }
         temperatureFile->close();

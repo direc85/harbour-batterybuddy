@@ -16,7 +16,6 @@
  * Author: Matti Viljanen
  */
 #include <QCoreApplication>
-#include <QObject>
 
 #include "logger.h"
 #include "settings.h"
@@ -26,7 +25,6 @@
 
 int main(int argc, char** argv)
 {
-    bool logLevelSet = false;
     bool verbose = false;
     bool debug = false;
     bool logfile = false;
@@ -39,18 +37,15 @@ int main(int argc, char** argv)
         else if(!strcmp(argv[i],"--verbose")) {
             verbose = true;
             debug = false;
-            logLevelSet = true;
         }
         else if(!strcmp(argv[i],"--debug")) {
             verbose = true;
             debug = true;
-            logLevelSet = true;
         }
         else if(!strcmp(argv[i],"--logfile")) {
             logfile = true;
             verbose = true;
             debug = false;
-            logLevelSet = true;
         }
         else if(!strcmp(argv[i],"--help")) {
             printf("%s %s\n", APP_NAME, APP_VERSION);
@@ -71,14 +66,6 @@ int main(int argc, char** argv)
     Logger* logger = new Logger(verbose, debug, logfile);
     Settings* settings = new Settings(logger);
     logL(QString("%1 %2").arg(APP_NAME, APP_VERSION));
-
-    // Read log level from config - if not already set
-    if(!logLevelSet) {
-        int logLevel = settings->getLogLevel();
-        logger->debug = (logLevel == 2);
-        logger->verbose = (logLevel > 1);
-        logL(QString("Log level set to %1").arg((logLevel == 0 ? "low" : (logLevel == 1 ? "medium" : "high"))));
-    }
 
     Battery* battery = new Battery(settings, logger, &app);
 

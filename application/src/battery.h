@@ -43,7 +43,9 @@ class Battery : public BatteryBase
 
 public:
     Battery(Settings* newSettings, Logger* newLogger, QObject* parent = nullptr);
-    ~Battery();
+
+public slots:
+    void updateData();
 
 private:
     Settings* settings;
