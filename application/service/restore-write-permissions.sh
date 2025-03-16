@@ -22,4 +22,5 @@ chmod 644 /sys/class/power_supply/battery/constant_charge_current_max 2>/dev/nul
 chmod 644 /sys/class/power_supply/usb/charger_disable 2>/dev/null
 chmod 644 /sys/class/power_supply/dollar_cove_battery/enable_charging 2>/dev/null
 chmod 644 /sys/class/power_supply/axp-20x-battery/constant_charge_current_max 2>/dev/null
+chmod 644 /sys/class/power_supply/battery/charger.0/stop_charge 2>/dev/null
 exit 0

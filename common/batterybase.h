@@ -66,7 +66,9 @@ protected:
         // e.g. for Jolla Phone
         QStringLiteral("/sys/class/power_supply/usb/charger_disable"),
         // e.g. for Jolla Tablet
-        QStringLiteral("/sys/class/power_supply/dollar_cove_battery/enable_charging")
+        QStringLiteral("/sys/class/power_supply/dollar_cove_battery/enable_charging"),
+        // e.g. Jolla C2
+        QStringLiteral("/sys/class/power_supply/battery/charger.0/stop_charge")
     };
 
     // Charging/discharging current in microamps, e.g. -1450000 (-145mA)
@@ -102,7 +104,8 @@ protected:
     const QStringList usbConnectedFiles = {
         QStringLiteral("/sys/class/power_supply/usb/present"),
         QStringLiteral("/sys/class/power_supply/dollar_cove_charger/present"),
-        QStringLiteral("/sys/class/power_supply/axp20x-usb/present")};
+        QStringLiteral("/sys/class/power_supply/axp20x-usb/present"),
+        QStringLiteral("/sys/class/power_supply/usb/online")};
 
     // Default values:
     int charge = 100;              // Charge percentage, 0..100
