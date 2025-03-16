@@ -9,6 +9,8 @@
 #include <iostream>
 #include <fstream>
 
+#include "version.h"
+
 // Use like this:
 // logM("Settings loaded");
 

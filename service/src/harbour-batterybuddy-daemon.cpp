@@ -17,11 +17,12 @@
  */
 #include <QCoreApplication>
 
+#include <signal.h>
+
 #include "logger.h"
 #include "settings.h"
 #include "battery.h"
-
-#include <signal.h>
+#include "version.h"
 
 int main(int argc, char** argv)
 {
@@ -61,6 +62,7 @@ int main(int argc, char** argv)
 
     QCoreApplication app(argc, argv);
     app.setApplicationName(APP_NAME);
+    app.setOrganizationName(APP_NAME);
     app.setApplicationVersion(APP_VERSION);
 
     Logger* logger = new Logger(verbose, debug, logfile);

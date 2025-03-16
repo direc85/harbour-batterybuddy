@@ -4,12 +4,6 @@ QT = core dbus
 
 PKGCONFIG += nemonotifications-qt5
 
-# Keep this in sync with application.pro and .spec
-VERSION = 4.3.2-1
-
-DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"
-DEFINES += APP_NAME=\"\\\"$$TARGET\\\"\"
-
 # Use "--verbose" and "--debug" at runtime.
 # See main() and logger.h for details.
 DEFINES += QT_NO_DEBUG_OUTPUT

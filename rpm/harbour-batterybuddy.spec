@@ -5,7 +5,7 @@
 
 Name:       harbour-batterybuddy
 Summary:    Battery Buddy
-# Keep this in sync with .pro files
+# Keep this in sync with version.h
 Version:    4.3.2
 Release:    1
 Group:      Qt/Qt

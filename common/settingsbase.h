@@ -5,6 +5,7 @@
 #include <QString>
 #include <QSettings>
 #include "logger.h"
+#include "version.h"
 
 class SettingsBase : public QObject
 {
