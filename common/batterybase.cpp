@@ -102,6 +102,15 @@ BatteryBase::BatteryBase(Logger* newLogger, QObject* parent) : QObject(parent)
 
     logL("Battery temperature file: " + (temperatureFile ? temperatureFile->fileName() : notFound));
 
+    foreach(const QString& file, timeToFullFiles) {
+        if(QFile::exists(file)) {
+            timeToFullFile = new QFile(file, this);
+            break;
+        }
+    }
+
+    logL("Battery timeToFull file: " + (timeToFullFile ? timeToFullFile->fileName() : notFound));
+
     foreach(const QString& file, healthFiles) {
         if(!healthFile && QFile::exists(file)) {
             healthFile = new QFile(file, this);
@@ -196,6 +205,17 @@ void BatteryBase::updateBaseData()
         }
         temperatureFile->close();
     }
+
+    if(timeToFullFile && timeToFullFile->open(QIODevice::ReadOnly)) {
+        int nextTimeToFull = timeToFullFile->readLine().trimmed().toInt();
+        if(nextTimeToFull != timeToFull) {
+            // C2 reports 1 when not charging:
+            timeToFull = (nextTimeToFull == 1) ? 0x7FFFFFFF : nextTimeToFull;
+            emit _timeToFullChanged(timeToFull);
+            logH(QString("Time to Full: %1s").arg(timeToFull));
+        }
+        timeToFullFile->close();
+    }
 }
 
 
@@ -208,3 +228,4 @@ int BatteryBase::getTemperature(){ return temperature; }
 bool BatteryBase::getChargingEnabled() { return chargingEnabled; }
 bool BatteryBase::getUsbConnected() { return usbConnected; }
 bool BatteryBase::getAcConnected() { return acConnected; }
+int BatteryBase::getTimeToFull(){ return timeToFull; }
