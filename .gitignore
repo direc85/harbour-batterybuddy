@@ -7,9 +7,13 @@
 *.qm
 *.spec.*
 *.autosave
-shadow/
+build/
 RPMS/
 *.o
 *.so
 Makefile
 moc_*
+*.list
+installroot/
+application/harbour-batterybuddy
+service/harbour-batterybuddy-daemon
