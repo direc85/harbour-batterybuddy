@@ -29,6 +29,7 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent)
     connect(this, SIGNAL(_acConnectedChanged(bool)), this, SIGNAL(acConnectedChanged(bool)));
     connect(this, SIGNAL(_healthChanged(QString)), this, SIGNAL(healthChanged(QString)));
     connect(this, SIGNAL(_temperatureChanged(int)), this, SIGNAL(temperatureChanged(int)));
+    connect(this, SIGNAL(_timeToFullChanged(int)), this, SIGNAL(timeToFullChanged(int)));
 
     updateData();
 }

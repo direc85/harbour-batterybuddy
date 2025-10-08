@@ -29,6 +29,12 @@ CoverBackground {
             right: coverPage.right
             verticalCenter: parent.verticalCenter
         }
+        CoverLabel {
+            id: timeLabel
+            property var raw: battery.timeRemaining(battery.timeToFull)
+            text: "⏲ " + qsTr("%1:%2", "a time duration, hours and minutes").arg(raw[0]).arg(raw[1])
+            visible:  battery.timeToFull !== 0x7FFFFFFF
+        }
         BatteryGraph {
             x: coverPage.width * 0.3
             y: coverPage.width * 0.25
