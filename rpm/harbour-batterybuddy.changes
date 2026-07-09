@@ -1,4 +1,15 @@
-* Sun Mar 16 2025 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.4.0-0+beta1
+* Sat Sep 27 2025 Matti Viljanen <matti.viljanen@kapsi.fi> 4.4.0-0+beta2
+- Remove redundant macros
+- Remove wrong dependency
+- Use `install` to install service files
+- Remove redundant buildroot cleanup
+- Remove redundant `%defattr` from `%files`
+- Don't use `systemctl-user`
+- Ignore Platform SDK build files
+- Use cleaner method for shadow build in Platform SDK
+- Remove redundant build-rpms.sh
+
+* Sun Mar 16 2025 Matti Viljanen <matti.viljanen@kapsi.fi> 4.4.0-0+beta1
 - Major refactor of the project to lessen duplicated code
 - Set internal application version and name consistently
 - Initial Jolla C2 support: detect charger pause/continue charging
@@ -8,40 +19,40 @@
 - Fix typo in About page (thanks, tuplasuhveli)
 - Properly generate translations (thanks, nephros)
 
-* Tue Apr 25 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.3.2-1
+* Tue Apr 25 2023 Matti Viljanen <matti.viljanen@kapsi.fi> 4.3.2-1
 - Fix charge current control
 
-* Sat Apr 22 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.3.1-1
+* Sat Apr 22 2023 Matti Viljanen <matti.viljanen@kapsi.fi> 4.3.1-1
 - Update Polish translation (thanks, wetab73)
 - Update translation files in the repository
 
-* Mon Apr 17 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.3.0-1
+* Mon Apr 17 2023 Matti Viljanen <matti.viljanen@kapsi.fi> 4.3.0-1
 - Add PineTab support (thanks, nephros)
 - Add Russian translation (thanks, sprainbrains)
 
-* Sun Mar 5 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.2.5-1
+* Sun Mar 5 2023 Matti Viljanen <matti.viljanen@kapsi.fi> 4.2.5-1
 - Fixup! Include all translation files
 
-* Sun Mar 5 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.2.4-1
+* Sun Mar 5 2023 Matti Viljanen <matti.viljanen@kapsi.fi> 4.2.4-1
 - Fixup! Fix broken battery health
 
-* Sat Mar 4 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.2.3-1
+* Sat Mar 4 2023 Matti Viljanen <matti.viljanen@kapsi.fi> 4.2.3-1
 - Add Slovak translation (thanks, okruhliak)
 - Update Swedish translation (thanks, eson57)
 - Add Support for AC Charger detection (thanks, nephros)
 - Be more efficient with handling file paths in constructors
 - Fix package dependencies
 
-* Sun Jan 1 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.2.2-1
+* Sun Jan 1 2023 Matti Viljanen <matti.viljanen@kapsi.fi> 4.2.2-1
 - Restart the permission service on update
 
-* Sun Jan 1 2023 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.2.1-1
+* Sun Jan 1 2023 Matti Viljanen <matti.viljanen@kapsi.fi> 4.2.1-1
 - Properly read and set values on first startup
 
-* Sat Dec 31 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.2.0-1
+* Sat Dec 31 2022 Matti Viljanen <matti.viljanen@kapsi.fi> 4.2.0-1
 - Add setting maximum charge current
 
-* Sun Aug 28 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.1.1-1
+* Sun Aug 28 2022 Matti Viljanen <matti.viljanen@kapsi.fi> 4.1.1-1
 - Fixup! Use correct colors in battery graphic
 - Fixup! Enable low battery animation
 - Move all subpages to MainPage pull down menu
@@ -49,7 +60,7 @@
 - Update Polish translation (thanks, wetab73)
 - Update copyrights
 
-* Sun Aug 28 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.1.0-1
+* Sun Aug 28 2022 Matti Viljanen <matti.viljanen@kapsi.fi> 4.1.0-1
 - Redesign the logo and battery graphic
 - Use custom ImageButton in About page
 - Use ColumnView to show the log contents with formatting (thanks, nephros!)
@@ -69,67 +80,67 @@
 - Print correct log file name
 - Remove unused signals from service
 
-* Sun Mar 20 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 4.0.0-1
+* Sun Mar 20 2022 Matti Viljanen <matti.viljanen@kapsi.fi> 4.0.0-1
 - Enable sandboxing with appropriate permissions (GUI only)
 - Use QML DBusInterface for user service manipulation
 - Drop support for SFOS 4.2 and older
 - Clean up systemd service handling during install/update/uninstall
 - Built with Sailfish OS SDK 3.8 for 4.3.0.12
 
-* Sun Mar 20 2022 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.17.0-1
+* Sun Mar 20 2022 Matti Viljanen <matti.viljanen@kapsi.fi> 3.17.0-1
 - Disable sandboxing
 - Fix install/upgrade/uninstall scriptlets
 - Service binary consumes less resources
 - Don't try to close notifications if they are not open
 
-* Wed Nov 24 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.16.2-1
+* Wed Nov 24 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 3.16.2-1
 - Fix .spec bin file path (thanks, leon and nephros)
 - Built with Sailfish OS SDK 3.7 for 4.3.0.12
 
-* Sun Oct 10 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.16.1-1
+* Sun Oct 10 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 3.16.1-1
 - Fix bogus version number
 
-* Sun Oct 10 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.16.0-1
+* Sun Oct 10 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 3.16.0-1
 - Built for SFOS 4.2.0.21 using SDK 3.6.6
 - Use semantic versioning
 - Use `systemctl-user` instead of `systemctl --user`
 
-* Sun Jul 25 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.15-1
+* Sun Jul 25 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 3.15-1
 - Implement BackgroundActivity timed events
 
-* Sun May 30 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.14-1
+* Sun May 30 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 3.14-1
 - Use keepalive-tool to mitigate deep sleep
 - Update translators and credits
 - Update Polish translation (thanks, atlochowski)
 - Update Deutch translation (thanks, nephros)
 
-* Sun May 23 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.13-1
+* Sun May 23 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 3.13-1
 - Show battery temperature and condition (thanks, nephros)
 - Show notifications about abnormal temperature and condition (thanks, nephros)
 - Fix broken notifications on SFOS 3.4 and earlier
 - Bring back SFOS 2.2 support
 
-* Fri Apr 30 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.12-3
+* Fri Apr 30 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 3.12-3
 - Fix missing translations
 
-* Fri Apr 30 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.12-2
+* Fri Apr 30 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 3.12-2
 - Add Hungarian translation (thanks, 1Zgp)
 
-* Wed Apr 28 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.12-1
+* Wed Apr 28 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 3.12-1
 - Update Chinese translation (thanks, dashinfantry)
 - Remove some debug output
 
-* Tue Apr 27 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.11-1
+* Tue Apr 27 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 3.11-1
 - Don't trigger config save when loading Settings page
 
-* Mon Apr 26 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.10-1
+* Mon Apr 26 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 3.10-1
 - Fix and improve logged messages
 - Remove more unused code
 - Handle emulator more like an actual device
 - Update Polish translation (thanks, atlochowski)
 - Use smaller Ko-Fi icon
 
-* Sat Apr 24 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.9-2
+* Sat Apr 24 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 3.9-2
 - Fix enabling/disabling background service (again)
 - Add log viewer (and a copy button)
 - Add buttons to help fine-tuning slider values
@@ -142,14 +153,14 @@
 - Remove and simplify a lot of code
 - Update Swedish translation (thanks, eson57) (3.9-2)
 
-* Sun Jan 31 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.8-1
+* Sun Jan 31 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 3.8-1
 - Improve SFOS 3.4 support (don't hardcode user nemo)
 - Enable charger control by default (for new users)
 
-* Sun Jan 10 2021 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.7-2
+* Sun Jan 10 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 3.7-2
 - Update Deutch translation (thanks, fllp)
 
-* Wed Dec 30 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.7-1
+* Wed Dec 30 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 3.7-1
 - Respect ringtone volume and silent mode
 - Fix services' startup and install/uninstall
 - Use Nemo Notification for notifications
@@ -161,24 +172,24 @@
 - Update Finnish translation
 - Support SFOS 3.4 (defaultuser)
 
-* Mon Nov 16 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.6-3
+* Mon Nov 16 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 3.6-3
 - Add Polish translation (thanks, atlochowski)
 - Updated Chinese translation (thanks, dashinfantry)
 - Updated Finnish translation
 
-* Sun Nov 15 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.6-2
+* Sun Nov 15 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 3.6-2
 - Add German translation (thanks, dryo)
 
-* Sun Nov 15 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.6-1
+* Sun Nov 15 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 3.6-1
 - Main build requires SailfishOS 3.3
 - Display charging/discharging current
 - Speed up service buttons
 
-* Mon Oct 19 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.5-1
+* Mon Oct 19 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 3.5-1
 - Fix service control buttons on SFOS 3.4
 - Drop custom slider element
 
-* Sun Jun 14 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.4-1
+* Sun Jun 14 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 3.4-1
 - Check service status when starting app
 - Add controls to enable/disable service at boot
 - Trigger notifications when charger is connected/disconnected
@@ -187,43 +198,43 @@
 - Fix cover page text wrap issue
 - Minor repo/code cleanup
 
-* Fri Jun 12 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.3-1
+* Fri Jun 12 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 3.3-1
 - Start user service at boot
 - Remove all old versions of the services
 - Fix start and stop service controls
 - Update Swedish translation (thanks, eson57)
 
-* Fri Jun 12 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.2-1
+* Fri Jun 12 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 3.2-1
 - Run service without root privileges
 - Add start and stop service controls
 
-* Mon Jun 01 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.1-1
+* Mon Jun 01 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 3.1-1
 - Update Chinese translation
 - Don't alert on "100% idle" (e.g. emulator)
 
-* Sun May 31 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 3.0-1
+* Sun May 31 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 3.0-1
 - Reimplemented systemd service controls charging and notifications
 - GUI doesn't have to be open for proper operation
 - Added Ko-Fi.com donation link
 - Translation fixes
 - Identical with version 3.0 beta 1 (2.99-1)
 
-* Fri Mar 27 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 2.2-2
+* Fri Mar 27 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 2.2-2
 - Fix broken notifications timer
 - Add Swedish translation (thanks, eson57)
 - Add "--verbose" and "--debug" arguments to print out more messages
 - Add "-v" argument for version query, because why not :)
 - Add "--help" argument
 
-* Sat Mar 21 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 2.1-2
+* Sat Mar 21 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 2.1-2
 - Fix crash on startup after upgrade
 - Fix missing systemd service after upgrade
 
-* Sat Mar 21 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 2.1-1
+* Sat Mar 21 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 2.1-1
 - Add landscape orientation support
 - Update Chinese translation (thanks, dashinfantry)
 
-* Sat Mar 21 2020 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 2.0-1
+* Sat Mar 21 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 2.0-1
 - New feature: pause and resume charging (automatically/manually)
 - Implemented systemd service for charger control permissions
 - Massive code cleanup, many parts improved or rewritten
@@ -232,23 +243,23 @@
 - Use "right to left" slider highlight
 - Use separate license page
 
-* Sun Mar 10 2019 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 1.3-1
+* Sun Mar 10 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 1.3-1
 - Add Chinese translation (thanks, dashinfantry)
 - Add French translation (thanks, Quenty31)
 
-* Mon Feb 11 2019 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 1.2-1
+* Mon Feb 11 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 1.2-1
 - Alert doesn't stop media playback
 - Add battery graphic
 - Redesign cover page
 - Poll changes more often
 - Fix multiple notifications (hopefully)
 
-* Tue Jan 8 2019 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 1.1-1
+* Tue Jan 8 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 1.1-1
 - Slider values are now saved
 - Show battery state
 - Alert when battery is charged to 100%, but not charging
 
-* Sun Jan 6 2019 Matti Viljanen (direc85) <matti.viljanen@kapsi.fi> 1.0-1
+* Sun Jan 6 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 1.0-1
 - Initial release
 - Implement battery level monitoring
 - Implement audible alerts and notifications
