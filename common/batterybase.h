@@ -43,6 +43,7 @@ protected:
     QFile *statusFile = nullptr;
     QFile *temperatureFile = nullptr;
     QFile *usbConnectedFile = nullptr;
+    QFile *timeToFullFile = nullptr;
 
     Logger *logger = nullptr;
 
@@ -107,6 +108,12 @@ protected:
         QStringLiteral("/sys/class/power_supply/axp20x-usb/present"),
         QStringLiteral("/sys/class/power_supply/usb/online")};
 
+    // Number: Time to full charge, in seconds
+    const QStringList timeToFullFiles = {
+        QStringLiteral("/sys/class/power_supply/battery/time_to_full_now") // Jolla C2
+    };
+
+
     // Default values:
     int charge = 100;              // Charge percentage, 0..100
     int current = 0;               // Charging/discharging current in microamps
@@ -138,6 +145,8 @@ protected:
 
     int maxSupportedCurrent = -1;
 
+    int timeToFull = 0x7FFFFFFF;     // Seconds to full charge. INT32_MAX means "unknown"
+
     int getCharge();
     int getCurrent();
     int getMaxChargeCurrent();
@@ -148,6 +157,8 @@ protected:
 
     QString getHealth();
     int getTemperature();
+
+    int getTimeToFull();
 
     bool getChargingEnabled();
 
@@ -162,6 +173,7 @@ signals:
     void _acConnectedChanged(bool);
     void _healthChanged(QString);
     void _temperatureChanged(int);
+    void _timeToFullChanged(int);
 };
 
 #endif // BATTERYBASE_H

@@ -23,9 +23,12 @@
 #include <QFile>
 #include <QStandardPaths>
 #include <QSysInfo>
+#include <QVector>
 #include "batterybase.h"
 #include "settings.h"
 #include "logger.h"
+
+#include <chrono>
 
 class Battery : public BatteryBase
 {
@@ -40,9 +43,19 @@ class Battery : public BatteryBase
 
     Q_PROPERTY(QString health READ getHealth NOTIFY healthChanged)
     Q_PROPERTY(int temperature READ getTemperature NOTIFY temperatureChanged)
+    Q_PROPERTY(int timeToFull READ getTimeToFull NOTIFY timeToFullChanged)
 
 public:
     Battery(Settings* newSettings, Logger* newLogger, QObject* parent = nullptr);
+
+    // QVector would be better, but Qt 5.6 does not support that for QML JS Arrays
+    Q_INVOKABLE static QList<int> timeRemaining(const int seconds)
+    {
+        const auto secs    = std::chrono::seconds(seconds);
+        const auto hours   = std::chrono::duration_cast<std::chrono::hours>(secs);
+        const auto minutes = std::chrono::duration_cast<std::chrono::minutes>(secs-hours);
+        return QList<int>( { (int) hours.count(), (int) minutes.count() } );
+    };
 
 public slots:
     void updateData();
@@ -59,6 +72,7 @@ signals:
     void acConnectedChanged(bool);
     void healthChanged(QString);
     void temperatureChanged(int);
+    void timeToFullChanged(int);
 };
 
 #endif // BATTERY_H
