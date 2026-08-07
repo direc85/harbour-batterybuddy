@@ -148,18 +148,9 @@ Page {
                         value: statusText[battery.state]
                     }
                     MyDetailItem {
-                        label: qsTr("Time remaining:")
-                        property var raw: battery.timeRemaining(battery.timeToFull)
-                        value: {
-                            if (raw[0] == 0) { // less than an hour
-                                return qsTr("%n minute(s)", "time left" , raw[1])
-                            } else {
-                                return qsTr("%n hour(s)", "time left" , raw[0])
-                                + ", " + qsTr("%n minute(s)", "time left" , raw[1])
-                            }
-                            return qsTr("unknown")
-                        }
-                        visible: battery.timeToFull !== 0x7FFFFFFF
+                        label: qsTr("Time to full:")
+                        value: Format.formatDuration(battery.timeToFull, Format.Timepoint)
+                        visible: battery.timeToFull !== 0x7FFFFFFF && battery.state == "charging"
                     }
                     MyDetailItem {
                         label: qsTr("Health:")
