@@ -111,7 +111,8 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QCoreApplication *app
     }
 }
 
-Battery::~Battery() {
+Battery::~Battery()
+{
     setMaxChargeCurrent(maxChargeCurrent);
 
     updateTimer->stop();
@@ -141,17 +142,20 @@ void Battery::updateData()
     }
 }
 
-void Battery::healthHandler(QString newHealth) {
+void Battery::healthHandler(QString newHealth)
+{
     Q_UNUSED(newHealth);
     resetTimers();
 }
 
-void Battery::stateHandler(QString newState) {
+void Battery::stateHandler(QString newState)
+{
     Q_UNUSED(newState);
     resetTimers();
 }
 
-void Battery::resetTimers() {
+void Battery::resetTimers()
+{
     highNotifyTimer->stop();
     lowNotifyTimer->stop();
     healthNotifyTimer->stop();
@@ -197,7 +201,8 @@ void Battery::resetTimers() {
     }
 }
 
-void Battery::showHighNotification() {
+void Battery::showHighNotification()
+{
     if(settings->getHighNotificationsInterval() > 0 && (charge >= settings->getHighAlert() && state != "discharging")
             && !(charge == 100 && state == "idle")) {
         logH(QString("Notification: %1").arg(settings->getNotificationTitle().arg(charge)));
@@ -215,7 +220,8 @@ void Battery::showHighNotification() {
     }
 }
 
-void Battery::showLowNotification() {
+void Battery::showLowNotification()
+{
     if(settings->getLowNotificationsInterval() > 0 && charge <= settings->getLowAlert() && state != "charging") {
         logH(QString("Notification: %1").arg(settings->getNotificationTitle().arg(charge)));
         chargeNotification->send(settings->getNotificationTitle().arg(charge), settings->getNotificationLowText(), settings->getLowAlertFile());
@@ -232,7 +238,8 @@ void Battery::showLowNotification() {
     }
 }
 
-void Battery::showHealthNotification() {
+void Battery::showHealthNotification()
+{
     // set up alert categories
     // TODO: manage this more globally, use better data types(?), align with QML/Settings part
     static const QMap<QString, int> HealthThresh {
@@ -249,7 +256,11 @@ void Battery::showHealthNotification() {
         { "overheat" , HealthThresh["crit"] },
         { "cold"     , HealthThresh["crit"] }
     };
-    if(settings->getHealthNotificationsInterval() > 0 && temperature != 0x7FFFFFFF && ( HealthState[health] != HealthThresh["ok"] && HealthState[health] >= settings->getHealthAlert() ) ) {
+    if(settings->getHealthNotificationsInterval() > 0
+        && temperature != 0x7FFFFFFF
+        && HealthState[health] != HealthThresh["ok"]
+        && HealthState[health] >= settings->getHealthAlert()
+    ) {
         QString displayTemp = QString::number(temperature / 10.0);
         if (QLocale().measurementSystem() == QLocale::ImperialUSSystem)
             displayTemp = QString::number((temperature / 10) * 1.8 + 32) + " F";
@@ -278,7 +289,8 @@ void Battery::showHealthNotification() {
     }
 }
 
-bool Battery::setChargingEnabled(const bool isEnabled) {
+bool Battery::setChargingEnabled(const bool isEnabled)
+{
     bool success = false;
     if(controlFile) {
         if(controlFile->open(QIODevice::WriteOnly)) {
@@ -305,7 +317,8 @@ bool Battery::setChargingEnabled(const bool isEnabled) {
     return success;
 }
 
-void Battery::setMaxChargeCurrent(int newCurrent) {
+void Battery::setMaxChargeCurrent(int newCurrent)
+{
     if(maxCurrentFile) {
         logM(QString("Max charging current: %1mA").arg(newCurrent / 1000));
         if(newCurrent > maxChargeCurrent) {
@@ -324,7 +337,8 @@ void Battery::setMaxChargeCurrent(int newCurrent) {
     }
 }
 
-void Battery::shutdown() {
+void Battery::shutdown()
+{
     logM("Shutting down...");
     chargeNotification->close();
     blockSignals(true);

@@ -18,7 +18,8 @@
 #include "battery.h"
 
 Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent)
-: BatteryBase(newLogger, parent) {
+    : BatteryBase(newLogger, parent)
+{
     settings = newSettings;
 
     connect(this, SIGNAL(_chargeChanged(int)), this, SIGNAL(chargeChanged(int)));

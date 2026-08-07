@@ -14,17 +14,17 @@ class SettingsBase : public QObject
 public:
     SettingsBase(Logger* newLogger, QObject* parent = nullptr);
 
-    int  getLowAlert();
-    int  getHighAlert();
-    int  getMaxChargeCurrent();
-    int  getHighNotificationsInterval();
-    int  getLowNotificationsInterval();
-    int  getHealthAlert();
-    int  getHealthNotificationsInterval();
-    int  getLowLimit();
-    int  getHighLimit();
-    int  getLogLevel();
-    int  getMaxSupportedChargeCurrent();
+    int getLowAlert();
+    int getHighAlert();
+    int getMaxChargeCurrent();
+    int getHighNotificationsInterval();
+    int getLowNotificationsInterval();
+    int getHealthAlert();
+    int getHealthNotificationsInterval();
+    int getLowLimit();
+    int getHighLimit();
+    int getLogLevel();
+    int getMaxSupportedChargeCurrent();
     bool getLimitEnabled();
     QString getLowAlertFile();
     QString getHighAlertFile();

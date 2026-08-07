@@ -102,7 +102,8 @@ Settings::Settings(Logger* newLogger, QObject *parent)
     updateConfig(settings->fileName());
 }
 
-void Settings::updateConfig(const QString path) {
+void Settings::updateConfig(const QString path)
+{
 
     settings->sync();
 
@@ -158,7 +159,8 @@ void Settings::updateConfig(const QString path) {
     }
 }
 
-void Settings::setMaxSupportedCurrent(int newCurrent) {
+void Settings::setMaxSupportedCurrent(int newCurrent)
+{
     settings->setValue(sMaxSupportedChargeCurrent, QByteArray::number(newCurrent));
     if(settings->value(sMaxChargeCurrent, QVariant::fromValue(0)).toInt() == 0) {
         settings->setValue(sMaxChargeCurrent, QByteArray::number(newCurrent));

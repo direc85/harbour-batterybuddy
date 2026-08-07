@@ -50,13 +50,15 @@ protected:
     // Number: 0 or 1
     const QStringList acConnectedFiles = {
         QStringLiteral("/sys/class/power_supply/ac/present"),
-        QStringLiteral("/sys/class/power_supply/axp813-ac/present")};
+        QStringLiteral("/sys/class/power_supply/axp813-ac/present"),
+    };
 
     // Battery charge percentage, number, e.g. 42
     const QStringList chargeFiles = {
         QStringLiteral("/sys/class/power_supply/battery/capacity"),
         QStringLiteral("/sys/class/power_supply/dollar_cove_battery/capacity"),
-        QStringLiteral("/sys/class/power_supply/axp20x-battery/capacity")};
+        QStringLiteral("/sys/class/power_supply/axp20x-battery/capacity"),
+    };
 
     // Charger control file
     const QStringList controlFiles = {
@@ -69,48 +71,55 @@ protected:
         // e.g. for Jolla Tablet
         QStringLiteral("/sys/class/power_supply/dollar_cove_battery/enable_charging"),
         // e.g. Jolla C2
-        QStringLiteral("/sys/class/power_supply/battery/charger.0/stop_charge")
+        QStringLiteral("/sys/class/power_supply/battery/charger.0/stop_charge"),
     };
 
     // Charging/discharging current in microamps, e.g. -1450000 (-145mA)
     const QStringList currentFiles = {
         QStringLiteral("/sys/class/power_supply/battery/current_now"),
         QStringLiteral("/sys/class/power_supply/dollar_cove_battery/current_now"),
-        QStringLiteral("/sys/class/power_supply/axp20x-battery/current_now")};
+        QStringLiteral("/sys/class/power_supply/axp20x-battery/current_now"),
+    };
 
     // String: health state
     const QStringList healthFiles = {
         QStringLiteral("/sys/class/power_supply/battery/health"),
         QStringLiteral("/sys/class/power_supply/dollar_cove_battery/health"),
-        QStringLiteral("/sys/class/power_supply/axp20x-battery/health")};
+        QStringLiteral("/sys/class/power_supply/axp20x-battery/health"),
+    };
 
     // Maximum charge current in microamps, e.g. 3500000 (3500mA)
     const QStringList maxCurrentFiles = {
         QStringLiteral("/sys/class/power_supply/battery/constant_charge_current_max"),
-        QStringLiteral("/sys/class/power_supply/axp20x-battery/constant_charge_current_max")};
+        QStringLiteral("/sys/class/power_supply/axp20x-battery/constant_charge_current_max"),
+    };
 
     // Battery/charging status: charging, discharging, full, empty, unknown (others?)
     const QStringList statusFiles = {
         QStringLiteral("/sys/class/power_supply/battery/status"),
         QStringLiteral("/sys/class/power_supply/dollar_cove_battery/status"),
-        QStringLiteral("/sys/class/power_supply/axp20x-battery/status")};
+        QStringLiteral("/sys/class/power_supply/axp20x-battery/status"),
+    };
 
     // Number: temperature
     const QStringList temperatureFiles = {
         QStringLiteral("/sys/class/power_supply/battery/temp"),
         QStringLiteral("/sys/class/power_supply/dollar_cove_battery/temp"),
-        QStringLiteral("/sys/class/power_supply/axp20x-battery/hwmon0/in0_input")};
+        QStringLiteral("/sys/class/power_supply/axp20x-battery/hwmon0/in0_input"),
+    };
 
     // Number: 0 or 1
     const QStringList usbConnectedFiles = {
         QStringLiteral("/sys/class/power_supply/usb/present"),
         QStringLiteral("/sys/class/power_supply/dollar_cove_charger/present"),
         QStringLiteral("/sys/class/power_supply/axp20x-usb/present"),
-        QStringLiteral("/sys/class/power_supply/usb/online")};
+        QStringLiteral("/sys/class/power_supply/usb/online"),
+    };
 
     // Number: Time to full charge, in seconds
     const QStringList timeToFullFiles = {
-        QStringLiteral("/sys/class/power_supply/battery/time_to_full_now") // Jolla C2
+        // Jolla C2
+        QStringLiteral("/sys/class/power_supply/battery/time_to_full_now"),
     };
 
 
@@ -145,12 +154,9 @@ protected:
     bool getUsbConnected();
     bool getAcConnected();
     QString getState();
-
     QString getHealth();
     int getTemperature();
-
     int getTimeToFull();
-
     bool getChargingEnabled();
 
     void updateBaseData();

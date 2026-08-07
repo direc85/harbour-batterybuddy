@@ -17,10 +17,10 @@
  */
 #include "batterybase.h"
 
-BatteryBase::BatteryBase(Logger* newLogger, QObject* parent) : QObject(parent)
+BatteryBase::BatteryBase(Logger* newLogger, QObject* parent)
+    : QObject(parent)
+    , logger(newLogger)
 {
-    logger = newLogger;
-
     const QString notFound = QStringLiteral("not found");
 
     foreach(const QString& file, acConnectedFiles) {
@@ -109,7 +109,7 @@ BatteryBase::BatteryBase(Logger* newLogger, QObject* parent) : QObject(parent)
         }
     }
 
-    logL("Battery timeToFull file: " + (timeToFullFile ? timeToFullFile->fileName() : notFound));
+    logL("Battery time-to-full file: " + (timeToFullFile ? timeToFullFile->fileName() : notFound));
 
     foreach(const QString& file, healthFiles) {
         if(!healthFile && QFile::exists(file)) {
@@ -230,13 +230,52 @@ void BatteryBase::updateBaseData()
 }
 
 
-int BatteryBase::getCharge() { return charge; }
-int BatteryBase::getCurrent() { return current; }
-int BatteryBase::getMaxChargeCurrent() { return maxChargeCurrent; }
-QString BatteryBase::getState() { return state; }
-QString BatteryBase::getHealth() { return health; }
-int BatteryBase::getTemperature(){ return temperature; }
-bool BatteryBase::getChargingEnabled() { return chargingEnabled; }
-bool BatteryBase::getUsbConnected() { return usbConnected; }
-bool BatteryBase::getAcConnected() { return acConnected; }
-int BatteryBase::getTimeToFull(){ return timeToFull; }
+int BatteryBase::getCharge()
+{
+    return charge;
+}
+
+int BatteryBase::getCurrent()
+{
+    return current;
+}
+
+int BatteryBase::getMaxChargeCurrent()
+{
+    return maxChargeCurrent;
+}
+
+QString BatteryBase::getState()
+{
+    return state;
+}
+
+QString BatteryBase::getHealth()
+{
+    return health;
+}
+
+int BatteryBase::getTemperature()
+{
+    return temperature;
+}
+
+bool BatteryBase::getChargingEnabled()
+{
+    return chargingEnabled;
+}
+
+bool BatteryBase::getUsbConnected()
+{
+    return usbConnected;
+}
+
+bool BatteryBase::getAcConnected()
+{
+    return acConnected;
+}
+
+int BatteryBase::getTimeToFull()
+{
+    return timeToFull;
+}

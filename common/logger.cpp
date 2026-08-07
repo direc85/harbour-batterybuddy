@@ -1,7 +1,7 @@
 #include "logger.h"
 
-Logger::Logger(const bool enableVerbose, const bool enableDebug,
-               const bool useLogFile) {
+Logger::Logger(const bool enableVerbose, const bool enableDebug, const bool useLogFile)
+{
     buffer.resize(512);
     verbose = enableVerbose;
     debug = enableDebug;
@@ -10,13 +10,15 @@ Logger::Logger(const bool enableVerbose, const bool enableDebug,
     }
 }
 
-Logger::~Logger() {
+Logger::~Logger()
+{
     if(logFile.is_open()) {
         logFile.close();
     }
 }
 
-void Logger::log(const QString message) {
+void Logger::log(const QString message)
+{
     buffer = QString("[%1] %2\n").arg(QTime::currentTime().toString("HH:mm:ss"), message);
     if(logFileEnabled && logFile.is_open()) {
         logFile << buffer.toStdString();
@@ -28,15 +30,23 @@ void Logger::log(const QString message) {
     }
 };
 
-void Logger::log(const char* message) {
+void Logger::log(const char* message)
+{
     log(QString(message));
 };
 
-bool Logger::getDebug() { return debug; }
+bool Logger::getDebug()
+{
+    return debug;
+}
 
-bool Logger::getVerbose() { return verbose; }
+bool Logger::getVerbose()
+{
+    return verbose;
+}
 
-void Logger::enableLogFile() {
+void Logger::enableLogFile()
+{
     QString logDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation).replace("-daemon","");
     filename = QString(logDir + "/" + APP_NAME + ".log");
 
@@ -55,11 +65,13 @@ void Logger::enableLogFile() {
     }
 }
 
-QString Logger::getLogFilename() {
+QString Logger::getLogFilename()
+{
     return filename;
 }
 
-QString Logger::readLogfile(QString logFilename) {
+QString Logger::readLogfile(QString logFilename)
+{
     QFile logFile(logFilename);
     QString contents;
     if(logFile.open(QIODevice::ReadOnly)) {
