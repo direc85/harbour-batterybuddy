@@ -40,13 +40,21 @@ import Sailfish.Silica 1.0
 Item {
     id: detailItem
     width: parent.width
-    height: Math.max(labelText.height, valueText.height) + 2*Theme.paddingSmall
+    implicitHeight: Math.max(labelText.height, valueText.height) + 2*Theme.paddingSmall
+    height: showCondition ? implicitHeight : 0
+    clip: true
 
     property alias label: labelText.text
     property alias value: valueText.text
     property real leftMargin: Theme.horizontalPageMargin
     property real rightMargin: Theme.horizontalPageMargin
     property int pixelSize: Theme.fontSizeMedium
+    property bool showCondition: true
+
+    Behavior on height {
+        NumberAnimation { }
+    }
+
 
     Text {
         id: labelText

@@ -30,8 +30,15 @@ CoverBackground {
             verticalCenter: parent.verticalCenter
         }
         CoverLabel {
-            text: "⏲ " + Format.formatDuration(battery.timeToFull, Format.Timepoint)
-            visible: battery.timeToFull !== 0x7FFFFFFF && battery.state == "charging"
+            property bool charging: battery.state == "charging"
+            text: "⏲ %1".arg(Format.formatDuration(battery.timeToFull, Format.Timepoint))
+            visible: battery.timeToFull !== 0x7FFFFFFF
+            height: charging && visible ? implicitHeight : 0
+            clip: true
+
+            Behavior on height {
+                NumberAnimation { }
+            }
         }
         Item {
             width: parent.width

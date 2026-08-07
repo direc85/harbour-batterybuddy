@@ -150,7 +150,8 @@ Page {
                     MyDetailItem {
                         label: qsTr("Time to full:")
                         value: Format.formatDuration(battery.timeToFull, Format.Timepoint)
-                        visible: battery.timeToFull !== 0x7FFFFFFF && battery.state == "charging"
+                        visible: battery.timeToFull !== 0x7FFFFFFF
+                        showCondition: battery.state == "charging"
                     }
                     MyDetailItem {
                         label: qsTr("Health:")
