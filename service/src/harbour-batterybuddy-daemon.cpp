@@ -72,7 +72,7 @@ int main(int argc, char** argv)
     Battery* battery = new Battery(settings, logger, &app);
 
     // Exit gracefully on Ctrl-C and service stop
-    QObject::connect(&app, SIGNAL(aboutToQuit()), battery, SLOT(shutdown()));
+    QObject::connect(&app, &QCoreApplication::aboutToQuit, battery, &Battery::shutdown);
     signal(SIGINT, app.exit);
     signal(SIGTERM, app.exit);
 

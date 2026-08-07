@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
     Battery* battery = new Battery(settings, logger);
 
     QTimer* updater = new QTimer();
-    QObject::connect(updater, SIGNAL(timeout()), battery, SLOT(updateData()));
+    QObject::connect(updater, &QTimer::timeout, battery, &Battery::updateData);
     updater->start(3000);
 
     const QStringList frequencyNames = {

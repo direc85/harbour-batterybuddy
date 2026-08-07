@@ -67,35 +67,30 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QCoreApplication *app
     chargeNotification = new MyNotification(this);
     healthNotification = new MyNotification(this);
 
-    connect(settings, SIGNAL(resetTimers()), this, SLOT(resetTimers()));
-    connect(settings, SIGNAL(setMaxChargeCurrent(int)), this, SLOT(setMaxChargeCurrent(int)));
+    connect(settings, &Settings::resetTimers, this, &Battery::resetTimers);
+    connect(settings, &Settings::setMaxChargeCurrent, this, &Battery::setMaxChargeCurrent);
 
     updateTimer = new BackgroundActivity(app);
     highNotifyTimer = new BackgroundActivity(app);
     lowNotifyTimer = new BackgroundActivity(app);
     healthNotifyTimer = new BackgroundActivity(app);
 
-    connect(updateTimer, SIGNAL(running()), this, SLOT(updateData()));
-    connect(highNotifyTimer, SIGNAL(running()), this, SLOT(showHighNotification()));
-    connect(lowNotifyTimer, SIGNAL(running()), this, SLOT(showLowNotification()));
-    connect(healthNotifyTimer, SIGNAL(running()), this, SLOT(showHealthNotification()));
+    connect(updateTimer, &BackgroundActivity::running, this, &Battery::onUpdateTimerRunning);
+    connect(highNotifyTimer, &BackgroundActivity::running, this, &Battery::onHighNotifyTimerRunning);
+    connect(lowNotifyTimer, &BackgroundActivity::running, this, &Battery::onLowNotifyTimerRunning);
+    connect(healthNotifyTimer, &BackgroundActivity::running, this, &Battery::onHealthNotifyTimerRunning);
 
-    connect(updateTimer, SIGNAL(running()), updateTimer, SLOT(wait()));
-    connect(highNotifyTimer, SIGNAL(running()), highNotifyTimer, SLOT(wait()));
-    connect(lowNotifyTimer, SIGNAL(running()), lowNotifyTimer, SLOT(wait()));
-    connect(healthNotifyTimer, SIGNAL(running()), healthNotifyTimer, SLOT(wait()));
+    connect(this, &BatteryBase::_chargeChanged, this, &Battery::chargeChanged);
+    connect(this, &BatteryBase::_currentChanged, this, &Battery::currentChanged);
+    connect(this, &BatteryBase::_stateChanged, this, &Battery::stateChanged);
+    connect(this, &BatteryBase::_chargingEnabledChanged, this, &Battery::chargingEnabledChanged);
+    connect(this, &BatteryBase::_chargerConnectedChanged, this, &Battery::chargerConnectedChanged);
+    connect(this, &BatteryBase::_acConnectedChanged, this, &Battery::acConnectedChanged);
+    connect(this, &BatteryBase::_healthChanged, this, &Battery::healthChanged);
+    connect(this, &BatteryBase::_temperatureChanged, this, &Battery::temperatureChanged);
 
-    connect(this, SIGNAL(_chargeChanged(int)), this, SIGNAL(chargeChanged(int)));
-    connect(this, SIGNAL(_currentChanged(int)), this, SIGNAL(currentChanged(int)));
-    connect(this, SIGNAL(_stateChanged(QString)), this, SIGNAL(stateChanged(QString)));
-    connect(this, SIGNAL(_chargingEnabledChanged(bool)), this, SIGNAL(chargingEnabledChanged(bool)));
-    connect(this, SIGNAL(_chargerConnectedChanged(bool)), this, SIGNAL(chargerConnectedChanged(bool)));
-    connect(this, SIGNAL(_acConnectedChanged(bool)), this, SIGNAL(acConnectedChanged(bool)));
-    connect(this, SIGNAL(_healthChanged(QString)), this, SIGNAL(healthChanged(QString)));
-    connect(this, SIGNAL(_temperatureChanged(int)), this, SIGNAL(temperatureChanged(int)));
-
-    connect(this, SIGNAL(healthChanged(QString)), this, SLOT(healthHandler(QString)));
-    connect(this, SIGNAL(stateChanged(QString)), this, SLOT(stateHandler(QString)));
+    connect(this, &Battery::healthChanged, this, &Battery::healthHandler);
+    connect(this, &Battery::stateChanged, this, &Battery::stateHandler);
 
     updateData();
 
@@ -124,6 +119,30 @@ Battery::~Battery()
     delete highNotifyTimer;
     delete lowNotifyTimer;
     delete healthNotifyTimer;
+}
+
+void Battery::onUpdateTimerRunning()
+{
+    this->updateData();
+    updateTimer->wait();
+}
+
+void Battery::onHighNotifyTimerRunning()
+{
+    this->showHighNotification();
+    highNotifyTimer->wait();
+}
+
+void Battery::onLowNotifyTimerRunning()
+{
+    this->showLowNotification();
+    lowNotifyTimer->wait();
+}
+
+void Battery::onHealthNotifyTimerRunning()
+{
+    this->showHealthNotification();
+    healthNotifyTimer->wait();
 }
 
 void Battery::updateData()

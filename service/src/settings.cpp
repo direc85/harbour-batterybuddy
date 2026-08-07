@@ -94,7 +94,7 @@ Settings::Settings(Logger* newLogger, QObject *parent)
     }
 
     watcher = new QFileSystemWatcher(QStringList(settings->fileName()), this);
-    connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(updateConfig(QString)));
+    connect(watcher, &QFileSystemWatcher::fileChanged, this, &Settings::updateConfig);
 
     // To trigger setting the initial config value
     maxChargeCurrent = 0;

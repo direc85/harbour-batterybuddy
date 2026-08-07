@@ -22,15 +22,15 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QObject* parent)
 {
     settings = newSettings;
 
-    connect(this, SIGNAL(_chargeChanged(int)), this, SIGNAL(chargeChanged(int)));
-    connect(this, SIGNAL(_currentChanged(int)), this, SIGNAL(currentChanged(int)));
-    connect(this, SIGNAL(_stateChanged(QString)), this, SIGNAL(stateChanged(QString)));
-    connect(this, SIGNAL(_chargingEnabledChanged(bool)), this, SIGNAL(chargingEnabledChanged(bool)));
-    connect(this, SIGNAL(_chargerConnectedChanged(bool)), this, SIGNAL(chargerConnectedChanged(bool)));
-    connect(this, SIGNAL(_acConnectedChanged(bool)), this, SIGNAL(acConnectedChanged(bool)));
-    connect(this, SIGNAL(_healthChanged(QString)), this, SIGNAL(healthChanged(QString)));
-    connect(this, SIGNAL(_temperatureChanged(int)), this, SIGNAL(temperatureChanged(int)));
-    connect(this, SIGNAL(_timeToFullChanged(int)), this, SIGNAL(timeToFullChanged(int)));
+    connect(this, &BatteryBase::_chargeChanged, this, &Battery::chargeChanged);
+    connect(this, &BatteryBase::_currentChanged, this, &Battery::currentChanged);
+    connect(this, &BatteryBase::_stateChanged, this, &Battery::stateChanged);
+    connect(this, &BatteryBase::_chargingEnabledChanged, this, &Battery::chargingEnabledChanged);
+    connect(this, &BatteryBase::_chargerConnectedChanged, this, &Battery::chargerConnectedChanged);
+    connect(this, &BatteryBase::_acConnectedChanged, this, &Battery::acConnectedChanged);
+    connect(this, &BatteryBase::_healthChanged, this, &Battery::healthChanged);
+    connect(this, &BatteryBase::_temperatureChanged, this, &Battery::temperatureChanged);
+    connect(this, &BatteryBase::_timeToFullChanged, this, &Battery::timeToFullChanged);
 
     updateData();
 }

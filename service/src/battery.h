@@ -100,6 +100,10 @@ public slots:
 private slots:
     void healthHandler(QString);
     void stateHandler(QString);
+    void onUpdateTimerRunning();
+    void onHighNotifyTimerRunning();
+    void onLowNotifyTimerRunning();
+    void onHealthNotifyTimerRunning();
 };
 
 #endif // SVC_BATTERY_H
