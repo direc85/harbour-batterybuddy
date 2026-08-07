@@ -131,17 +131,8 @@ protected:
     int disableChargingValue = 1;
     bool chargerIsEnabled = true;
 
-    int nextCharge = charge;
     int invertSign = 1;
     bool invertDecided = false;
-
-    bool nextUsbConnected = false;
-    bool nextAcConnected = false;
-    QString nextState = "idle";
-    bool nextChargingEnabled = false;
-
-    QString nextHealth = health;
-    int nextTemperature = temperature;
 
     int maxSupportedCurrent = -1;
 

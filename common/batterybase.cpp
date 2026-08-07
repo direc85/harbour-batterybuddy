@@ -126,7 +126,7 @@ BatteryBase::~BatteryBase() { }
 void BatteryBase::updateBaseData()
 {
     if(chargeFile && chargeFile->open(QIODevice::ReadOnly)) {
-        nextCharge = chargeFile->readLine().trimmed().toInt();
+        int nextCharge = chargeFile->readLine().trimmed().toInt();
         if(nextCharge != charge) {
             charge = nextCharge;
             emit _chargeChanged(charge);
@@ -136,7 +136,7 @@ void BatteryBase::updateBaseData()
     }
 
     if(usbConnectedFile && usbConnectedFile->open(QIODevice::ReadOnly)) {
-        nextUsbConnected = usbConnectedFile->readLine().trimmed().toInt();
+        bool nextUsbConnected = usbConnectedFile->readLine().trimmed().toInt();
         if(nextUsbConnected != usbConnected) {
             usbConnected = nextUsbConnected;
             emit _chargerConnectedChanged(usbConnected);
@@ -146,7 +146,7 @@ void BatteryBase::updateBaseData()
     }
 
     if(acConnectedFile && acConnectedFile->open(QIODevice::ReadOnly)) {
-        nextAcConnected = acConnectedFile->readLine().trimmed().toInt();
+        bool nextAcConnected = acConnectedFile->readLine().trimmed().toInt();
         if(nextAcConnected != acConnected) {
             acConnected = nextAcConnected;
             emit _acConnectedChanged(acConnected);
@@ -156,7 +156,7 @@ void BatteryBase::updateBaseData()
     }
 
     if(statusFile && statusFile->open(QIODevice::ReadOnly)) {
-        nextState = (QString(statusFile->readLine().trimmed().toLower()));
+        QString nextState = (QString(statusFile->readLine().trimmed().toLower()));
         if(nextState != state) {
             state = nextState;
             emit _stateChanged(state);
@@ -166,7 +166,7 @@ void BatteryBase::updateBaseData()
     }
 
     if(currentFile && currentFile->open(QIODevice::ReadOnly)) {
-        current = currentFile->readLine().trimmed().toInt();
+        int nextCurrent = currentFile->readLine().trimmed().toInt();
         if(!invertDecided) {
             bool connected = usbConnected || acConnected;
             if(connected && current <= -200) {
@@ -187,7 +187,7 @@ void BatteryBase::updateBaseData()
     }
 
     if(healthFile && healthFile->open(QIODevice::ReadOnly)) {
-        nextHealth = (QString(healthFile->readLine().trimmed().toLower()));
+        QString nextHealth = (QString(healthFile->readLine().trimmed().toLower()));
         if(nextHealth != health) {
             health = nextHealth;
             emit _healthChanged(health);
@@ -197,7 +197,7 @@ void BatteryBase::updateBaseData()
     }
 
     if(temperatureFile && temperatureFile->open(QIODevice::ReadOnly)) {
-        nextTemperature = temperatureFile->readLine().trimmed().toInt() / tempCorrectionFactor;
+        int nextTemperature = temperatureFile->readLine().trimmed().toInt() / tempCorrectionFactor;
         if(nextTemperature != temperature) {
             temperature = nextTemperature;
             emit _temperatureChanged(temperature);
