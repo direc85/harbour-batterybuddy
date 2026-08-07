@@ -33,11 +33,17 @@ CoverBackground {
             text: "⏲ " + Format.formatDuration(battery.timeToFull, Format.Timepoint)
             visible: battery.timeToFull !== 0x7FFFFFFF && battery.state == "charging"
         }
-        BatteryGraph {
-            x: coverPage.width * 0.3
-            y: coverPage.width * 0.25
-            width: 0.35 * coverPage.width
-            enableLowBatteryAnimation: coverPage.status === Cover.Active
+        Item {
+            width: parent.width
+            height: parent.height * 0.3
+            BatteryGraph {
+                width: parent.height
+                height: parent.width * 0.55
+                anchors.centerIn: parent
+                rotation: 90
+                transformOrigin: Item.Center
+                enableLowBatteryAnimation: coverPage.status === Cover.Active
+            }
         }
         CoverLabel {
             id: chargeLabel
