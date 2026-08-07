@@ -175,20 +175,23 @@ void BatteryBase::updateBaseData()
 
         if(!invertDecided) {
             bool connected = usbConnected || acConnected;
-            if(connected && current <= -200) {
+            if(connected && nextCurrent <= -200) {
                 logL("Battery current inverted");
                 invertSign = -1;
                 invertDecided = true;
             }
-            else if(connected && current >= 200) {
+            else if(connected && nextCurrent >= 200) {
                 logL("Battery current not inverted");
                 invertSign = 1;
                 invertDecided = true;
             }
         }
-        current = invertSign * current;
-        emit _currentChanged(current);
-        logH(QString("Current: %1mA").arg(current / 1000));
+        nextCurrent = invertSign * nextCurrent;
+        if (current != nextCurrent) {
+            current = nextCurrent;
+            emit _currentChanged(current);
+            logH(QString("Current: %1mA").arg(current / 1000));
+        }
     }
 
     if(healthFile && healthFile->open(QIODevice::ReadOnly)) {
