@@ -72,6 +72,8 @@ protected:
         QStringLiteral("/sys/class/power_supply/dollar_cove_battery/enable_charging"),
         // e.g. Jolla C2
         QStringLiteral("/sys/class/power_supply/battery/charger.0/stop_charge"),
+        // e.g. Jolla Phone
+        QStringLiteral("/sys/class/power_supply/primary_chg/online"),
     };
 
     // Charging/discharging current in microamps, e.g. -1450000 (-145mA)
@@ -114,11 +116,12 @@ protected:
         QStringLiteral("/sys/class/power_supply/dollar_cove_charger/present"),
         QStringLiteral("/sys/class/power_supply/axp20x-usb/present"),
         QStringLiteral("/sys/class/power_supply/usb/online"),
+        QStringLiteral("/sys/class/power_supply/mtk-master-charger/online"),
     };
 
     // Number: Time to full charge, in seconds
     const QStringList timeToFullFiles = {
-        // Jolla C2
+        // e.g. Jolla C2, Jolla Phone
         QStringLiteral("/sys/class/power_supply/battery/time_to_full_now"),
     };
 

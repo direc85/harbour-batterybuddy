@@ -50,7 +50,9 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QCoreApplication *app
     if(controlFile) {
         if(controlFile->open(QIODevice::WriteOnly)) {
             // Flip the charging control bits if necessary
-            if(controlFile->fileName().contains("enable")) {
+            if(controlFile->fileName().contains("enable")
+                || controlFile->fileName().contains("online")
+            ) {
                 enableChargingValue = 1 - enableChargingValue;
                 disableChargingValue = 1 - disableChargingValue;
             }
