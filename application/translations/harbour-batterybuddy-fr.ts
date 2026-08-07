@@ -314,6 +314,10 @@
         <comment>Charger plugged in, not using nor charging battery</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Time to full:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>

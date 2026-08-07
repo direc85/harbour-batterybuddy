@@ -318,10 +318,6 @@
         <source>Time to full:</source>
         <translation>Aika täyteen:</translation>
     </message>
-    <message>
-        <source>Time to empty:</source>
-        <translation>Aika tyhjään:</translation>
-    </message>
 </context>
 <context>
     <name>QObject</name>

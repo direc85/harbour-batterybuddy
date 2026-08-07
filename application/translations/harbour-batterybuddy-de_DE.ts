@@ -37,14 +37,6 @@
     </message>
 </context>
 <context>
-    <name>CoverPage</name>
-    <message>
-        <source>%1:%2</source>
-        <comment>a time duration, hours and minutes</comment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>InfoPage</name>
     <message>
         <source>What is Battery Buddy?</source>
@@ -323,28 +315,8 @@
         <translation>wird nicht geladen</translation>
     </message>
     <message>
-        <source>Time remaining:</source>
-        <translation>Verbleibende Zeit:</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n minute(s)</source>
-        <comment>time left</comment>
-        <translation>
-            <numerusform>eine Minute</numerusform>
-            <numerusform>%n Minuten</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>%n hour(s)</source>
-        <comment>time left</comment>
-        <translation>
-            <numerusform>eine Stunde</numerusform>
-            <numerusform>%n Stunden</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <translation type="unfinished">unbekannt</translation>
+        <source>Time to full:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
