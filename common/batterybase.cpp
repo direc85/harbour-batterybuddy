@@ -127,46 +127,52 @@ void BatteryBase::updateBaseData()
 {
     if(chargeFile && chargeFile->open(QIODevice::ReadOnly)) {
         int nextCharge = chargeFile->readLine().trimmed().toInt();
+        chargeFile->close();
+
         if(nextCharge != charge) {
             charge = nextCharge;
             emit _chargeChanged(charge);
             logM(QString("Battery: %1%").arg(charge));
         }
-        chargeFile->close();
     }
 
     if(usbConnectedFile && usbConnectedFile->open(QIODevice::ReadOnly)) {
         bool nextUsbConnected = usbConnectedFile->readLine().trimmed().toInt();
+        usbConnectedFile->close();
+
         if(nextUsbConnected != usbConnected) {
             usbConnected = nextUsbConnected;
             emit _chargerConnectedChanged(usbConnected);
             logM(QString("Charger: %1").arg(usbConnected ? "connected" : "disconnected"));
         }
-        usbConnectedFile->close();
     }
 
     if(acConnectedFile && acConnectedFile->open(QIODevice::ReadOnly)) {
         bool nextAcConnected = acConnectedFile->readLine().trimmed().toInt();
+        acConnectedFile->close();
+
         if(nextAcConnected != acConnected) {
             acConnected = nextAcConnected;
             emit _acConnectedChanged(acConnected);
             logM(QString("AC: %1").arg(acConnected ? "connected" : "disconnected"));
         }
-        acConnectedFile->close();
     }
 
     if(statusFile && statusFile->open(QIODevice::ReadOnly)) {
         QString nextState = (QString(statusFile->readLine().trimmed().toLower()));
+        statusFile->close();
+
         if(nextState != state) {
             state = nextState;
             emit _stateChanged(state);
             logM("State: " + state);
         }
-        statusFile->close();
     }
 
     if(currentFile && currentFile->open(QIODevice::ReadOnly)) {
         int nextCurrent = currentFile->readLine().trimmed().toInt();
+        currentFile->close();
+
         if(!invertDecided) {
             bool connected = usbConnected || acConnected;
             if(connected && current <= -200) {
@@ -183,38 +189,40 @@ void BatteryBase::updateBaseData()
         current = invertSign * current;
         emit _currentChanged(current);
         logH(QString("Current: %1mA").arg(current / 1000));
-        currentFile->close();
     }
 
     if(healthFile && healthFile->open(QIODevice::ReadOnly)) {
         QString nextHealth = (QString(healthFile->readLine().trimmed().toLower()));
+        healthFile->close();
+
         if(nextHealth != health) {
             health = nextHealth;
             emit _healthChanged(health);
             logM("Health: " + health);
         }
-        healthFile->close();
     }
 
     if(temperatureFile && temperatureFile->open(QIODevice::ReadOnly)) {
         int nextTemperature = temperatureFile->readLine().trimmed().toInt() / tempCorrectionFactor;
+        temperatureFile->close();
+
         if(nextTemperature != temperature) {
             temperature = nextTemperature;
             emit _temperatureChanged(temperature);
             logH(QString("Temperature: %1°C").arg(temperature / 10));
         }
-        temperatureFile->close();
     }
 
     if(timeToFullFile && timeToFullFile->open(QIODevice::ReadOnly)) {
         int nextTimeToFull = timeToFullFile->readLine().trimmed().toInt();
+        timeToFullFile->close();
+
         if(nextTimeToFull != timeToFull) {
             // C2 reports 1 when not charging:
             timeToFull = (nextTimeToFull == 1) ? 0x7FFFFFFF : nextTimeToFull;
             emit _timeToFullChanged(timeToFull);
             logH(QString("Time to Full: %1s").arg(timeToFull));
         }
-        timeToFullFile->close();
     }
 }
 
