@@ -173,20 +173,22 @@ void BatteryBase::updateBaseData()
         int nextCurrent = currentFile->readLine().trimmed().toInt();
         currentFile->close();
 
-        if(!invertDecided) {
+        if(invertSign == 0) {
             bool connected = usbConnected || acConnected;
             if(connected && nextCurrent <= -200) {
                 logL("Battery current inverted");
                 invertSign = -1;
-                invertDecided = true;
             }
             else if(connected && nextCurrent >= 200) {
                 logL("Battery current not inverted");
                 invertSign = 1;
-                invertDecided = true;
             }
         }
-        nextCurrent = invertSign * nextCurrent;
+
+        if (invertSign != 0) {
+            nextCurrent = invertSign * nextCurrent;
+        }
+
         if (current != nextCurrent) {
             current = nextCurrent;
             emit _currentChanged(current);

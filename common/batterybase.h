@@ -140,8 +140,7 @@ protected:
     int disableChargingValue = 1;
     bool chargerIsEnabled = true;
 
-    int invertSign = 1;
-    bool invertDecided = false;
+    int invertSign = 0; // 0 = undecided, 1 = keep, -1 = flip
 
     int maxSupportedCurrent = -1;
 
