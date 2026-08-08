@@ -25,23 +25,19 @@ BuildRequires:  libkeepalive-devel
 Prolong your battery life.
 
 %prep
-%setup -q -n %{name}-%{version}
+%autosetup -n %{name}-%{version}
 
 %build
-[ -d %{builddir} ] || mkdir -p %{builddir}
-cd %{builddir} || exit 1
-
-%qmake5 ../../
+%qmake5
 %make_build
 
 %install
-cd %{builddir} || exit 1
 %qmake5_install
 
 desktop-file-install --delete-original --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/*.desktop
 
-install -D -m 644 ${RPM_SOURCE_DIR}/../application/service/%{name}-oneshot.service %{buildroot}%{_unitdir}/%{name}-oneshot.service
-install -D -m 644 ${RPM_SOURCE_DIR}/../application/service/%{name}.service %{buildroot}%{_userunitdir}/%{name}.service
+install -D -m 644 application/service/%{name}-oneshot.service %{buildroot}%{_unitdir}/%{name}-oneshot.service
+install -D -m 644 application/service/%{name}.service %{buildroot}%{_userunitdir}/%{name}.service
 
 %postun
 # Run on uninstall, not on upgrade

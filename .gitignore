@@ -7,7 +7,6 @@
 *.qm
 *.spec.*
 *.autosave
-build/
 RPMS/
 *.o
 *.so
