@@ -147,23 +147,43 @@ Page {
                         label: qsTr("State:")
                         value: statusText[battery.state]
                     }
-                    DetailItem {
-                        height: battery.state == "charging" ? implicitHeight : 0
+                    Item {
+                        width: parent.width
+                        height: battery.timeToFull !== 0x7FFFFFFF && battery.state == "charging" ? timeToFullItem.height : 0
                         clip: true
-                        label: qsTr("Time to full:")
-                        value: Format.formatDuration(battery.timeToFull, Format.Timepoint)
-                        visible: battery.timeToFull !== 0x7FFFFFFF
 
                         Behavior on height {
                             NumberAnimation { }
                         }
+
+                        DetailItem {
+                            id: timeToFullItem
+
+                            label: qsTr("Time to full:")
+                            value: Format.formatDuration(battery.timeToFull, Format.Timepoint)
+                        }
                     }
-                    DetailItem {
-                        label: qsTr("Health:")
-                        value: healthText[battery.health]
-                        visible: value !== "unknown" && value !== "good"
-                        palette.highlightColor: Theme.highlightFromColor("orange", Theme.colorScheme)
-                        palette.secondaryHighlightColor: Theme.secondaryHighlightColor
+                    Item {
+                        width: parent.width
+                        height: battery.health !== "unknown" && battery.health !== "good" ? healthItem.height : 0
+                        clip: true
+
+                        Behavior on height {
+                            NumberAnimation { }
+                        }
+
+                        DetailItem {
+                            id: healthItem
+
+                            label: qsTr("Health:")
+                            value: healthText[battery.health]
+                            palette.highlightColor: Theme.highlightFromColor("orange", Theme.colorScheme)
+                            palette.secondaryHighlightColor: Theme.secondaryHighlightColor
+
+                            Behavior on opacity {
+                                NumberAnimation { }
+                            }
+                        }
                     }
                     DetailItem {
                         label: qsTr("Temperature:")
