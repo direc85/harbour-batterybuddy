@@ -98,6 +98,7 @@ protected:
         QStringLiteral("/sys/class/power_supply/battery/constant_charge_current_max"),
         QStringLiteral("/sys/class/power_supply/axp20x-battery/constant_charge_current_max"),
         QStringLiteral("/sys/class/qcom-battery/restrict_cur"),
+        QStringLiteral("/sys/class/power_supply/mtk-master-charger/constant_charge_current_max"),
     };
 
     // Enable or disable restricting current files, 0 or 1
