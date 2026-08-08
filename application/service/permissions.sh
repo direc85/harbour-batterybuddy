@@ -22,8 +22,8 @@ done <<EOF
 /sys/class/power_supply/dollar_cove_battery/enable_charging
 /sys/class/power_supply/axp-20x-battery/constant_charge_current_max
 /sys/class/power_supply/battery/charger.0/stop_charge
-/sys/class/power_supply/primary_chg/online
-/sys/class/power_supply/mtk-master-charger/constant_charge_current_max
+/sys/class/power_supply/primary_chg/bypass_mode
+/sys/class/power_supply/mtk-master-charger/constant_charge_current_max_DISABLED
 /sys/class/qcom-battery/charging_enabled
 /sys/class/qcom-battery/restrict_cur
 /sys/class/qcom-battery/restrict_chg

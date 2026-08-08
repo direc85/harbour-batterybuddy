@@ -61,7 +61,7 @@ protected:
         // e.g. Jolla C2
         QStringLiteral("/sys/class/power_supply/battery/charger.0/stop_charge"),
         // e.g. Jolla Phone
-        QStringLiteral("/sys/class/power_supply/primary_chg/online"),
+        QStringLiteral("/sys/class/power_supply/primary_chg/bypass_mode"),
         // e.g. Sony Xperia 1 IV, 5 IV
         QStringLiteral("/sys/class/qcom-battery/charging_enabled"),
     };
@@ -85,7 +85,8 @@ protected:
         QStringLiteral("/sys/class/power_supply/battery/constant_charge_current_max"),
         QStringLiteral("/sys/class/power_supply/axp20x-battery/constant_charge_current_max"),
         QStringLiteral("/sys/class/qcom-battery/restrict_cur"),
-        QStringLiteral("/sys/class/power_supply/mtk-master-charger/constant_charge_current_max"),
+        // Defaults to -1 -- unsupported default value
+        QStringLiteral("/sys/class/power_supply/mtk-master-charger/constant_charge_current_max_DISABLED"),
     };
 
     // Enable or disable restricting current files, 0 or 1
