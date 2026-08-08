@@ -45,10 +45,10 @@ install -D -m 644 application/service/%{name}.service %{buildroot}%{_userunitdir
 %postun
 # Run on uninstall, not on upgrade
 if [ $1 -eq 0 ]; then
-  systemctl --user stop %{name}.service
-  systemctl --user disable %{name}.service
-  systemctl --user daemon-reload
-  systemctl --user reset-failed
+  systemctl-user stop %{name}.service
+  systemctl-user disable %{name}.service
+  systemctl-user daemon-reload
+  systemctl-user reset-failed
 
   systemctl stop %{name}-oneshot.service
   systemctl disable %{name}-oneshot.service
@@ -63,7 +63,7 @@ systemctl disable %{name}.service 2>/dev/null ||:
 rm -f %{_unitdir}/%{name}.service
 
 systemctl daemon-reload
-systemctl --user daemon-reload
+systemctl-user daemon-reload
 
 # Install/update permission daemon (root)
 systemctl enable %{name}-oneshot.service
@@ -71,9 +71,9 @@ systemctl stop %{name}-oneshot.service
 systemctl start %{name}-oneshot.service
 
 # Install/update background daemon (user)
-systemctl --user enable %{name}.service
-systemctl --user stop %{name}.service
-systemctl --user start %{name}.service
+systemctl-user enable %{name}.service
+systemctl-user stop %{name}.service
+systemctl-user start %{name}.service
 
 %files
 %{_bindir}/%{name}
