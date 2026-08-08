@@ -1,3 +1,7 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-FileCopyrightText: 2019-2026 Matti Viljanen <matti.viljanen@kapsi.fi>
+# SPDX-FileCopyrightText: 2025 Peter G. <sailfish@nephros.org>
+
 # NOTICE:
 #
 # Application name defined in TARGET has a corresponding QML filename.

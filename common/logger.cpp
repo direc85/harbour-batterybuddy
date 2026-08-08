@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2021-2026 Matti Viljanen <matti.viljanen@kapsi.fi>
+
 #include "logger.h"
 
 Logger::Logger(const bool enableVerbose, const bool enableDebug, const bool useLogFile)
