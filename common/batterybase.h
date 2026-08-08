@@ -75,6 +75,8 @@ protected:
         QStringLiteral("/sys/class/power_supply/battery/charger.0/stop_charge"),
         // e.g. Jolla Phone
         QStringLiteral("/sys/class/power_supply/primary_chg/online"),
+        // e.g. Sony Xperia 1 IV, 5 IV
+        QStringLiteral("/sys/class/qcom-battery/charging_enabled"),
     };
 
     // Charging/discharging current in microamps, e.g. -1450000 (-145mA)
@@ -95,10 +97,12 @@ protected:
     const QStringList maxCurrentFiles = {
         QStringLiteral("/sys/class/power_supply/battery/constant_charge_current_max"),
         QStringLiteral("/sys/class/power_supply/axp20x-battery/constant_charge_current_max"),
+        QStringLiteral("/sys/class/qcom-battery/restrict_cur"),
     };
 
     // Enable or disable restricting current files, 0 or 1
     const QStringList restrictCurrentFiles = {
+        QStringLiteral("/sys/class/qcom-battery/restrict_chg"),
     };
 
     // Battery/charging status: charging, discharging, full, empty, unknown (others?)

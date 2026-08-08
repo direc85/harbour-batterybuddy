@@ -24,4 +24,7 @@ chmod 666 /sys/class/power_supply/dollar_cove_battery/enable_charging 2>/dev/nul
 chmod 666 /sys/class/power_supply/axp-20x-battery/constant_charge_current_max 2>/dev/null
 chmod 666 /sys/class/power_supply/battery/charger.0/stop_charge 2>/dev/null
 chmod 666 /sys/class/power_supply/primary_chg/online 2>/dev/null
+chmod 666 /sys/class/qcom-battery/charging_enabled 2>/dev/null
+chmod 666 /sys/class/qcom-battery/restrict_cur 2>/dev/null
+chmod 666 /sys/class/qcom-battery/restrict_chg 2>/dev/null
 exit 0
