@@ -46,7 +46,6 @@ DISTFILES += \
     qml/components/CoverLabel.qml \
     qml/components/BatteryGraph.qml \
     qml/components/ImageButton.qml \
-    qml/components/MyDetailItem.qml \
     qml/components/MyLabel.qml \
     qml/components/MySlider.qml \
     qml/components/SystemdUserService.qml \

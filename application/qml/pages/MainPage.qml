@@ -110,16 +110,16 @@ Page {
                     width: parent.width
                     spacing: 0
 
-                    MyDetailItem {
+                    DetailItem {
                         label: qsTr("Charge:")
                         value: battery.charge + "%"
                     }
-                    MyDetailItem {
+                    DetailItem {
                         label: qsTr("Current:")
                         value: Math.floor(battery.current / 1000) + " mA"
                     }
 
-                    MyDetailItem {
+                    DetailItem {
                         property bool connected: (battery.chargerConnected || battery.acConnected)
                         property string chargerType: {
                             if      ( battery.chargerConnected && !battery.acConnected) { return qsTr("USB") }
@@ -130,22 +130,27 @@ Page {
                         label: qsTr("Charger connected:")
                         value: connected ? (qsTr("yes") + " (" + chargerType + ")") : qsTr("no")
                     }
-                    MyDetailItem {
+                    DetailItem {
                         label: qsTr("State:")
                         value: statusText[battery.state]
                     }
-                    MyDetailItem {
+                    DetailItem {
+                        height: battery.state == "charging" ? implicitHeight : 0
+                        clip: true
                         label: qsTr("Time to full:")
                         value: Format.formatDuration(battery.timeToFull, Format.Timepoint)
                         visible: battery.timeToFull !== 0x7FFFFFFF
-                        showCondition: battery.state == "charging"
+
+                        Behavior on height {
+                            NumberAnimation { }
+                        }
                     }
-                    MyDetailItem {
+                    DetailItem {
                         label: qsTr("Health:")
                         value: healthText[battery.health]
                         visible: value !== "unknown"
                     }
-                    MyDetailItem {
+                    DetailItem {
                         label: qsTr("Temperature:")
                         value: battery.temperature === 0x7FFFFFFF ? healthText["unknown"] : formatTemperature(battery.temperature)
                         visible: battery.temperature !== 0x7FFFFFFF
