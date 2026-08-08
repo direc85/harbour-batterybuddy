@@ -172,21 +172,6 @@ void BatteryBase::updateBaseData()
         int nextCurrent = currentFile->readLine().trimmed().toInt();
         currentFile->close();
 
-        if(invertSign == 0 && state == "discharging") {
-            if (nextCurrent >= 200) {
-                logL("Battery current inverted");
-                invertSign = -1;
-            }
-            else if (nextCurrent <= -200) {
-                logL("Battery current not inverted");
-                invertSign = 1;
-            }
-        }
-
-        if (invertSign < 0) {
-            nextCurrent = -nextCurrent;
-        }
-
         if (current != nextCurrent) {
             current = nextCurrent;
             emit _currentChanged(current);

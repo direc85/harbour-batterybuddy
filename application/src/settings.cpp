@@ -22,6 +22,7 @@ Settings::Settings(Logger *newLogger, QObject *parent) : SettingsBase(newLogger,
     loadInteger(sHighLimit, highLimit, 6, 100);
     loadInteger(sMaxSupportedChargeCurrent, maxSupportedChargeCurrent, 0, 5000000);
     loadInteger(sMaxChargeCurrent, maxChargeCurrent, 0, maxSupportedChargeCurrent);
+    loadInteger(sInvertSign, invertSign, -1, 1);
     loadInteger(sLogLevel, logLevel, 0, 2);
 
     loadString(sLogFilename, logFilename);
@@ -62,6 +63,12 @@ Settings::Settings(Logger *newLogger, QObject *parent) : SettingsBase(newLogger,
     connect(this, &SettingsBase::notificationHealthWarnTextChanged, this, &Settings::notificationHealthWarnTextChanged);
     connect(this, &SettingsBase::notificationHealthCritTextChanged, this, &Settings::notificationHealthCritTextChanged);
     connect(this, &SettingsBase::logFilenameChanged, this, &Settings::logFilenameChanged);
+}
+
+void Settings::setInvertSign(const int newSign)
+{
+    if(saveInteger(sInvertSign, newSign, invertSign))
+        emit invertSignChanged(invertSign);
 }
 
 Settings::~Settings()

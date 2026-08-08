@@ -115,8 +115,21 @@ Page {
                         value: battery.charge + "%"
                     }
                     DetailItem {
+                        property int current: battery.current
+                        property int invertSign: settings.invertSign
                         label: qsTr("Current:")
-                        value: Math.floor(battery.current / 1000) + " mA"
+                        value: Math.floor(current * (invertSign || 1) / 1000) + " mA"
+
+                        onCurrentChanged: {
+                            if (invertSign == 0 && battery.state == "discharging") {
+                                if (current >= 200000) {
+                                    settings.invertSign = -1;
+                                }
+                                else if (current <= -200000) {
+                                    settings.invertSign = 1;
+                                }
+                            }
+                        }
                     }
 
                     DetailItem {

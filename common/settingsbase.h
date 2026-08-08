@@ -28,6 +28,7 @@ public:
     int getHighLimit();
     int getLogLevel();
     int getMaxSupportedChargeCurrent();
+    int getInvertSign();
     bool getLimitEnabled();
     QString getLowAlertFile();
     QString getHighAlertFile();
@@ -76,6 +77,8 @@ protected:
     int highLimit = 70;
     int maxChargeCurrent = 0; // micro amps
     int maxSupportedChargeCurrent = 0; // micro amps
+    int invertSign = 0; // 0 = undecided, 1 = keep, -1 = flip
+
     const QString lowAlertFile = QStringLiteral("/usr/share/sounds/jolla-ambient/stereo/general_warning.wav");
     const QString highAlertFile = QStringLiteral("/usr/share/sounds/jolla-ambient/stereo/positive_confirmation.wav");
     const QString healthAlertFile = lowAlertFile;
@@ -103,6 +106,7 @@ protected:
     const QString sHighLimit = QStringLiteral("highLimit");
     const QString sMaxSupportedChargeCurrent = QStringLiteral("maxSupportedChargeCurrent");
     const QString sMaxChargeCurrent = QStringLiteral("maxChargeCurrent");
+    const QString sInvertSign = QStringLiteral("invertSign");
     const QString sLowAlertFile = QStringLiteral("lowAlertFile");
     const QString sHighAlertFile = QStringLiteral("highAlertFile");
     const QString sHealthAlertFile = QStringLiteral("healthAlertFile");
@@ -133,6 +137,7 @@ signals:
     void highLimitChanged(int);
     void maxChargeCurrentChanged(int);
     void maxSupportedChargeCurrentChanged(int);
+    void invertSignChanged(int);
     void lowAlertFileChanged(QString);
     void highAlertFileChanged(QString);
     void healthAlertFileChanged(QString);

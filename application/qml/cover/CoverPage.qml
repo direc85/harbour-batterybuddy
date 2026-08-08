@@ -44,7 +44,7 @@ CoverBackground {
             text: "🔋 " + battery.charge + "%"
         }
         CoverLabel {
-            text: "🔌 " + Math.floor(battery.current / 1000) + " mA"
+            text: "🔌 " + Math.floor(battery.current * (settings.invertSign || 1) / 1000) + " mA"
         }
         CoverLabel {
             height: text === '🌡️ ' ? 0 : chargeLabel.height

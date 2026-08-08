@@ -214,6 +214,11 @@ int SettingsBase::getMaxSupportedChargeCurrent()
     return maxSupportedChargeCurrent;
 }
 
+int SettingsBase::getInvertSign()
+{
+    return invertSign;
+}
+
 bool SettingsBase::getLimitEnabled()
 {
     return limitEnabled == 1;

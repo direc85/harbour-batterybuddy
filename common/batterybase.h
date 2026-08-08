@@ -147,6 +147,7 @@ protected:
     int timeToFull = 0x7FFFFFFF;     // Seconds to full charge. INT32_MAX means "unknown"
 
     int getCharge();
+    int getInvertSign();
     int getCurrent();
     int getMaxChargeCurrent();
     bool getCharging();
@@ -170,6 +171,7 @@ signals:
     void _healthChanged(QString);
     void _temperatureChanged(int);
     void _timeToFullChanged(int);
+    void _invertSignChanged(int);
 };
 
 #endif // BATTERYBASE_H

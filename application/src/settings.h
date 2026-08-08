@@ -22,6 +22,7 @@ class Settings : public SettingsBase
     Q_PROPERTY(int lowLimit READ getLowLimit WRITE setLowLimit NOTIFY lowLimitChanged)
     Q_PROPERTY(int maxChargeCurrent READ getMaxChargeCurrent WRITE setMaxChargeCurrent NOTIFY maxChargeCurrentChanged)
     Q_PROPERTY(int maxSupportedChargeCurrent READ getMaxSupportedChargeCurrent NOTIFY maxSupportedChargeCurrentChanged)
+    Q_PROPERTY(int invertSign READ getInvertSign WRITE setInvertSign NOTIFY invertSignChanged)
     Q_PROPERTY(bool limitEnabled READ getLimitEnabled WRITE setLimitEnabled NOTIFY limitEnabledChanged)
     Q_PROPERTY(QString highAlertFile READ getHighAlertFile NOTIFY highAlertFileChanged)
     Q_PROPERTY(QString lowAlertFile READ getLowAlertFile NOTIFY lowAlertFileChanged)
@@ -39,6 +40,8 @@ public:
     Settings(Logger* newLogger, QObject* parent = nullptr);
     ~Settings();
 
+    void setInvertSign(const int newSign);
+
 signals:
     void lowAlertChanged(int);
     void highAlertChanged(int);
@@ -51,6 +54,7 @@ signals:
     void highLimitChanged(int);
     void maxChargeCurrentChanged(int);
     void maxSupportedChargeCurrentChanged(int);
+    void invertSignChanged(int);
     void lowAlertFileChanged(QString);
     void highAlertFileChanged(QString);
     void healthAlertFileChanged(QString);
