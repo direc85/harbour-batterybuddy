@@ -35,13 +35,14 @@ cd %{builddir} || exit 1
 %make_build
 
 %install
-cd %{builddir} || exit 1
+pushd %{builddir} || exit 1
 %qmake5_install
 
 desktop-file-install --delete-original --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/*.desktop
 
-install -D -m 644 ${RPM_SOURCE_DIR}/../application/service/%{name}-oneshot.service %{buildroot}%{_unitdir}/%{name}-oneshot.service
-install -D -m 644 ${RPM_SOURCE_DIR}/../application/service/%{name}.service %{buildroot}%{_userunitdir}/%{name}.service
+popd
+install -D -m 644 application/service/%{name}-oneshot.service %{buildroot}%{_unitdir}/%{name}-oneshot.service
+install -D -m 644 application/service/%{name}.service %{buildroot}%{_userunitdir}/%{name}.service
 
 %postun
 # Run on uninstall, not on upgrade
