@@ -71,6 +71,18 @@ BatteryBase::BatteryBase(Logger* newLogger, QObject* parent)
     }
     logL("Max charge current file: " + (maxCurrentFile ? maxCurrentFile->fileName() : notFound));
 
+    // No point checking the restriction control file
+    // if the max current file wasn't writable
+    if (maxCurrentFile) {
+        foreach(const QString& file, restrictCurrentFiles) {
+            if(QFile::exists(file)) {
+                restrictCurrentFile = new QFile(file, this);
+                break;
+            }
+        }
+        logL("Charge restriction file: " + (restrictCurrentFile ? restrictCurrentFile->fileName() : notFound));
+    }
+
     foreach(const QString& file, statusFiles) {
         if(QFile::exists(file)) {
             statusFile = new QFile(file, this);

@@ -40,6 +40,7 @@ protected:
     QFile *currentFile = nullptr;
     QFile *healthFile = nullptr;
     QFile *maxCurrentFile = nullptr;
+    QFile *restrictCurrentFile = nullptr;
     QFile *statusFile = nullptr;
     QFile *temperatureFile = nullptr;
     QFile *usbConnectedFile = nullptr;
@@ -94,6 +95,10 @@ protected:
     const QStringList maxCurrentFiles = {
         QStringLiteral("/sys/class/power_supply/battery/constant_charge_current_max"),
         QStringLiteral("/sys/class/power_supply/axp20x-battery/constant_charge_current_max"),
+    };
+
+    // Enable or disable restricting current files, 0 or 1
+    const QStringList restrictCurrentFiles = {
     };
 
     // Battery/charging status: charging, discharging, full, empty, unknown (others?)

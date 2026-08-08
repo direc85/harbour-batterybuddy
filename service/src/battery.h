@@ -41,6 +41,7 @@ public:
     ~Battery();
 
     bool setChargingEnabled(const bool isEnabled);
+    void enableRestrictCharging(const bool enabled);
 
 public slots:
     void updateData();

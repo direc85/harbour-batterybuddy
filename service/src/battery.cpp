@@ -23,8 +23,19 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QCoreApplication *app
     settings = newSettings;
 
     if(maxCurrentFile) {
+        bool restrictOk = restrictCurrentFile == nullptr;
+        bool currentOk = false;
+
+        if(!restrictOk && restrictCurrentFile->open(QIODevice::WriteOnly)) {
+            restrictCurrentFile->close();
+            restrictOk = true;
+        } else {
+            logL("Restrict charge current file is not writable - feature disabled");
+        }
+
         if(maxCurrentFile->open(QIODevice::WriteOnly)) {
             maxCurrentFile->close();
+            currentOk = true;
             if(maxCurrentFile->open(QIODevice::ReadOnly)) {
 
                 // Read and store the default max current
@@ -39,9 +50,17 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QCoreApplication *app
                     setMaxChargeCurrent(maxChargeCurrent);
                 }
             }
-        }
-        else {
+        } else {
             logL("Max charge current file is not writable - feature disabled");
+        }
+
+        if (!restrictOk) {
+            delete restrictCurrentFile;
+            restrictCurrentFile = nullptr;
+            currentOk = false;
+        }
+
+        if (!currentOk) {
             delete maxCurrentFile;
             maxCurrentFile = nullptr;
         }
@@ -111,6 +130,7 @@ Battery::Battery(Settings* newSettings, Logger* newLogger, QCoreApplication *app
 Battery::~Battery()
 {
     setMaxChargeCurrent(maxChargeCurrent);
+    enableRestrictCharging(false);
 
     updateTimer->stop();
     highNotifyTimer->stop();
@@ -341,6 +361,7 @@ bool Battery::setChargingEnabled(const bool isEnabled)
 void Battery::setMaxChargeCurrent(int newCurrent)
 {
     if(maxCurrentFile) {
+        enableRestrictCharging(true);
         logM(QString("Max charging current: %1mA").arg(newCurrent / 1000));
         if(newCurrent > maxChargeCurrent) {
             newCurrent = maxChargeCurrent;
@@ -353,6 +374,22 @@ void Battery::setMaxChargeCurrent(int newCurrent)
         }
         else {
             logM("Could not open max charging current file");
+        }
+        maxCurrentFile->close();
+    }
+}
+
+void Battery::enableRestrictCharging(const bool enabled)
+{
+    if(restrictCurrentFile) {
+        if(restrictCurrentFile->open(QIODevice::WriteOnly)) {
+            QString data = enabled ? QStringLiteral("1") : QStringLiteral("0");
+            if(!restrictCurrentFile->write(data.toLocal8Bit())) {
+                logM("Could not write to restrict charging current file");
+            }
+        }
+        else {
+            logM("Could not open restrict charging current file");
         }
         maxCurrentFile->close();
     }
