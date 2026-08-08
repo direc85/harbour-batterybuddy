@@ -1,3 +1,17 @@
+* Sat Aug 08 2026 Matti Viljanen <matti.viljanen@kapsi.fi> 4.4.0-0+beta4
+- Add support for enable charging current limitation control file
+- Add Sony Xperia 1 IV and Sony Xperia 5 IV support (thanks, wetab73)
+- Simplify and unify file permission scripts
+- Use SPDX identifiers and copyright holder headers
+- Simplify build process (fixes OBS build)
+- Drop copied MyDetailItem
+- Fix current sign on Jolla Phone
+- Persist current sign in settings
+- Fix Jolla Phone charger control (still rudimentary)
+- Drop Jolla Phone charge current control (unsupported behavior)
+- Hide battery health when good or unknown (thanks, nephros)
+- Fix main page detail item animations
+
 * Fri Aug 07 2026 Matti Viljanen <matti.viljanen@kapsi.fi> 4.4.0-0+beta3
 - Add Jolla Phone support (experimental)
 - Show time-to-full, if provided (thanks, nephros)

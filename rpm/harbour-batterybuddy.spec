@@ -7,7 +7,7 @@ Name:       harbour-batterybuddy
 Summary:    Battery Buddy
 # Keep this in sync with version.h
 Version:    4.4.0
-Release:    0+beta3
+Release:    0+beta4
 Group:      Qt/Qt
 License:    GPLv3
 URL:        http://example.org/
