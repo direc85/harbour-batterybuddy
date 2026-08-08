@@ -161,7 +161,9 @@ Page {
                     DetailItem {
                         label: qsTr("Health:")
                         value: healthText[battery.health]
-                        visible: value !== "unknown"
+                        visible: value !== "unknown" && value !== "good"
+                        palette.highlightColor: Theme.highlightFromColor("orange", Theme.colorScheme)
+                        palette.secondaryHighlightColor: Theme.secondaryHighlightColor
                     }
                     DetailItem {
                         label: qsTr("Temperature:")
