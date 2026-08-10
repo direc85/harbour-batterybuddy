@@ -87,9 +87,9 @@ protected:
     QString notificationTitle = "Battery charge %1%";
     QString notificationLowText = "Please connect the charger.";
     QString notificationHighText = "Please disconnect the charger.";
-    QString notificationHealthTitle = "Battery health %1";
-    QString notificationHealthWarnText = "Battery health is not good";
-    QString notificationHealthCritText = "Battery health is critical";
+    QString notificationHealthTitle = "Battery warning %1";
+    QString notificationHealthWarnText = "Battery is not feeling good";
+    QString notificationHealthCritText = "Battery has a critical condition";
 
     QString logFilename;
     int logLevel = 1;
