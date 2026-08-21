@@ -1,31 +1,17 @@
-/**
- * Battery Buddy, a Sailfish application to prolong battery lifetime
- *
- * Copyright (C) 2019-2022 Matti Viljanen
- *
- * Battery Buddy is free software: you can redistribute it and/or modify it under the terms of the
- * GNU General Public License as published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * Battery Buddy is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * See the GNU General Public License for more details. You should have received a copy of the GNU
- * General Public License along with Battery Buddy. If not, see <http://www.gnu.org/licenses/>.
- *
- * Author: Matti Viljanen
- */
-#include <QCoreApplication>
-#include <QObject>
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2020-2026 Matti Viljanen <matti.viljanen@kapsi.fi>
 
-#include "logger.h"
-#include "battery.h"
+#include <QCoreApplication>
 
 #include <signal.h>
 
+#include "logger.h"
+#include "settings.h"
+#include "battery.h"
+#include "version.h"
+
 int main(int argc, char** argv)
 {
-    bool logLevelSet = false;
     bool verbose = false;
     bool debug = false;
     bool logfile = false;
@@ -38,18 +24,15 @@ int main(int argc, char** argv)
         else if(!strcmp(argv[i],"--verbose")) {
             verbose = true;
             debug = false;
-            logLevelSet = true;
         }
         else if(!strcmp(argv[i],"--debug")) {
             verbose = true;
             debug = true;
-            logLevelSet = true;
         }
         else if(!strcmp(argv[i],"--logfile")) {
             logfile = true;
             verbose = true;
             debug = false;
-            logLevelSet = true;
         }
         else if(!strcmp(argv[i],"--help")) {
             printf("%s %s\n", APP_NAME, APP_VERSION);
@@ -65,15 +48,17 @@ int main(int argc, char** argv)
 
     QCoreApplication app(argc, argv);
     app.setApplicationName(APP_NAME);
+    app.setOrganizationName(APP_NAME);
     app.setApplicationVersion(APP_VERSION);
 
     Logger* logger = new Logger(verbose, debug, logfile);
+    Settings* settings = new Settings(logger);
     logL(QString("%1 %2").arg(APP_NAME, APP_VERSION));
 
-    Battery* battery = new Battery(logger, logLevelSet, &app);
+    Battery* battery = new Battery(settings, logger, &app);
 
     // Exit gracefully on Ctrl-C and service stop
-    QObject::connect(&app, SIGNAL(aboutToQuit()), battery, SLOT(shutdown()));
+    QObject::connect(&app, &QCoreApplication::aboutToQuit, battery, &Battery::shutdown);
     signal(SIGINT, app.exit);
     signal(SIGTERM, app.exit);
 
@@ -81,6 +66,7 @@ int main(int argc, char** argv)
 
     delete battery;
     delete logger;
+    delete settings;
 
     return retval;
 }

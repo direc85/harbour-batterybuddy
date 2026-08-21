@@ -1,3 +1,7 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-FileCopyrightText: 2019-2026 Matti Viljanen <matti.viljanen@kapsi.fi>
+# SPDX-FileCopyrightText: 2025 Peter G. <sailfish@nephros.org>
+
 # NOTICE:
 #
 # Application name defined in TARGET has a corresponding QML filename.
@@ -14,26 +18,26 @@ TARGET = harbour-batterybuddy
 
 CONFIG += console sailfishapp sailfishapp_i18n dbus
 
-# Keep this in sync with service.pro and .spec
-VERSION = 4.3.2-1
-
-DEFINES += APP_VERSION=\"\\\"$$VERSION\\\"\"
-DEFINES += APP_NAME=\"\\\"$$TARGET\\\"\"
-
 # Use "--verbose" and "--debug" at runtime.
 # See main() and logger.h for details.
 DEFINES += QT_NO_DEBUG_OUTPUT
 
+INCLUDEPATH += "../common"
+
 HEADERS += \
+    ../common/batterybase.h \
+    ../common/logger.h \
+    ../common/settingsbase.h \
     src/battery.h \
-    src/logger.h \
     src/settings.h
 
 SOURCES += \
+    ../common/batterybase.cpp \
+    ../common/logger.cpp \
+    ../common/settingsbase.cpp \
     src/battery.cpp \
+    src/settings.cpp \
     src/harbour-batterybuddy.cpp \
-    src/logger.cpp \
-    src/settings.cpp
 
 DISTFILES += \
     harbour-batterybuddy.desktop \
@@ -42,7 +46,6 @@ DISTFILES += \
     qml/components/CoverLabel.qml \
     qml/components/BatteryGraph.qml \
     qml/components/ImageButton.qml \
-    qml/components/MyDetailItem.qml \
     qml/components/MyLabel.qml \
     qml/components/MySlider.qml \
     qml/components/SystemdUserService.qml \
@@ -59,12 +62,12 @@ DISTFILES += \
     service/harbour-batterybuddy.service \
     service/restore-write-permissions.sh \
     service/set-write-permissions.sh \
-    translations/*.ts
+    $$files(translations/*.ts)
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 
 TRANSLATIONS += translations/harbour-batterybuddy.ts \
-   translations/harbour-batterybuddy-*.ts
+   $$files(translations/harbour-batterybuddy-*.ts)
 
 # Executable provided by "service.pro"
 # Two services, actually

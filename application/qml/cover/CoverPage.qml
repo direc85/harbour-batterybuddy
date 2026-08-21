@@ -1,20 +1,7 @@
-/**
- * Battery Buddy, a Sailfish application to prolong battery lifetime
- *
- * Copyright (C) 2019-2022 Matti Viljanen
- *
- * Battery Buddy is free software: you can redistribute it and/or modify it under the terms of the
- * GNU General Public License as published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * Battery Buddy is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * See the GNU General Public License for more details. You should have received a copy of the GNU
- * General Public License along with Battery Buddy. If not, see <http://www.gnu.org/licenses/>.
- *
- * Author: Matti Viljanen
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2019-2026 Matti Viljanen <matti.viljanen@kapsi.fi>
+// SPDX-FileCopyrightText: 2025 Peter G. <sailfish@nephros.org>
+
 import QtQuick 2.6
 import Sailfish.Silica 1.0
 import "../components"
@@ -29,18 +16,35 @@ CoverBackground {
             right: coverPage.right
             verticalCenter: parent.verticalCenter
         }
-        BatteryGraph {
-            x: coverPage.width * 0.3
-            y: coverPage.width * 0.25
-            width: 0.35 * coverPage.width
-            enableLowBatteryAnimation: coverPage.status === Cover.Active
+        CoverLabel {
+            property bool charging: battery.state == "charging"
+            text: "⏲ %1".arg(Format.formatDuration(battery.timeToFull, Format.Timepoint))
+            visible: battery.timeToFull !== 0x7FFFFFFF
+            height: charging && visible ? implicitHeight : 0
+            clip: true
+
+            Behavior on height {
+                NumberAnimation { }
+            }
+        }
+        Item {
+            width: parent.width
+            height: parent.height * 0.3
+            BatteryGraph {
+                width: parent.height
+                height: parent.width * 0.55
+                anchors.centerIn: parent
+                rotation: 90
+                transformOrigin: Item.Center
+                enableLowBatteryAnimation: coverPage.status === Cover.Active
+            }
         }
         CoverLabel {
             id: chargeLabel
             text: "🔋 " + battery.charge + "%"
         }
         CoverLabel {
-            text: "🔌 " + Math.floor(battery.current / 1000) + " mA"
+            text: "🔌 " + Math.floor(battery.current * (settings.invertSign || 1) / 1000) + " mA"
         }
         CoverLabel {
             height: text === '🌡️ ' ? 0 : chargeLabel.height

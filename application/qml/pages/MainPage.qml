@@ -1,20 +1,7 @@
-/**
- * Battery Buddy, a Sailfish application to prolong battery lifetime
- *
- * Copyright (C) 2019-2023 Matti Viljanen
- *
- * Battery Buddy is free software: you can redistribute it and/or modify it under the terms of the
- * GNU General Public License as published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * Battery Buddy is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * See the GNU General Public License for more details. You should have received a copy of the GNU
- * General Public License along with Battery Buddy. If not, see <http://www.gnu.org/licenses/>.
- *
- * Author: Matti Viljanen
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2019-2026 Matti Viljanen <matti.viljanen@kapsi.fi>
+// SPDX-FileCopyrightText: 2021-2025 Peter G. <sailfish@nephros.org>
+
 import QtQuick 2.6
 import Sailfish.Silica 1.0
 import "../components"
@@ -24,6 +11,7 @@ Page {
     allowedOrientations: Orientation.Portrait | Orientation.Landscape | Orientation.LandscapeInverted
     property variant statusText: {
         "idle": qsTr("idle", "Charger plugged in, not using nor charging battery"),
+        "not charging": qsTr("not charging", "Charger plugged in, not using nor charging battery"),
         "discharging": qsTr("discharging", "Charger not plugged in, battery discharging"),
         "charging": qsTr("charging", "Charger plugged in and battery charging"),
         "full": qsTr("full", "Battery fully charged"),
@@ -122,16 +110,29 @@ Page {
                     width: parent.width
                     spacing: 0
 
-                    MyDetailItem {
+                    DetailItem {
                         label: qsTr("Charge:")
                         value: battery.charge + "%"
                     }
-                    MyDetailItem {
+                    DetailItem {
+                        property int current: battery.current
+                        property int invertSign: settings.invertSign
                         label: qsTr("Current:")
-                        value: Math.floor(battery.current / 1000) + " mA"
+                        value: Math.floor(current * (invertSign || 1) / 1000) + " mA"
+
+                        onCurrentChanged: {
+                            if (invertSign == 0 && battery.state == "discharging") {
+                                if (current >= 200000) {
+                                    settings.invertSign = -1;
+                                }
+                                else if (current <= -200000) {
+                                    settings.invertSign = 1;
+                                }
+                            }
+                        }
                     }
 
-                    MyDetailItem {
+                    DetailItem {
                         property bool connected: (battery.chargerConnected || battery.acConnected)
                         property string chargerType: {
                             if      ( battery.chargerConnected && !battery.acConnected) { return qsTr("USB") }
@@ -142,16 +143,49 @@ Page {
                         label: qsTr("Charger connected:")
                         value: connected ? (qsTr("yes") + " (" + chargerType + ")") : qsTr("no")
                     }
-                    MyDetailItem {
+                    DetailItem {
                         label: qsTr("State:")
                         value: statusText[battery.state]
                     }
-                    MyDetailItem {
-                        label: qsTr("Health:")
-                        value: healthText[battery.health]
-                        visible: value !== "unknown"
+                    Item {
+                        width: parent.width
+                        height: battery.timeToFull !== 0x7FFFFFFF && battery.state == "charging" ? timeToFullItem.height : 0
+                        clip: true
+
+                        Behavior on height {
+                            NumberAnimation { }
+                        }
+
+                        DetailItem {
+                            id: timeToFullItem
+
+                            label: qsTr("Time to full:")
+                            value: Format.formatDuration(battery.timeToFull, Format.Timepoint)
+                        }
                     }
-                    MyDetailItem {
+                    Item {
+                        width: parent.width
+                        height: battery.health !== "unknown" && battery.health !== "good" ? healthItem.height : 0
+                        clip: true
+
+                        Behavior on height {
+                            NumberAnimation { }
+                        }
+
+                        DetailItem {
+                            id: healthItem
+
+                            label: qsTr("Health:")
+                            value: healthText[battery.health]
+                            palette.highlightColor: Theme.highlightFromColor("orange", Theme.colorScheme)
+                            palette.secondaryHighlightColor: Theme.secondaryHighlightColor
+
+                            Behavior on opacity {
+                                NumberAnimation { }
+                            }
+                        }
+                    }
+                    DetailItem {
                         label: qsTr("Temperature:")
                         value: battery.temperature === 0x7FFFFFFF ? healthText["unknown"] : formatTemperature(battery.temperature)
                         visible: battery.temperature !== 0x7FFFFFFF

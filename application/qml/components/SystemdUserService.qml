@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2022-2026 Matti Viljanen <matti.viljanen@kapsi.fi>
+
 import QtQuick 2.6
 import Nemo.DBus 2.0
 

@@ -1,20 +1,6 @@
-/**
- * Battery Buddy, a Sailfish application to prolong battery lifetime
- *
- * Copyright (C) 2019-2022 Matti Viljanen
- *
- * Battery Buddy is free software: you can redistribute it and/or modify it under the terms of the
- * GNU General Public License as published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * Battery Buddy is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * See the GNU General Public License for more details. You should have received a copy of the GNU
- * General Public License along with Battery Buddy. If not, see <http://www.gnu.org/licenses/>.
- *
- * Author: Matti Viljanen
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2019-2026 Matti Viljanen <matti.viljanen@kapsi.fi>
+
 #ifdef QT_QML_DEBUG
 #include <QtQuick>
 #endif
@@ -31,6 +17,7 @@
 #include "logger.h"
 #include "battery.h"
 #include "settings.h"
+#include "version.h"
 
 int main(int argc, char *argv[])
 {
@@ -78,6 +65,7 @@ int main(int argc, char *argv[])
     QGuiApplication* app = SailfishApp::application(argc, argv);
     app->setApplicationName(APP_NAME);
     app->setOrganizationName(APP_NAME);
+    app->setApplicationVersion(APP_VERSION);
 
     QQuickView* view = SailfishApp::createView();
 
@@ -86,7 +74,7 @@ int main(int argc, char *argv[])
     Battery* battery = new Battery(settings, logger);
 
     QTimer* updater = new QTimer();
-    QObject::connect(updater, SIGNAL(timeout()), battery, SLOT(updateData()));
+    QObject::connect(updater, &QTimer::timeout, battery, &Battery::updateData);
     updater->start(3000);
 
     const QStringList frequencyNames = {
