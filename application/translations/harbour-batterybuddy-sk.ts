@@ -312,11 +312,11 @@
     <message>
         <source>not charging</source>
         <comment>Charger plugged in, not using nor charging battery</comment>
-        <translation type="unfinished"></translation>
+        <translation>nenabíja sa</translation>
     </message>
     <message>
         <source>Time to full:</source>
-        <translation type="unfinished"></translation>
+        <translation>Čas do nabitia:</translation>
     </message>
 </context>
 <context>
