@@ -190,11 +190,11 @@
     </message>
     <message>
         <source>Charge:</source>
-        <translation>Nabitie:</translation>
+        <translation>Úroveň nabitia:</translation>
     </message>
     <message>
         <source>State:</source>
-        <translation>Stav:</translation>
+        <translation>Proces:</translation>
     </message>
     <message>
         <source>idle</source>
@@ -218,7 +218,7 @@
     </message>
     <message>
         <source>Charger connected:</source>
-        <translation>Pripojená nabíjačka:</translation>
+        <translation>Nabíjačka pripojená:</translation>
     </message>
     <message>
         <source>full</source>
@@ -312,11 +312,11 @@
     <message>
         <source>not charging</source>
         <comment>Charger plugged in, not using nor charging battery</comment>
-        <translation type="unfinished"></translation>
+        <translation>nenabíja sa</translation>
     </message>
     <message>
         <source>Time to full:</source>
-        <translation type="unfinished"></translation>
+        <translation>Čas do nabitia:</translation>
     </message>
 </context>
 <context>
