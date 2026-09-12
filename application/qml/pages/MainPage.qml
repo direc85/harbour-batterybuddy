@@ -175,7 +175,7 @@ Page {
                         DetailItem {
                             id: healthItem
 
-                            label: qsTr("Health:")
+                            label: qsTr("Warning:")
                             value: healthText[battery.health]
                             palette.highlightColor: Theme.highlightFromColor("orange", Theme.colorScheme)
                             palette.secondaryHighlightColor: Theme.secondaryHighlightColor

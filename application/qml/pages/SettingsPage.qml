@@ -317,7 +317,7 @@ Page {
 
                 Label {
                     x: Theme.paddingLarge
-                    text: qsTr("Health notification settings")
+                    text: qsTr("Warning notification settings")
                     color: Theme.highlightColor
                 }
                 Label {
@@ -351,11 +351,11 @@ Page {
                     }
                 }
 
-                SectionHeader { text: qsTr("Health notification interval") }
+                SectionHeader { text: qsTr("Warning notification interval") }
 
                 ComboBox {
                     id: healthIntervalCombo
-                    label: qsTr("Health notification interval")
+                    label: qsTr("Warning notification interval")
                     menu: ContextMenu {
                         Repeater {
                             model: frequencyNames
